@@ -377,7 +377,7 @@
       position: absolute;
       top: 75px;
       left: 18px;
-      width: 250px;
+      width: 260px;
       max-height: calc(100% - 95px);
       background: var(--navy-glass);
       border: 2px solid var(--gold);
@@ -472,7 +472,7 @@
       font-weight: bold;
     }
 
-    /* Scrollable items with touch & wheel */
+    /* Scrollable items with touch & wheel (Smooth Scrolling) */
     .vertical-item-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -483,6 +483,7 @@
       scrollbar-width: thin;
       touch-action: pan-y;
       -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
     }
 
     .horizontal-item-grid {
@@ -493,6 +494,7 @@
       scrollbar-width: thin;
       touch-action: pan-x;
       -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
     }
 
     .ar-touch-item {
@@ -505,7 +507,7 @@
       justify-content: center;
       cursor: pointer;
       padding: 6px;
-      transition: all 0.2s;
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
       position: relative;
     }
 
@@ -531,6 +533,7 @@
       height: 42px;
       object-fit: contain;
       margin-bottom: 4px;
+      pointer-events: none;
     }
 
     .ar-touch-item span {
@@ -541,6 +544,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 90px;
+      pointer-events: none;
     }
 
     .ar-touch-item .price-tag {
@@ -548,6 +552,7 @@
       color: var(--gold-light);
       font-weight: bold;
       margin-top: 2px;
+      pointer-events: none;
     }
 
     /* Jigsaw Game Stage (6 Pieces: 3x2) */
@@ -734,6 +739,7 @@
         <p id="level-subtitle">กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒)</p>
       </div>
       <div class="top-controls">
+        <button class="btn-top interactive" id="home-btn" title="กลับหน้าเริ่มต้น">🏠 หน้าหลัก</button>
         <div class="money-pill">
           <span>💵</span> <span id="money-count">100</span> อัฐ
         </div>
@@ -926,7 +932,7 @@
     };
 
     /* =========================================================
-       3. POP CULTURE FRAMES SHOP (Crash-free Rendering)
+       3. POP CULTURE FRAMES SHOP (Seamless / No Freeze)
        ========================================================= */
     const SHOP_FRAMES = {
       none: { name: 'ไม่ใส่กรอบ', price: 0, owned: true, render: (ctx, w, h) => {} },
@@ -1116,7 +1122,7 @@
     let userMoney = 100;
 
     /* =========================================================
-       4. LEFT DRESSING & SHOP PANELS
+       4. LEFT DRESSING & SHOP PANELS (Interactive)
        ========================================================= */
     const dressingPanel = document.getElementById('dressing-panel');
     const dressToggleBtn = document.getElementById('dress-toggle-btn');
@@ -1128,12 +1134,25 @@
     const shopCloseBtn = document.getElementById('shop-close-btn');
     const shopItemsContainer = document.getElementById('shop-items-container');
     const moneyCountEl = document.getElementById('money-count');
+    const homeBtn = document.getElementById('home-btn');
 
     let currentCategory = 'clothes';
 
     function updateMoneyUI() {
       moneyCountEl.textContent = userMoney;
     }
+
+    homeBtn.addEventListener('click', () => {
+      // Return to Start Screen
+      document.getElementById('start-screen').style.display = 'flex';
+      document.getElementById('start-screen').classList.remove('camera-ready');
+      document.getElementById('start-main-card').style.display = 'flex';
+      document.getElementById('ar-start-prompt').style.display = 'none';
+      dressingPanel.classList.remove('open');
+      shopPanel.classList.remove('open');
+      isGameRunning = false;
+      AudioEngine.playSnap();
+    });
 
     dressToggleBtn.addEventListener('click', () => {
       dressingPanel.classList.toggle('open');
@@ -1224,6 +1243,7 @@
       });
     }
 
+    // Seamless Purchase & Instant Frame Swap (No popup alert & no freezing)
     function handleShopSelection(key) {
       const item = SHOP_FRAMES[key];
       if (item.owned) {
@@ -1238,9 +1258,8 @@
           updateMoneyUI();
           renderShopItems();
           AudioEngine.playVictory();
-          alert(`🎉 ออเจ้าได้ปลดล็อกกรอบรูป "${item.name}" เรียบร้อยแล้ว!`);
         } else {
-          alert(`⚠️ ธนบัตร (อัฐ) ของออเจ้าไม่เพียงพอ! ต้องใช้ ${item.price} อัฐ (ต่อจิ๊กซอว์เพื่อรับเงินเพิ่ม)`);
+          AudioEngine.playSnap();
         }
       }
     }
@@ -1326,7 +1345,6 @@
        ========================================================= */
     const thaiFlowerParticles = [];
 
-    // Traditional Thai Pikul Flower (ดอกพิกุลทอง 8 กลีบเหลี่ยมแหลมประณีต)
     function drawThaiPikulFlower(ctx, cx, cy, size, alpha, rot) {
       ctx.save();
       ctx.translate(cx, cy);
@@ -1341,7 +1359,6 @@
         
         ctx.beginPath();
         ctx.moveTo(0, 0);
-        // Diamond pointed Pikul petal
         ctx.lineTo(size * 0.32, -size * 0.5);
         ctx.lineTo(0, -size);
         ctx.lineTo(-size * 0.32, -size * 0.5);
@@ -1359,7 +1376,6 @@
         ctx.restore();
       }
 
-      // Center gold stamen ring
       ctx.beginPath();
       ctx.arc(0, 0, size * 0.3, 0, Math.PI * 2);
       ctx.fillStyle = '#FFE066';
@@ -1681,7 +1697,7 @@
       canvasCtx.clearRect(0, 0, w, h);
       frameCtx.clearRect(0, 0, w, h);
 
-      // Render Pop Culture Camera Frame
+      // Render Pop Culture Camera Frame (Zero Lag)
       if (SHOP_FRAMES[activeFrameKey] && SHOP_FRAMES[activeFrameKey].render) {
         SHOP_FRAMES[activeFrameKey].render(frameCtx, w, h);
       }
