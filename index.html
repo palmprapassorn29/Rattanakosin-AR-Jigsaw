@@ -47,7 +47,6 @@
       color: var(--ivory);
     }
 
-    /* Fullscreen AR Viewport */
     #ar-container {
       position: absolute;
       top: 0;
@@ -88,9 +87,7 @@
       z-index: 6;
     }
 
-    /* =========================================================
-       1. START SCREEN (Centered Button, Kanok Motif & Golden Sparkles)
-       ========================================================= */
+    /* Start Screen */
     #start-screen {
       position: absolute;
       top: 0;
@@ -100,7 +97,7 @@
       z-index: 200;
       display: flex;
       justify-content: center;
-      align-items: center; /* จัดให้อยู่ตรงกลางหน้าจอ */
+      align-items: center;
       text-align: center;
       padding: 20px;
       background-image: 
@@ -111,7 +108,7 @@
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition: opacity 0.5s ease;
     }
 
     #start-screen.camera-ready {
@@ -119,7 +116,6 @@
       pointer-events: none;
     }
 
-    /* การ์ดต้อนรับลายไทยกนกเรืองแสง */
     .start-card {
       position: relative;
       background: linear-gradient(145deg, rgba(20, 12, 8, 0.94) 0%, rgba(10, 25, 47, 0.96) 100%);
@@ -128,10 +124,7 @@
       padding: 38px 42px;
       max-width: 660px;
       width: 92%;
-      box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.9),
-        0 0 35px rgba(212, 175, 55, 0.45),
-        inset 0 0 25px rgba(212, 175, 55, 0.2);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 35px rgba(212, 175, 55, 0.45);
       backdrop-filter: blur(16px);
       display: flex;
       flex-direction: column;
@@ -141,8 +134,8 @@
     }
 
     @keyframes pulseGlow {
-      0% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 25px rgba(212, 175, 55, 0.3); }
-      100% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(255, 240, 153, 0.7); }
+      0% { box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 25px rgba(212, 175, 55, 0.3); }
+      100% { box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 45px rgba(255, 240, 153, 0.7); }
     }
 
     .start-card::before {
@@ -152,15 +145,6 @@
       font-size: 24px;
       color: var(--gold);
       text-shadow: 0 0 10px var(--gold-glow);
-    }
-
-    .start-card::after {
-      content: '❖';
-      position: absolute;
-      bottom: 12px;
-      font-size: 16px;
-      color: var(--gold);
-      opacity: 0.7;
     }
 
     .badge-sub {
@@ -194,7 +178,6 @@
       font-weight: 300;
     }
 
-    /* ปุ่มเปิดกล้องตรงกลาง */
     .gold-btn-start {
       background: linear-gradient(180deg, #FFE79A 0%, #D4AF37 50%, #996515 100%);
       color: #381A00;
@@ -217,7 +200,7 @@
       box-shadow: 0 8px 35px rgba(255, 240, 153, 0.95);
     }
 
-    /* กล่องข้อความพร้อมเล่นบนหน้ากล้อง (หลังอนุญาตกล้อง) */
+    /* Live Camera Ready Prompt */
     #ar-start-prompt {
       display: none;
       position: absolute;
@@ -248,9 +231,7 @@
       color: var(--gold-light);
     }
 
-    /* =========================================================
-       2. UI OVERLAY & CONTROLS
-       ========================================================= */
+    /* UI Overlay */
     #ui-container {
       position: absolute;
       top: 0;
@@ -349,7 +330,7 @@
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map */
+    /* Mini-map */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
@@ -371,7 +352,7 @@
     }
 
     #minimap-img {
-      width: 135px;
+      width: 140px;
       height: 90px;
       object-fit: cover;
       border-radius: 6px;
@@ -379,9 +360,7 @@
       display: block;
     }
 
-    /* =========================================================
-       3. LEFT DRESSING PANEL & BOTTOM SHOP PANEL
-       ========================================================= */
+    /* Left Dressing Sidebar */
     #dressing-panel {
       position: absolute;
       top: 75px;
@@ -406,6 +385,7 @@
       transform: translateX(0);
     }
 
+    /* Shop Panel */
     #shop-panel {
       position: absolute;
       bottom: 20px;
@@ -480,7 +460,6 @@
       font-weight: bold;
     }
 
-    /* เลื่อนแถบดูชุดด้วยนิ้วได้อย่างลื่นไหล */
     .vertical-item-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -558,7 +537,7 @@
       margin-top: 2px;
     }
 
-    /* Jigsaw Game Stage (6 Pieces: 3 Columns x 2 Rows) */
+    /* Jigsaw Game Stage (6 Pieces: 3x2) */
     #game-stage {
       position: absolute;
       top: 0;
@@ -594,6 +573,7 @@
       touch-action: none;
       pointer-events: auto;
       transition: transform 0.1s ease, box-shadow 0.1s ease;
+      background-repeat: no-repeat;
     }
 
     .puzzle-piece.dragging {
@@ -655,6 +635,7 @@
       line-height: 1.6;
       color: var(--ivory);
       margin-bottom: 24px;
+      text-align: left;
     }
 
     .reward-banner {
@@ -736,7 +717,7 @@
   <div id="ui-container">
     <header>
       <div class="title-group">
-        <h1 id="level-title">ด่านที่ ๑ : กำเนิดพระนคร</h1>
+        <h1 id="level-title">ด่านที่ ๑ : กำเนิดพระนครและวัดพระแก้ว</h1>
         <p id="level-subtitle">กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒)</p>
       </div>
       <div class="top-controls">
@@ -787,7 +768,7 @@
   <!-- History Modal -->
   <div id="info-modal" class="modal-overlay">
     <div class="modal-card">
-      <h2 id="modal-title">ความรู้ประวัติศาสตร์</h2>
+      <h2 id="modal-title">เฉลยสตอรี่เรื่องราวประวัติศาสตร์</h2>
       <div class="reward-banner">ได้รับรางวัล: 💵 +๑๐๐ อัฐ</div>
       <p id="modal-desc"></p>
       <button class="gold-btn interactive" id="next-level-btn">ท่องมิติสู่ด่านถัดไป ➔</button>
@@ -799,271 +780,138 @@
     <div class="modal-card">
       <h2>ออเจ้าสำเร็จบริบูรณ์!</h2>
       <div class="reward-banner">ได้รับรางวัลใหญ่: 💵 +๓๐๐ อัฐ</div>
-      <p id="victory-stats"></p>
-      <p>ขอขอบน้ำใจออเจ้าที่ร่วมสืบสานและร้อยเรียงเรื่องราวประวัติศาสตร์รัตนโกสินทร์อันรุ่งเรือง</p>
+      <p id="victory-stats" style="text-align:center;"></p>
+      <p style="text-align:center;">ขอขอบน้ำใจออเจ้าที่ร่วมสืบสานและร้อยเรียงเรื่องราวประวัติศาสตร์รัตนโกสินทร์อันรุ่งเรือง</p>
       <button class="gold-btn interactive" id="restart-game-btn">ท่องมิติใหม่อีกครา ↺</button>
     </div>
   </div>
 
   <script>
     /* =========================================================
-       1. HISTORICAL STAGES (6 Pieces: 3 Columns x 2 Rows)
+       1. HISTORICAL STAGES (5 Historical Levels with Attached Images)
        ========================================================= */
-    function generateHistoricalSVG(theme) {
-      const svgs = {
-        r1: `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
-              <defs>
-                <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E28F34"/><stop offset="100%" stop-color="#8B1E1E"/></linearGradient>
-                <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFEE80"/><stop offset="100%" stop-color="#B8860B"/></linearGradient>
-              </defs>
-              <rect width="600" height="400" fill="url(#g1)"/>
-              <circle cx="300" cy="180" r="110" fill="#FFF099" opacity="0.4"/>
-              <path d="M50 400 L50 320 L90 280 L130 320 L130 400 Z" fill="url(#gold)"/>
-              <path d="M300 70 L325 180 L350 220 L250 220 L275 180 Z" fill="url(#gold)"/>
-              <path d="M220 220 L380 220 L380 400 L220 400 Z" fill="#7A1313"/>
-              <path d="M440 400 L450 140 L465 140 L475 400 Z M445 160 L515 160 M505 400 L495 140 L510 140 L520 400 Z" fill="#A82323" stroke="#D4AF37" stroke-width="2"/>
-              <text x="300" y="370" font-family="'Charm', serif" font-size="26" fill="#FFF8DC" text-anchor="middle" font-weight="bold">กำเนิดพระนครและวัดพระศรีรัตนศาสดาราม</text>
-            </svg>`,
-        r3: `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
-              <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1B3B6F"/><stop offset="100%" stop-color="#065A82"/></linearGradient></defs>
-              <rect width="600" height="400" fill="url(#g2)"/>
-              <path d="M120 280 C200 320 400 320 480 270 L460 330 C350 370 200 360 140 330 Z" fill="#6B3E26" stroke="#D4AF37" stroke-width="2"/>
-              <path d="M220 120 L220 280 M330 80 L330 280 M420 140 L420 280" stroke="#8B5A2B" stroke-width="6"/>
-              <path d="M225 130 C270 140 270 240 225 250 Z" fill="#D4AF37"/>
-              <path d="M335 90 C390 100 390 240 335 250 Z" fill="#E6CA65"/>
-              <path d="M70 280 L90 180 L100 130 L110 180 L130 280 Z" fill="#FFF8DC" opacity="0.6"/>
-              <text x="300" y="370" font-family="'Charm', serif" font-size="26" fill="#FFF8DC" text-anchor="middle" font-weight="bold">การค้าสำเภาไทย-จีนและวัดอรุณราชวราราม</text>
-            </svg>`,
-        r4: `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
-              <defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0D1B2A"/><stop offset="100%" stop-color="#1B263B"/></linearGradient></defs>
-              <rect width="600" height="400" fill="url(#g3)"/>
-              <circle cx="80" cy="70" r="2" fill="#fff"/><circle cx="150" cy="120" r="2.5" fill="#fff"/><circle cx="480" cy="80" r="3" fill="#FFEE80"/><circle cx="530" cy="150" r="1.5" fill="#fff"/>
-              <circle cx="300" cy="130" r="60" fill="#E0A96D"/>
-              <circle cx="315" cy="130" r="58" fill="#0D1B2A"/>
-              <path d="M180 320 L270 160 L310 180 L220 340 Z" fill="#C0C0C0" stroke="#D4AF37" stroke-width="2"/>
-              <path d="M230 310 L190 390 M250 310 L280 390 M230 310 L240 390" stroke="#8B5A2B" stroke-width="4"/>
-              <text x="300" y="370" font-family="'Charm', serif" font-size="26" fill="#FFF8DC" text-anchor="middle" font-weight="bold">ดาราศาสตร์สากล ณ หอดูดาวหว้ากอ</text>
-            </svg>`,
-        r5: `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
-              <defs><linearGradient id="g4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4A5859"/><stop offset="100%" stop-color="#253031"/></linearGradient></defs>
-              <rect width="600" height="400" fill="url(#g4)"/>
-              <path d="M200 240 Q300 130 400 240 Z" fill="#EAE0D5"/>
-              <rect x="230" y="240" width="140" height="70" fill="#C6AC8F"/>
-              <path d="M0 380 L600 380 M0 360 L600 360" stroke="#D4AF37" stroke-width="3"/>
-              <rect x="360" y="280" width="140" height="70" fill="#8B1E1E" rx="8"/>
-              <circle cx="390" cy="355" r="16" fill="#333" stroke="#D4AF37" stroke-width="2"/>
-              <circle cx="440" cy="355" r="16" fill="#333" stroke="#D4AF37" stroke-width="2"/>
-              <circle cx="480" cy="355" r="16" fill="#333" stroke="#D4AF37" stroke-width="2"/>
-              <text x="300" y="370" font-family="'Charm', serif" font-size="26" fill="#FFF8DC" text-anchor="middle" font-weight="bold">การปฏิรูปสยาม เลิกทาส และการรถไฟ</text>
-            </svg>`,
-        r9: `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
-              <defs>
-                <linearGradient id="g5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5B8E7D"/><stop offset="100%" stop-color="#2F4858"/></linearGradient>
-                <linearGradient id="field" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8CB369"/><stop offset="100%" stop-color="#D4AF37"/></linearGradient>
-              </defs>
-              <rect width="600" height="400" fill="url(#g5)"/>
-              <path d="M120 90 L220 90 L250 80 L230 110 L150 110 Z" fill="#F4F1DE" stroke="#D4AF37" stroke-width="2"/>
-              <path d="M0 240 Q150 210 300 250 T600 230 L600 400 L0 400 Z" fill="url(#field)"/>
-              <ellipse cx="420" cy="320" rx="110" ry="40" fill="#3A86C8" stroke="#FFF8DC" stroke-width="2"/>
-              <text x="300" y="370" font-family="'Charm', serif" font-size="26" fill="#FFF8DC" text-anchor="middle" font-weight="bold">โครงการพระราชดำริ ฝนหลวง และเกษตรทฤษฎีใหม่</text>
-            </svg>`
-      };
-      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svgs[theme]);
-    }
-
     const LEVELS = [
       {
         id: 1,
-        title: "ด่านที่ ๑ : กำเนิดพระนคร",
+        title: "ด่านที่ ๑ : กำเนิดพระนครและวัดพระแก้ว",
         subtitle: "กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒)",
         rows: 2, cols: 3,
-        image: generateHistoricalSVG('r1'),
-        history: "พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (ร.๑) ทรงสถาปนากรุงรัตนโกสินทร์ขึ้นเมื่อ พ.ศ. ๒๓๒๕ และโปรดเกล้าฯ ให้สร้างพระบรมมหาราชวังและวัดพระศรีรัตนศาสดาราม (วัดพระแก้ว)"
+        image: "Gemini_Generated_Image_80e9aj80e9aj80e9.jpg",
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (ร.๑) ทรงสถาปนากรุงรัตนโกสินทร์ขึ้นเมื่อ พ.ศ. ๒๓๒๕ ทรงโปรดเกล้าฯ ให้สร้างพระบรมมหาราชวังและวัดพระศรีรัตนศาสดาราม (วัดพระแก้ว) พร้อมทั้งสร้างเสาชิงช้าและขุดคลองรอบกรุงเพื่อเป็นศูนย์กลางการค้าและศูนย์รวมจิตใจของราษฎร"
       },
       {
         id: 2,
         title: "ด่านที่ ๒ : การค้าสำเภาและศิลปกรรมรุ่งเรือง",
         subtitle: "ยุคพาณิชย์นาวีรุ่งโรจน์ (รัชกาลที่ ๓)",
         rows: 2, cols: 3,
-        image: generateHistoricalSVG('r3'),
-        history: "รัชสมัยพระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว มีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีน เช่น พระปรางค์วัดอรุณราชวราราม"
+        image: "Gemini_Generated_Image_dcahnzdcahnzdcah.jpg",
+        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
       },
       {
         id: 3,
         title: "ด่านที่ ๓ : รุ่งอรุณแห่งดาราศาสตร์สากล",
         subtitle: "การเปิดรับวิทยาการสมัยใหม่ (รัชกาลที่ ๔)",
         rows: 2, cols: 3,
-        image: generateHistoricalSVG('r4'),
-        history: "พระบาทสมเด็จพระจอมเกล้าเจ้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ ได้อย่างแม่นยำล่วงหน้า ๒ ปี"
+        image: "Gemini_Generated_Image_f2p7i9f2p7i9f2p7.jpg",
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าเจ้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
       },
       {
         id: 4,
-        title: "ด่านที่ ๔ : การปฏิรูปสยามสู่สากล",
-        subtitle: "เลิกทาสและพัฒนาระบบคมนาคม (รัชกาลที่ ๕ - ๗)",
+        title: "ด่านที่ ๔ : การปฏิรูปสยามสู่สากลและเลิกทาส",
+        subtitle: "ยุคศิวิไลซ์และความทันสมัย (รัชกาลที่ ๕ - ๗)",
         rows: 2, cols: 3,
-        image: generateHistoricalSVG('r5'),
-        history: "พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัวทรงประกาศเลิกทาส ริเริ่มการรถไฟ ไปรษณีย์ และก่อสร้างพระที่นั่งอนันตสมาคม"
+        image: "Gemini_Generated_Image_jjyx97jjyx97jjyx.jpg",
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (ร.๕) ทรงประกาศเลิกทาสอย่างสันติวิธี ให้คนไทยมีอิสรภาพ ทรงริเริ่มสร้างทางรถไฟสายแรก การไปรษณีย์โทรเลข ไฟฟ้า และก่อสร้างพระที่นั่งอนันตสมาคม นำพาสยามก้าวสู่ความเจริญทัดเทียมนานาอารยประเทศ"
       },
       {
         id: 5,
         title: "ด่านที่ ๕ : พระบารมีปกเกล้าและเกษตรทฤษฎีใหม่",
         subtitle: "สืบสานศาสตร์พระราชา (รัชกาลที่ ๙)",
         rows: 2, cols: 3,
-        image: generateHistoricalSVG('r9'),
-        history: "ในหลวงรัชกาลที่ ๙ ทรงพระราชทานโครงการพระราชดำริ อาทิ ฝนหลวง แก้มลิง และหลักปรัชญาเศรษฐกิจพอเพียง"
+        image: "Gemini_Generated_Image_s6u0xls6u0xls6u0.jpg",
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร ทรงอุทิศพระวรกายเพื่อปวงชน พระราชทานโครงการพระราชดำริกว่า ๔,๐๐๐ โครงการ อาทิ ฝนหลวง กังหันน้ำชัยพัฒนา และหลักปรัชญาเศรษฐกิจพอเพียง เพื่อความอยู่ดีกินดีอย่างยั่งยืน"
       }
     ];
 
     /* =========================================================
-       2. AR COSTUME & ITEM ASSETS (Men & Women across Eras)
+       2. AR COSTUME & ITEM ASSETS (Men & Women)
        ========================================================= */
     const ASSETS = {
       clothes: {
         sabai_gold: {
           name: 'สไบปักทอง (หญิง)',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-            <defs><linearGradient id="sgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFE79A"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#996515"/></linearGradient></defs>
-            <path d="M120 40 Q200 70 280 200 L320 340 L240 340 L180 180 Q140 100 120 40 Z" fill="url(#sgold)" stroke="#FFF099" stroke-width="2"/>
-            <circle cx="160" cy="90" r="14" fill="#8B1E1E" stroke="#FFE79A" stroke-width="2"/>
-            <path d="M140 60 Q200 120 260 60" fill="none" stroke="url(#sgold)" stroke-width="6"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFE79A"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#996515"/></linearGradient></defs><path d="M120 40 Q200 70 280 200 L320 340 L240 340 L180 180 Q140 100 120 40 Z" fill="url(#sgold)" stroke="#FFF099" stroke-width="2"/><circle cx="160" cy="90" r="14" fill="#8B1E1E" stroke="#FFE79A" stroke-width="2"/><path d="M140 60 Q200 120 260 60" fill="none" stroke="url(#sgold)" stroke-width="6"/></svg>`
         },
         sabai_pleat: {
           name: 'สไบจีบชมพู (หญิง)',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-            <defs><linearGradient id="sruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF758F"/><stop offset="100%" stop-color="#800F2F"/></linearGradient></defs>
-            <path d="M110 50 Q210 80 290 220 L310 340 L230 340 L170 190 Z" fill="url(#sruby)" stroke="#FFB3C1" stroke-width="2"/>
-            <line x1="130" y1="80" x2="250" y2="340" stroke="#FFF" stroke-width="1.5" stroke-dasharray="6,4"/>
-            <line x1="150" y1="100" x2="270" y2="340" stroke="#FFF" stroke-width="1.5" stroke-dasharray="6,4"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF758F"/><stop offset="100%" stop-color="#800F2F"/></linearGradient></defs><path d="M110 50 Q210 80 290 220 L310 340 L230 340 L170 190 Z" fill="url(#sruby)" stroke="#FFB3C1" stroke-width="2"/><line x1="130" y1="80" x2="250" y2="340" stroke="#FFF" stroke-width="1.5" stroke-dasharray="6,4"/><line x1="150" y1="100" x2="270" y2="340" stroke="#FFF" stroke-width="1.5" stroke-dasharray="6,4"/></svg>`
         },
         sabai_emerald: {
           name: 'สไบแพรมรกต (หญิง)',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-            <defs><linearGradient id="gem" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#52B788"/><stop offset="100%" stop-color="#1B4332"/></linearGradient></defs>
-            <path d="M115 45 Q205 75 285 210 L315 340 L235 340 L175 185 Z" fill="url(#gem)" stroke="#D4AF37" stroke-width="2"/>
-            <circle cx="150" cy="85" r="12" fill="#D4AF37"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gem" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#52B788"/><stop offset="100%" stop-color="#1B4332"/></linearGradient></defs><path d="M115 45 Q205 75 285 210 L315 340 L235 340 L175 185 Z" fill="url(#gem)" stroke="#D4AF37" stroke-width="2"/><circle cx="150" cy="85" r="12" fill="#D4AF37"/></svg>`
         },
         r5_ham: {
           name: 'ชุดแขนหมูแฮม ร.๕ (หญิง)',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-            <defs><linearGradient id="lace" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#E2D9D2"/></linearGradient></defs>
-            <ellipse cx="90" cy="110" rx="45" ry="35" fill="url(#lace)" stroke="#D4AF37" stroke-width="1.5"/>
-            <ellipse cx="310" cy="110" rx="45" ry="35" fill="url(#lace)" stroke="#D4AF37" stroke-width="1.5"/>
-            <path d="M130 90 L270 90 L285 340 L115 340 Z" fill="url(#lace)" stroke="#C6AC8F" stroke-width="2"/>
-            <path d="M160 95 Q200 140 240 95" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="6,4"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lace" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#E2D9D2"/></linearGradient></defs><ellipse cx="90" cy="110" rx="45" ry="35" fill="url(#lace)" stroke="#D4AF37" stroke-width="1.5"/><ellipse cx="310" cy="110" rx="45" ry="35" fill="url(#lace)" stroke="#D4AF37" stroke-width="1.5"/><path d="M130 90 L270 90 L285 340 L115 340 Z" fill="url(#lace)" stroke="#C6AC8F" stroke-width="2"/><path d="M160 95 Q200 140 240 95" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="6,4"/></svg>`
         },
         raj_pattern: {
           name: 'เสื้อราชปะแตนขาว (ชาย)',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-            <path d="M100 80 L300 80 L320 340 L80 340 Z" fill="#F8F9FA" stroke="#D4AF37" stroke-width="3"/>
-            <rect x="180" y="60" width="40" height="30" fill="#E9ECEF" stroke="#D4AF37" stroke-width="2" rx="4"/>
-            <line x1="200" y1="90" x2="200" y2="340" stroke="#D4AF37" stroke-width="3"/>
-            <circle cx="200" cy="120" r="5" fill="#D4AF37"/><circle cx="200" cy="160" r="5" fill="#D4AF37"/><circle cx="200" cy="200" r="5" fill="#D4AF37"/><circle cx="200" cy="240" r="5" fill="#D4AF37"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><path d="M100 80 L300 80 L320 340 L80 340 Z" fill="#F8F9FA" stroke="#D4AF37" stroke-width="3"/><rect x="180" y="60" width="40" height="30" fill="#E9ECEF" stroke="#D4AF37" stroke-width="2" rx="4"/><line x1="200" y1="90" x2="200" y2="340" stroke="#D4AF37" stroke-width="3"/><circle cx="200" cy="120" r="5" fill="#D4AF37"/><circle cx="200" cy="160" r="5" fill="#D4AF37"/><circle cx="200" cy="200" r="5" fill="#D4AF37"/><circle cx="200" cy="240" r="5" fill="#D4AF37"/></svg>`
         },
         warrior_male: {
           name: 'เสื้องานพิธีโบราณ (ชาย)',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-            <defs><linearGradient id="crim" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#A82323"/><stop offset="100%" stop-color="#5A0F0F"/></linearGradient></defs>
-            <path d="M90 75 L310 75 L325 340 L75 340 Z" fill="url(#crim)" stroke="#D4AF37" stroke-width="3"/>
-            <path d="M160 75 L200 130 L240 75 Z" fill="#D4AF37"/>
-            <line x1="200" y1="130" x2="200" y2="340" stroke="#D4AF37" stroke-width="4"/>
-            <circle cx="200" cy="170" r="6" fill="#FFEE80"/><circle cx="200" cy="220" r="6" fill="#FFEE80"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="crim" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#A82323"/><stop offset="100%" stop-color="#5A0F0F"/></linearGradient></defs><path d="M90 75 L310 75 L325 340 L75 340 Z" fill="url(#crim)" stroke="#D4AF37" stroke-width="3"/><path d="M160 75 L200 130 L240 75 Z" fill="#D4AF37"/><line x1="200" y1="130" x2="200" y2="340" stroke="#D4AF37" stroke-width="4"/><circle cx="200" cy="170" r="6" fill="#FFEE80"/><circle cx="200" cy="220" r="6" fill="#FFEE80"/></svg>`
         },
         r5_male_suit: {
           name: 'สูทพระราชพิธี ร.๕ (ชาย)',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-            <path d="M95 80 L305 80 L320 340 L80 340 Z" fill="#0A192F" stroke="#D4AF37" stroke-width="2.5"/>
-            <rect x="75" y="75" width="45" height="20" fill="#D4AF37" rx="5"/>
-            <rect x="280" y="75" width="45" height="20" fill="#D4AF37" rx="5"/>
-            <line x1="110" y1="80" x2="280" y2="340" stroke="#FFE79A" stroke-width="12"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><path d="M95 80 L305 80 L320 340 L80 340 Z" fill="#0A192F" stroke="#D4AF37" stroke-width="2.5"/><rect x="75" y="75" width="45" height="20" fill="#D4AF37" rx="5"/><rect x="280" y="75" width="45" height="20" fill="#D4AF37" rx="5"/><line x1="110" y1="80" x2="280" y2="340" stroke="#FFE79A" stroke-width="12"/></svg>`
         },
         r1_male_brown: {
           name: 'เสื้อกั๊กคอตะแคง ร.๑ (ชาย)',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-            <path d="M95 75 L305 75 L315 340 L85 340 Z" fill="#6F4E37" stroke="#D4AF37" stroke-width="3"/>
-            <path d="M130 75 L180 140 L270 75" fill="none" stroke="#D4AF37" stroke-width="3"/>
-            <circle cx="180" cy="160" r="5" fill="#FFEE80"/><circle cx="180" cy="200" r="5" fill="#FFEE80"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><path d="M95 75 L305 75 L315 340 L85 340 Z" fill="#6F4E37" stroke="#D4AF37" stroke-width="3"/><path d="M130 75 L180 140 L270 75" fill="none" stroke="#D4AF37" stroke-width="3"/><circle cx="180" cy="160" r="5" fill="#FFEE80"/><circle cx="180" cy="200" r="5" fill="#FFEE80"/></svg>`
         }
       },
       hats: {
         none: { name: 'ไม่สวมหมวก', svg: '<svg viewBox="0 0 200 200"></svg>' },
         chada: {
           name: 'ชฎาทองคำมงกุฎ',
-          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-            <defs><linearGradient id="hgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFF099"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs>
-            <path d="M100 10 L115 80 L130 140 L70 140 L85 80 Z" fill="url(#hgold)" stroke="#FFF" stroke-width="1"/>
-            <circle cx="100" cy="15" r="5" fill="#FFF"/>
-            <rect x="65" y="140" width="70" height="25" fill="#8B1E1E" stroke="url(#hgold)" stroke-width="2" rx="4"/>
-            <circle cx="100" cy="152" r="5" fill="#FFF099"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFF099"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs><path d="M100 10 L115 80 L130 140 L70 140 L85 80 Z" fill="url(#hgold)" stroke="#FFF" stroke-width="1"/><circle cx="100" cy="15" r="5" fill="#FFF"/><rect x="65" y="140" width="70" height="25" fill="#8B1E1E" stroke="url(#hgold)" stroke-width="2" rx="4"/><circle cx="100" cy="152" r="5" fill="#FFF099"/></svg>`
         },
         male_kile: {
           name: 'มาลาเกี้ยวขุนนาง (ชาย)',
-          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-            <path d="M100 40 L120 120 L80 120 Z" fill="#D4AF37"/>
-            <path d="M60 120 Q100 100 140 120 L150 150 L50 150 Z" fill="#2B2D42" stroke="#D4AF37" stroke-width="2"/>
-            <circle cx="100" cy="135" r="7" fill="#8B1E1E" stroke="#D4AF37" stroke-width="1.5"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><path d="M100 40 L120 120 L80 120 Z" fill="#D4AF37"/><path d="M60 120 Q100 100 140 120 L150 150 L50 150 Z" fill="#2B2D42" stroke="#D4AF37" stroke-width="2"/><circle cx="100" cy="135" r="7" fill="#8B1E1E" stroke="#D4AF37" stroke-width="1.5"/></svg>`
         },
         r5_cap: {
           name: 'หมวกทรงยุโรป ร.๕ (ชาย)',
-          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="100" cy="150" rx="80" ry="20" fill="#EAE0D5" stroke="#D4AF37" stroke-width="2"/>
-            <path d="M50 145 C50 100 150 100 150 145 Z" fill="#F4F1DE" stroke="#D4AF37" stroke-width="2"/>
-            <rect x="60" y="135" width="80" height="10" fill="#8B1E1E"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><ellipse cx="100" cy="150" rx="80" ry="20" fill="#EAE0D5" stroke="#D4AF37" stroke-width="2"/><path d="M50 145 C50 100 150 100 150 145 Z" fill="#F4F1DE" stroke="#D4AF37" stroke-width="2"/><rect x="60" y="135" width="80" height="10" fill="#8B1E1E"/></svg>`
         }
       },
       accessories: {
         none: { name: 'ไม่มี', svg: '<svg viewBox="0 0 200 200"></svg>' },
         gold_necklace: {
           name: 'สังวาลและกรองคอทองคำ',
-          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path d="M50 40 Q100 120 150 40" fill="none" stroke="#D4AF37" stroke-width="6"/>
-            <circle cx="100" cy="85" r="14" fill="#8B1E1E" stroke="#FFEE80" stroke-width="2"/>
-            <line x1="50" y1="40" x2="150" y2="180" stroke="#D4AF37" stroke-width="4" stroke-dasharray="5,3"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50 40 Q100 120 150 40" fill="none" stroke="#D4AF37" stroke-width="6"/><circle cx="100" cy="85" r="14" fill="#8B1E1E" stroke="#FFEE80" stroke-width="2"/><line x1="50" y1="40" x2="150" y2="180" stroke="#D4AF37" stroke-width="4" stroke-dasharray="5,3"/></svg>`
         },
         lotus_garland: {
           name: 'พวงมาลัยดอกรักคล้องมือ',
-          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="100" cy="100" r="45" fill="none" stroke="#FFF" stroke-width="10" stroke-dasharray="8,6"/>
-            <path d="M100 145 L100 185 M90 185 L110 185" stroke="#C9184A" stroke-width="6"/>
-            <circle cx="100" cy="185" r="8" fill="#FF758F"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="45" fill="none" stroke="#FFF" stroke-width="10" stroke-dasharray="8,6"/><path d="M100 145 L100 185 M90 185 L110 185" stroke="#C9184A" stroke-width="6"/><circle cx="100" cy="185" r="8" fill="#FF758F"/></svg>`
         }
       },
       bags: {
         none: { name: 'ไม่มี', svg: '<svg viewBox="0 0 200 200"></svg>' },
         thai_basket: {
           name: 'ชะลอมสานใส่ดอกบัว',
-          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path d="M60 90 L140 90 L130 170 L70 170 Z" fill="#DDA15E" stroke="#BC6C25" stroke-width="3"/>
-            <path d="M70 90 C70 50 130 50 130 90" fill="none" stroke="#BC6C25" stroke-width="4"/>
-            <circle cx="90" cy="85" r="12" fill="#FF758F"/>
-            <circle cx="110" cy="85" r="12" fill="#FF758F"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M60 90 L140 90 L130 170 L70 170 Z" fill="#DDA15E" stroke="#BC6C25" stroke-width="3"/><path d="M70 90 C70 50 130 50 130 90" fill="none" stroke="#BC6C25" stroke-width="4"/><circle cx="90" cy="85" r="12" fill="#FF758F"/><circle cx="110" cy="85" r="12" fill="#FF758F"/></svg>`
         },
         embroidered_pouch: {
           name: 'ย่ามไหมปักดิ้นทอง (ชาย/หญิง)',
-          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path d="M40 30 L160 170" stroke="#D4AF37" stroke-width="6"/>
-            <path d="M120 130 L170 130 L165 185 L125 185 Z" fill="#8B1E1E" stroke="#D4AF37" stroke-width="2"/>
-            <circle cx="145" cy="155" r="8" fill="#FFEE80"/>
-          </svg>`
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M40 30 L160 170" stroke="#D4AF37" stroke-width="6"/><path d="M120 130 L170 130 L165 185 L125 185 Z" fill="#8B1E1E" stroke="#D4AF37" stroke-width="2"/><circle cx="145" cy="155" r="8" fill="#FFEE80"/></svg>`
         }
       }
     };
 
     /* =========================================================
-       3. POP CULTURE FRAMES SHOP
+       3. POP CULTURE FRAMES SHOP (Optimized & Crash-free)
        ========================================================= */
     const SHOP_FRAMES = {
       none: { name: 'ไม่ใส่กรอบ', price: 0, owned: true, render: (ctx, w, h) => {} },
@@ -1080,19 +928,19 @@
           ctx.translate(70, 70);
           ctx.fillStyle = '#C58958';
           ctx.beginPath();
-          ctx.ellipse(-30, -50, 14, 45, -0.3, 0, Math.PI*2);
-          ctx.ellipse(30, -50, 14, 45, 0.3, 0, Math.PI*2);
+          ctx.ellipse(-25, -40, 12, 35, -0.3, 0, Math.PI*2);
+          ctx.ellipse(25, -40, 12, 35, 0.3, 0, Math.PI*2);
           ctx.fill();
           ctx.beginPath();
-          ctx.arc(0, 0, 42, 0, Math.PI * 2);
+          ctx.arc(0, 0, 36, 0, Math.PI * 2);
           ctx.fill();
           ctx.fillStyle = '#FFF';
           ctx.beginPath();
-          ctx.arc(0, 10, 22, 0, Math.PI);
+          ctx.arc(0, 8, 18, 0, Math.PI);
           ctx.fill();
           ctx.fillStyle = '#333';
-          ctx.font = 'bold 12px sans-serif';
-          ctx.fillText('LABUBU', -24, 45);
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('LABUBU', -22, 38);
           ctx.restore();
         }
       },
@@ -1106,19 +954,19 @@
           ctx.lineWidth = 14;
           ctx.strokeRect(7, 7, w - 14, h - 14);
           ctx.save();
-          ctx.translate(w - 80, 80);
+          ctx.translate(w - 75, 75);
           ctx.fillStyle = '#90DBF4';
           ctx.beginPath();
-          ctx.arc(0, 0, 38, 0, Math.PI * 2);
+          ctx.arc(0, 0, 34, 0, Math.PI * 2);
           ctx.fill();
           ctx.fillStyle = '#FF758F';
           ctx.beginPath();
-          ctx.arc(-8, 5, 8, 0, Math.PI * 2);
-          ctx.arc(8, 5, 8, 0, Math.PI * 2);
+          ctx.arc(-7, 4, 7, 0, Math.PI * 2);
+          ctx.arc(7, 4, 7, 0, Math.PI * 2);
           ctx.fill();
           ctx.fillStyle = '#333';
-          ctx.font = 'bold 12px sans-serif';
-          ctx.fillText('CARE BEARS', -40, 50);
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('CARE BEARS', -35, 42);
           ctx.restore();
         }
       },
@@ -1135,19 +983,19 @@
           ctx.translate(70, h - 70);
           ctx.fillStyle = '#6F4E37';
           ctx.beginPath();
-          ctx.arc(0, 0, 38, 0, Math.PI * 2);
+          ctx.arc(0, 0, 34, 0, Math.PI * 2);
           ctx.fill();
           ctx.fillStyle = '#FCEADE';
           ctx.beginPath();
-          ctx.arc(0, 4, 25, 0, Math.PI * 2);
+          ctx.arc(0, 3, 22, 0, Math.PI * 2);
           ctx.fill();
           ctx.fillStyle = '#FFB703';
           ctx.beginPath();
-          ctx.arc(0, 14, 8, 0, Math.PI * 2);
+          ctx.arc(0, 12, 7, 0, Math.PI * 2);
           ctx.fill();
           ctx.fillStyle = '#FFF';
-          ctx.font = 'bold 12px sans-serif';
-          ctx.fillText('MONCHHICHI', -38, -45);
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('MONCHHICHI', -35, -40);
           ctx.restore();
         }
       },
@@ -1161,20 +1009,20 @@
           ctx.lineWidth = 14;
           ctx.strokeRect(7, 7, w - 14, h - 14);
           ctx.save();
-          ctx.translate(w - 75, h - 75);
+          ctx.translate(w - 70, h - 70);
           ctx.fillStyle = '#FFFFFF';
           ctx.beginPath();
-          ctx.arc(0, 0, 35, 0, Math.PI * 2);
+          ctx.arc(0, 0, 32, 0, Math.PI * 2);
           ctx.fill();
           ctx.fillStyle = '#E63946';
           ctx.beginPath();
-          ctx.arc(22, -22, 12, 0, Math.PI * 2);
-          ctx.arc(36, -22, 10, 0, Math.PI * 2);
-          ctx.arc(10, -22, 10, 0, Math.PI * 2);
+          ctx.arc(20, -20, 10, 0, Math.PI * 2);
+          ctx.arc(32, -20, 8, 0, Math.PI * 2);
+          ctx.arc(8, -20, 8, 0, Math.PI * 2);
           ctx.fill();
           ctx.fillStyle = '#FFF';
-          ctx.font = 'bold 12px sans-serif';
-          ctx.fillText('HELLO KITTY', -38, -42);
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('HELLO KITTY', -35, -38);
           ctx.restore();
         }
       },
@@ -1188,18 +1036,18 @@
           ctx.lineWidth = 14;
           ctx.strokeRect(7, 7, w - 14, h - 14);
           ctx.save();
-          ctx.translate(75, 75);
+          ctx.translate(70, 70);
           ctx.fillStyle = '#101010';
           ctx.beginPath();
-          ctx.arc(0, 0, 36, 0, Math.PI * 2);
+          ctx.arc(0, 0, 32, 0, Math.PI * 2);
           ctx.fill();
           ctx.fillStyle = '#70E000';
           ctx.beginPath();
-          ctx.moveTo(-20, -25); ctx.lineTo(0, 0); ctx.lineTo(-20, 25); ctx.closePath();
-          ctx.moveTo(20, -25); ctx.lineTo(0, 0); ctx.lineTo(20, 25); ctx.closePath();
+          ctx.moveTo(-18, -22); ctx.lineTo(0, 0); ctx.lineTo(-18, 22); ctx.closePath();
+          ctx.moveTo(18, -22); ctx.lineTo(0, 0); ctx.lineTo(18, 22); ctx.closePath();
           ctx.fill();
-          ctx.font = 'bold 12px sans-serif';
-          ctx.fillText('BEN 10', -20, 48);
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('BEN 10', -18, 42);
           ctx.restore();
         }
       },
@@ -1213,20 +1061,20 @@
           ctx.lineWidth = 14;
           ctx.strokeRect(7, 7, w - 14, h - 14);
           ctx.save();
-          ctx.translate(w - 75, 75);
+          ctx.translate(w - 70, 70);
           ctx.strokeStyle = '#111';
           ctx.lineWidth = 3;
-          ctx.strokeRect(-32, -18, 28, 20);
-          ctx.strokeRect(4, -18, 28, 20);
-          ctx.beginPath(); ctx.moveTo(-4, -8); ctx.lineTo(4, -8); ctx.stroke();
+          ctx.strokeRect(-28, -16, 24, 18);
+          ctx.strokeRect(4, -16, 24, 18);
+          ctx.beginPath(); ctx.moveTo(-4, -7); ctx.lineTo(4, -7); ctx.stroke();
           ctx.fillStyle = '#D90429';
           ctx.beginPath();
-          ctx.moveTo(-18, 12); ctx.lineTo(0, 18); ctx.lineTo(-18, 24); ctx.closePath();
-          ctx.moveTo(18, 12); ctx.lineTo(0, 18); ctx.lineTo(18, 24); ctx.closePath();
+          ctx.moveTo(-15, 10); ctx.lineTo(0, 15); ctx.lineTo(-15, 20); ctx.closePath();
+          ctx.moveTo(15, 10); ctx.lineTo(0, 15); ctx.lineTo(15, 20); ctx.closePath();
           ctx.fill();
           ctx.fillStyle = '#FFF';
-          ctx.font = 'bold 12px sans-serif';
-          ctx.fillText('CONAN', -24, 44);
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('CONAN', -20, 38);
           ctx.restore();
         }
       }
@@ -1253,7 +1101,7 @@
     let userMoney = 100;
 
     /* =========================================================
-       4. LEFT DRESSING & SHOP PANELS (Interactive)
+       4. LEFT DRESSING & SHOP PANELS
        ========================================================= */
     const dressingPanel = document.getElementById('dressing-panel');
     const dressToggleBtn = document.getElementById('dress-toggle-btn');
@@ -1272,7 +1120,6 @@
       moneyCountEl.textContent = userMoney;
     }
 
-    // Toggle Panels
     dressToggleBtn.addEventListener('click', () => {
       dressingPanel.classList.toggle('open');
       shopPanel.classList.remove('open');
@@ -1298,7 +1145,6 @@
       shopToggleBtn.classList.remove('active');
     });
 
-    // Dressing Tabs
     document.querySelectorAll('.cat-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
@@ -1340,7 +1186,6 @@
       AudioEngine.playSnap();
     }
 
-    // Shop Items Render
     function renderShopItems() {
       shopItemsContainer.innerHTML = '';
       Object.keys(SHOP_FRAMES).forEach(key => {
@@ -1462,7 +1307,7 @@
     });
 
     /* =========================================================
-       7. GOLDEN THAI FLOWER TOUCH EFFECT & GLITTER
+       7. GOLDEN THAI FLOWER TOUCH EFFECT
        ========================================================= */
     const thaiFlowerParticles = [];
 
@@ -1711,7 +1556,7 @@
       updateMoneyUI();
 
       const currentLevel = LEVELS[currentLevelIdx];
-      modalTitle.textContent = currentLevel.title;
+      modalTitle.textContent = `${currentLevel.title} (สำเร็จ!)`;
       modalDesc.textContent = currentLevel.history;
       infoModal.classList.add('active');
     }
@@ -1772,14 +1617,12 @@
     });
     hands.onResults((results) => { handResults = results; });
 
-    // Universal AR Element Click Simulator
     function triggerUniversalARClick(x, y) {
       const now = Date.now();
       if (now - lastArClickTime < 450) return;
 
       createFlowerTouch(x, y);
 
-      // 1. Confirm prompt button on live camera
       const promptBtn = document.getElementById('confirm-start-btn');
       if (promptBtn && promptBtn.offsetParent !== null) {
         const pRect = promptBtn.getBoundingClientRect();
@@ -1790,7 +1633,6 @@
         }
       }
 
-      // 2. Click any UI element under fingertip
       const el = document.elementFromPoint(x, y);
       if (el) {
         const clickTarget = el.closest('button, .ar-touch-item, .btn-top, .btn-icon, .panel-close, .cat-tab, .gold-btn');
@@ -1813,12 +1655,12 @@
       canvasCtx.clearRect(0, 0, w, h);
       frameCtx.clearRect(0, 0, w, h);
 
-      // 1. Render Pop Culture Custom Camera Frame
+      // Render Pop Culture Camera Frame
       if (SHOP_FRAMES[activeFrameKey] && SHOP_FRAMES[activeFrameKey].render) {
         SHOP_FRAMES[activeFrameKey].render(frameCtx, w, h);
       }
 
-      // 2. AR Fitting Costume Overlay
+      // AR Fitting Costume Overlay
       if (poseResults && poseResults.poseLandmarks) {
         const lm = poseResults.poseLandmarks;
         const leftShoulder = lm[11];
@@ -1902,7 +1744,7 @@
         }
       }
 
-      // 3. AR Hand Interaction (Universal Finger Touch & Jigsaw Control)
+      // AR Hand Interaction
       if (handResults && handResults.multiHandLandmarks) {
         for (const landmarks of handResults.multiHandLandmarks) {
           const indexTip = landmarks[8];
@@ -1918,12 +1760,10 @@
           const pinchDist = Math.hypot(ix - tx, iy - ty);
           const isPinching = pinchDist < 45;
 
-          // Universal AR Finger Touch Click everywhere on UI
           if (isPinching) {
             triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2);
           }
 
-          // AR Drag Puzzle Pieces
           if (isGameRunning) {
             if (isPinching) {
               if (!arHeldPiece) {
@@ -1964,7 +1804,6 @@
     const arStartPrompt = document.getElementById('ar-start-prompt');
     const confirmStartBtn = document.getElementById('confirm-start-btn');
 
-    // Step 1: Click start button to request permission and switch to Live Camera Background
     startBtn.addEventListener('click', async () => {
       AudioEngine.init();
       if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
@@ -1989,7 +1828,6 @@
         });
         camera.start();
 
-        // Switch start screen to live camera background & show AR prompt
         startScreen.classList.add('camera-ready');
         startMainCard.style.display = 'none';
         arStartPrompt.style.display = 'block';
@@ -2001,7 +1839,6 @@
       }
     });
 
-    // Step 2: Use AR Hand / Touch to confirm and start jigsaw
     confirmStartBtn.addEventListener('click', () => {
       startScreen.style.display = 'none';
       arStartPrompt.style.display = 'none';
