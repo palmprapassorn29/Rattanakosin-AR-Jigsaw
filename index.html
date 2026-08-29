@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>บุพเพรัตนโกสินทร์ AR Jigsaw & Wardrobe</title>
+  <title>บุพเพรัตนโกสินทร์ AR Jigsaw: ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์</title>
   
   <!-- Google Fonts Thai -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,14 +18,14 @@
   <style>
     :root {
       --gold-primary: #D4AF37;
-      --gold-bright: #FFE066;
+      --gold-light: #FFF099;
       --gold-deep: #996515;
-      --gold-glow: rgba(255, 224, 102, 0.6);
-      --crimson-royal: #7A0C0C;
-      --crimson-dark: #450606;
+      --gold-glow: #FDE047;
+      --crimson-royal: #8B1E1E;
+      --crimson-dark: #4A0E0E;
+      --ivory: #FFF8DC;
       --navy-royal: #081426;
-      --navy-glass: rgba(8, 20, 38, 0.88);
-      --ivory: #FFF9E6;
+      --navy-glass: rgba(8, 20, 38, 0.92);
       --font-title: 'Charm', cursive, serif;
       --font-body: 'Sarabun', sans-serif;
     }
@@ -49,7 +49,7 @@
     }
 
     /* =========================================================
-       1. LUXURIOUS START SCREEN & THAI GILDED BACKGROUND
+       LUXURIOUS ROYAL START SCREEN (ลายไทยหรูหรา ทองคำเปลว)
        ========================================================= */
     #start-screen {
       position: absolute;
@@ -60,244 +60,209 @@
       z-index: 200;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      padding: 30px 24px 40px 24px;
-      /* High-end Royal Gradient with Visual Depth & Fallback */
-      background: 
-        radial-gradient(circle at 50% 35%, rgba(255, 215, 0, 0.18) 0%, transparent 60%),
-        linear-gradient(180deg, rgba(8, 20, 38, 0.4) 0%, rgba(35, 12, 12, 0.75) 60%, rgba(8, 12, 20, 0.95) 100%),
+      text-align: center;
+      padding: 24px;
+      background-image: 
+        radial-gradient(circle at 50% 40%, rgba(255, 215, 0, 0.15) 0%, rgba(10, 20, 35, 0.75) 60%, rgba(5, 10, 20, 0.95) 100%),
         url('Gemini_Generated_Image_89ya1c89ya1c89ya.png'),
-        url('bg-rattanakosin.jpg'),
-        radial-gradient(ellipse at center, #8B1E1E 0%, #1A0505 100%);
+        url('bg-rattanakosin.jpg');
       background-size: cover;
-      background-position: center 20%;
+      background-position: center center;
       background-repeat: no-repeat;
       overflow: hidden;
     }
 
-    /* Falling Golden Petals Canvas */
-    #petals-canvas {
+    /* Canvas สำหรับดอกไม้สีทองโปรยปรายร่วงหล่น */
+    #floating-flower-canvas {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 1;
+      z-index: 205;
     }
 
-    /* Top Start Screen Bar */
-    .start-top-bar {
-      width: 100%;
-      max-width: 1050px;
+    /* Golden Thai Traditional Border Frame */
+    .start-frame-container {
+      position: relative;
+      z-index: 210;
+      background: linear-gradient(145deg, rgba(20, 10, 5, 0.90) 0%, rgba(8, 20, 38, 0.94) 100%);
+      border: 2.5px solid var(--gold-primary);
+      border-radius: 32px;
+      padding: 40px 48px;
+      max-width: 680px;
+      width: 90%;
+      box-shadow: 
+        0 25px 60px rgba(0, 0, 0, 0.9),
+        0 0 40px rgba(212, 175, 55, 0.45),
+        inset 0 0 30px rgba(212, 175, 55, 0.25);
+      backdrop-filter: blur(16px);
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      z-index: 10;
+      animation: floatIn 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .brand-emblem {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(10, 20, 35, 0.85);
-      border: 1.5px solid var(--gold-primary);
-      border-radius: 30px;
-      padding: 6px 18px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.6), 0 0 15px var(--gold-glow);
-      backdrop-filter: blur(8px);
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    .brand-emblem span {
+    .start-frame-container::before, .start-frame-container::after {
+      content: '❖';
+      position: absolute;
+      font-size: 24px;
+      color: var(--gold-light);
+      text-shadow: 0 0 10px var(--gold-glow);
+    }
+    .start-frame-container::before { top: 12px; left: 16px; }
+    .start-frame-container::after { top: 12px; right: 16px; }
+
+    .royal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--gold-primary);
+      background: linear-gradient(90deg, rgba(139, 30, 30, 0.8) 0%, rgba(74, 14, 14, 0.8) 100%);
+      padding: 5px 22px;
+      border-radius: 25px;
+      font-size: 14px;
+      color: var(--gold-light);
+      letter-spacing: 1.2px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    #start-screen h1 {
       font-family: var(--font-title);
-      font-size: 16px;
-      color: var(--gold-bright);
-      letter-spacing: 1px;
+      font-size: 42px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      background: linear-gradient(180deg, #FFF8DC 10%, #FFE79A 40%, #D4AF37 80%, #996515 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
     }
 
-    .start-nav-btns {
+    #start-screen p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ivory);
+      margin-bottom: 30px;
+      font-weight: 300;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.9);
+      max-width: 540px;
+    }
+
+    /* Centered Start Button (ปุ่มเริ่มเกมอยู่ตรงกลางเด่นชัด) */
+    .start-center-actions {
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      width: 100%;
+    }
+
+    .gold-btn-start-hero {
+      background: linear-gradient(180deg, #FFF099 0%, #E6CA65 30%, #B8860B 70%, #7A5506 100%);
+      color: #381800;
+      font-family: var(--font-title);
+      font-size: 26px;
+      font-weight: 700;
+      border: 2px solid #FFF8DC;
+      border-radius: 50px;
+      padding: 16px 52px;
+      cursor: pointer;
+      box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.7),
+        0 0 30px rgba(212, 175, 55, 0.75);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
       gap: 12px;
     }
 
-    .icon-action-btn {
-      background: linear-gradient(145deg, #241414, #0e1929);
+    .gold-btn-start-hero:hover {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.8),
+        0 0 45px rgba(255, 240, 153, 0.95);
+    }
+
+    .menu-icons-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .menu-icon-btn {
+      background: var(--navy-glass);
       border: 1.5px solid var(--gold-primary);
-      color: var(--gold-bright);
-      padding: 8px 18px;
-      border-radius: 25px;
-      font-family: var(--font-title);
-      font-size: 16px;
-      font-weight: 700;
+      color: var(--gold-light);
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
-      cursor: pointer;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.6), inset 0 0 10px rgba(212,175,55,0.25);
-      transition: all 0.25s ease;
-      backdrop-filter: blur(8px);
-    }
-
-    .icon-action-btn:hover {
-      transform: translateY(-2px);
-      border-color: var(--gold-bright);
-      box-shadow: 0 8px 25px rgba(212,175,55,0.6);
-      color: #FFFFFF;
-    }
-
-    /* Center-Bottom Royal Content Card */
-    .start-main-card {
-      position: relative;
-      background: linear-gradient(135deg, rgba(26, 12, 12, 0.92) 0%, rgba(10, 24, 44, 0.95) 100%);
-      border: 2px solid var(--gold-primary);
-      border-radius: 30px;
-      padding: 32px 40px;
-      max-width: 680px;
-      width: 92%;
-      text-align: center;
-      box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.9),
-        0 0 35px var(--gold-glow),
-        inset 0 0 25px rgba(212, 175, 55, 0.25);
-      backdrop-filter: blur(16px);
-      z-index: 10;
-      animation: floatStartCard 5s ease-in-out infinite alternate;
-    }
-
-    @keyframes floatStartCard {
-      0% { transform: translateY(0px); }
-      100% { transform: translateY(-6px); }
-    }
-
-    .start-main-card h1 {
-      font-family: var(--font-title);
-      font-size: 38px;
-      line-height: 1.25;
-      background: linear-gradient(180deg, #FFF6BD 10%, #D4AF37 70%, #996515 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 4px 15px rgba(0,0,0,0.8);
-      margin-bottom: 8px;
-    }
-
-    .start-main-card p {
-      font-size: 15px;
-      line-height: 1.65;
-      color: var(--ivory);
-      margin-bottom: 24px;
-      font-weight: 300;
-    }
-
-    .btn-gold-epic {
-      background: linear-gradient(180deg, #FFF099 0%, #D4AF37 50%, #996515 100%);
-      color: #381A00;
-      font-family: var(--font-title);
-      font-size: 24px;
-      font-weight: 700;
-      border: 2px solid #FFF8DC;
-      border-radius: 40px;
-      padding: 14px 48px;
-      cursor: pointer;
-      box-shadow: 
-        0 8px 25px rgba(0, 0, 0, 0.7),
-        0 0 30px var(--gold-glow);
-      transition: all 0.25s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .btn-gold-epic:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 12px 35px rgba(255, 240, 153, 0.9);
-    }
-
-    /* =========================================================
-       2. IN-GAME HUD & CURRENCY SYSTEM (ธนบัตร/เงินพดด้วง)
-       ========================================================= */
-    #ui-container {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 10;
-      pointer-events: none;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .interactive { pointer-events: auto; }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 24px;
-      background: linear-gradient(180deg, rgba(8, 20, 38, 0.96) 0%, rgba(8, 20, 38, 0.5) 75%, transparent 100%);
-    }
-
-    .title-area h1 {
-      font-family: var(--font-title);
-      font-size: 24px;
-      color: var(--gold-bright);
-      text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
-    }
-
-    .title-area p {
-      font-size: 13px;
-      color: var(--ivory);
-      opacity: 0.9;
-    }
-
-    /* Currency Vault Widget */
-    .currency-badge {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, rgba(30, 15, 10, 0.9), rgba(10, 25, 45, 0.9));
-      border: 1.5px solid var(--gold-primary);
-      border-radius: 25px;
-      padding: 6px 16px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.6), 0 0 10px var(--gold-glow);
-    }
-
-    .currency-icon { font-size: 20px; }
-
-    .currency-text {
-      font-family: var(--font-title);
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--gold-bright);
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .mode-switch-btn {
-      background: linear-gradient(180deg, #7A0C0C 0%, #450606 100%);
-      border: 1.5px solid var(--gold-primary);
-      color: var(--gold-bright);
-      font-family: var(--font-title);
-      font-size: 15px;
-      padding: 7px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
       transition: all 0.2s ease;
     }
 
-    .mode-switch-btn.active {
-      background: linear-gradient(180deg, #FFF099 0%, #D4AF37 100%);
-      color: #381A00;
-      font-weight: 700;
-      box-shadow: 0 0 15px var(--gold-glow);
+    .menu-icon-btn:hover {
+      background: var(--crimson-royal);
+      border-color: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
     }
 
     /* =========================================================
-       3. AR WARDROBE & JIGSAW (8 PIECES)
+       BANKNOTE / HISTORICAL CURRENCY SYSTEM (ระบบสะสมธนบัตร)
+       ========================================================= */
+    .banknote-hud {
+      background: linear-gradient(135deg, rgba(20, 12, 8, 0.92) 0%, rgba(10, 25, 47, 0.94) 100%);
+      border: 1.5px solid var(--gold-primary);
+      border-radius: 24px;
+      padding: 6px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6), inset 0 0 10px rgba(212,175,55,0.2);
+    }
+
+    .banknote-icon {
+      font-size: 20px;
+      filter: drop-shadow(0 0 5px var(--gold-glow));
+    }
+
+    .banknote-info {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .banknote-label {
+      font-size: 11px;
+      color: var(--gold-light);
+      font-family: var(--font-title);
+    }
+
+    .banknote-amount {
+      font-size: 16px;
+      font-weight: 700;
+      color: #FFF8DC;
+      letter-spacing: 0.5px;
+    }
+
+    /* =========================================================
+       AR & LIVE CAMERA VIEWPORT
        ========================================================= */
     #ar-container {
       position: absolute;
@@ -319,95 +284,102 @@
       z-index: 5;
     }
 
-    /* Floating Wardrobe Drawer */
-    #wardrobe-panel {
+    /* UI Layer */
+    #ui-container {
       position: absolute;
-      left: 20px;
-      top: 75px;
-      bottom: 20px;
-      width: 260px;
-      background: var(--navy-glass);
-      border: 2px solid var(--gold-primary);
-      border-radius: 20px;
-      padding: 12px;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.8), inset 0 0 15px rgba(212,175,55,0.25);
-      backdrop-filter: blur(14px);
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 10;
+      pointer-events: none;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      overflow-y: auto;
-      transition: transform 0.35s ease, opacity 0.35s ease;
-      z-index: 20;
+      justify-content: space-between;
     }
 
-    #wardrobe-panel.hidden {
-      transform: translateX(-300px);
-      opacity: 0;
-      pointer-events: none;
-    }
+    .interactive { pointer-events: auto; }
 
-    .wardrobe-sec-title {
-      font-family: var(--font-title);
-      font-size: 15px;
-      color: var(--gold-bright);
-      border-bottom: 1px solid rgba(212,175,55,0.4);
-      padding-bottom: 3px;
-      margin-top: 4px;
+    header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 12px 24px;
+      background: linear-gradient(180deg, rgba(8, 20, 38, 0.95) 0%, rgba(8, 20, 38, 0.4) 70%, transparent 100%);
     }
 
-    .ar-touch-pill {
-      font-size: 10px;
-      color: #FFF099;
-      font-family: var(--font-body);
-      background: rgba(122, 12, 12, 0.7);
-      padding: 1px 6px;
-      border-radius: 10px;
+    .title-group h1 {
+      font-family: var(--font-title);
+      font-size: 24px;
+      color: var(--gold-light);
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
     }
 
-    .item-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .title-group p {
+      font-size: 13px;
+      color: var(--ivory);
+      opacity: 0.9;
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mode-btn {
+      background: linear-gradient(180deg, #8B1E1E 0%, #4A0E0E 100%);
+      border: 1.5px solid var(--gold-primary);
+      color: var(--gold-light);
+      font-family: var(--font-title);
+      font-size: 15px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
       gap: 6px;
     }
 
-    .wardrobe-item-btn {
-      background: rgba(255, 248, 220, 0.08);
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      border-radius: 10px;
-      color: var(--ivory);
-      padding: 7px 4px;
-      font-size: 11px;
-      text-align: center;
+    .mode-btn.active {
+      background: linear-gradient(180deg, #FFE79A 0%, #D4AF37 100%);
+      color: #381800;
+      font-weight: 700;
+      box-shadow: 0 0 15px rgba(212,175,55,0.8);
+    }
+
+    .btn-icon {
+      background: var(--navy-glass);
+      border: 1.5px solid var(--gold-primary);
+      color: var(--gold-light);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
       cursor: pointer;
       transition: all 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
     }
 
-    .wardrobe-item-btn.active, .wardrobe-item-btn:hover {
-      background: var(--crimson-royal);
-      border-color: var(--gold-bright);
-      color: var(--gold-bright);
-      box-shadow: 0 0 10px var(--gold-glow);
+    .btn-icon:hover {
+      transform: scale(1.08);
+      border-color: var(--gold-light);
     }
 
-    /* Thumbnail Mini-map (8 Pieces) */
+    /* Thumbnail Mini-map (8 Pieces Preview) */
     #minimap-wrapper {
       position: absolute;
-      top: 75px;
-      right: 20px;
+      top: 80px;
+      right: 24px;
       background: var(--navy-glass);
       border: 2px solid var(--gold-primary);
       border-radius: 14px;
       padding: 6px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
       text-align: center;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
+      transition: all 0.3s;
     }
 
     #minimap-wrapper h4 {
@@ -426,7 +398,86 @@
       display: block;
     }
 
-    /* Jigsaw Game 8-Piece Board */
+    /* Floating AR Touch Wardrobe Panel */
+    #wardrobe-panel {
+      position: absolute;
+      left: 20px;
+      top: 80px;
+      bottom: 20px;
+      width: 250px;
+      background: var(--navy-glass);
+      border: 2px solid var(--gold-primary);
+      border-radius: 18px;
+      padding: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7), inset 0 0 15px rgba(212,175,55,0.2);
+      backdrop-filter: blur(14px);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      z-index: 20;
+    }
+
+    #wardrobe-panel.hidden {
+      transform: translateX(-290px);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .wardrobe-sec-title {
+      font-family: var(--font-title);
+      font-size: 15px;
+      color: var(--gold-light);
+      border-bottom: 1px solid rgba(212,175,55,0.4);
+      padding-bottom: 4px;
+      margin-top: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ar-touch-hint {
+      font-size: 10px;
+      color: #FFF099;
+      font-family: var(--font-body);
+      background: rgba(139,30,30,0.6);
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+
+    .item-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .wardrobe-item-btn {
+      background: rgba(255, 248, 220, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 10px;
+      color: var(--ivory);
+      padding: 8px 4px;
+      font-size: 11px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .wardrobe-item-btn.active, .wardrobe-item-btn:hover {
+      background: var(--crimson-royal);
+      border-color: var(--gold-light);
+      color: var(--gold-light);
+      box-shadow: 0 0 10px rgba(212,175,55,0.6);
+    }
+
+    .item-icon { font-size: 18px; }
+
+    /* Jigsaw 8 Pieces (4x2) */
     #game-stage {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -442,7 +493,7 @@
       border: 2px dashed rgba(212, 175, 55, 0.75);
       background: rgba(8, 20, 38, 0.55);
       box-shadow: 0 0 35px rgba(0,0,0,0.85);
-      border-radius: 8px;
+      border-radius: 10px;
     }
 
     .puzzle-slot {
@@ -455,7 +506,7 @@
       cursor: grab;
       border-radius: 4px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.6);
-      border: 1px solid rgba(212, 175, 55, 0.6);
+      border: 1.5px solid rgba(212, 175, 55, 0.6);
       touch-action: none;
       pointer-events: auto;
       transition: transform 0.1s ease, box-shadow 0.1s ease;
@@ -464,7 +515,7 @@
     .puzzle-piece.dragging {
       cursor: grabbing;
       transform: scale(1.06);
-      box-shadow: 0 12px 30px var(--gold-glow);
+      box-shadow: 0 12px 30px rgba(212, 175, 55, 0.85);
       z-index: 1000 !important;
     }
 
@@ -474,11 +525,11 @@
       box-shadow: none;
     }
 
-    /* Modals (How to Play & Rewards) */
+    /* Modals & Guides */
     .modal-overlay {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(5, 12, 24, 0.88);
+      background: rgba(5, 10, 20, 0.88);
       backdrop-filter: blur(10px);
       display: flex;
       justify-content: center;
@@ -492,81 +543,92 @@
     .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
     .modal-card {
-      background: linear-gradient(145deg, #1f1010, #0c1828);
+      background: linear-gradient(145deg, #182840, #0c1524);
       border: 2px solid var(--gold-primary);
       border-radius: 24px;
       padding: 32px 30px;
       max-width: 560px;
       width: 90%;
       text-align: center;
-      box-shadow: 0 12px 45px rgba(0,0,0,0.85), 0 0 25px var(--gold-glow);
+      box-shadow: 0 15px 45px rgba(0,0,0,0.9), 0 0 25px rgba(212, 175, 55, 0.35);
     }
 
     .modal-card h2 {
       font-family: var(--font-title);
       font-size: 30px;
-      color: var(--gold-bright);
-      margin-bottom: 12px;
-      text-shadow: 0 0 12px var(--gold-glow);
+      color: var(--gold-light);
+      margin-bottom: 14px;
+      text-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
     }
 
-    .modal-card p {
+    .modal-card p, .modal-card ul {
       font-size: 15px;
-      line-height: 1.65;
+      line-height: 1.7;
       color: var(--ivory);
       margin-bottom: 22px;
-    }
-
-    .how-to-list {
       text-align: left;
-      font-size: 14px;
-      line-height: 1.8;
-      color: var(--ivory);
-      margin-bottom: 24px;
-      padding-left: 20px;
     }
 
-    .reward-banner {
-      background: rgba(212, 175, 55, 0.15);
-      border: 1px dashed var(--gold-primary);
-      border-radius: 12px;
-      padding: 10px;
-      margin-bottom: 20px;
+    .modal-card ul { padding-left: 20px; }
+
+    .gold-btn {
+      background: linear-gradient(180deg, #FFE79A 0%, #D4AF37 50%, #996515 100%);
+      color: #381800;
       font-family: var(--font-title);
-      font-size: 18px;
-      color: var(--gold-bright);
+      font-size: 20px;
+      font-weight: 700;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 36px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+      transition: all 0.25s ease;
     }
+
+    .gold-btn:hover { transform: translateY(-2px); }
 
     #yt-audio-frame { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
   </style>
 </head>
 <body>
 
+  <!-- Hidden YouTube BGM Player -->
   <div id="yt-audio-frame"></div>
 
-  <!-- Start Screen with Falling Golden Petals -->
+  <!-- Start Screen with Centered Buttons & Floating Golden Flowers -->
   <div id="start-screen">
-    <canvas id="petals-canvas"></canvas>
+    <canvas id="floating-flower-canvas"></canvas>
 
-    <!-- Top Action Nav -->
-    <div class="start-top-bar">
-      <div class="brand-emblem">
-        <span>❖ รัตนโกสินทร์ AR</span>
+    <div class="start-frame-container">
+      <div class="royal-badge">
+        <span>❖</span>
+        <span>รัตนโกสินทร์ศก AR Historical Metaverse</span>
+        <span>❖</span>
       </div>
-      <div class="start-nav-btns">
-        <button class="icon-action-btn" id="start-btn-wardrobe">👗 แต่งกายชุดไทย</button>
-        <button class="icon-action-btn" id="start-btn-how">📖 วิธีการเล่น</button>
-        <button class="icon-action-btn" id="audio-toggle-btn">🎵 ดนตรี</button>
-      </div>
-    </div>
 
-    <!-- Main Title Card -->
-    <div class="start-main-card">
       <h1>บุพเพรัตนโกสินทร์ AR Jigsaw</h1>
-      <p>ท่องมิติเวลาแปลงโฉมชุดไทยโบราณเต็มรูปแบบ จิ้มนิ้วเลือกเครื่องแต่งกายผ่านกล้องหน้า ต่อร้อยเรียงภาพประวัติศาสตร์ ๘ ชิ้น และสะสมธนบัตรสยามโบราณ</p>
-      <button class="btn-gold-epic" id="start-game-btn">
-        <span>เข้าสู่มิติประวัติศาสตร์ (เริ่มเกม) ➔</span>
-      </button>
+      <p>ท่องมิติเวลาแปลงโฉมชุดไทยโบราณเต็มรูปแบบ สะสมธนบัตรโบราณ และต่อร้อยเรียงภาพจิ๊กซอว์ประวัติศาสตร์ ๘ ชิ้น ด้วยมือของคุณเองผ่านกล้องหน้า</p>
+
+      <div class="start-center-actions">
+        <!-- ปุ่มเริ่มเกมตรงกลางสง่างาม -->
+        <button class="gold-btn-start-hero" id="start-game-btn">
+          <span>👑</span>
+          <span>เข้าสู่การเดินทางประวัติศาสตร์</span>
+        </button>
+
+        <!-- แถบไอคอนเมนูช่วยเหลือ -->
+        <div class="menu-icons-bar">
+          <button class="menu-icon-btn" id="btn-open-wardrobe-direct">
+            <span>👘</span> แต่งชุดไทย (AR Wardrobe)
+          </button>
+          <button class="menu-icon-btn" id="btn-open-guide">
+            <span>📜</span> วิธีเล่นเกม
+          </button>
+          <button class="menu-icon-btn" id="btn-toggle-music-start">
+            <span id="start-music-icon">🎵</span> เพลงประกอบ
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -576,214 +638,249 @@
     <canvas id="ar-canvas"></canvas>
   </div>
 
-  <!-- Jigsaw Game Stage (8 Pieces) -->
+  <!-- Jigsaw Game Stage -->
   <div id="game-stage">
     <div id="puzzle-board" class="puzzle-target-board"></div>
   </div>
 
-  <!-- In-Game HUD -->
+  <!-- UI Overlay -->
   <div id="ui-container">
     <header>
-      <div class="title-area">
+      <div class="title-group">
         <h1 id="level-title">ด่านที่ ๑ : กำเนิดพระนคร</h1>
-        <p id="level-subtitle">กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒) • ๘ ชิ้น</p>
-      </div>
-      
-      <!-- Currency Vault HUD -->
-      <div class="currency-badge">
-        <span class="currency-icon">📜</span>
-        <span class="currency-text" id="currency-display">๐ บาท (ธนบัตรสยาม)</span>
+        <p id="level-subtitle">กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒) • จิ๊กซอว์ ๘ ชิ้น</p>
       </div>
 
-      <div class="header-actions">
-        <button class="mode-switch-btn interactive" id="hud-btn-wardrobe">✨ แต่งกาย (Wardrobe)</button>
-        <button class="mode-switch-btn interactive active" id="hud-btn-jigsaw">🧩 จิ๊กซอว์ (Jigsaw)</button>
+      <div class="top-controls">
+        <!-- ยอดสะสมธนบัตรโบราณ -->
+        <div class="banknote-hud">
+          <span class="banknote-icon">💵</span>
+          <div class="banknote-info">
+            <span class="banknote-label">ธนบัตรสะสม</span>
+            <span class="banknote-amount" id="banknote-display">๑๐๐ บาท</span>
+          </div>
+        </div>
+
+        <button class="mode-btn interactive active" id="btn-mode-wardrobe">
+          <span>✨</span> แต่งกาย (AR)
+        </button>
+        <button class="mode-btn interactive" id="btn-mode-jigsaw">
+          <span>🧩</span> เล่นจิ๊กซอว์
+        </button>
+        <button class="btn-icon interactive" id="audio-toggle-btn" title="เปิด/ปิดเสียงดนตรี">🎵</button>
       </div>
     </header>
 
-    <!-- Floating AR Touch Wardrobe -->
-    <div id="wardrobe-panel" class="interactive hidden">
+    <!-- Floating AR Touch Wardrobe Selector -->
+    <div id="wardrobe-panel" class="interactive">
       <div class="wardrobe-sec-title">
         <span>👗 ชุดไทย (หญิง & ชาย)</span>
-        <span class="ar-touch-pill">จิ้มผ่านกล้องได้</span>
+        <span class="ar-touch-hint">จิ้มผ่านกล้องได้</span>
       </div>
       <div class="item-grid" id="grid-costumes">
         <button class="wardrobe-item-btn active" data-type="costume" data-val="sabai_gold">
-          <span>👘</span>สไบปักทอง (หญิง)
+          <span class="item-icon">👘</span>สไบปักทอง (หญิง)
         </button>
         <button class="wardrobe-item-btn" data-type="costume" data-val="sabai_pleat">
-          <span>🌸</span>สไบจีบชมพู (หญิง)
+          <span class="item-icon">🌸</span>สไบจีบชมพู (หญิง)
         </button>
         <button class="wardrobe-item-btn" data-type="costume" data-val="r5_ham">
-          <span>🪡</span>แขนหมูแฮม ร.๕
+          <span class="item-icon">🪡</span>แขนหมูแฮม ร.๕
         </button>
         <button class="wardrobe-item-btn" data-type="costume" data-val="raj_pattern">
-          <span>🥋</span>ราชปะแตน (ชาย)
+          <span class="item-icon">🥋</span>ราชปะแตน (ชาย)
         </button>
         <button class="wardrobe-item-btn" data-type="costume" data-val="male_mahadlek">
-          <span>👔</span>เสื้อมหาดเล็ก (ชาย)
+          <span class="item-icon">👔</span>เสื้อมหาดเล็ก (ชาย)
         </button>
         <button class="wardrobe-item-btn" data-type="costume" data-val="male_kruy">
-          <span>👑</span>เสื้อครุยพิธีโบราณ
+          <span class="item-icon">👑</span>เสื้อครุยพิธีโบราณ
         </button>
       </div>
 
       <div class="wardrobe-sec-title">
         <span>👑 ศิราภรณ์ & หมวก</span>
-        <span class="ar-touch-pill">จิ้มผ่านกล้องได้</span>
+        <span class="ar-touch-hint">จิ้มผ่านกล้องได้</span>
       </div>
       <div class="item-grid" id="grid-hats">
         <button class="wardrobe-item-btn active" data-type="hat" data-val="none">
-          <span>❌</span>ไม่ใส่
+          <span class="item-icon">❌</span>ไม่ใส่
         </button>
         <button class="wardrobe-item-btn" data-type="hat" data-val="chada">
-          <span>👑</span>ชฎามงกุฎทอง
+          <span class="item-icon">👑</span>ชฎามงกุฎทอง
         </button>
         <button class="wardrobe-item-btn" data-type="hat" data-val="radklao">
-          <span>✨</span>รัดเกล้ายอด
+          <span class="item-icon">✨</span>รัดเกล้ายอด
         </button>
         <button class="wardrobe-item-btn" data-type="hat" data-val="malai">
-          <span>🌺</span>มาลัยดอกไม้ทัด
+          <span class="item-icon">🌺</span>มาลัยดอกไม้ทัด
         </button>
         <button class="wardrobe-item-btn" data-type="hat" data-val="r5_hat">
-          <span>🎩</span>หมวกสักหลาด ร.๕
+          <span class="item-icon">🎩</span>หมวกสักหลาด ร.๕
         </button>
         <button class="wardrobe-item-btn" data-type="hat" data-val="kalo_hat">
-          <span>👒</span>หมวกกะโล่โบราณ
+          <span class="item-icon">👒</span>หมวกกะโล่โบราณ
         </button>
       </div>
 
       <div class="wardrobe-sec-title">
         <span>💎 เครื่องประดับ & กระเป๋า</span>
-        <span class="ar-touch-pill">จิ้มผ่านกล้องได้</span>
+        <span class="ar-touch-hint">จิ้มผ่านกล้องได้</span>
       </div>
       <div class="item-grid" id="grid-accs">
         <button class="wardrobe-item-btn active" data-type="acc" data-val="necklace_gold">
-          <span>📿</span>สังวาลทองพลอย
+          <span class="item-icon">📿</span>สังวาลทองพลอย
         </button>
         <button class="wardrobe-item-btn" data-type="acc" data-val="pearl_string">
-          <span>⚪</span>สร้อยไข่มุก ร.๕
+          <span class="item-icon">⚪</span>สร้อยไข่มุก ร.๕
         </button>
         <button class="wardrobe-item-btn" data-type="acc" data-val="bag_silk">
-          <span>👜</span>ย่ามไหมยกทอง
+          <span class="item-icon">👜</span>ย่ามไหมยกทอง
         </button>
         <button class="wardrobe-item-btn" data-type="acc" data-val="bag_vintage">
-          <span>👛</span>กระเป๋าถือโบราณ
+          <span class="item-icon">👛</span>กระเป๋าถือโบราณ
         </button>
       </div>
     </div>
 
-    <!-- Mini-map Reference Thumbnail (8 Pieces) -->
+    <!-- Mini-map Reference Thumbnail (Exact Match 8-Piece Image) -->
     <div id="minimap-wrapper" class="interactive">
       <h4>ภาพตัวอย่างเฉลย (๘ ชิ้น)</h4>
       <img id="minimap-img" src="" alt="Thumbnail">
     </div>
   </div>
 
-  <!-- How to Play Modal -->
-  <div id="how-modal" class="modal-overlay">
+  <!-- How to Play Guide Modal -->
+  <div id="guide-modal" class="modal-overlay">
     <div class="modal-card">
-      <h2>📖 วิธีการเล่นและท่องมิติ AR</h2>
-      <ol class="how-to-list">
-        <li><strong>เปิดกล้องหน้า:</strong> อนุญาตให้ระบบเข้าถึงกล้อง เพื่อสวมชุดไทยและตรวจจับมือ</li>
-        <li><strong>จิ้มนิ้วเลือกชุด:</strong> ใช้นิ้วชี้จิ้มปุ่มเมนูบนหน้าจอผ่านกล้องเพื่อเปลี่ยนชุด หมวก และเครื่องประดับ</li>
-        <li><strong>จีบนิ้วต่อจิ๊กซอว์:</strong> จีบนิ้วโป้งกับนิ้วชี้ (Pinch) เพื่อหยิบชิ้นส่วนจิ๊กซอว์ ๘ ชิ้น ไปวางในตาราง</li>
-        <li><strong>สะสมธนบัตรสยาม:</strong> เมื่อต่อภาพประวัติศาสตร์สำเร็จแต่ละด่าน จะได้รับเงินรางวัล ๑๐๐ บาท</li>
-      </ol>
-      <button class="btn-gold-epic" id="close-how-btn">เข้าใจแล้ว ปิดหน้าต่าง ✕</button>
+      <h2>📜 วิธีเล่นเกม AR บุพเพรัตนโกสินทร์</h2>
+      <ul>
+        <li>✨ <strong>แปลงกายชุดไทย:</strong> ยื่นปลายนิ้วชี้ไปจิ้มเลือกชุด หมวก และเครื่องประดับบนหน้าจอผ่านกล้องหน้า หรือใช้นิ้วแตะเลือกได้ทันที</li>
+        <li>🧩 <strong>ต่อจิ๊กซอว์ ๘ ชิ้น:</strong> จีบนิ้วโป้งกับนิ้วชี้ (Pinch Gesture) เพื่อหยิบชิ้นส่วนจิ๊กซอว์ไปวางลงในช่องตารางให้ถูกต้อง (หรือใช้เมาส์/สัมผัสหน้าจอลาก)</li>
+        <li>💵 <strong>สะสมธนบัตรโบราณ:</strong> ต่อสำเร็จแต่ละด่านจะได้รับเงินรางวัลธนบัตรโบราณสะสม ๒๐๐ บาท</li>
+      </ul>
+      <button class="gold-btn interactive" id="btn-close-guide">เข้าใจแล้ว ➔</button>
     </div>
   </div>
 
-  <!-- History & Level Complete Modal -->
+  <!-- Level History Modal -->
   <div id="info-modal" class="modal-overlay">
     <div class="modal-card">
       <h2 id="modal-title">ความรู้ประวัติศาสตร์</h2>
-      <div class="reward-banner">🎉 ได้รับพระราชทานธนบัตรสยาม +๑๐๐ บาท!</div>
       <p id="modal-desc"></p>
-      <button class="btn-gold-epic" id="next-level-btn">ท่องมิติสู่ด่านถัดไป ➔</button>
+      <div style="background: rgba(212,175,55,0.15); border: 1px solid var(--gold-primary); border-radius: 12px; padding: 8px 14px; margin-bottom: 20px; color: var(--gold-light); font-weight: bold;">
+        🎉 ได้รับเงินรางวัลธนบัตรโบราณ +๒๐๐ บาท!
+      </div>
+      <button class="gold-btn interactive" id="next-level-btn">ท่องมิติสู่ด่านถัดไป ➔</button>
     </div>
   </div>
 
-  <!-- Victory Summary Modal -->
+  <!-- Victory Modal -->
   <div id="victory-modal" class="modal-overlay">
     <div class="modal-card">
       <h2>ออเจ้าสำเร็จบริบูรณ์!</h2>
-      <div class="reward-banner" id="final-currency-banner">💰 ยอดเงินสะสมรวม: ๕๐๐ บาท (ธนบัตรสยาม)</div>
       <p id="victory-stats"></p>
       <p>ขอขอบน้ำใจออเจ้าที่ร่วมสืบสานและร้อยเรียงเรื่องราวประวัติศาสตร์รัตนโกสินทร์อันรุ่งเรือง</p>
-      <button class="btn-gold-epic" id="restart-game-btn">ท่องมิติใหม่อีกครา ↺</button>
+      <button class="gold-btn interactive" id="restart-game-btn">ท่องมิติใหม่อีกครา ↺</button>
     </div>
   </div>
 
   <script>
     /* =========================================================
-       1. FALLING GOLDEN THAI PETALS ON START SCREEN
+       1. FLOATING FALLING GOLDEN THAI FLOWERS BACKGROUND
        ========================================================= */
-    const petalsCanvas = document.getElementById('petals-canvas');
-    const petalsCtx = petalsCanvas.getContext('2d');
-    let petals = [];
+    const flowerCanvas = document.getElementById('floating-flower-canvas');
+    const fCtx = flowerCanvas.getContext('2d');
+    const bgFlowers = [];
 
-    function resizePetals() {
-      petalsCanvas.width = window.innerWidth;
-      petalsCanvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizePetals);
-    resizePetals();
-
-    for (let i = 0; i < 35; i++) {
-      petals.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        size: Math.random() * 8 + 6,
-        speedY: Math.random() * 1.5 + 0.8,
-        speedX: Math.sin(Math.random() * Math.PI) * 1.2,
-        rot: Math.random() * Math.PI * 2,
-        rotSpeed: (Math.random() - 0.5) * 0.04,
-        opacity: Math.random() * 0.7 + 0.3
-      });
+    function initFloatingFlowers() {
+      flowerCanvas.width = window.innerWidth;
+      flowerCanvas.height = window.innerHeight;
+      bgFlowers.length = 0;
+      for (let i = 0; i < 28; i++) {
+        bgFlowers.push({
+          x: Math.random() * flowerCanvas.width,
+          y: Math.random() * flowerCanvas.height,
+          size: Math.random() * 12 + 10,
+          speedY: Math.random() * 0.8 + 0.4,
+          speedX: Math.sin(Math.random() * Math.PI) * 0.5,
+          rot: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.02,
+          opacity: Math.random() * 0.6 + 0.4
+        });
+      }
     }
 
-    function animatePetals() {
-      petalsCtx.clearRect(0, 0, petalsCanvas.width, petalsCanvas.height);
-      petals.forEach(p => {
-        p.y += p.speedY;
-        p.x += Math.sin(p.y * 0.01) * 1.2;
-        p.rot += p.rotSpeed;
+    function renderFloatingFlowers() {
+      fCtx.clearRect(0, 0, flowerCanvas.width, flowerCanvas.height);
+      bgFlowers.forEach(f => {
+        f.y += f.speedY;
+        f.x += f.speedX + Math.sin(f.y * 0.01) * 0.3;
+        f.rot += f.rotSpeed;
 
-        if (p.y > petalsCanvas.height + 20) {
-          p.y = -20;
-          p.x = Math.random() * petalsCanvas.width;
+        if (f.y > flowerCanvas.height + 30) {
+          f.y = -30;
+          f.x = Math.random() * flowerCanvas.width;
         }
 
-        petalsCtx.save();
-        petalsCtx.translate(p.x, p.y);
-        petalsCtx.rotate(p.rot);
-        petalsCtx.globalAlpha = p.opacity;
+        fCtx.save();
+        fCtx.translate(f.x, f.y);
+        fCtx.rotate(f.rot);
+        fCtx.globalAlpha = f.opacity;
 
-        // Draw Gilded Thai Petal
-        petalsCtx.fillStyle = '#FFE79A';
-        petalsCtx.strokeStyle = '#D4AF37';
-        petalsCtx.lineWidth = 1;
-        petalsCtx.shadowColor = '#FFE066';
-        petalsCtx.shadowBlur = 8;
+        // Draw Traditional Dok Lamduan / Dok Pudtan Golden Petals
+        fCtx.shadowColor = '#FDE047';
+        fCtx.shadowBlur = 10;
+        fCtx.fillStyle = '#FFEE80';
+        fCtx.strokeStyle = '#B8860B';
+        fCtx.lineWidth = 1;
 
-        petalsCtx.beginPath();
-        petalsCtx.moveTo(0, -p.size);
-        petalsCtx.quadraticCurveTo(p.size * 0.8, 0, 0, p.size);
-        petalsCtx.quadraticCurveTo(-p.size * 0.8, 0, 0, -p.size);
-        petalsCtx.fill();
-        petalsCtx.stroke();
-        petalsCtx.restore();
+        for (let i = 0; i < 4; i++) {
+          fCtx.save();
+          fCtx.rotate((i * Math.PI) / 2);
+          fCtx.beginPath();
+          fCtx.moveTo(0, 0);
+          fCtx.quadraticCurveTo(f.size * 0.6, -f.size * 0.7, 0, -f.size);
+          fCtx.quadraticCurveTo(-f.size * 0.6, -f.size * 0.7, 0, 0);
+          fCtx.fill();
+          fCtx.stroke();
+          fCtx.restore();
+        }
+
+        fCtx.fillStyle = '#8B1E1E';
+        fCtx.beginPath();
+        fCtx.arc(0, 0, f.size * 0.2, 0, Math.PI * 2);
+        fCtx.fill();
+        fCtx.restore();
       });
 
       if (document.getElementById('start-screen').style.display !== 'none') {
-        requestAnimationFrame(animatePetals);
+        requestAnimationFrame(renderFloatingFlowers);
       }
     }
-    requestAnimationFrame(animatePetals);
+
+    window.addEventListener('resize', initFloatingFlowers);
+    initFloatingFlowers();
+    renderFloatingFlowers();
 
     /* =========================================================
-       2. HISTORICAL DATA (8 Pieces: 4 Columns x 2 Rows)
+       2. BANKNOTE CURRENCY SYSTEM (ระบบสะสมธนบัตรโบราณ)
+       ========================================================= */
+    let banknoteTotal = 100; // เริ่มต้นที่ 100 บาท
+    const banknoteDisplay = document.getElementById('banknote-display');
+
+    function toThaiNumerals(num) {
+      const thaiDigits = ['๐','๑','๒','๓','๔','๕','๖','๗','๘','๙'];
+      return num.toString().split('').map(d => thaiDigits[d] || d).join('');
+    }
+
+    function addBanknotes(amount) {
+      banknoteTotal += amount;
+      banknoteDisplay.textContent = `${toThaiNumerals(banknoteTotal)} บาท`;
+    }
+
+    /* =========================================================
+       3. HISTORICAL LEVELS DATA (8 Pieces: 4 Columns x 2 Rows)
        ========================================================= */
     function generateHistoricalSVG(theme) {
       const svgs = {
@@ -890,11 +987,13 @@
     ];
 
     /* =========================================================
-       3. AUDIO SYNTHESIZER & YOUTUBE BGM
+       4. WEB AUDIO SYNTHESIZER
        ========================================================= */
     const AudioEngine = {
       ctx: null,
-      init() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); },
+      init() {
+        if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      },
       playPoke() {
         this.init();
         const osc = this.ctx.createOscillator();
@@ -904,8 +1003,10 @@
         osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.1);
         gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
         gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
-        osc.connect(gain); gain.connect(this.ctx.destination);
-        osc.start(); osc.stop(this.ctx.currentTime + 0.1);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.1);
       },
       playSnap() {
         this.init();
@@ -916,8 +1017,10 @@
         osc.frequency.exponentialRampToValueAtTime(1046.5, this.ctx.currentTime + 0.15);
         gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
         gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
-        osc.connect(gain); gain.connect(this.ctx.destination);
-        osc.start(); osc.stop(this.ctx.currentTime + 0.15);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.15);
       },
       playVictory() {
         this.init();
@@ -929,13 +1032,17 @@
           osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.12);
           gain.gain.setValueAtTime(0.25, this.ctx.currentTime + idx * 0.12);
           gain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.12 + 0.35);
-          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
           osc.start(this.ctx.currentTime + idx * 0.12);
           osc.stop(this.ctx.currentTime + idx * 0.12 + 0.35);
         });
       }
     };
 
+    /* =========================================================
+       5. YOUTUBE BGM API
+       ========================================================= */
     let ytPlayer = null, isMuted = false;
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
@@ -946,43 +1053,27 @@
         playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'oAwGBYdvwW0', 'controls': 0 }
       });
     };
-    document.getElementById('audio-toggle-btn').addEventListener('click', () => {
+
+    function toggleMusic() {
       if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return;
       if (isMuted) {
         ytPlayer.unMute(); ytPlayer.playVideo();
-        document.getElementById('audio-toggle-btn').textContent = '🎵 ดนตรี';
+        document.getElementById('audio-toggle-btn').textContent = '🎵';
+        document.getElementById('start-music-icon').textContent = '🎵';
         isMuted = false;
       } else {
         ytPlayer.mute();
-        document.getElementById('audio-toggle-btn').textContent = '🔇 ดนตรี';
+        document.getElementById('audio-toggle-btn').textContent = '🔇';
+        document.getElementById('start-music-icon').textContent = '🔇';
         isMuted = true;
       }
-    });
-
-    /* =========================================================
-       4. CURRENCY & HOW-TO-PLAY MODALS
-       ========================================================= */
-    let totalCurrency = 0;
-    const currencyDisplay = document.getElementById('currency-display');
-    const howModal = document.getElementById('how-modal');
-    const startBtnHow = document.getElementById('start-btn-how');
-    const closeHowBtn = document.getElementById('close-how-btn');
-
-    startBtnHow.addEventListener('click', () => { howModal.classList.add('active'); AudioEngine.playPoke(); });
-    closeHowBtn.addEventListener('click', () => { howModal.classList.remove('active'); AudioEngine.playPoke(); });
-
-    function toThaiNumber(num) {
-      const thaiDigits = ['๐','๑','๒','๓','๔','๕','๖','๗','๘','๙'];
-      return num.toString().split('').map(d => thaiDigits[d] || d).join('');
     }
 
-    function addCurrency(amount) {
-      totalCurrency += amount;
-      currencyDisplay.textContent = `${toThaiNumber(totalCurrency)} บาท (ธนบัตรสยาม)`;
-    }
+    document.getElementById('audio-toggle-btn').addEventListener('click', toggleMusic);
+    document.getElementById('btn-toggle-music-start').addEventListener('click', toggleMusic);
 
     /* =========================================================
-       5. EXPANDED AR WARDROBE
+       6. AR ASSETS (Wardrobe, Hats, Accessories)
        ========================================================= */
     let selectedCostume = 'sabai_gold';
     let selectedHat = 'none';
@@ -996,7 +1087,7 @@
         <path d="M140 60 Q200 120 260 60" fill="none" stroke="url(#sgold)" stroke-width="6"/>
       </svg>`,
       sabai_pleat: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-        <defs><linearGradient id="sruby" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF758F"/><stop offset="100%" stop-color="#A4133C"/></linearGradient></defs>
+        <defs><linearGradient id="sruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF758F"/><stop offset="100%" stop-color="#A4133C"/></linearGradient></defs>
         <path d="M110 50 Q210 80 290 220 L310 340 L230 340 L170 190 Z" fill="url(#sruby)" stroke="#FFCCD5" stroke-width="1.5"/>
         <line x1="130" y1="80" x2="250" y2="340" stroke="#FFF0F3" stroke-width="2" stroke-dasharray="6,4"/>
         <line x1="150" y1="100" x2="270" y2="340" stroke="#FFF0F3" stroke-width="2" stroke-dasharray="6,4"/>
@@ -1029,7 +1120,6 @@
         <path d="M100 10 L108 80 L125 140 L140 200 L60 200 L75 140 L92 80 Z" fill="url(#chgold)" stroke="#FFF8DC" stroke-width="2"/>
         <ellipse cx="100" cy="200" rx="45" ry="15" fill="#8B1E1E" stroke="#D4AF37" stroke-width="3"/>
         <circle cx="100" cy="10" r="6" fill="#FFFFFF"/>
-        <line x1="100" y1="20" x2="100" y2="190" stroke="#FFEE80" stroke-width="2" stroke-dasharray="4,4"/>
       </svg>`,
       radklao: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
         <path d="M100 30 L115 100 L135 150 L65 150 L85 100 Z" fill="#D4AF37" stroke="#FFE79A" stroke-width="2"/>
@@ -1041,37 +1131,30 @@
         <circle cx="110" cy="70" r="14" fill="#FFB3C1"/>
         <circle cx="115" cy="95" r="14" fill="#FFE5EC"/>
         <path d="M95 95 Q110 140 120 150" stroke="#D4AF37" stroke-width="4" stroke-linecap="round"/>
-        <circle cx="120" cy="150" r="6" fill="#FF4D6D"/>
       </svg>`,
       r5_hat: `<svg viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="110" cy="110" rx="100" ry="25" fill="#2B2D42" stroke="#D4AF37" stroke-width="2"/>
         <path d="M45 100 L60 30 L160 30 L175 100 Z" fill="#1F2022" stroke="#D4AF37" stroke-width="2"/>
         <rect x="55" y="85" width="110" height="15" fill="#8B1E1E"/>
-        <circle cx="110" cy="92" r="6" fill="#D4AF37"/>
       </svg>`,
       kalo_hat: `<svg viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="110" cy="115" rx="95" ry="22" fill="#E9D8A6" stroke="#AE8B47" stroke-width="2"/>
         <path d="M55 105 Q110 30 165 105 Z" fill="#F4F1DE" stroke="#AE8B47" stroke-width="2"/>
-        <ellipse cx="110" cy="55" rx="15" ry="8" fill="#AE8B47"/>
       </svg>`,
       necklace_gold: `<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
         <path d="M60 40 Q150 160 240 40" fill="none" stroke="#D4AF37" stroke-width="6"/>
-        <path d="M80 40 Q150 190 220 40" fill="none" stroke="#FFEE80" stroke-width="3" stroke-dasharray="8,6"/>
         <circle cx="150" cy="155" r="12" fill="#8B1E1E" stroke="#FFF099" stroke-width="3"/>
       </svg>`,
       pearl_string: `<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
         <path d="M70 40 Q150 150 230 40" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-dasharray="10,6"/>
-        <path d="M85 40 Q150 180 215 40" fill="none" stroke="#E9ECEF" stroke-width="6" stroke-dasharray="8,5"/>
       </svg>`,
       bag_silk: `<svg viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">
         <path d="M30 60 L130 60 L140 180 Q80 200 20 180 Z" fill="#8B1E1E" stroke="#D4AF37" stroke-width="3"/>
         <path d="M80 10 Q110 10 110 60 L50 60 Q50 10 80 10 Z" fill="none" stroke="#D4AF37" stroke-width="4"/>
-        <circle cx="80" cy="120" r="16" fill="#FFEE80" stroke="#8B1E1E" stroke-width="3"/>
       </svg>`,
       bag_vintage: `<svg viewBox="0 0 160 180" xmlns="http://www.w3.org/2000/svg">
         <rect x="25" y="60" width="110" height="90" rx="10" fill="#EAE0D5" stroke="#8B5A2B" stroke-width="3"/>
         <path d="M50 60 Q80 15 110 60" fill="none" stroke="#D4AF37" stroke-width="4"/>
-        <circle cx="80" cy="90" r="8" fill="#D4AF37"/>
       </svg>`
     };
 
@@ -1095,9 +1178,10 @@
       });
     });
 
+    // Modes & Panels
     let currentMode = 'jigsaw';
-    const hudBtnWardrobe = document.getElementById('hud-btn-wardrobe');
-    const hudBtnJigsaw = document.getElementById('hud-btn-jigsaw');
+    const btnModeWardrobe = document.getElementById('btn-mode-wardrobe');
+    const btnModeJigsaw = document.getElementById('btn-mode-jigsaw');
     const wardrobePanel = document.getElementById('wardrobe-panel');
     const gameStage = document.getElementById('game-stage');
     const minimapWrapper = document.getElementById('minimap-wrapper');
@@ -1105,15 +1189,15 @@
     function setMode(mode) {
       currentMode = mode;
       if (mode === 'wardrobe') {
-        hudBtnWardrobe.classList.add('active');
-        hudBtnJigsaw.classList.remove('active');
+        btnModeWardrobe.classList.add('active');
+        btnModeJigsaw.classList.remove('active');
         wardrobePanel.classList.remove('hidden');
         gameStage.style.opacity = '0.3';
         gameStage.style.pointerEvents = 'none';
         minimapWrapper.style.opacity = '0.5';
       } else {
-        hudBtnJigsaw.classList.add('active');
-        hudBtnWardrobe.classList.remove('active');
+        btnModeJigsaw.classList.add('active');
+        btnModeWardrobe.classList.remove('active');
         wardrobePanel.classList.add('hidden');
         gameStage.style.opacity = '1';
         gameStage.style.pointerEvents = 'auto';
@@ -1122,18 +1206,23 @@
       AudioEngine.playPoke();
     }
 
-    hudBtnWardrobe.addEventListener('click', () => setMode('wardrobe'));
-    hudBtnJigsaw.addEventListener('click', () => setMode('jigsaw'));
+    btnModeWardrobe.addEventListener('click', () => setMode('wardrobe'));
+    btnModeJigsaw.addEventListener('click', () => setMode('jigsaw'));
+
+    // Modals
+    const guideModal = document.getElementById('guide-modal');
+    document.getElementById('btn-open-guide').addEventListener('click', () => guideModal.classList.add('active'));
+    document.getElementById('btn-close-guide').addEventListener('click', () => guideModal.classList.remove('active'));
 
     /* =========================================================
-       6. GOLDEN THAI FLOWER PARTICLES & CURSOR
+       7. GOLDEN THAI FLOWER CURSOR & PARTICLES
        ========================================================= */
-    const sparkleParticles = [];
+    const particles = [];
     function createFlowerSparkles(x, y) {
       for (let i = 0; i < 20; i++) {
         const angle = Math.random() * Math.PI * 2;
         const speed = Math.random() * 3.5 + 1.5;
-        sparkleParticles.push({
+        particles.push({
           x, y,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
@@ -1152,6 +1241,7 @@
 
       ctx.shadowColor = '#FDE047';
       ctx.shadowBlur = 18;
+
       ctx.fillStyle = '#FFEE80';
       ctx.strokeStyle = '#B8860B';
       ctx.lineWidth = 1.5;
@@ -1172,17 +1262,22 @@
       ctx.beginPath();
       ctx.arc(0, 0, 5, 0, Math.PI * 2);
       ctx.fill();
+      ctx.fillStyle = '#FFF8DC';
+      ctx.beginPath();
+      ctx.arc(0, 0, 2, 0, Math.PI * 2);
+      ctx.fill();
+
       ctx.restore();
     }
 
-    function renderSparkles(ctx) {
-      for (let i = sparkleParticles.length - 1; i >= 0; i--) {
-        const p = sparkleParticles[i];
+    function renderParticles(ctx) {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
         p.x += p.vx;
         p.y += p.vy;
         p.life -= 0.035;
         if (p.life <= 0) {
-          sparkleParticles.splice(i, 1);
+          particles.splice(i, 1);
           continue;
         }
         ctx.save();
@@ -1196,7 +1291,7 @@
     }
 
     /* =========================================================
-       7. 8-PIECE JIGSAW PUZZLE SYSTEM
+       8. JIGSAW PUZZLE SYSTEM (8 Pieces: 4 Columns x 2 Rows)
        ========================================================= */
     let currentLevelIdx = 0;
     let totalSnapped = 0;
@@ -1302,6 +1397,7 @@
         createFlowerSparkles(pieceObj.x + pieceObj.w / 2, pieceObj.y + pieceObj.h / 2);
 
         if (totalSnapped === puzzlePieces.length) {
+          addBanknotes(200);
           setTimeout(levelCompleted, 600);
         }
       }
@@ -1348,7 +1444,7 @@
     }
 
     /* =========================================================
-       8. LEVEL COMPLETION & REWARDS
+       9. LEVEL COMPLETION & VICTORY
        ========================================================= */
     const infoModal = document.getElementById('info-modal');
     const modalTitle = document.getElementById('modal-title');
@@ -1356,12 +1452,10 @@
     const nextLevelBtn = document.getElementById('next-level-btn');
     const victoryModal = document.getElementById('victory-modal');
     const victoryStats = document.getElementById('victory-stats');
-    const finalCurrencyBanner = document.getElementById('final-currency-banner');
     const restartGameBtn = document.getElementById('restart-game-btn');
 
     function levelCompleted() {
       AudioEngine.playVictory();
-      addCurrency(100); // Earn 100 Baht per stage
       const currentLevel = LEVELS[currentLevelIdx];
       modalTitle.textContent = currentLevel.title;
       modalDesc.textContent = currentLevel.history;
@@ -1374,29 +1468,31 @@
         initLevel(currentLevelIdx + 1);
       } else {
         const totalSecs = Math.floor((Date.now() - gameStartTime) / 1000);
-        victoryStats.textContent = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที`;
-        finalCurrencyBanner.textContent = `💰 ยอดเงินสะสมรวม: ${toThaiNumber(totalCurrency)} บาท (ธนบัตรสยาม)`;
+        victoryStats.textContent = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที • สะสมธนบัตรได้รวมทั้งสิ้น ${toThaiNumerals(banknoteTotal)} บาท`;
         victoryModal.classList.add('active');
       }
     });
 
     restartGameBtn.addEventListener('click', () => {
       victoryModal.classList.remove('active');
-      totalCurrency = 0;
-      addCurrency(0);
       gameStartTime = Date.now();
+      banknoteTotal = 100;
+      addBanknotes(0);
       initLevel(0);
     });
 
     /* =========================================================
-       9. MEDIAPIPE AR POSE, HANDS & IN-CAMERA BUTTON POKING
+       10. MEDIAPIPE AR POSE, HANDS & IN-CAMERA POKING
        ========================================================= */
     const videoElement = document.getElementById('webcam-video');
     const canvasElement = document.getElementById('ar-canvas');
     const canvasCtx = canvasElement.getContext('2d');
 
-    let poseResults = null, handResults = null, arHeldPiece = null;
-    let flowerRotation = 0, lastPokeTime = 0;
+    let poseResults = null;
+    let handResults = null;
+    let arHeldPiece = null;
+    let flowerRotation = 0;
+    let lastPokeTime = 0;
 
     const pose = new Pose({ locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}` });
     pose.setOptions({ modelComplexity: 1, smoothLandmarks: true, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
@@ -1415,7 +1511,7 @@
       canvasCtx.clearRect(0, 0, w, h);
       flowerRotation += 0.02;
 
-      // AR Costume Fitting
+      // 1. AR Thai Costume & Accessories
       if (poseResults && poseResults.poseLandmarks) {
         const lm = poseResults.poseLandmarks;
         const nose = lm[0];
@@ -1432,7 +1528,7 @@
           const shoulderDist = Math.hypot(rsX - lsX, rsY - lsY);
           const angle = Math.atan2(rsY - lsY, rsX - lsX);
 
-          // Costume
+          // Render Selected Costume
           const costumeImg = loadedImgs[selectedCostume];
           if (costumeImg && costumeImg.complete) {
             const costumeW = shoulderDist * 2.5;
@@ -1444,7 +1540,7 @@
             canvasCtx.restore();
           }
 
-          // Accessory
+          // Render Selected Accessory
           if (selectedAcc && loadedImgs[selectedAcc]) {
             const accImg = loadedImgs[selectedAcc];
             if (selectedAcc.startsWith('necklace') || selectedAcc.startsWith('pearl')) {
@@ -1460,12 +1556,12 @@
               const bagH = bagW * (200 / 160);
               canvasCtx.save();
               canvasCtx.translate(lsX + 20, lsY + shoulderDist * 0.8);
-              canvasCtx.drawImage(accImg, -bagW / 2, 0, bagW, bagH);
+              canvasCtx.drawImage(bagImg, -bagW / 2, 0, bagW, bagH);
               canvasCtx.restore();
             }
           }
 
-          // Hat
+          // Render Selected Hat / Headpiece
           if (selectedHat !== 'none' && loadedImgs[selectedHat] && nose.visibility > 0.4) {
             const hatImg = loadedImgs[selectedHat];
             const noseX = (1 - nose.x) * w;
@@ -1482,7 +1578,7 @@
         }
       }
 
-      // AR Hands
+      // 2. AR Finger Poke for UI + Pinch for Jigsaw
       if (handResults && handResults.multiHandLandmarks) {
         for (const landmarks of handResults.multiHandLandmarks) {
           const indexTip = landmarks[8];
@@ -1494,7 +1590,7 @@
 
           drawGoldenThaiFlower(canvasCtx, ix, iy, 1.1, flowerRotation);
 
-          // AR Button Poking
+          // In-camera AR Finger Poking
           const now = Date.now();
           if (now - lastPokeTime > 400 && wardrobePanel && !wardrobePanel.classList.contains('hidden')) {
             const elementsAtPoint = document.elementsFromPoint(ix, iy);
@@ -1508,7 +1604,7 @@
             }
           }
 
-          // Pinch Drag for Jigsaw
+          // Pinch Gesture for Jigsaw
           if (currentMode === 'jigsaw') {
             const pinchDist = Math.hypot(ix - tx, iy - ty);
             const isPinching = pinchDist < 45;
@@ -1541,18 +1637,16 @@
         }
       }
 
-      renderSparkles(canvasCtx);
+      renderParticles(canvasCtx);
       requestAnimationFrame(onFrame);
     }
 
     /* =========================================================
-       10. START SCREEN ACTIONS & INITIALIZATION
+       11. INITIALIZATION & CAMERA START
        ========================================================= */
-    const startGameBtn = document.getElementById('start-game-btn');
-    const startBtnWardrobe = document.getElementById('start-btn-wardrobe');
     const startScreen = document.getElementById('start-screen');
 
-    async function launchExperience(defaultMode = 'jigsaw') {
+    async function launchGame(initialMode = 'jigsaw') {
       AudioEngine.init();
       if (ytPlayer && typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
 
@@ -1577,16 +1671,22 @@
         startScreen.style.display = 'none';
         gameStartTime = Date.now();
         initLevel(0);
-        setMode(defaultMode);
+        setMode(initialMode);
         requestAnimationFrame(onFrame);
       } catch (err) {
-        alert('กรุณาอนุญาตการเข้าถึงกล้องหน้าเพื่อสัมผัสประสบการณ์ AR จิ๊กซอว์ประวัติศาสตร์');
+        alert('กรุณาอนุญาตการเข้าถึงกล้องหน้าเพื่อสัมผัสประสบการณ์ AR');
         console.error(err);
       }
     }
 
-    startGameBtn.addEventListener('click', () => launchExperience('jigsaw'));
-    startBtnWardrobe.addEventListener('click', () => launchExperience('wardrobe'));
+    document.getElementById('start-game-btn').addEventListener('click', () => launchGame('jigsaw'));
+    document.getElementById('btn-open-wardrobe-direct').addEventListener('click', () => launchGame('wardrobe'));
+
+    window.addEventListener('resize', () => {
+      if (startScreen.style.display === 'none') {
+        initLevel(currentLevelIdx);
+      }
+    });
   </script>
 </body>
 </html>
