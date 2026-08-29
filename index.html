@@ -88,7 +88,9 @@
       z-index: 6;
     }
 
-    /* Start Screen */
+    /* =========================================================
+       1. START SCREEN (Centered Button, Kanok Motif & Golden Sparkles)
+       ========================================================= */
     #start-screen {
       position: absolute;
       top: 0;
@@ -97,67 +99,102 @@
       height: 100%;
       z-index: 200;
       display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
+      justify-content: center;
+      align-items: center; /* จัดให้อยู่ตรงกลางหน้าจอ */
       text-align: center;
-      padding: 0 20px 45px 20px;
+      padding: 20px;
       background-image: 
-        linear-gradient(180deg, rgba(10, 25, 47, 0.15) 0%, rgba(10, 25, 47, 0.35) 50%, rgba(10, 15, 25, 0.9) 100%),
+        linear-gradient(180deg, rgba(10, 25, 47, 0.2) 0%, rgba(10, 25, 47, 0.4) 50%, rgba(10, 15, 25, 0.92) 100%),
         url('Gemini_Generated_Image_89ya1c89ya1c89ya.png'),
         url('bg-rattanakosin.jpg'),
         radial-gradient(circle at 50% 30%, #ffd97d 0%, #b85d19 40%, #4a150c 75%, #0d060c 100%);
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
+    #start-screen.camera-ready {
+      background: transparent;
+      pointer-events: none;
+    }
+
+    /* การ์ดต้อนรับลายไทยกนกเรืองแสง */
     .start-card {
       position: relative;
-      background: linear-gradient(145deg, rgba(20, 12, 8, 0.92) 0%, rgba(10, 25, 47, 0.95) 100%);
+      background: linear-gradient(145deg, rgba(20, 12, 8, 0.94) 0%, rgba(10, 25, 47, 0.96) 100%);
       border: 2px solid var(--gold);
-      border-radius: 28px;
-      padding: 30px 36px;
-      max-width: 680px;
+      border-radius: 32px;
+      padding: 38px 42px;
+      max-width: 660px;
       width: 92%;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 30px rgba(212, 175, 55, 0.4);
-      backdrop-filter: blur(14px);
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.9),
+        0 0 35px rgba(212, 175, 55, 0.45),
+        inset 0 0 25px rgba(212, 175, 55, 0.2);
+      backdrop-filter: blur(16px);
       display: flex;
       flex-direction: column;
       align-items: center;
       pointer-events: auto;
+      animation: pulseGlow 4s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 25px rgba(212, 175, 55, 0.3); }
+      100% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(255, 240, 153, 0.7); }
+    }
+
+    .start-card::before {
+      content: '༺ ༻';
+      position: absolute;
+      top: -16px;
+      font-size: 24px;
+      color: var(--gold);
+      text-shadow: 0 0 10px var(--gold-glow);
+    }
+
+    .start-card::after {
+      content: '❖';
+      position: absolute;
+      bottom: 12px;
+      font-size: 16px;
+      color: var(--gold);
+      opacity: 0.7;
     }
 
     .badge-sub {
       display: inline-block;
       border: 1px solid var(--gold);
-      background: rgba(139, 30, 30, 0.7);
-      padding: 4px 18px;
+      background: rgba(139, 30, 30, 0.8);
+      padding: 4px 20px;
       border-radius: 20px;
-      font-size: 13px;
+      font-size: 14px;
       color: var(--gold-light);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      letter-spacing: 1px;
     }
 
     #start-screen h1 {
       font-family: var(--font-title);
-      font-size: 34px;
+      font-size: 36px;
       color: var(--gold-light);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       background: linear-gradient(180deg, #FFF099 20%, #D4AF37 80%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
     }
 
     #start-screen p {
-      font-size: 15px;
-      line-height: 1.6;
+      font-size: 15.5px;
+      line-height: 1.65;
       color: var(--ivory);
-      margin-bottom: 22px;
+      margin-bottom: 26px;
       font-weight: 300;
     }
 
+    /* ปุ่มเปิดกล้องตรงกลาง */
     .gold-btn-start {
       background: linear-gradient(180deg, #FFE79A 0%, #D4AF37 50%, #996515 100%);
       color: #381A00;
@@ -165,19 +202,55 @@
       font-size: 22px;
       font-weight: 700;
       border: 1.5px solid #FFF8DC;
-      border-radius: 35px;
-      padding: 12px 38px;
+      border-radius: 40px;
+      padding: 14px 44px;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.6), 0 0 25px rgba(212, 175, 55, 0.7);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.6), 0 0 30px rgba(212, 175, 55, 0.7);
       transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .gold-btn-start:hover {
-      transform: scale(1.04);
-      box-shadow: 0 8px 30px rgba(255, 240, 153, 0.9);
+      transform: scale(1.05);
+      box-shadow: 0 8px 35px rgba(255, 240, 153, 0.95);
     }
 
-    /* UI Overlay */
+    /* กล่องข้อความพร้อมเล่นบนหน้ากล้อง (หลังอนุญาตกล้อง) */
+    #ar-start-prompt {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 210;
+      text-align: center;
+      pointer-events: auto;
+    }
+
+    .prompt-box {
+      background: var(--navy-glass);
+      border: 2px solid var(--gold);
+      border-radius: 25px;
+      padding: 24px 36px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 30px rgba(212, 175, 55, 0.5);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .prompt-box h2 {
+      font-family: var(--font-title);
+      font-size: 28px;
+      color: var(--gold-light);
+    }
+
+    /* =========================================================
+       2. UI OVERLAY & CONTROLS
+       ========================================================= */
     #ui-container {
       position: absolute;
       top: 0;
@@ -307,7 +380,7 @@
     }
 
     /* =========================================================
-       SIDEBARS: LEFT DRESSING PANEL & BOTTOM SHOP PANEL
+       3. LEFT DRESSING PANEL & BOTTOM SHOP PANEL
        ========================================================= */
     #dressing-panel {
       position: absolute;
@@ -384,6 +457,7 @@
       margin-bottom: 10px;
       overflow-x: auto;
       scrollbar-width: none;
+      touch-action: pan-x;
     }
 
     .cat-tab {
@@ -406,14 +480,17 @@
       font-weight: bold;
     }
 
+    /* เลื่อนแถบดูชุดด้วยนิ้วได้อย่างลื่นไหล */
     .vertical-item-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 8px;
       overflow-y: auto;
       max-height: calc(100vh - 210px);
-      padding-right: 2px;
+      padding-right: 4px;
       scrollbar-width: thin;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
     }
 
     .horizontal-item-grid {
@@ -422,6 +499,8 @@
       overflow-x: auto;
       padding: 6px 4px 10px 4px;
       scrollbar-width: thin;
+      touch-action: pan-x;
+      -webkit-overflow-scrolling: touch;
     }
 
     .ar-touch-item {
@@ -618,13 +697,26 @@
   <!-- Background Music (YouTube IFrame) -->
   <div id="yt-audio-frame"></div>
 
-  <!-- Start Screen -->
+  <!-- Start Screen with Centered Kanok Card & Sparkles -->
   <div id="start-screen">
-    <div class="start-card">
+    <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
       <h1>บุพเพรัตนโกสินทร์ AR Jigsaw</h1>
       <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR จิ้มเลือกชุดไทย หมวก เครื่องประดับทางฝั่งซ้าย สะสมธนบัตรโบราณซื้อกรอบรูปน่ารัก และต่อจิ๊กซอว์ ๖ ชิ้นทั้ง ๕ ยุคสมัย</p>
-      <button class="gold-btn-start interactive" id="start-btn">เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)</button>
+      <button class="gold-btn-start interactive" id="start-btn">
+        <span>📷</span> เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)
+      </button>
+    </div>
+  </div>
+
+  <!-- Hand Gesture Ready Prompt on Live Camera -->
+  <div id="ar-start-prompt" class="interactive">
+    <div class="prompt-box">
+      <h2>✨ กล้องพร้อมแล้วออเจ้า ✨</h2>
+      <p>ยื่นนิ้วชี้หรือจีบนิ้วกลางอากาศเพื่อกดปุ่มด้านล่าง หรือใช้นิ้วสัมผัสหน้าจอ</p>
+      <button class="gold-btn interactive" id="confirm-start-btn">
+        🌸 เริ่มท่องมิติเวลา (Start Playing)
+      </button>
     </div>
   </div>
 
@@ -784,7 +876,7 @@
         id: 1,
         title: "ด่านที่ ๑ : กำเนิดพระนคร",
         subtitle: "กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒)",
-        rows: 2, cols: 3, // 6 ชิ้น (3x2)
+        rows: 2, cols: 3,
         image: generateHistoricalSVG('r1'),
         history: "พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (ร.๑) ทรงสถาปนากรุงรัตนโกสินทร์ขึ้นเมื่อ พ.ศ. ๒๓๒๕ และโปรดเกล้าฯ ให้สร้างพระบรมมหาราชวังและวัดพระศรีรัตนศาสดาราม (วัดพระแก้ว)"
       },
@@ -792,7 +884,7 @@
         id: 2,
         title: "ด่านที่ ๒ : การค้าสำเภาและศิลปกรรมรุ่งเรือง",
         subtitle: "ยุคพาณิชย์นาวีรุ่งโรจน์ (รัชกาลที่ ๓)",
-        rows: 2, cols: 3, // 6 ชิ้น
+        rows: 2, cols: 3,
         image: generateHistoricalSVG('r3'),
         history: "รัชสมัยพระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว มีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีน เช่น พระปรางค์วัดอรุณราชวราราม"
       },
@@ -800,7 +892,7 @@
         id: 3,
         title: "ด่านที่ ๓ : รุ่งอรุณแห่งดาราศาสตร์สากล",
         subtitle: "การเปิดรับวิทยาการสมัยใหม่ (รัชกาลที่ ๔)",
-        rows: 2, cols: 3, // 6 ชิ้น
+        rows: 2, cols: 3,
         image: generateHistoricalSVG('r4'),
         history: "พระบาทสมเด็จพระจอมเกล้าเจ้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ ได้อย่างแม่นยำล่วงหน้า ๒ ปี"
       },
@@ -808,7 +900,7 @@
         id: 4,
         title: "ด่านที่ ๔ : การปฏิรูปสยามสู่สากล",
         subtitle: "เลิกทาสและพัฒนาระบบคมนาคม (รัชกาลที่ ๕ - ๗)",
-        rows: 2, cols: 3, // 6 ชิ้น
+        rows: 2, cols: 3,
         image: generateHistoricalSVG('r5'),
         history: "พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัวทรงประกาศเลิกทาส ริเริ่มการรถไฟ ไปรษณีย์ และก่อสร้างพระที่นั่งอนันตสมาคม"
       },
@@ -816,7 +908,7 @@
         id: 5,
         title: "ด่านที่ ๕ : พระบารมีปกเกล้าและเกษตรทฤษฎีใหม่",
         subtitle: "สืบสานศาสตร์พระราชา (รัชกาลที่ ๙)",
-        rows: 2, cols: 3, // 6 ชิ้น
+        rows: 2, cols: 3,
         image: generateHistoricalSVG('r9'),
         history: "ในหลวงรัชกาลที่ ๙ ทรงพระราชทานโครงการพระราชดำริ อาทิ ฝนหลวง แก้มลิง และหลักปรัชญาเศรษฐกิจพอเพียง"
       }
@@ -839,7 +931,7 @@
         sabai_pleat: {
           name: 'สไบจีบชมพู (หญิง)',
           svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-            <defs><linearGradient id="sruby" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF758F"/><stop offset="100%" stop-color="#800F2F"/></linearGradient></defs>
+            <defs><linearGradient id="sruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF758F"/><stop offset="100%" stop-color="#800F2F"/></linearGradient></defs>
             <path d="M110 50 Q210 80 290 220 L310 340 L230 340 L170 190 Z" fill="url(#sruby)" stroke="#FFB3C1" stroke-width="2"/>
             <line x1="130" y1="80" x2="250" y2="340" stroke="#FFF" stroke-width="1.5" stroke-dasharray="6,4"/>
             <line x1="150" y1="100" x2="270" y2="340" stroke="#FFF" stroke-width="1.5" stroke-dasharray="6,4"/>
@@ -974,12 +1066,7 @@
        3. POP CULTURE FRAMES SHOP
        ========================================================= */
     const SHOP_FRAMES = {
-      none: {
-        name: 'ไม่ใส่กรอบ',
-        price: 0,
-        owned: true,
-        render: (ctx, w, h) => {}
-      },
+      none: { name: 'ไม่ใส่กรอบ', price: 0, owned: true, render: (ctx, w, h) => {} },
       labubu: {
         name: 'ลาบูบู้ (Labubu)',
         price: 80,
@@ -989,7 +1076,6 @@
           ctx.strokeStyle = '#D4A373';
           ctx.lineWidth = 14;
           ctx.strokeRect(7, 7, w - 14, h - 14);
-
           ctx.save();
           ctx.translate(70, 70);
           ctx.fillStyle = '#C58958';
@@ -1019,7 +1105,6 @@
           ctx.strokeStyle = '#FFB5A7';
           ctx.lineWidth = 14;
           ctx.strokeRect(7, 7, w - 14, h - 14);
-
           ctx.save();
           ctx.translate(w - 80, 80);
           ctx.fillStyle = '#90DBF4';
@@ -1046,7 +1131,6 @@
           ctx.strokeStyle = '#BC6C25';
           ctx.lineWidth = 14;
           ctx.strokeRect(7, 7, w - 14, h - 14);
-
           ctx.save();
           ctx.translate(70, h - 70);
           ctx.fillStyle = '#6F4E37';
@@ -1076,7 +1160,6 @@
           ctx.strokeStyle = '#FF4D6D';
           ctx.lineWidth = 14;
           ctx.strokeRect(7, 7, w - 14, h - 14);
-
           ctx.save();
           ctx.translate(w - 75, h - 75);
           ctx.fillStyle = '#FFFFFF';
@@ -1104,7 +1187,6 @@
           ctx.strokeStyle = '#38B000';
           ctx.lineWidth = 14;
           ctx.strokeRect(7, 7, w - 14, h - 14);
-
           ctx.save();
           ctx.translate(75, 75);
           ctx.fillStyle = '#101010';
@@ -1130,7 +1212,6 @@
           ctx.strokeStyle = '#0077B6';
           ctx.lineWidth = 14;
           ctx.strokeRect(7, 7, w - 14, h - 14);
-
           ctx.save();
           ctx.translate(w - 75, 75);
           ctx.strokeStyle = '#111';
@@ -1381,7 +1462,7 @@
     });
 
     /* =========================================================
-       7. GOLDEN THAI FLOWER TOUCH EFFECT
+       7. GOLDEN THAI FLOWER TOUCH EFFECT & GLITTER
        ========================================================= */
     const thaiFlowerParticles = [];
 
@@ -1694,17 +1775,16 @@
     // Universal AR Element Click Simulator
     function triggerUniversalARClick(x, y) {
       const now = Date.now();
-      if (now - lastArClickTime < 500) return;
+      if (now - lastArClickTime < 450) return;
 
       createFlowerTouch(x, y);
 
-      // 1. If start screen is visible, check start button click
-      const startScreen = document.getElementById('start-screen');
-      if (startScreen.style.display !== 'none') {
-        const startBtn = document.getElementById('start-btn');
-        const sRect = startBtn.getBoundingClientRect();
-        if (x >= sRect.left && x <= sRect.right && y >= sRect.top && y <= sRect.bottom) {
-          startBtn.click();
+      // 1. Confirm prompt button on live camera
+      const promptBtn = document.getElementById('confirm-start-btn');
+      if (promptBtn && promptBtn.offsetParent !== null) {
+        const pRect = promptBtn.getBoundingClientRect();
+        if (x >= pRect.left && x <= pRect.right && y >= pRect.top && y <= pRect.bottom) {
+          promptBtn.click();
           lastArClickTime = now;
           return;
         }
@@ -1876,12 +1956,21 @@
     }
 
     /* =========================================================
-       11. CAMERA START & INITIALIZATION
+       11. CAMERA START & FLOW
        ========================================================= */
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
+    const startMainCard = document.getElementById('start-main-card');
+    const arStartPrompt = document.getElementById('ar-start-prompt');
+    const confirmStartBtn = document.getElementById('confirm-start-btn');
 
-    async function initCamera() {
+    // Step 1: Click start button to request permission and switch to Live Camera Background
+    startBtn.addEventListener('click', async () => {
+      AudioEngine.init();
+      if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        ytPlayer.playVideo();
+      }
+
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } },
@@ -1899,24 +1988,23 @@
           height: 720
         });
         camera.start();
+
+        // Switch start screen to live camera background & show AR prompt
+        startScreen.classList.add('camera-ready');
+        startMainCard.style.display = 'none';
+        arStartPrompt.style.display = 'block';
+
         requestAnimationFrame(onFrame);
       } catch (err) {
-        console.warn('Camera permission pending or unavailable:', err);
+        alert('กรุณาอนุญาตการเข้าถึงกล้องหน้าเพื่อสัมผัสประสบการณ์ AR จิ๊กซอว์ประวัติศาสตร์');
+        console.error(err);
       }
-    }
-
-    // Initialize Camera immediately on load to enable AR hand clicking on Start Screen
-    window.addEventListener('DOMContentLoaded', () => {
-      initCamera();
     });
 
-    startBtn.addEventListener('click', async () => {
-      AudioEngine.init();
-      if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-        ytPlayer.playVideo();
-      }
-
+    // Step 2: Use AR Hand / Touch to confirm and start jigsaw
+    confirmStartBtn.addEventListener('click', () => {
       startScreen.style.display = 'none';
+      arStartPrompt.style.display = 'none';
       isGameRunning = true;
       gameStartTime = Date.now();
       initLevel(0);
