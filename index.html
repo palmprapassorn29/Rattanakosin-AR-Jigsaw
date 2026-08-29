@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Rattanakosin AR Jigsaw: ร้อยเรียงภาพประวัติศาสตร์รัตนโกสินทร์</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --gold-primary: #D4AF37;
+      --gold-light: #FFF0A5;
+      --gold-dark: #997A15;
+      --thai-red: #8B1E1E;
+      --thai-dark-red: #4A0E0E;
+      --navy-blue: #0E1A2B;
+      --ivory: #FFF8DC;
+      --shadow-gold: 0 0 15px rgba(212, 175, 55, 0.6);
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Sarabun', sans-serif;
+      background-color: var(--navy-blue);
+      color: var(--ivory);
+    }
+
+    h1, h2, h3, .thai-title {
+      font-family: 'Charm', cursive;
+      letter-spacing: 1px;
+    }
+
+    /* Screen Layouts */
+    .screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease;
+      z-index: 10;
+    }
+
+    .hidden {
+      display: none !important;
+      opacity: 0;
+    }
+
+    /* Backgrounds & Decorations */
+    .bg-pattern {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(139, 30, 30, 0.85) 0%, rgba(14, 26, 43, 0.95) 100%),
+                  repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.05) 0, rgba(212, 175, 55, 0.05) 20px, transparent 20px, transparent 40px);
+      z-index: -1;
+    }
+
+    /* Start Screen */
+    .start-container {
+      background: rgba(14, 26, 43, 0.85);
+      border: 3px solid var(--gold-primary);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 650px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(212, 175, 55, 0.3);
+      position: relative;
+    }
+
+    .card-preview {
+      width: 180px;
+      height: 180px;
+      margin: 15px auto;
+      border: 3px solid var(--gold-primary);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-gold);
+      background: #000;
+    }
+
+    .card-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Primary Gold Button */
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-primary), var(--gold-dark));
+      color: var(--thai-dark-red);
+      font-size: 1.25rem;
+      font-weight: 700;
+      padding: 14px 36px;
+      border: 2px solid var(--gold-light);
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: var(--shadow-gold), 0 4px 10px rgba(0,0,0,0.5);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn-gold:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 240, 165, 0.9);
+    }
+
+    /* AR Gameplay Viewport */
+    #game-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      overflow: hidden;
+    }
+
+    #webcam-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1); /* Mirror camera */
+      z-index: 1;
+      opacity: 0.85;
+    }
+
+    #game-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: auto;
+      touch-action: none;
+    }
+
+    /* In-game HUD Header */
+    .hud-header {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      background: rgba(14, 26, 43, 0.85);
+      border: 2px solid var(--gold-primary);
+      padding: 8px 25px;
+      border-radius: 30px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      pointer-events: none;
+    }
+
+    /* Info Pop-up Modal */
+    .modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: linear-gradient(180deg, #1b0a0a 0%, #2b1111 100%);
+      border: 3px solid var(--gold-primary);
+      border-radius: 20px;
+      padding: 25px;
+      max-width: 580px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 0 35px rgba(212, 175, 55, 0.7);
+      animation: popIn 0.4s ease-out forwards;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-image {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border: 2px solid var(--gold-primary);
+      border-radius: 10px;
+      margin: 15px 0;
+    }
+
+    .history-desc {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--ivory);
+      margin-bottom: 20px;
+      text-align: justify;
+      text-justify: inter-cluster;
+      background: rgba(0,0,0,0.3);
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    /* Hand Status Indicator */
+    .hand-indicator {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      z-index: 5;
+      background: rgba(14, 26, 43, 0.85);
+      border: 1px solid var(--gold-primary);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ff4d4d;
+    }
+    .status-dot.active {
+      background: #4dff88;
+      box-shadow: 0 0 8px #4dff88;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="start-screen" class="screen">
+    <div class="bg-pattern"></div>
+    <div class="start-container">
+      <h1 style="color: var(--gold-light); font-size: 2.2rem; margin-bottom: 5px;">ร้อยเรียงภาพประวัติศาสตร์</h1>
+      <h2 style="color: var(--gold-primary); font-size: 1.5rem; margin-bottom: 15px;">รัตนโกสินทร์ AR Jigsaw</h2>
+
+      <div class="card-preview">
+        <img id="preview-r9-img" src="image_2117c9.jpg" alt="ภาพพระราชกรณียกิจ ร.9" onerror="this.src=createR9VectorDataURL()">
+      </div>
+
+      <p style="color: var(--gold-light); font-weight: 600; margin-bottom: 8px;">
+        ✨ ท่องประวัติศาสตร์ 3 ยุคสมัย ผ่านมิติเสมือนจริง ✨
+      </p>
+      <p style="font-size: 0.95rem; line-height: 1.5; color: var(--ivory); margin-bottom: 20px;">
+        เปิดกล้อง ยกมือขึ้นมาตรงหน้าจอ แล้วทำท่า <b>"จีบนิ้วชี้กับนิ้วโป้ง"</b> เพื่อหยิบชิ้นส่วนจิ๊กซอว์ลากไปวางในตำแหน่งที่ถูกต้อง (หรือใช้เมาส์/สัมผัสหน้าจอได้โดยตรง)
+      </p>
+
+      <button id="start-btn" class="btn-gold">
+        <span>📷 เปิดกล้องเล่นเกม (AR Start)</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="game-screen" class="screen hidden">
+    <div class="hud-header">
+      <span id="level-indicator" style="color: var(--gold-light); font-weight: bold;">ด่านที่ 1: ยุครัตนโกสินทร์ตอนต้น</span>
+      <span>⏳ <span id="timer">00:00</span></span>
+    </div>
+
+    <div class="hand-indicator">
+      <div id="hand-status-dot" class="status-dot"></div>
+      <span id="hand-status-text">กำลังค้นหามือ...</span>
+    </div>
+
+    <div id="game-container">
+      <video id="webcam-video" playsinline></video>
+      <canvas id="game-canvas"></canvas>
+    </div>
+  </div>
+
+  <div id="info-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h2 id="modal-title" class="thai-title" style="color: var(--gold-light); font-size: 1.8rem;">สำเร็จสมบูรณ์!</h2>
+      <img id="modal-img" class="modal-image" src="" alt="ภาพประวัติศาสตร์">
+      <div id="modal-desc" class="history-desc">เกร็ดประวัติศาสตร์ประจำยุคสมัย...</div>
+      <button id="modal-next-btn" class="btn-gold">ท่องประวัติศาสตร์ด่านถัดไป ➔</button>
+    </div>
+  </div>
+
+  <div id="summary-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h1 class="thai-title" style="color: var(--gold-light); font-size: 2.2rem; margin-bottom: 10px;">👑 ชัยชนะแห่งประวัติศาสตร์ 👑</h1>
+      <p style="font-size: 1.1rem; margin-bottom: 15px;">ท่านได้ร้อยเรียงภาพประวัติศาสตร์กรุงรัตนโกสินทร์ครบถ้วนทั้ง 3 ยุคสมัย</p>
+      
+      <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--gold-primary);">
+        <p style="font-size: 1.2rem; color: var(--gold-light);">เวลารวมทั้งหมด: <b id="total-time">00:00</b> นาที</p>
+        <p style="font-size: 1.1rem; color: #4dff88; margin-top: 5px;">คะแนนความแม่นยำ: 100%</p>
+      </div>
+
+      <button id="restart-btn" class="btn-gold">↺ เล่นอีกครั้ง</button>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       1. SVG GRAPHICS GENERATOR (ภาพสำรองและภาพจำลองด่าน 1 & 2 ความละเอียดสูง)
+       ========================================================================== */
+    function createEra1VectorDataURL() {
+      const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+        <defs>
+          <linearGradient id="sky1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#4A0E0E"/>
+            <stop offset="60%" stop-color="#8B1E1E"/>
+            <stop offset="100%" stop-color="#D4AF37"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="400" fill="url(#sky1)"/>
+        <path d="M0 320 Q 150 280, 300 320 T 600 320 L 600 400 L 0 400 Z" fill="#0E1A2B"/>
+        <polygon points="300,60 315,180 285,180" fill="#FFEAA7"/>
+        <polygon points="300,30 305,60 295,60" fill="#D4AF37"/>
+        <rect x="270" y="180" width="60" height="100" fill="#D4AF37" rx="4"/>
+        <polygon points="210,110 220,190 200,190" fill="#FFEAA7"/>
+        <rect x="190" y="190" width="40" height="90" fill="#C5A028"/>
+        <polygon points="390,110 400,190 380,190" fill="#FFEAA7"/>
+        <rect x="370" y="190" width="40" height="90" fill="#C5A028"/>
+        <rect x="50" y="270" width="500" height="50" fill="#FFF8DC" stroke="#D4AF37" stroke-width="3"/>
+        <circle cx="300" cy="90" r="40" fill="none" stroke="#FFF0A5" stroke-width="2" stroke-dasharray="6,6"/>
+        <text x="300" y="375" font-family="'Sarabun', sans-serif" font-size="20" fill="#FFF8DC" font-weight="bold" text-anchor="middle">ยุคสถาปนากรุงรัตนโกสินทร์และวัดพระแก้ว (ร.1)</text>
+      </svg>`;
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    }
+
+    function createEra2VectorDataURL() {
+      const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+        <defs>
+          <linearGradient id="sky2" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#1A2A3A"/>
+            <stop offset="100%" stop-color="#4A6572"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="400" fill="url(#sky2)"/>
+        <rect x="0" y="280" width="600" height="40" fill="#34495E"/>
+        <line x1="0" y1="300" x2="600" y2="300" stroke="#D4AF37" stroke-width="6" stroke-dasharray="15,10"/>
+        <rect x="220" y="180" width="160" height="90" fill="#2C3E50" rx="8"/>
+        <circle cx="260" cy="275" r="22" fill="#D4AF37" stroke="#111" stroke-width="4"/>
+        <circle cx="340" cy="275" r="22" fill="#D4AF37" stroke="#111" stroke-width="4"/>
+        <rect x="330" y="130" width="30" height="55" fill="#1A252F"/>
+        <circle cx="345" cy="110" r="18" fill="rgba(255,255,255,0.6)"/>
+        <circle cx="365" cy="85" r="24" fill="rgba(255,255,255,0.4)"/>
+        <polygon points="120,180 140,240 100,240" fill="#D4AF37"/>
+        <text x="300" y="375" font-family="'Sarabun', sans-serif" font-size="20" fill="#FFF8DC" font-weight="bold" text-anchor="middle">ยุคปฏิรูปสยามสู่สากลและการเลิกทาส (ร.5)</text>
+      </svg>`;
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    }
+
+    function createR9VectorDataURL() {
+      const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+        <defs>
+          <linearGradient id="sky3" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#0E1A2B"/>
+            <stop offset="50%" stop-color="#8B1E1E"/>
+            <stop offset="100%" stop-color="#D4AF37"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="400" fill="url(#sky3)"/>
+        <circle cx="300" cy="180" r="110" fill="#FFEAA7" opacity="0.9"/>
+        <path d="M 260 170 Q 300 130 340 170 L 320 280 L 280 280 Z" fill="#D4AF37"/>
+        <rect x="220" y="210" width="45" height="30" fill="#333" rx="4"/>
+        <circle cx="242" cy="225" r="8" fill="#FFF"/>
+        <path d="M 360 210 Q 380 250 350 270" stroke="#FFF0A5" stroke-width="6" fill="none"/>
+        <text x="300" y="365" font-family="'Sarabun', sans-serif" font-size="20" fill="#FFF8DC" font-weight="bold" text-anchor="middle">ยุคพัฒนาและความร่มเย็นใต้ร่มพระบารมี (ร.9)</text>
+      </svg>`;
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    }
+
+    /* ==========================================================================
+       2. SOUND EFFECTS (Web Audio API Synthesizer)
+       ========================================================================== */
+    const AudioEngine = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+      },
+      playSnap() {
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(587.33, now); // D5
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.1); // A5
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      },
+      playWin() {
+        this.init();
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C, E, G, C
+        notes.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          const now = this.ctx.currentTime + (idx * 0.12);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.4);
+        });
+      }
+    };
+
+    /* ==========================================================================
+       3. GAME DATA & CONFIGURATION
+       ========================================================================== */
+    const LEVELS = [
+      {
+        id: 1,
+        title: "ด่านที่ 1: ยุครัตนโกสินทร์ตอนต้น (ร.1)",
+        rows: 2,
+        cols: 2,
+        imageSrc: createEra1VectorDataURL(),
+        desc: "พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (รัชกาลที่ 1) ทรงสถาปนากรุงรัตนโกสินทร์ขึ้นเมื่อ พ.ศ. 2325 ทรงย้ายราชธานีมายังฝั่งตะวันออกของแม่น้ำเจ้าพระยา และโปรดเกล้าฯ ให้สร้างพระบรมมหาราชวังพร้อมทั้ง 'วัดพระศรีรัตนศาสดาราม' (วัดพระแก้ว) เพื่อประดิษฐานพระพุทธมหามณีรัตนปฏิมากร เป็นศูนย์รวมจิตใจและหลักชัยของชาวสยาม"
+      },
+      {
+        id: 2,
+        title: "ด่านที่ 2: ยุคปฏิรูปสยามสู่สากล (ร.5)",
+        rows: 2,
+        cols: 2,
+        imageSrc: createEra2VectorDataURL(),
+        desc: "พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (รัชกาลที่ 5) ทรงนำสยามก้าวเข้าสู่ยุคสมัยใหม่อย่างสง่างาม ทรงประกาศ 'เลิกทาส' โดยสันติวิธี วางรากฐานสาธารณูปโภค เช่น การเปิดเดินรถไฟสายแรก การไปรษณีย์โทรเลข และการสร้างสะพานมัฆวานรังสรรค์ เชื่อมโยงสยามให้ทัดเทียมนานาอารยประเทศ"
+      },
+      {
+        id: 3,
+        title: "ด่านที่ 3: ยุคพัฒนาและความร่มเย็นใต้ร่มพระบารมี (ร.9)",
+        rows: 2,
+        cols: 2,
+        imageSrc: "image_2117c9.jpg",
+        fallbackSrc: createR9VectorDataURL(),
+        desc: "พระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร (ในหลวง ร.9) ในฉลองพระองค์บรมราชภูษิตาภรณ์ ทรงอุทิศพระวรกายเพื่ออาณาประชาราษฎร์ผ่านโครงการพระราชดำริกว่า 4,000 โครงการ ทรงเปี่ยมด้วยพระอัจฉริยภาพทั้งด้านดนตรีสากล การแพทย์ เกษตรทฤษฎีใหม่ และการพัฒนาทรัพยากรธรรมชาติอย่างยั่งยืน"
+      }
+    ];
+
+    /* ==========================================================================
+       4. GAME ENGINE & STATE MANAGEMENT
+       ========================================================================== */
+    class RattanakosinGame {
+      constructor() {
+        this.currentLevelIdx = 0;
+        this.pieces = [];
+        this.board = { x: 0, y: 0, width: 0, height: 0 };
+        this.activePiece = null;
+        this.dragOffset = { x: 0, y: 0 };
+        this.sparkles = [];
+        this.isCompleted = false;
+
+        // Pointer / Hand tracking
+        this.cursor = { x: -100, y: -100, isPinching: false };
+        this.lastPinchState = false;
+
+        // Timer
+        this.secondsElapsed = 0;
+        this.timerInterval = null;
+
+        // Canvas & Context
+        this.canvas = document.getElementById('game-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.video = document.getElementById('webcam-video');
+
+        this.loadedImages = {};
+        this.initEvents();
+      }
+
+      async init() {
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        this.preloadAllImages(() => {
+          this.loadLevel(this.currentLevelIdx);
+          this.startTimer();
+          this.renderLoop();
+        });
+      }
+
+      preloadAllImages(callback) {
+        let loaded = 0;
+        LEVELS.forEach((lvl, idx) => {
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+          img.onload = () => {
+            this.loadedImages[idx] = img;
+            loaded++;
+            if (loaded === LEVELS.length) callback();
+          };
+          img.onerror = () => {
+            // โหลดภาพ Fallback หากรูปหลักโหลดไม่ได้
+            if (lvl.fallbackSrc) {
+              img.src = lvl.fallbackSrc;
+            } else {
+              img.src = createEra1VectorDataURL();
+            }
+          };
+          img.src = lvl.imageSrc;
+        });
+      }
+
+      resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.calculateBoardLayout();
+      }
+
+      calculateBoardLayout() {
+        const isLandscape = window.innerWidth > window.innerHeight;
+        const maxW = isLandscape ? window.innerWidth * 0.45 : window.innerWidth * 0.75;
+        const maxH = isLandscape ? window.innerHeight * 0.6 : window.innerHeight * 0.45;
+        
+        let bw = maxW;
+        let bh = (bw * 2) / 3;
+        if (bh > maxH) {
+          bh = maxH;
+          bw = (bh * 3) / 2;
+        }
+
+        this.board = {
+          width: bw,
+          height: bh,
+          x: (window.innerWidth - bw) / 2,
+          y: (window.innerHeight - bh) / 2
+        };
+
+        if (this.pieces.length > 0) {
+          this.updatePieceSlots();
+        }
+      }
+
+      loadLevel(idx) {
+        this.isCompleted = false;
+        this.activePiece = null;
+        this.sparkles = [];
+        const levelData = LEVELS[idx];
+        document.getElementById('level-indicator').textContent = levelData.title;
+
+        const img = this.loadedImages[idx];
+        const rows = levelData.rows;
+        const cols = levelData.cols;
+        const pieceW = this.board.width / cols;
+        const pieceH = this.board.height / rows;
+
+        this.pieces = [];
+
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            // กำหนดพิกัดกระจายชิ้นส่วนซ้าย-ขวา
+            const isLeft = Math.random() < 0.5;
+            const startX = isLeft 
+              ? Math.random() * (this.board.x - pieceW - 40) + 20 
+              : this.board.x + this.board.width + 30 + Math.random() * (window.innerWidth - (this.board.x + this.board.width) - pieceW - 50);
+            
+            const startY = Math.random() * (window.innerHeight - pieceH - 120) + 70;
+
+            this.pieces.push({
+              row: r,
+              col: c,
+              img: img,
+              w: pieceW,
+              h: pieceH,
+              sx: (c * img.width) / cols,
+              sy: (r * img.height) / rows,
+              sw: img.width / cols,
+              sh: img.height / rows,
+              x: Math.max(20, Math.min(window.innerWidth - pieceW - 20, startX)),
+              y: Math.max(70, Math.min(window.innerHeight - pieceH - 40, startY)),
+              targetX: this.board.x + c * pieceW,
+              targetY: this.board.y + r * pieceH,
+              isLocked: false
+            });
+          }
+        }
+        // สลับตำแหน่งการวาด (Z-order)
+        this.pieces.sort(() => Math.random() - 0.5);
+      }
+
+      updatePieceSlots() {
+        const lvl = LEVELS[this.currentLevelIdx];
+        const pieceW = this.board.width / lvl.cols;
+        const pieceH = this.board.height / lvl.rows;
+
+        this.pieces.forEach(p => {
+          p.w = pieceW;
+          p.h = pieceH;
+          p.targetX = this.board.x + p.col * pieceW;
+          p.targetY = this.board.y + p.row * pieceH;
+          if (p.isLocked) {
+            p.x = p.targetX;
+            p.y = p.targetY;
+          }
+        });
+      }
+
+      startTimer() {
+        if (this.timerInterval) clearInterval(this.timerInterval);
+        this.secondsElapsed = 0;
+        this.timerInterval = setInterval(() => {
+          this.secondsElapsed++;
+          const m = String(Math.floor(this.secondsElapsed / 60)).padStart(2, '0');
+          const s = String(this.secondsElapsed % 60).padStart(2, '0');
+          document.getElementById('timer').textContent = `${m}:${s}`;
+        }, 1000);
+      }
+
+      /* ==========================================================================
+         TOUCH, MOUSE & HAND INTERACTION LOGIC
+         ========================================================================== */
+      initEvents() {
+        // Fallback Mouse & Touch Handlers
+        const handleDown = (x, y) => {
+          this.cursor.x = x;
+          this.cursor.y = y;
+          this.tryGrabPiece(x, y);
+        };
+
+        const handleMove = (x, y) => {
+          this.cursor.x = x;
+          this.cursor.y = y;
+          if (this.activePiece) {
+            this.activePiece.x = x - this.dragOffset.x;
+            this.activePiece.y = y - this.dragOffset.y;
+          }
+        };
+
+        const handleUp = () => {
+          this.tryReleasePiece();
+        };
+
+        this.canvas.addEventListener('mousedown', (e) => handleDown(e.clientX, e.clientY));
+        window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
+        window.addEventListener('mouseup', handleUp);
+
+        this.canvas.addEventListener('touchstart', (e) => {
+          if (e.touches.length > 0) handleDown(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: false });
+
+        window.addEventListener('touchmove', (e) => {
+          if (e.touches.length > 0) handleMove(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: false });
+
+        window.addEventListener('touchend', handleUp);
+      }
+
+      tryGrabPiece(x, y) {
+        if (this.isCompleted) return;
+        // ค้นหาจากชิ้นบนสุดลงล่าง
+        for (let i = this.pieces.length - 1; i >= 0; i--) {
+          const p = this.pieces[i];
+          if (!p.isLocked && x >= p.x && x <= p.x + p.w && y >= p.y && y <= p.y + p.h) {
+            this.activePiece = p;
+            this.dragOffset.x = x - p.x;
+            this.dragOffset.y = y - p.y;
+            // ดึงชิ้นที่เลือกมาไว้บนสุด
+            this.pieces.splice(i, 1);
+            this.pieces.push(p);
+            break;
+          }
+        }
+      }
+
+      tryReleasePiece() {
+        if (!this.activePiece) return;
+        const p = this.activePiece;
+        const snapRadius = 55; // รัศมีดูดเข้าเป้าหมาย
+
+        const dist = Math.hypot(p.x - p.targetX, p.y - p.targetY);
+        if (dist < snapRadius) {
+          p.x = p.targetX;
+          p.y = p.targetY;
+          p.isLocked = true;
+          AudioEngine.playSnap();
+          this.createSparkleBurst(p.x + p.w / 2, p.y + p.h / 2);
+          this.checkWinCondition();
+        }
+        this.activePiece = null;
+      }
+
+      updateHandTracking(x, y, isPinching) {
+        this.cursor.x = x;
+        this.cursor.y = y;
+        this.cursor.isPinching = isPinching;
+
+        // ตรวจจับ Trigger เมื่อเพิ่งเริ่มหนีบนิ้ว
+        if (isPinching && !this.lastPinchState) {
+          this.tryGrabPiece(x, y);
+        } else if (!isPinching && this.lastPinchState) {
+          this.tryReleasePiece();
+        }
+
+        if (isPinching && this.activePiece) {
+          this.activePiece.x = x - this.dragOffset.x;
+          this.activePiece.y = y - this.dragOffset.y;
+        }
+
+        this.lastPinchState = isPinching;
+      }
+
+      createSparkleBurst(x, y) {
+        for (let i = 0; i < 20; i++) {
+          this.sparkles.push({
+            x: x,
+            y: y,
+            vx: (Math.random() - 0.5) * 8,
+            vy: (Math.random() - 0.5) * 8,
+            size: Math.random() * 6 + 3,
+            alpha: 1,
+            color: ['#FFF0A5', '#D4AF37', '#FFF8DC'][Math.floor(Math.random() * 3)]
+          });
+        }
+      }
+
+      checkWinCondition() {
+        const allLocked = this.pieces.every(p => p.isLocked);
+        if (allLocked && !this.isCompleted) {
+          this.isCompleted = true;
+          AudioEngine.playWin();
+          this.createSparkleBurst(this.board.x + this.board.width / 2, this.board.y + this.board.height / 2);
+          
+          setTimeout(() => {
+            this.showEraInfoModal();
+          }, 800);
+        }
+      }
+
+      showEraInfoModal() {
+        const lvl = LEVELS[this.currentLevelIdx];
+        const modal = document.getElementById('info-modal');
+        document.getElementById('modal-title').textContent = `ด่านสำเร็จ: ${lvl.title}`;
+        document.getElementById('modal-desc').textContent = lvl.desc;
+        document.getElementById('modal-img').src = lvl.imageSrc;
+        
+        const nextBtn = document.getElementById('modal-next-btn');
+        if (this.currentLevelIdx === LEVELS.length - 1) {
+          nextBtn.textContent = "ชมสรุปผลการเล่น 👑";
+        } else {
+          nextBtn.textContent = "ท่องประวัติศาสตร์ด่านถัดไป ➔";
+        }
+        
+        modal.classList.remove('hidden');
+      }
+
+      nextLevel() {
+        document.getElementById('info-modal').classList.add('hidden');
+        if (this.currentLevelIdx < LEVELS.length - 1) {
+          this.currentLevelIdx++;
+          this.loadLevel(this.currentLevelIdx);
+        } else {
+          // จบเกมทั้ง 3 ด่าน
+          clearInterval(this.timerInterval);
+          const m = String(Math.floor(this.secondsElapsed / 60)).padStart(2, '0');
+          const s = String(this.secondsElapsed % 60).padStart(2, '0');
+          document.getElementById('total-time').textContent = `${m}:${s}`;
+          document.getElementById('summary-modal').classList.remove('hidden');
+        }
+      }
+
+      /* ==========================================================================
+         RENDERING LOOP (Canvas Graphics & Virtual Hand Lotus)
+         ========================================================================== */
+      renderLoop() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // 1. วาดกรอบเป้าหมายกลางจอ (Golden Frame & Thai Outline)
+        this.drawBoardGrid();
+
+        // 2. วาดชิ้นส่วนจิ๊กซอว์ทั้งหมด
+        this.pieces.forEach(p => {
+          this.ctx.save();
+          
+          if (!p.isLocked) {
+            // เงาของชิ้นส่วนที่ลอยอยู่
+            this.ctx.shadowColor = 'rgba(0,0,0,0.6)';
+            this.ctx.shadowBlur = 12;
+            this.ctx.shadowOffsetX = 4;
+            this.ctx.shadowOffsetY = 4;
+          }
+
+          // วาดภาพย่อยในชิ้นส่วน
+          this.ctx.drawImage(p.img, p.sx, p.sy, p.sw, p.sh, p.x, p.y, p.w, p.h);
+
+          // เส้นขอบสีทอง
+          this.ctx.strokeStyle = p.isLocked ? 'rgba(212, 175, 55, 0.4)' : '#FFF0A5';
+          this.ctx.lineWidth = p.isLocked ? 1.5 : 3;
+          this.ctx.strokeRect(p.x, p.y, p.w, p.h);
+
+          this.ctx.restore();
+        });
+
+        // 3. วาดอนุภาคประกายแสง (Sparkles)
+        this.renderSparkles();
+
+        // 4. วาดตัวชี้มือเสมือนจริง (Virtual Lotus Cursor)
+        this.drawLotusCursor();
+
+        requestAnimationFrame(() => this.renderLoop());
+      }
+
+      drawBoardGrid() {
+        const { x, y, width, height } = this.board;
+        const lvl = LEVELS[this.currentLevelIdx];
+
+        this.ctx.save();
+        // พื้นหลังโปร่งแสงของบอร์ด
+        this.ctx.fillStyle = 'rgba(14, 26, 43, 0.65)';
+        this.ctx.fillRect(x, y, width, height);
+
+        // กรอบทองลายไทยรอบนอก
+        this.ctx.strokeStyle = '#D4AF37';
+        this.ctx.lineWidth = 4;
+        this.ctx.shadowColor = '#D4AF37';
+        this.ctx.shadowBlur = 10;
+        this.ctx.strokeRect(x, y, width, height);
+
+        // เส้นไกด์ตารางหมากรุก (Grid Guides)
+        this.ctx.strokeStyle = 'rgba(212, 175, 55, 0.3)';
+        this.ctx.lineWidth = 1.5;
+        this.ctx.setLineDash([6, 6]);
+
+        const stepX = width / lvl.cols;
+        const stepY = height / lvl.rows;
+
+        for (let c = 1; c < lvl.cols; c++) {
+          this.ctx.beginPath();
+          this.ctx.moveTo(x + c * stepX, y);
+          this.ctx.lineTo(x + c * stepX, y + height);
+          this.ctx.stroke();
+        }
+        for (let r = 1; r < lvl.rows; r++) {
+          this.ctx.beginPath();
+          this.ctx.moveTo(x, y + r * stepY);
+          this.ctx.lineTo(x + width, y + r * stepY);
+          this.ctx.stroke();
+        }
+        this.ctx.restore();
+      }
+
+      renderSparkles() {
+        for (let i = this.sparkles.length - 1; i >= 0; i--) {
+          const s = this.sparkles[i];
+          s.x += s.vx;
+          s.y += s.vy;
+          s.alpha -= 0.03;
+          s.size *= 0.96;
+
+          if (s.alpha <= 0) {
+            this.sparkles.splice(i, 1);
+            continue;
+          }
+
+          this.ctx.save();
+          this.ctx.globalAlpha = s.alpha;
+          this.ctx.fillStyle = s.color;
+          this.ctx.beginPath();
+          this.ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+          this.ctx.fill();
+          this.ctx.restore();
+        }
+      }
+
+      drawLotusCursor() {
+        if (this.cursor.x < 0 || this.cursor.y < 0) return;
+        const { x, y, isPinching } = this.cursor;
+
+        this.ctx.save();
+        this.ctx.translate(x, y);
+
+        // ดอกบัวทองเสมือน (Virtual Lotus Gesture Cursor)
+        this.ctx.shadowColor = isPinching ? '#FFF0A5' : '#D4AF37';
+        this.ctx.shadowBlur = isPinching ? 25 : 12;
+
+        this.ctx.fillStyle = isPinching ? '#FFF0A5' : 'rgba(212, 175, 55, 0.85)';
+        this.ctx.strokeStyle = '#FFFFFF';
+        this.ctx.lineWidth = 2;
+
+        // วาดกลีบดอกบัว 4 แฉก
+        const scale = isPinching ? 0.75 : 1.0;
+        this.ctx.scale(scale, scale);
+
+        for (let i = 0; i < 4; i++) {
+          this.ctx.rotate(Math.PI / 2);
+          this.ctx.beginPath();
+          this.ctx.moveTo(0, 0);
+          this.ctx.quadraticCurveTo(10, -18, 0, -28);
+          this.ctx.quadraticCurveTo(-10, -18, 0, 0);
+          this.ctx.fill();
+          this.ctx.stroke();
+        }
+
+        // เกสรกลางดอก
+        this.ctx.beginPath();
+        this.ctx.arc(0, 0, 6, 0, Math.PI * 2);
+        this.ctx.fillStyle = '#8B1E1E';
+        this.ctx.fill();
+        this.ctx.stroke();
+
+        this.ctx.restore();
+      }
+    }
+
+    /* ==========================================================================
+       5. MEDIAPIPE HAND TRACKING & SYSTEM BOOTSTRAP
+       ========================================================================== */
+    let game = null;
+
+    async function setupCameraAndMediaPipe() {
+      const videoElement = document.getElementById('webcam-video');
+      const statusDot = document.getElementById('hand-status-dot');
+      const statusText = document.getElementById('hand-status-text');
+
+      const hands = new Hands({
+        locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+      });
+
+      hands.setOptions({
+        maxNumHands: 1,
+        modelComplexity: 1,
+        minDetectionConfidence: 0.6,
+        minTrackingConfidence: 0.6
+      });
+
+      hands.onResults((results) => {
+        if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+          statusDot.classList.add('active');
+          statusText.textContent = "ตรวจพบมือ (พร้อมควบคุม)";
+
+          const landmarks = results.multiHandLandmarks[0];
+          const thumbTip = landmarks[4];
+          const indexTip = landmarks[8];
+
+          // แปลงพิกัด Mirror กล้องให้ตรงกับ Canvas
+          const screenX = (1 - indexTip.x) * window.innerWidth;
+          const screenY = indexTip.y * window.innerHeight;
+
+          // คำนวณระยะห่างระหว่างปลายนิ้วโป้งและนิ้วชี้ เพื่อตรวจจับการจีบ/หนีบ (Pinch)
+          const pinchDistance = Math.hypot(
+            (1 - thumbTip.x) * window.innerWidth - screenX,
+            thumbTip.y * window.innerHeight - screenY
+          );
+
+          const isPinching = pinchDistance < 55;
+          if (game) {
+            game.updateHandTracking(screenX, screenY, isPinching);
+          }
+        } else {
+          statusDot.classList.remove('active');
+          statusText.textContent = "กำลังค้นหามือ...";
+          if (game) {
+            game.updateHandTracking(-100, -100, false);
+          }
+        }
+      });
+
+      const camera = new Camera(videoElement, {
+        onFrame: async () => {
+          await hands.send({ image: videoElement });
+        },
+        width: 1280,
+        height: 720
+      });
+
+      try {
+        await camera.start();
+      } catch (err) {
+        console.warn("ไม่สามารถเปิดกล้องได้ เข้าสู่โหมดเมาส์/ทัชสกรีน:", err);
+        statusText.textContent = "โหมดสัมผัส / เมาส์";
+      }
+    }
+
+    // UI Event Listeners
+    document.getElementById('start-btn').addEventListener('click', () => {
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('game-screen').classList.remove('hidden');
+      AudioEngine.init();
+      
+      game = new RattanakosinGame();
+      game.init();
+      setupCameraAndMediaPipe();
+    });
+
+    document.getElementById('modal-next-btn').addEventListener('click', () => {
+      if (game) game.nextLevel();
+    });
+
+    document.getElementById('restart-btn').addEventListener('click', () => {
+      document.getElementById('summary-modal').classList.add('hidden');
+      if (game) {
+        game.currentLevelIdx = 0;
+        game.loadLevel(0);
+        game.startTimer();
+      }
+    });
+  </script>
+</body>
+</html>
