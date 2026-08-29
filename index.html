@@ -47,6 +47,7 @@
       color: var(--ivory);
     }
 
+    /* Fullscreen AR Viewport */
     #ar-container {
       position: absolute;
       top: 0;
@@ -87,7 +88,9 @@
       z-index: 6;
     }
 
-    /* Start Screen */
+    /* =========================================================
+       1. START SCREEN (Centered, Kanok Border & Glitter)
+       ========================================================= */
     #start-screen {
       position: absolute;
       top: 0;
@@ -101,7 +104,7 @@
       text-align: center;
       padding: 20px;
       background-image: 
-        linear-gradient(180deg, rgba(10, 25, 47, 0.2) 0%, rgba(10, 25, 47, 0.4) 50%, rgba(10, 15, 25, 0.92) 100%),
+        linear-gradient(180deg, rgba(10, 25, 47, 0.25) 0%, rgba(10, 25, 47, 0.45) 50%, rgba(10, 15, 25, 0.94) 100%),
         url('Gemini_Generated_Image_89ya1c89ya1c89ya.png'),
         url('bg-rattanakosin.jpg'),
         radial-gradient(circle at 50% 30%, #ffd97d 0%, #b85d19 40%, #4a150c 75%, #0d060c 100%);
@@ -118,13 +121,13 @@
 
     .start-card {
       position: relative;
-      background: linear-gradient(145deg, rgba(20, 12, 8, 0.94) 0%, rgba(10, 25, 47, 0.96) 100%);
+      background: linear-gradient(145deg, rgba(20, 12, 8, 0.95) 0%, rgba(10, 25, 47, 0.96) 100%);
       border: 2px solid var(--gold);
       border-radius: 32px;
       padding: 38px 42px;
       max-width: 660px;
       width: 92%;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 35px rgba(212, 175, 55, 0.45);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(212, 175, 55, 0.45);
       backdrop-filter: blur(16px);
       display: flex;
       flex-direction: column;
@@ -134,8 +137,8 @@
     }
 
     @keyframes pulseGlow {
-      0% { box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 25px rgba(212, 175, 55, 0.3); }
-      100% { box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 45px rgba(255, 240, 153, 0.7); }
+      0% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 25px rgba(212, 175, 55, 0.3); }
+      100% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(255, 240, 153, 0.7); }
     }
 
     .start-card::before {
@@ -147,10 +150,19 @@
       text-shadow: 0 0 10px var(--gold-glow);
     }
 
+    .start-card::after {
+      content: '❖';
+      position: absolute;
+      bottom: 12px;
+      font-size: 16px;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
     .badge-sub {
       display: inline-block;
       border: 1px solid var(--gold);
-      background: rgba(139, 30, 30, 0.8);
+      background: rgba(139, 30, 30, 0.85);
       padding: 4px 20px;
       border-radius: 20px;
       font-size: 14px;
@@ -330,7 +342,7 @@
       cursor: pointer;
     }
 
-    /* Mini-map */
+    /* Thumbnail Mini-map (Clear & Well-proportioned) */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
@@ -345,18 +357,18 @@
     }
 
     #minimap-wrapper h4 {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--gold);
-      margin-bottom: 4px;
+      margin-bottom: 5px;
       font-family: var(--font-title);
     }
 
     #minimap-img {
-      width: 140px;
-      height: 90px;
+      width: 150px;
+      height: 98px;
       object-fit: cover;
       border-radius: 6px;
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      border: 1.5px solid rgba(212, 175, 55, 0.5);
       display: block;
     }
 
@@ -460,6 +472,7 @@
       font-weight: bold;
     }
 
+    /* Scrollable items with touch & wheel */
     .vertical-item-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -617,7 +630,7 @@
       border: 2px solid var(--gold);
       border-radius: 20px;
       padding: 32px 28px;
-      max-width: 540px;
+      max-width: 560px;
       width: 90%;
       text-align: center;
       box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.3);
@@ -632,14 +645,14 @@
 
     .modal-card p {
       font-size: 16px;
-      line-height: 1.6;
+      line-height: 1.65;
       color: var(--ivory);
       margin-bottom: 24px;
       text-align: left;
     }
 
     .reward-banner {
-      background: rgba(139, 30, 30, 0.8);
+      background: rgba(139, 30, 30, 0.85);
       border: 1px solid var(--gold);
       border-radius: 12px;
       padding: 8px 16px;
@@ -905,13 +918,15 @@
         },
         embroidered_pouch: {
           name: 'ย่ามไหมปักดิ้นทอง (ชาย/หญิง)',
-          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M40 30 L160 170" stroke="#D4AF37" stroke-width="6"/><path d="M120 130 L170 130 L165 185 L125 185 Z" fill="#8B1E1E" stroke="#D4AF37" stroke-width="2"/><circle cx="145" cy="155" r="8" fill="#FFEE80"/></svg>`
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M40 30 L160 170" stroke="#D4AF37" stroke-width="6"/>
+          <path d="M120 130 L170 130 L165 185 L125 185 Z" fill="#8B1E1E" stroke="#D4AF37" stroke-width="2"/>
+          <circle cx="145" cy="155" r="8" fill="#FFEE80"/></svg>`
         }
       }
     };
 
     /* =========================================================
-       3. POP CULTURE FRAMES SHOP (Optimized & Crash-free)
+       3. POP CULTURE FRAMES SHOP (Crash-free Rendering)
        ========================================================= */
     const SHOP_FRAMES = {
       none: { name: 'ไม่ใส่กรอบ', price: 0, owned: true, render: (ctx, w, h) => {} },
@@ -1307,11 +1322,12 @@
     });
 
     /* =========================================================
-       7. GOLDEN THAI FLOWER TOUCH EFFECT
+       7. GOLDEN THAI PIKUL FLOWER TOUCH EFFECT (ดอกพิกุลทอง)
        ========================================================= */
     const thaiFlowerParticles = [];
 
-    function drawThaiLotusFlower(ctx, cx, cy, size, alpha, rot) {
+    // Traditional Thai Pikul Flower (ดอกพิกุลทอง 8 กลีบเหลี่ยมแหลมประณีต)
+    function drawThaiPikulFlower(ctx, cx, cy, size, alpha, rot) {
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(rot);
@@ -1325,27 +1341,37 @@
         
         ctx.beginPath();
         ctx.moveTo(0, 0);
-        ctx.quadraticCurveTo(size * 0.45, -size * 0.6, 0, -size);
-        ctx.quadraticCurveTo(-size * 0.45, -size * 0.6, 0, 0);
+        // Diamond pointed Pikul petal
+        ctx.lineTo(size * 0.32, -size * 0.5);
+        ctx.lineTo(0, -size);
+        ctx.lineTo(-size * 0.32, -size * 0.5);
+        ctx.closePath();
         
         const grad = ctx.createLinearGradient(0, 0, 0, -size);
         grad.addColorStop(0, '#FFE79A');
-        grad.addColorStop(0.6, '#D4AF37');
+        grad.addColorStop(0.5, '#D4AF37');
         grad.addColorStop(1, '#8B1E1E');
         ctx.fillStyle = grad;
         ctx.fill();
-        ctx.strokeStyle = '#FFEE80';
+        ctx.strokeStyle = '#FFF099';
         ctx.lineWidth = 1.2;
         ctx.stroke();
         ctx.restore();
       }
 
+      // Center gold stamen ring
       ctx.beginPath();
-      ctx.arc(0, 0, size * 0.28, 0, Math.PI * 2);
+      ctx.arc(0, 0, size * 0.3, 0, Math.PI * 2);
       ctx.fillStyle = '#FFE066';
       ctx.fill();
       ctx.strokeStyle = '#D4AF37';
+      ctx.lineWidth = 1.5;
       ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, size * 0.14, 0, Math.PI * 2);
+      ctx.fillStyle = '#8B1E1E';
+      ctx.fill();
 
       ctx.restore();
     }
@@ -1373,7 +1399,7 @@
           continue;
         }
 
-        drawThaiLotusFlower(ctx, p.x, p.y, p.size, p.alpha, p.rot);
+        drawThaiPikulFlower(ctx, p.x, p.y, p.size, p.alpha, p.rot);
       }
     }
 
@@ -1744,7 +1770,7 @@
         }
       }
 
-      // AR Hand Interaction
+      // AR Hand Interaction (Pikul Flower Cursor & Universal Click)
       if (handResults && handResults.multiHandLandmarks) {
         for (const landmarks of handResults.multiHandLandmarks) {
           const indexTip = landmarks[8];
@@ -1755,7 +1781,7 @@
           const tx = (1 - thumbTip.x) * w;
           const ty = thumbTip.y * h;
 
-          drawThaiLotusFlower(canvasCtx, ix, iy, 16, 0.95, 0);
+          drawThaiPikulFlower(canvasCtx, ix, iy, 16, 0.95, 0);
 
           const pinchDist = Math.hypot(ix - tx, iy - ty);
           const isPinching = pinchDist < 45;
@@ -1764,6 +1790,7 @@
             triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2);
           }
 
+          // AR Drag Puzzle Pieces
           if (isGameRunning) {
             if (isPinching) {
               if (!arHeldPiece) {
