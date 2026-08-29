@@ -24,7 +24,7 @@
       --crimson-dark: #5A0F0F;
       --ivory: #FFF8DC;
       --navy: #0A192F;
-      --navy-glass: rgba(10, 25, 47, 0.92);
+      --navy-glass: rgba(10, 25, 47, 0.94);
       --font-title: 'Charm', cursive, serif;
       --font-body: 'Sarabun', sans-serif;
     }
@@ -45,6 +45,47 @@
       background-color: var(--navy);
       font-family: var(--font-body);
       color: var(--ivory);
+    }
+
+    /* Fullscreen AR Viewport */
+    #ar-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    #webcam-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1);
+    }
+
+    #ar-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    #frame-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 6;
     }
 
     /* Start Screen */
@@ -69,6 +110,7 @@
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
+      transition: opacity 0.5s ease;
     }
 
     .start-card {
@@ -84,6 +126,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      pointer-events: auto;
     }
 
     .badge-sub {
@@ -134,47 +177,6 @@
       box-shadow: 0 8px 30px rgba(255, 240, 153, 0.9);
     }
 
-    /* AR Container */
-    #ar-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    #webcam-video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scaleX(-1);
-    }
-
-    #ar-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    /* Selected Frame Canvas/Overlay Layer */
-    #frame-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 6;
-    }
-
     /* UI Overlay */
     #ui-container {
       position: absolute;
@@ -219,7 +221,6 @@
       gap: 10px;
     }
 
-    /* Banknote Currency Display */
     .money-pill {
       background: rgba(139, 30, 30, 0.85);
       border: 1.5px solid var(--gold);
@@ -275,7 +276,7 @@
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map (Strictly Matches Current Stage) */
+    /* Thumbnail Mini-map */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
@@ -297,16 +298,42 @@
     }
 
     #minimap-img {
-      width: 140px;
-      height: 95px;
+      width: 135px;
+      height: 90px;
       object-fit: cover;
       border-radius: 6px;
       border: 1px solid rgba(212, 175, 55, 0.4);
       display: block;
     }
 
-    /* Dressing & Shop Sliding Panels */
-    .slide-panel {
+    /* =========================================================
+       SIDEBARS: LEFT DRESSING PANEL & BOTTOM SHOP PANEL
+       ========================================================= */
+    #dressing-panel {
+      position: absolute;
+      top: 75px;
+      left: 18px;
+      width: 250px;
+      max-height: calc(100% - 95px);
+      background: var(--navy-glass);
+      border: 2px solid var(--gold);
+      border-radius: 20px;
+      padding: 14px 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 20px rgba(212, 175, 55, 0.3);
+      backdrop-filter: blur(12px);
+      transform: translateX(-120%);
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 25;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #dressing-panel.open {
+      transform: translateX(0);
+    }
+
+    #shop-panel {
       position: absolute;
       bottom: 20px;
       left: 50%;
@@ -323,7 +350,7 @@
       z-index: 25;
     }
 
-    .slide-panel.open {
+    #shop-panel.open {
       transform: translateX(-50%) translateY(0);
     }
 
@@ -331,14 +358,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       border-bottom: 1px solid rgba(212, 175, 55, 0.3);
       padding-bottom: 6px;
     }
 
     .panel-header h3 {
       font-family: var(--font-title);
-      font-size: 20px;
+      font-size: 17px;
       color: var(--gold-light);
     }
 
@@ -346,27 +373,29 @@
       background: transparent;
       border: none;
       color: var(--ivory);
-      font-size: 20px;
+      font-size: 18px;
       cursor: pointer;
     }
 
-    .category-tabs {
+    .left-cat-tabs {
       display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
+      flex-direction: row;
+      gap: 4px;
+      margin-bottom: 10px;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
 
     .cat-tab {
       background: transparent;
       border: 1px solid rgba(212, 175, 55, 0.4);
       color: var(--ivory);
-      font-size: 14px;
+      font-size: 12px;
       font-family: var(--font-title);
-      padding: 5px 12px;
+      padding: 4px 8px;
       cursor: pointer;
-      border-radius: 12px;
+      border-radius: 10px;
+      white-space: nowrap;
       transition: all 0.2s;
     }
 
@@ -377,7 +406,17 @@
       font-weight: bold;
     }
 
-    .item-grid {
+    .vertical-item-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      overflow-y: auto;
+      max-height: calc(100vh - 210px);
+      padding-right: 2px;
+      scrollbar-width: thin;
+    }
+
+    .horizontal-item-grid {
       display: flex;
       gap: 12px;
       overflow-x: auto;
@@ -386,12 +425,9 @@
     }
 
     .ar-touch-item {
-      flex: 0 0 auto;
-      width: 105px;
-      height: 110px;
       background: rgba(255, 255, 255, 0.08);
       border: 1.5px solid rgba(212, 175, 55, 0.4);
-      border-radius: 14px;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -402,28 +438,38 @@
       position: relative;
     }
 
+    .vertical-item-grid .ar-touch-item {
+      height: 95px;
+    }
+
+    .horizontal-item-grid .ar-touch-item {
+      flex: 0 0 auto;
+      width: 105px;
+      height: 110px;
+    }
+
     .ar-touch-item.active {
       border-color: var(--gold-glow);
-      background: rgba(139, 30, 30, 0.7);
-      box-shadow: 0 0 14px var(--gold);
-      transform: scale(1.05);
+      background: rgba(139, 30, 30, 0.75);
+      box-shadow: 0 0 12px var(--gold);
+      transform: scale(1.04);
     }
 
     .ar-touch-item img {
-      width: 48px;
-      height: 48px;
+      width: 42px;
+      height: 42px;
       object-fit: contain;
       margin-bottom: 4px;
     }
 
     .ar-touch-item span {
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--ivory);
       text-align: center;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 95px;
+      max-width: 90px;
     }
 
     .ar-touch-item .price-tag {
@@ -577,8 +623,8 @@
     <div class="start-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
       <h1>บุพเพรัตนโกสินทร์ AR Jigsaw</h1>
-      <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR จิ้มเลือกชุดไทย หมวก เครื่องประดับ สะสมธนบัตรโบราณซื้อกรอบรูปน่ารัก และต่อจิ๊กซอว์ ๖ ชิ้นทั้ง ๕ ยุคสมัย</p>
-      <button class="gold-btn-start" id="start-btn">เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)</button>
+      <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR จิ้มเลือกชุดไทย หมวก เครื่องประดับทางฝั่งซ้าย สะสมธนบัตรโบราณซื้อกรอบรูปน่ารัก และต่อจิ๊กซอว์ ๖ ชิ้นทั้ง ๕ ยุคสมัย</p>
+      <button class="gold-btn-start interactive" id="start-btn">เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)</button>
     </div>
   </div>
 
@@ -617,30 +663,30 @@
       <img id="minimap-img" src="" alt="Thumbnail">
     </div>
 
-    <!-- 1. Dedicated Dressing Panel -->
-    <div id="dressing-panel" class="slide-panel interactive">
+    <!-- 1. LEFT SIDE Dressing Panel -->
+    <div id="dressing-panel" class="interactive">
       <div class="panel-header">
-        <h3>👗 ห้องเครื่องแต่งกายชุดไทยโบราณ (ใช้นิ้ว AR จิ้มเลือกได้)</h3>
+        <h3>👗 ห้องเครื่องแต่งกาย</h3>
         <button class="panel-close" id="dress-close-btn">✖</button>
       </div>
-      <div class="category-tabs">
-        <button class="cat-tab active" data-cat="clothes">ชุดไทย (หญิง/ชาย)</button>
-        <button class="cat-tab" data-cat="hats">หมวก / ชฎา</button>
+      <div class="left-cat-tabs">
+        <button class="cat-tab active" data-cat="clothes">ชุดไทย</button>
+        <button class="cat-tab" data-cat="hats">หมวก/ชฎา</button>
         <button class="cat-tab" data-cat="accessories">เครื่องประดับ</button>
-        <button class="cat-tab" data-cat="bags">กระเป๋า / ย่าม</button>
+        <button class="cat-tab" data-cat="bags">กระเป๋า/ย่าม</button>
       </div>
-      <div class="item-grid" id="dress-items-container">
+      <div class="vertical-item-grid" id="dress-items-container">
         <!-- Rendered dynamically -->
       </div>
     </div>
 
     <!-- 2. Pop Culture Frame Shop Panel -->
-    <div id="shop-panel" class="slide-panel interactive">
+    <div id="shop-panel" class="interactive">
       <div class="panel-header">
         <h3>🛍️ ร้านค้ากรอบรูปขวัญใจออเจ้า (สะสมธนบัตรเพื่อปลดล็อก)</h3>
         <button class="panel-close" id="shop-close-btn">✖</button>
       </div>
-      <div class="item-grid" id="shop-items-container">
+      <div class="horizontal-item-grid" id="shop-items-container">
         <!-- Rendered dynamically -->
       </div>
     </div>
@@ -925,7 +971,7 @@
     };
 
     /* =========================================================
-       3. POP CULTURE FRAMES SHOP (Labubu, Care Bears, Monchhichi, Kitty, Ben 10, Conan)
+       3. POP CULTURE FRAMES SHOP
        ========================================================= */
     const SHOP_FRAMES = {
       none: {
@@ -1126,7 +1172,7 @@
     let userMoney = 100;
 
     /* =========================================================
-       4. DRESSING & SHOP PANELS (AR Touch Interactive)
+       4. LEFT DRESSING & SHOP PANELS (Interactive)
        ========================================================= */
     const dressingPanel = document.getElementById('dressing-panel');
     const dressToggleBtn = document.getElementById('dress-toggle-btn');
@@ -1140,7 +1186,6 @@
     const moneyCountEl = document.getElementById('money-count');
 
     let currentCategory = 'clothes';
-    let arTouchBoxes = [];
 
     function updateMoneyUI() {
       moneyCountEl.textContent = userMoney;
@@ -1152,13 +1197,11 @@
       shopPanel.classList.remove('open');
       dressToggleBtn.classList.toggle('active');
       shopToggleBtn.classList.remove('active');
-      updateTouchBoundingBoxes();
     });
 
     dressCloseBtn.addEventListener('click', () => {
       dressingPanel.classList.remove('open');
       dressToggleBtn.classList.remove('active');
-      updateTouchBoundingBoxes();
     });
 
     shopToggleBtn.addEventListener('click', () => {
@@ -1167,13 +1210,11 @@
       shopToggleBtn.classList.toggle('active');
       dressToggleBtn.classList.remove('active');
       renderShopItems();
-      updateTouchBoundingBoxes();
     });
 
     shopCloseBtn.addEventListener('click', () => {
       shopPanel.classList.remove('open');
       shopToggleBtn.classList.remove('active');
-      updateTouchBoundingBoxes();
     });
 
     // Dressing Tabs
@@ -1208,7 +1249,6 @@
 
         dressItemsContainer.appendChild(div);
       });
-      setTimeout(updateTouchBoundingBoxes, 150);
     }
 
     function selectCostumeItem(cat, key) {
@@ -1241,7 +1281,6 @@
 
         shopItemsContainer.appendChild(div);
       });
-      setTimeout(updateTouchBoundingBoxes, 150);
     }
 
     function handleShopSelection(key) {
@@ -1266,29 +1305,6 @@
     }
 
     renderDressingItems();
-
-    function updateTouchBoundingBoxes() {
-      arTouchBoxes = [];
-      if (dressingPanel.classList.contains('open')) {
-        dressItemsContainer.querySelectorAll('.ar-touch-item').forEach(el => {
-          const rect = el.getBoundingClientRect();
-          arTouchBoxes.push({
-            x: rect.left, y: rect.top, w: rect.width, h: rect.height,
-            type: 'costume', cat: el.getAttribute('data-cat'), key: el.getAttribute('data-key')
-          });
-        });
-      } else if (shopPanel.classList.contains('open')) {
-        shopItemsContainer.querySelectorAll('.ar-touch-item').forEach(el => {
-          const rect = el.getBoundingClientRect();
-          arTouchBoxes.push({
-            x: rect.left, y: rect.top, w: rect.width, h: rect.height,
-            type: 'shop', key: el.getAttribute('data-key')
-          });
-        });
-      }
-    }
-
-    window.addEventListener('resize', updateTouchBoundingBoxes);
 
     /* =========================================================
        5. WEB AUDIO SYNTHESIZER
@@ -1454,7 +1470,7 @@
       const lvl = LEVELS[currentLevelIdx];
       levelTitle.textContent = lvl.title;
       levelSubtitle.textContent = lvl.subtitle;
-      minimapImg.src = lvl.image; // ตรงกับภาพที่กำลังต่อ 100%
+      minimapImg.src = lvl.image;
 
       puzzleBoard.innerHTML = '';
       puzzlePieces.forEach(p => p.el.remove());
@@ -1540,7 +1556,6 @@
         pieceObj.isSnapped = true;
         totalSnapped++;
 
-        // Award Banknote per piece
         userMoney += 10;
         updateMoneyUI();
 
@@ -1611,7 +1626,7 @@
 
     function levelCompleted() {
       AudioEngine.playVictory();
-      userMoney += 100; // Bonus for level clear
+      userMoney += 100;
       updateMoneyUI();
 
       const currentLevel = LEVELS[currentLevelIdx];
@@ -1625,7 +1640,7 @@
       if (currentLevelIdx < LEVELS.length - 1) {
         initLevel(currentLevelIdx + 1);
       } else {
-        userMoney += 300; // Grand reward
+        userMoney += 300;
         updateMoneyUI();
         const totalSecs = Math.floor((Date.now() - gameStartTime) / 1000);
         victoryStats.textContent = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที (ยอดเงินสะสม ${userMoney} อัฐ)`;
@@ -1651,7 +1666,8 @@
     let poseResults = null;
     let handResults = null;
     let arHeldPiece = null;
-    let lastArTouchTime = 0;
+    let lastArClickTime = 0;
+    let isGameRunning = false;
 
     const pose = new Pose({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
@@ -1674,6 +1690,37 @@
       minTrackingConfidence: 0.5
     });
     hands.onResults((results) => { handResults = results; });
+
+    // Universal AR Element Click Simulator
+    function triggerUniversalARClick(x, y) {
+      const now = Date.now();
+      if (now - lastArClickTime < 500) return;
+
+      createFlowerTouch(x, y);
+
+      // 1. If start screen is visible, check start button click
+      const startScreen = document.getElementById('start-screen');
+      if (startScreen.style.display !== 'none') {
+        const startBtn = document.getElementById('start-btn');
+        const sRect = startBtn.getBoundingClientRect();
+        if (x >= sRect.left && x <= sRect.right && y >= sRect.top && y <= sRect.bottom) {
+          startBtn.click();
+          lastArClickTime = now;
+          return;
+        }
+      }
+
+      // 2. Click any UI element under fingertip
+      const el = document.elementFromPoint(x, y);
+      if (el) {
+        const clickTarget = el.closest('button, .ar-touch-item, .btn-top, .btn-icon, .panel-close, .cat-tab, .gold-btn');
+        if (clickTarget) {
+          clickTarget.click();
+          lastArClickTime = now;
+          return;
+        }
+      }
+    }
 
     function onFrame() {
       canvasElement.width = window.innerWidth;
@@ -1775,7 +1822,7 @@
         }
       }
 
-      // 3. AR Hand Interaction & Selection
+      // 3. AR Hand Interaction (Universal Finger Touch & Jigsaw Control)
       if (handResults && handResults.multiHandLandmarks) {
         for (const landmarks of handResults.multiHandLandmarks) {
           const indexTip = landmarks[8];
@@ -1791,46 +1838,34 @@
           const pinchDist = Math.hypot(ix - tx, iy - ty);
           const isPinching = pinchDist < 45;
 
-          // AR Touch on UI items
-          const now = Date.now();
-          if (arTouchBoxes.length > 0 && (now - lastArTouchTime > 600)) {
-            for (const box of arTouchBoxes) {
-              if (ix >= box.x && ix <= box.x + box.w && iy >= box.y && iy <= box.y + box.h) {
-                if (box.type === 'costume') {
-                  selectCostumeItem(box.cat, box.key);
-                } else if (box.type === 'shop') {
-                  handleShopSelection(box.key);
-                }
-                createFlowerTouch(ix, iy);
-                lastArTouchTime = now;
-                break;
-              }
-            }
+          // Universal AR Finger Touch Click everywhere on UI
+          if (isPinching) {
+            triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2);
           }
 
           // AR Drag Puzzle Pieces
-          if (isPinching) {
-            createFlowerTouch((ix + tx) / 2, (iy + ty) / 2);
-
-            if (!arHeldPiece) {
-              for (const p of puzzlePieces) {
-                if (!p.isSnapped && ix >= p.x && ix <= p.x + p.w && iy >= p.y && iy <= p.y + p.h) {
-                  arHeldPiece = p;
-                  p.el.classList.add('dragging');
-                  break;
+          if (isGameRunning) {
+            if (isPinching) {
+              if (!arHeldPiece) {
+                for (const p of puzzlePieces) {
+                  if (!p.isSnapped && ix >= p.x && ix <= p.x + p.w && iy >= p.y && iy <= p.y + p.h) {
+                    arHeldPiece = p;
+                    p.el.classList.add('dragging');
+                    break;
+                  }
                 }
+              } else {
+                arHeldPiece.x = ix - arHeldPiece.w / 2;
+                arHeldPiece.y = iy - arHeldPiece.h / 2;
+                arHeldPiece.el.style.left = `${arHeldPiece.x}px`;
+                arHeldPiece.el.style.top = `${arHeldPiece.y}px`;
               }
             } else {
-              arHeldPiece.x = ix - arHeldPiece.w / 2;
-              arHeldPiece.y = iy - arHeldPiece.h / 2;
-              arHeldPiece.el.style.left = `${arHeldPiece.x}px`;
-              arHeldPiece.el.style.top = `${arHeldPiece.y}px`;
-            }
-          } else {
-            if (arHeldPiece) {
-              arHeldPiece.el.classList.remove('dragging');
-              checkSnap(arHeldPiece);
-              arHeldPiece = null;
+              if (arHeldPiece) {
+                arHeldPiece.el.classList.remove('dragging');
+                checkSnap(arHeldPiece);
+                arHeldPiece = null;
+              }
             }
           }
         }
@@ -1841,17 +1876,12 @@
     }
 
     /* =========================================================
-       11. INITIALIZATION & CAMERA FEED
+       11. CAMERA START & INITIALIZATION
        ========================================================= */
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
 
-    startBtn.addEventListener('click', async () => {
-      AudioEngine.init();
-      if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-        ytPlayer.playVideo();
-      }
-
+    async function initCamera() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } },
@@ -1869,19 +1899,31 @@
           height: 720
         });
         camera.start();
-
-        startScreen.style.display = 'none';
-        gameStartTime = Date.now();
-        initLevel(0);
         requestAnimationFrame(onFrame);
       } catch (err) {
-        alert('กรุณาอนุญาตการเข้าถึงกล้องหน้าเพื่อสัมผัสประสบการณ์ AR จิ๊กซอว์ประวัติศาสตร์');
-        console.error(err);
+        console.warn('Camera permission pending or unavailable:', err);
       }
+    }
+
+    // Initialize Camera immediately on load to enable AR hand clicking on Start Screen
+    window.addEventListener('DOMContentLoaded', () => {
+      initCamera();
+    });
+
+    startBtn.addEventListener('click', async () => {
+      AudioEngine.init();
+      if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        ytPlayer.playVideo();
+      }
+
+      startScreen.style.display = 'none';
+      isGameRunning = true;
+      gameStartTime = Date.now();
+      initLevel(0);
     });
 
     window.addEventListener('resize', () => {
-      if (startScreen.style.display === 'none') {
+      if (isGameRunning) {
         initLevel(currentLevelIdx);
       }
     });
