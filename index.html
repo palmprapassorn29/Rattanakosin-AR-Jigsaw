@@ -342,7 +342,7 @@
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map (Clear & Well-proportioned) */
+    /* Thumbnail Mini-map */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
@@ -357,7 +357,7 @@
     }
 
     #minimap-wrapper h4 {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--gold);
       margin-bottom: 5px;
       font-family: var(--font-title);
@@ -472,7 +472,6 @@
       font-weight: bold;
     }
 
-    /* Scrollable items with touch & wheel (Smooth Scrolling) */
     .vertical-item-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -824,7 +823,7 @@
         subtitle: "ยุคพาณิชย์นาวีรุ่งโรจน์ (รัชกาลที่ ๓)",
         rows: 2, cols: 3,
         image: "Gemini_Generated_Image_dcahnzdcahnzdcah.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
+        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
       },
       {
         id: 3,
@@ -832,7 +831,7 @@
         subtitle: "การเปิดรับวิทยาการสมัยใหม่ (รัชกาลที่ ๔)",
         rows: 2, cols: 3,
         image: "Gemini_Generated_Image_f2p7i9f2p7i9f2p7.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าเจ้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
       },
       {
         id: 4,
@@ -1120,6 +1119,7 @@
 
     let activeFrameKey = 'none';
     let userMoney = 100;
+    let cameraStream = null; // เก็บสิทธิ์ใช้งานกล้องเอาไว้ตลอดเวลา
 
     /* =========================================================
        4. LEFT DRESSING & SHOP PANELS (Interactive)
@@ -1143,7 +1143,7 @@
     }
 
     homeBtn.addEventListener('click', () => {
-      // Return to Start Screen
+      // กลับหน้าเริ่มต้นโดยยังคงสิทธิ์เปิดกล้อง (กล้องจับตลอดเวลา ไม่ต้องขอใหม่)
       document.getElementById('start-screen').style.display = 'flex';
       document.getElementById('start-screen').classList.remove('camera-ready');
       document.getElementById('start-main-card').style.display = 'flex';
@@ -1243,7 +1243,7 @@
       });
     }
 
-    // Seamless Purchase & Instant Frame Swap (No popup alert & no freezing)
+    // ซื้อและเปลี่ยนกรอบรูปได้ทันทีแบบไม่ค้าง ไม่มี alert
     function handleShopSelection(key) {
       const item = SHOP_FRAMES[key];
       if (item.owned) {
@@ -1839,7 +1839,7 @@
     }
 
     /* =========================================================
-       11. CAMERA START & FLOW
+       11. CAMERA START & PERSISTENT STREAM
        ========================================================= */
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
@@ -1847,12 +1847,7 @@
     const arStartPrompt = document.getElementById('ar-start-prompt');
     const confirmStartBtn = document.getElementById('confirm-start-btn');
 
-    startBtn.addEventListener('click', async () => {
-      AudioEngine.init();
-      if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-        ytPlayer.playVideo();
-      }
-
+    async function initCameraStream() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } },
@@ -1870,16 +1865,26 @@
           height: 720
         });
         camera.start();
-
-        startScreen.classList.add('camera-ready');
-        startMainCard.style.display = 'none';
-        arStartPrompt.style.display = 'block';
-
         requestAnimationFrame(onFrame);
       } catch (err) {
-        alert('กรุณาอนุญาตการเข้าถึงกล้องหน้าเพื่อสัมผัสประสบการณ์ AR จิ๊กซอว์ประวัติศาสตร์');
-        console.error(err);
+        console.warn('Camera stream permission pending or unavailable:', err);
       }
+    }
+
+    // ขออนุญาตเปิดกล้องทันทีตั้งแต่เข้าหน้าเว็บครั้งแรก และคงสิทธิ์ไว้ตลอดเวลาแม้กลับหน้าหลัก
+    window.addEventListener('DOMContentLoaded', () => {
+      initCameraStream();
+    });
+
+    startBtn.addEventListener('click', () => {
+      AudioEngine.init();
+      if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        ytPlayer.playVideo();
+      }
+
+      startScreen.classList.add('camera-ready');
+      startMainCard.style.display = 'none';
+      arStartPrompt.style.display = 'block';
     });
 
     confirmStartBtn.addEventListener('click', () => {
