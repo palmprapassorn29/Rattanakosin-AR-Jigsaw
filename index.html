@@ -1,20 +1,16 @@
-# Let's generate a complete, beautifully updated single-file HTML index.html
-# with an exquisite Thai-art inspired start screen background (including Wat Phra Kaew, Giant Swing, glowing aura, traditional motifs, cloud swirls, gold foil accents)
-# or using bg-rattanakosin.jpg as requested with rich visual fallbacks and artistic overlays.
-
-html_code = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>บุพเพรัตนโกสินทร์ AR Jigsaw</title>
+  <title>บุพเพรัตนโกสินทร์ AR Jigsaw: ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์</title>
   
-  <!-- Google Fonts -->
+  <!-- Google Fonts Thai -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   
-  <!-- MediaPipe Libraries -->
+  <!-- MediaPipe AI Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
@@ -52,7 +48,7 @@ html_code = """<!DOCTYPE html>
     }
 
     /* =========================================================
-       LUXURIOUS START SCREEN WITH THAI ART BACKGROUND
+       1. START SCREEN (ใช้ภาพการ์ตูนย้อนยุคเป็นฉากหลังเต็มตา)
        ========================================================= */
     #start-screen {
       position: absolute;
@@ -63,132 +59,125 @@ html_code = """<!DOCTYPE html>
       z-index: 200;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-end; /* จัดการ์ดไว้ด้านล่างเล็กน้อยเพื่อให้เห็นตัวละครและวัดด้านบนชัดเจน */
       align-items: center;
       text-align: center;
-      padding: 24px;
-      /* Background Image Layer with Fallback & Rich Atmospheric Lighting */
-      background: 
-        linear-gradient(180deg, rgba(10, 25, 47, 0.4) 0%, rgba(20, 10, 5, 0.75) 100%),
-        url('bg-rattanakosin.jpg'),
-        radial-gradient(circle at 50% 30%, #ffd97d 0%, #b85d19 40%, #4a150c 75%, #0d060c 100%);
+      padding: 0 20px 45px 20px;
+      background-image: 
+        linear-gradient(180deg, rgba(10, 25, 47, 0.15) 0%, rgba(10, 25, 47, 0.3) 50%, rgba(10, 15, 25, 0.85) 100%),
+        url('Gemini_Generated_Image_89ya1c89ya1c89ya.png'),
+        url('bg-rattanakosin.jpg');
       background-size: cover;
-      background-position: center bottom;
+      background-position: center center;
       background-repeat: no-repeat;
       overflow: hidden;
     }
 
-    /* Atmospheric Floating Glow & Light Dust */
+    /* แสงละอองสีทองและม่านหมอกโบราณ */
     #start-screen::before {
       content: '';
       position: absolute;
-      top: -20%;
-      left: -20%;
-      width: 140%;
-      height: 140%;
-      background: radial-gradient(circle at 50% 40%, rgba(255, 215, 0, 0.25) 0%, rgba(212, 175, 55, 0.08) 45%, transparent 70%);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 30%, rgba(255, 223, 128, 0.25) 0%, transparent 65%);
       pointer-events: none;
-      animation: pulseAura 8s infinite alternate ease-in-out;
+      animation: pulseGoldAura 6s infinite alternate ease-in-out;
     }
 
-    @keyframes pulseAura {
-      0% { transform: scale(0.95); opacity: 0.7; }
-      100% { transform: scale(1.05); opacity: 1; }
+    @keyframes pulseGoldAura {
+      0% { opacity: 0.6; transform: scale(0.98); }
+      100% { opacity: 1; transform: scale(1.02); }
     }
 
-    /* Traditional Decorative Frame Container */
+    /* การ์ดต้อนรับลายไทยประยุกต์ กระจกฝ้าขอบทอง */
     .start-card {
       position: relative;
-      background: linear-gradient(135deg, rgba(20, 12, 8, 0.88) 0%, rgba(10, 25, 47, 0.92) 100%);
+      background: linear-gradient(145deg, rgba(20, 12, 8, 0.88) 0%, rgba(10, 25, 47, 0.92) 100%);
       border: 2px solid var(--gold);
-      border-radius: 24px;
-      padding: 44px 36px;
-      max-width: 640px;
-      width: 90%;
+      border-radius: 28px;
+      padding: 30px 36px;
+      max-width: 660px;
+      width: 92%;
       box-shadow: 
-        0 15px 50px rgba(0, 0, 0, 0.85),
-        0 0 35px rgba(212, 175, 55, 0.35),
-        inset 0 0 25px rgba(212, 175, 55, 0.15);
-      backdrop-filter: blur(12px);
+        0 20px 50px rgba(0, 0, 0, 0.85),
+        0 0 30px rgba(212, 175, 55, 0.4),
+        inset 0 0 20px rgba(212, 175, 55, 0.2);
+      backdrop-filter: blur(14px);
       display: flex;
       flex-direction: column;
       align-items: center;
+      animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Golden Thai Ornaments on Corners */
-    .start-card::after {
-      content: '❖';
-      position: absolute;
-      top: 12px;
-      font-size: 20px;
-      color: var(--gold);
-      text-shadow: 0 0 8px var(--gold-glow);
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .badge-sub {
       display: inline-block;
       border: 1px solid var(--gold);
-      background: rgba(139, 30, 30, 0.6);
-      padding: 4px 16px;
+      background: rgba(139, 30, 30, 0.7);
+      padding: 4px 18px;
       border-radius: 20px;
       font-size: 13px;
       color: var(--gold-light);
       letter-spacing: 1px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.4);
     }
 
     #start-screen h1 {
       font-family: var(--font-title);
-      font-size: 42px;
+      font-size: 38px;
       line-height: 1.25;
       color: var(--gold-light);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       text-shadow: 
         0 0 15px rgba(212, 175, 55, 0.8),
-        0 4px 8px rgba(0, 0, 0, 0.9);
+        0 4px 10px rgba(0, 0, 0, 0.9);
       background: linear-gradient(180deg, #FFF099 20%, #D4AF37 80%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     #start-screen p {
-      font-size: 16px;
-      line-height: 1.7;
+      font-size: 15px;
+      line-height: 1.65;
       color: var(--ivory);
-      margin-bottom: 30px;
+      margin-bottom: 24px;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
       font-weight: 300;
     }
 
-    /* Glowing Start Button */
+    /* ปุ่มเปิดกล้องเรืองแสงสีทอง */
     .gold-btn-start {
       background: linear-gradient(180deg, #FFE79A 0%, #D4AF37 50%, #996515 100%);
-      color: #3B1C00;
+      color: #381A00;
       font-family: var(--font-title);
       font-size: 22px;
       font-weight: 700;
       border: 1.5px solid #FFF8DC;
       border-radius: 35px;
-      padding: 14px 40px;
+      padding: 12px 38px;
       cursor: pointer;
       box-shadow: 
         0 6px 20px rgba(0, 0, 0, 0.6),
-        0 0 25px rgba(212, 175, 55, 0.6);
+        0 0 25px rgba(212, 175, 55, 0.7);
       transition: all 0.25s ease;
-      position: relative;
-      overflow: hidden;
     }
 
     .gold-btn-start:hover {
       transform: translateY(-3px) scale(1.03);
       box-shadow: 
         0 8px 30px rgba(0, 0, 0, 0.7),
-        0 0 35px rgba(255, 240, 153, 0.9);
+        0 0 35px rgba(255, 240, 153, 0.95);
     }
 
     /* =========================================================
-       AR & GAME VIEWPORT
+       2. AR VIEWPORT & LIVE CAMERA
        ========================================================= */
     #ar-container {
       position: absolute;
@@ -236,7 +225,6 @@ html_code = """<!DOCTYPE html>
       pointer-events: auto;
     }
 
-    /* Top Bar */
     header {
       display: flex;
       justify-content: space-between;
@@ -287,7 +275,7 @@ html_code = """<!DOCTYPE html>
       box-shadow: 0 0 12px var(--gold);
     }
 
-    /* Mini-map Reference */
+    /* Thumbnail Mini-map */
     #minimap-wrapper {
       position: absolute;
       top: 85px;
@@ -348,7 +336,9 @@ html_code = """<!DOCTYPE html>
       box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
     }
 
-    /* Game Jigsaw Stage */
+    /* =========================================================
+       3. JIGSAW PUZZLE BOARD & PIECES
+       ========================================================= */
     #game-stage {
       position: absolute;
       top: 0;
@@ -481,7 +471,7 @@ html_code = """<!DOCTYPE html>
   <!-- Hidden YouTube BGM Player -->
   <div id="yt-audio-frame"></div>
 
-  <!-- Start Screen with Exquisite Background -->
+  <!-- Start Screen with New Artwork Background -->
   <div id="start-screen">
     <div class="start-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
@@ -550,7 +540,7 @@ html_code = """<!DOCTYPE html>
 
   <script>
     /* =========================================================
-       1. HISTORICAL STAGES DATA (High Precision Vector SVGs for Stages 1-5)
+       1. HISTORICAL STAGES DATA (ภาพประกอบเฉพาะ 5 ยุคสมัย)
        ========================================================= */
     function generateHistoricalSVG(theme) {
       const svgs = {
@@ -561,36 +551,28 @@ html_code = """<!DOCTYPE html>
               </defs>
               <rect width="600" height="400" fill="url(#g1)"/>
               <circle cx="300" cy="180" r="110" fill="#FFF099" opacity="0.4"/>
-              <!-- Grand Palace / Temple Silhouette -->
               <path d="M50 400 L50 320 L90 280 L130 320 L130 400 Z" fill="url(#gold)"/>
               <path d="M300 70 L325 180 L350 220 L250 220 L275 180 Z" fill="url(#gold)"/>
               <path d="M220 220 L380 220 L380 400 L220 400 Z" fill="#7A1313"/>
-              <!-- Giant Swing -->
               <path d="M440 400 L450 140 L465 140 L475 400 Z M445 160 L515 160 M505 400 L495 140 L510 140 L520 400 Z" fill="#A82323" stroke="#D4AF37" stroke-width="2"/>
               <text x="300" y="370" font-family="'Charm', serif" font-size="28" fill="#FFF8DC" text-anchor="middle" font-weight="bold">กำเนิดพระนครและวัดพระศรีรัตนศาสดาราม</text>
             </svg>`,
         r3: `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
               <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1B3B6F"/><stop offset="100%" stop-color="#065A82"/></linearGradient></defs>
               <rect width="600" height="400" fill="url(#g2)"/>
-              <!-- Chinese Junk Ship -->
               <path d="M120 280 C200 320 400 320 480 270 L460 330 C350 370 200 360 140 330 Z" fill="#6B3E26" stroke="#D4AF37" stroke-width="2"/>
               <path d="M220 120 L220 280 M330 80 L330 280 M420 140 L420 280" stroke="#8B5A2B" stroke-width="6"/>
-              <!-- Sails -->
               <path d="M225 130 C270 140 270 240 225 250 Z" fill="#D4AF37"/>
               <path d="M335 90 C390 100 390 240 335 250 Z" fill="#E6CA65"/>
-              <!-- Pagoda Wat Arun Silhouette -->
               <path d="M70 280 L90 180 L100 130 L110 180 L130 280 Z" fill="#FFF8DC" opacity="0.6"/>
               <text x="300" y="370" font-family="'Charm', serif" font-size="26" fill="#FFF8DC" text-anchor="middle" font-weight="bold">การค้าสำเภาไทย-จีนและวัดอรุณราชวราราม</text>
             </svg>`,
         r4: `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
               <defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0D1B2A"/><stop offset="100%" stop-color="#1B263B"/></linearGradient></defs>
               <rect width="600" height="400" fill="url(#g3)"/>
-              <!-- Stars -->
               <circle cx="80" cy="70" r="2" fill="#fff"/><circle cx="150" cy="120" r="2.5" fill="#fff"/><circle cx="480" cy="80" r="3" fill="#FFEE80"/><circle cx="530" cy="150" r="1.5" fill="#fff"/>
-              <!-- Solar Eclipse / Moon -->
               <circle cx="300" cy="130" r="60" fill="#E0A96D"/>
               <circle cx="315" cy="130" r="58" fill="#0D1B2A"/>
-              <!-- Telescope Waghor -->
               <path d="M180 320 L270 160 L310 180 L220 340 Z" fill="#C0C0C0" stroke="#D4AF37" stroke-width="2"/>
               <path d="M230 310 L190 390 M250 310 L280 390 M230 310 L240 390" stroke="#8B5A2B" stroke-width="4"/>
               <text x="300" y="370" font-family="'Charm', serif" font-size="26" fill="#FFF8DC" text-anchor="middle" font-weight="bold">ดาราศาสตร์สากล ณ หอดูดาวหว้ากอ</text>
@@ -598,10 +580,8 @@ html_code = """<!DOCTYPE html>
         r5: `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
               <defs><linearGradient id="g4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4A5859"/><stop offset="100%" stop-color="#253031"/></linearGradient></defs>
               <rect width="600" height="400" fill="url(#g4)"/>
-              <!-- Ananta Samakhom Dome -->
               <path d="M200 240 Q300 130 400 240 Z" fill="#EAE0D5"/>
               <rect x="230" y="240" width="140" height="70" fill="#C6AC8F"/>
-              <!-- Railway & Train -->
               <path d="M0 380 L600 380 M0 360 L600 360" stroke="#D4AF37" stroke-width="3"/>
               <rect x="360" y="280" width="140" height="70" fill="#8B1E1E" rx="8"/>
               <circle cx="390" cy="355" r="16" fill="#333" stroke="#D4AF37" stroke-width="2"/>
@@ -615,9 +595,7 @@ html_code = """<!DOCTYPE html>
                 <linearGradient id="field" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8CB369"/><stop offset="100%" stop-color="#D4AF37"/></linearGradient>
               </defs>
               <rect width="600" height="400" fill="url(#g5)"/>
-              <!-- Rainmaking Plane -->
               <path d="M120 90 L220 90 L250 80 L230 110 L150 110 Z" fill="#F4F1DE" stroke="#D4AF37" stroke-width="2"/>
-              <!-- Terraced Fields -->
               <path d="M0 240 Q150 210 300 250 T600 230 L600 400 L0 400 Z" fill="url(#field)"/>
               <ellipse cx="420" cy="320" rx="110" ry="40" fill="#3A86C8" stroke="#FFF8DC" stroke-width="2"/>
               <text x="300" y="370" font-family="'Charm', serif" font-size="26" fill="#FFF8DC" text-anchor="middle" font-weight="bold">โครงการพระราชดำริ ฝนหลวง และเกษตรทฤษฎีใหม่</text>
@@ -763,7 +741,7 @@ html_code = """<!DOCTYPE html>
         <path d="M140 60 Q200 120 260 60" fill="none" stroke="url(#sgold)" stroke-width="6"/>
       </svg>`,
       sabai_pleat: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-        <defs><linearGradient id="sruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C9184A"/><stop offset="100%" stop-color="#590D22"/></linearGradient></defs>
+        <defs><linearGradient id="sruby" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C9184A"/><stop offset="100%" stop-color="#590D22"/></linearGradient></defs>
         <path d="M110 50 Q210 80 290 220 L310 340 L230 340 L170 190 Z" fill="url(#sruby)" stroke="#FFB3C1" stroke-width="1.5"/>
         <line x1="130" y1="80" x2="250" y2="340" stroke="#FF758F" stroke-width="2" stroke-dasharray="6,4"/>
         <line x1="150" y1="100" x2="270" y2="340" stroke="#FF758F" stroke-width="2" stroke-dasharray="6,4"/>
@@ -1219,9 +1197,3 @@ html_code = """<!DOCTYPE html>
   </script>
 </body>
 </html>
-"""
-
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write(html_code)
-
-print("Saved index.html successfully!")
