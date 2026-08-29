@@ -1,14 +1,20 @@
-<!DOCTYPE html>
+# Let's generate a complete, beautifully updated single-file HTML index.html
+# with an exquisite Thai-art inspired start screen background (including Wat Phra Kaew, Giant Swing, glowing aura, traditional motifs, cloud swirls, gold foil accents)
+# or using bg-rattanakosin.jpg as requested with rich visual fallbacks and artistic overlays.
+
+html_code = """<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>บุพเพรัตนโกสินทร์ AR Jigsaw</title>
   
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   
+  <!-- MediaPipe Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
@@ -17,11 +23,12 @@
     :root {
       --gold: #D4AF37;
       --gold-light: #FFF099;
+      --gold-glow: #FDE047;
       --crimson: #8B1E1E;
       --crimson-dark: #5A0F0F;
       --ivory: #FFF8DC;
       --navy: #0A192F;
-      --navy-glass: rgba(10, 25, 47, 0.85);
+      --navy-glass: rgba(10, 25, 47, 0.88);
       --font-title: 'Charm', cursive, serif;
       --font-body: 'Sarabun', sans-serif;
     }
@@ -44,7 +51,145 @@
       color: var(--ivory);
     }
 
-    /* Fullscreen AR Viewport */
+    /* =========================================================
+       LUXURIOUS START SCREEN WITH THAI ART BACKGROUND
+       ========================================================= */
+    #start-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 24px;
+      /* Background Image Layer with Fallback & Rich Atmospheric Lighting */
+      background: 
+        linear-gradient(180deg, rgba(10, 25, 47, 0.4) 0%, rgba(20, 10, 5, 0.75) 100%),
+        url('bg-rattanakosin.jpg'),
+        radial-gradient(circle at 50% 30%, #ffd97d 0%, #b85d19 40%, #4a150c 75%, #0d060c 100%);
+      background-size: cover;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+      overflow: hidden;
+    }
+
+    /* Atmospheric Floating Glow & Light Dust */
+    #start-screen::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -20%;
+      width: 140%;
+      height: 140%;
+      background: radial-gradient(circle at 50% 40%, rgba(255, 215, 0, 0.25) 0%, rgba(212, 175, 55, 0.08) 45%, transparent 70%);
+      pointer-events: none;
+      animation: pulseAura 8s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseAura {
+      0% { transform: scale(0.95); opacity: 0.7; }
+      100% { transform: scale(1.05); opacity: 1; }
+    }
+
+    /* Traditional Decorative Frame Container */
+    .start-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(20, 12, 8, 0.88) 0%, rgba(10, 25, 47, 0.92) 100%);
+      border: 2px solid var(--gold);
+      border-radius: 24px;
+      padding: 44px 36px;
+      max-width: 640px;
+      width: 90%;
+      box-shadow: 
+        0 15px 50px rgba(0, 0, 0, 0.85),
+        0 0 35px rgba(212, 175, 55, 0.35),
+        inset 0 0 25px rgba(212, 175, 55, 0.15);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Golden Thai Ornaments on Corners */
+    .start-card::after {
+      content: '❖';
+      position: absolute;
+      top: 12px;
+      font-size: 20px;
+      color: var(--gold);
+      text-shadow: 0 0 8px var(--gold-glow);
+    }
+
+    .badge-sub {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      background: rgba(139, 30, 30, 0.6);
+      padding: 4px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--gold-light);
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+
+    #start-screen h1 {
+      font-family: var(--font-title);
+      font-size: 42px;
+      line-height: 1.25;
+      color: var(--gold-light);
+      margin-bottom: 12px;
+      text-shadow: 
+        0 0 15px rgba(212, 175, 55, 0.8),
+        0 4px 8px rgba(0, 0, 0, 0.9);
+      background: linear-gradient(180deg, #FFF099 20%, #D4AF37 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    #start-screen p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ivory);
+      margin-bottom: 30px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+      font-weight: 300;
+    }
+
+    /* Glowing Start Button */
+    .gold-btn-start {
+      background: linear-gradient(180deg, #FFE79A 0%, #D4AF37 50%, #996515 100%);
+      color: #3B1C00;
+      font-family: var(--font-title);
+      font-size: 22px;
+      font-weight: 700;
+      border: 1.5px solid #FFF8DC;
+      border-radius: 35px;
+      padding: 14px 40px;
+      cursor: pointer;
+      box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.6),
+        0 0 25px rgba(212, 175, 55, 0.6);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gold-btn-start:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 
+        0 8px 30px rgba(0, 0, 0, 0.7),
+        0 0 35px rgba(255, 240, 153, 0.9);
+    }
+
+    /* =========================================================
+       AR & GAME VIEWPORT
+       ========================================================= */
     #ar-container {
       position: absolute;
       top: 0;
@@ -74,7 +219,6 @@
       z-index: 5;
     }
 
-    /* UI Layer */
     #ui-container {
       position: absolute;
       top: 0;
@@ -97,8 +241,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 24px;
-      background: linear-gradient(180deg, rgba(10, 25, 47, 0.9) 0%, transparent 100%);
+      padding: 14px 28px;
+      background: linear-gradient(180deg, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.4) 70%, transparent 100%);
       text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
@@ -143,10 +287,10 @@
       box-shadow: 0 0 12px var(--gold);
     }
 
-    /* Mini-map Thumbnail */
+    /* Mini-map Reference */
     #minimap-wrapper {
       position: absolute;
-      top: 80px;
+      top: 85px;
       right: 24px;
       background: var(--navy-glass);
       border: 2px solid var(--gold);
@@ -158,15 +302,15 @@
     }
 
     #minimap-wrapper h4 {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--gold);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       font-family: var(--font-title);
     }
 
     #minimap-img {
-      width: 130px;
-      height: 95px;
+      width: 135px;
+      height: 90px;
       object-fit: cover;
       border-radius: 6px;
       border: 1px solid rgba(212, 175, 55, 0.4);
@@ -174,7 +318,7 @@
 
     /* Costume Selector Bar */
     #costume-bar {
-      margin: 0 auto 16px auto;
+      margin: 0 auto 18px auto;
       background: var(--navy-glass);
       border: 1.5px solid var(--gold);
       border-radius: 30px;
@@ -189,7 +333,7 @@
       background: transparent;
       border: 1px solid transparent;
       color: var(--ivory);
-      padding: 6px 14px;
+      padding: 7px 16px;
       border-radius: 20px;
       font-family: var(--font-body);
       font-size: 13px;
@@ -204,7 +348,7 @@
       box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
     }
 
-    /* Jigsaw Game Area */
+    /* Game Jigsaw Stage */
     #game-stage {
       position: absolute;
       top: 0;
@@ -220,15 +364,15 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      border: 2px dashed rgba(212, 175, 55, 0.6);
-      background: rgba(10, 25, 47, 0.35);
-      box-shadow: 0 0 30px rgba(0,0,0,0.6);
+      border: 2px dashed rgba(212, 175, 55, 0.65);
+      background: rgba(10, 25, 47, 0.45);
+      box-shadow: 0 0 30px rgba(0,0,0,0.7);
       border-radius: 8px;
     }
 
     .puzzle-slot {
       position: absolute;
-      border: 1px dashed rgba(255, 248, 220, 0.2);
+      border: 1px dashed rgba(255, 248, 220, 0.25);
     }
 
     .puzzle-piece {
@@ -245,7 +389,7 @@
     .puzzle-piece.dragging {
       cursor: grabbing;
       transform: scale(1.05);
-      box-shadow: 0 12px 25px rgba(212, 175, 55, 0.6);
+      box-shadow: 0 12px 25px rgba(212, 175, 55, 0.7);
       z-index: 1000 !important;
     }
 
@@ -255,7 +399,7 @@
       box-shadow: none;
     }
 
-    /* Modal / Popups */
+    /* Modals */
     .modal-overlay {
       position: absolute;
       top: 0;
@@ -287,12 +431,11 @@
       width: 90%;
       text-align: center;
       box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.3);
-      position: relative;
     }
 
     .modal-card h2 {
       font-family: var(--font-title);
-      font-size: 32px;
+      font-size: 30px;
       color: var(--gold-light);
       margin-bottom: 12px;
       text-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
@@ -324,40 +467,6 @@
       box-shadow: 0 6px 25px rgba(255, 240, 153, 0.7);
     }
 
-    /* Start Screen */
-    #start-screen {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, #1b3052 0%, #070e1a 100%);
-      z-index: 200;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-    }
-
-    #start-screen h1 {
-      font-family: var(--font-title);
-      font-size: 46px;
-      color: var(--gold-light);
-      margin-bottom: 10px;
-      text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
-    }
-
-    #start-screen p {
-      font-size: 18px;
-      max-width: 600px;
-      margin-bottom: 35px;
-      color: var(--ivory);
-      line-height: 1.6;
-    }
-
-    /* Hidden YouTube frame */
     #yt-audio-frame {
       position: absolute;
       width: 1px;
@@ -369,23 +478,31 @@
 </head>
 <body>
 
+  <!-- Hidden YouTube BGM Player -->
   <div id="yt-audio-frame"></div>
 
+  <!-- Start Screen with Exquisite Background -->
   <div id="start-screen">
-    <h1>บุพเพรัตนโกสินทร์ AR Jigsaw</h1>
-    <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ สวมชุดไทยโบราณผ่านกล้องหน้า และต่อร้อยเรียงภาพเหตุการณ์สำคัญแห่งกรุงรัตนโกสินทร์ด้วยมือของคุณ</p>
-    <button class="gold-btn" id="start-btn">เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)</button>
+    <div class="start-card">
+      <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
+      <h1>บุพเพรัตนโกสินทร์ AR Jigsaw</h1>
+      <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ สวมใส่ชุดไทยโบราณผ่านกล้องหน้า และต่อร้อยเรียงภาพเหตุการณ์สำคัญแห่งกรุงรัตนโกสินทร์ทั้ง ๕ ยุคสมัยด้วยมือของคุณ</p>
+      <button class="gold-btn-start" id="start-btn">เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)</button>
+    </div>
   </div>
 
+  <!-- AR Container -->
   <div id="ar-container">
     <video id="webcam-video" playsinline muted></video>
     <canvas id="ar-canvas"></canvas>
   </div>
 
+  <!-- Jigsaw Game Stage -->
   <div id="game-stage">
     <div id="puzzle-board" class="puzzle-target-board"></div>
   </div>
 
+  <!-- UI Overlay -->
   <div id="ui-container">
     <header>
       <div class="title-group">
@@ -397,11 +514,13 @@
       </div>
     </header>
 
+    <!-- Mini-map Reference Thumbnail -->
     <div id="minimap-wrapper" class="interactive">
       <h4>ภาพตัวอย่าง</h4>
       <img id="minimap-img" src="" alt="Thumbnail">
     </div>
 
+    <!-- Costume Selector -->
     <div id="costume-bar" class="interactive">
       <button class="costume-btn active" data-costume="sabai_gold">สไบปักทอง (หญิง)</button>
       <button class="costume-btn" data-costume="sabai_pleat">สไบจีบ (หญิง)</button>
@@ -410,6 +529,7 @@
     </div>
   </div>
 
+  <!-- Modal: Level Completed / History Info -->
   <div id="info-modal" class="modal-overlay">
     <div class="modal-card">
       <h2 id="modal-title">ความรู้ประวัติศาสตร์</h2>
@@ -418,6 +538,7 @@
     </div>
   </div>
 
+  <!-- Modal: Game Victory Summary -->
   <div id="victory-modal" class="modal-overlay">
     <div class="modal-card">
       <h2>ออเจ้าสำเร็จบริบูรณ์!</h2>
@@ -429,9 +550,8 @@
 
   <script>
     /* =========================================================
-       1. DATA & HISTORICAL STAGES (5 Historical Levels)
+       1. HISTORICAL STAGES DATA (High Precision Vector SVGs for Stages 1-5)
        ========================================================= */
-    // Procedural SVG Generation to ensure self-contained standalone functionality
     function generateHistoricalSVG(theme) {
       const svgs = {
         r1: `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
@@ -441,28 +561,36 @@
               </defs>
               <rect width="600" height="400" fill="url(#g1)"/>
               <circle cx="300" cy="180" r="110" fill="#FFF099" opacity="0.4"/>
+              <!-- Grand Palace / Temple Silhouette -->
               <path d="M50 400 L50 320 L90 280 L130 320 L130 400 Z" fill="url(#gold)"/>
               <path d="M300 70 L325 180 L350 220 L250 220 L275 180 Z" fill="url(#gold)"/>
               <path d="M220 220 L380 220 L380 400 L220 400 Z" fill="#7A1313"/>
+              <!-- Giant Swing -->
               <path d="M440 400 L450 140 L465 140 L475 400 Z M445 160 L515 160 M505 400 L495 140 L510 140 L520 400 Z" fill="#A82323" stroke="#D4AF37" stroke-width="2"/>
               <text x="300" y="370" font-family="'Charm', serif" font-size="28" fill="#FFF8DC" text-anchor="middle" font-weight="bold">กำเนิดพระนครและวัดพระศรีรัตนศาสดาราม</text>
             </svg>`,
         r3: `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
               <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1B3B6F"/><stop offset="100%" stop-color="#065A82"/></linearGradient></defs>
               <rect width="600" height="400" fill="url(#g2)"/>
+              <!-- Chinese Junk Ship -->
               <path d="M120 280 C200 320 400 320 480 270 L460 330 C350 370 200 360 140 330 Z" fill="#6B3E26" stroke="#D4AF37" stroke-width="2"/>
               <path d="M220 120 L220 280 M330 80 L330 280 M420 140 L420 280" stroke="#8B5A2B" stroke-width="6"/>
+              <!-- Sails -->
               <path d="M225 130 C270 140 270 240 225 250 Z" fill="#D4AF37"/>
               <path d="M335 90 C390 100 390 240 335 250 Z" fill="#E6CA65"/>
+              <!-- Pagoda Wat Arun Silhouette -->
               <path d="M70 280 L90 180 L100 130 L110 180 L130 280 Z" fill="#FFF8DC" opacity="0.6"/>
               <text x="300" y="370" font-family="'Charm', serif" font-size="26" fill="#FFF8DC" text-anchor="middle" font-weight="bold">การค้าสำเภาไทย-จีนและวัดอรุณราชวราราม</text>
             </svg>`,
         r4: `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
               <defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0D1B2A"/><stop offset="100%" stop-color="#1B263B"/></linearGradient></defs>
               <rect width="600" height="400" fill="url(#g3)"/>
+              <!-- Stars -->
               <circle cx="80" cy="70" r="2" fill="#fff"/><circle cx="150" cy="120" r="2.5" fill="#fff"/><circle cx="480" cy="80" r="3" fill="#FFEE80"/><circle cx="530" cy="150" r="1.5" fill="#fff"/>
+              <!-- Solar Eclipse / Moon -->
               <circle cx="300" cy="130" r="60" fill="#E0A96D"/>
               <circle cx="315" cy="130" r="58" fill="#0D1B2A"/>
+              <!-- Telescope Waghor -->
               <path d="M180 320 L270 160 L310 180 L220 340 Z" fill="#C0C0C0" stroke="#D4AF37" stroke-width="2"/>
               <path d="M230 310 L190 390 M250 310 L280 390 M230 310 L240 390" stroke="#8B5A2B" stroke-width="4"/>
               <text x="300" y="370" font-family="'Charm', serif" font-size="26" fill="#FFF8DC" text-anchor="middle" font-weight="bold">ดาราศาสตร์สากล ณ หอดูดาวหว้ากอ</text>
@@ -470,8 +598,10 @@
         r5: `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
               <defs><linearGradient id="g4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4A5859"/><stop offset="100%" stop-color="#253031"/></linearGradient></defs>
               <rect width="600" height="400" fill="url(#g4)"/>
+              <!-- Ananta Samakhom Dome -->
               <path d="M200 240 Q300 130 400 240 Z" fill="#EAE0D5"/>
               <rect x="230" y="240" width="140" height="70" fill="#C6AC8F"/>
+              <!-- Railway & Train -->
               <path d="M0 380 L600 380 M0 360 L600 360" stroke="#D4AF37" stroke-width="3"/>
               <rect x="360" y="280" width="140" height="70" fill="#8B1E1E" rx="8"/>
               <circle cx="390" cy="355" r="16" fill="#333" stroke="#D4AF37" stroke-width="2"/>
@@ -485,7 +615,9 @@
                 <linearGradient id="field" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8CB369"/><stop offset="100%" stop-color="#D4AF37"/></linearGradient>
               </defs>
               <rect width="600" height="400" fill="url(#g5)"/>
+              <!-- Rainmaking Plane -->
               <path d="M120 90 L220 90 L250 80 L230 110 L150 110 Z" fill="#F4F1DE" stroke="#D4AF37" stroke-width="2"/>
+              <!-- Terraced Fields -->
               <path d="M0 240 Q150 210 300 250 T600 230 L600 400 L0 400 Z" fill="url(#field)"/>
               <ellipse cx="420" cy="320" rx="110" ry="40" fill="#3A86C8" stroke="#FFF8DC" stroke-width="2"/>
               <text x="300" y="370" font-family="'Charm', serif" font-size="26" fill="#FFF8DC" text-anchor="middle" font-weight="bold">โครงการพระราชดำริ ฝนหลวง และเกษตรทฤษฎีใหม่</text>
@@ -552,8 +684,8 @@
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(523.25, this.ctx.currentTime); // C5
-        osc.frequency.exponentialRampToValueAtTime(1046.5, this.ctx.currentTime + 0.15); // C6
+        osc.frequency.setValueAtTime(523.25, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1046.5, this.ctx.currentTime + 0.15);
         gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
         gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
         osc.connect(gain);
@@ -563,7 +695,7 @@
       },
       playVictory() {
         this.init();
-        const notes = [523.25, 659.25, 783.99, 1046.5]; // C, E, G, High C
+        const notes = [523.25, 659.25, 783.99, 1046.5];
         notes.forEach((freq, idx) => {
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
@@ -585,7 +717,6 @@
     let ytPlayer = null;
     let isMuted = false;
 
-    // Load YouTube IFrame API
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     document.head.appendChild(tag);
@@ -626,15 +757,13 @@
     let currentCostume = 'sabai_gold';
     const costumeSVGs = {
       sabai_gold: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="sgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFE79A"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#996515"/></linearGradient>
-        </defs>
+        <defs><linearGradient id="sgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFE79A"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#996515"/></linearGradient></defs>
         <path d="M120 40 Q200 70 280 200 L320 340 L240 340 L180 180 Q140 100 120 40 Z" fill="url(#sgold)" stroke="#FFF099" stroke-width="2"/>
         <circle cx="160" cy="90" r="14" fill="#8B1E1E" stroke="#FFE79A" stroke-width="2"/>
         <path d="M140 60 Q200 120 260 60" fill="none" stroke="url(#sgold)" stroke-width="6"/>
       </svg>`,
       sabai_pleat: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-        <defs><linearGradient id="sruby" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C9184A"/><stop offset="100%" stop-color="#590D22"/></linearGradient></defs>
+        <defs><linearGradient id="sruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C9184A"/><stop offset="100%" stop-color="#590D22"/></linearGradient></defs>
         <path d="M110 50 Q210 80 290 220 L310 340 L230 340 L170 190 Z" fill="url(#sruby)" stroke="#FFB3C1" stroke-width="1.5"/>
         <line x1="130" y1="80" x2="250" y2="340" stroke="#FF758F" stroke-width="2" stroke-dasharray="6,4"/>
         <line x1="150" y1="100" x2="270" y2="340" stroke="#FF758F" stroke-width="2" stroke-dasharray="6,4"/>
@@ -710,7 +839,7 @@
     }
 
     /* =========================================================
-       6. JIGSAW PUZZLE SYSTEM (Touch, Mouse & AR Hands)
+       6. JIGSAW PUZZLE ENGINE
        ========================================================= */
     let currentLevelIdx = 0;
     let totalSnapped = 0;
@@ -735,7 +864,6 @@
       puzzlePieces = [];
       totalSnapped = 0;
 
-      // Board Dimensions
       const stageW = window.innerWidth;
       const stageH = window.innerHeight;
       const boardW = Math.min(stageW * 0.46, 480);
@@ -749,11 +877,9 @@
       const pieceW = boardW / lvl.cols;
       const pieceH = boardH / lvl.rows;
 
-      // Create Slots and Pieces
       let pieceIndex = 0;
       for (let r = 0; r < lvl.rows; r++) {
         for (let c = 0; c < lvl.cols; c++) {
-          // Target Slot
           const slot = document.createElement('div');
           slot.className = 'puzzle-slot';
           slot.style.width = `${pieceW}px`;
@@ -762,11 +888,9 @@
           slot.style.left = `${c * pieceW}px`;
           puzzleBoard.appendChild(slot);
 
-          // Absolute Target Position
           const targetScreenX = (stageW / 2 - boardW / 2) + c * pieceW;
           const targetScreenY = (stageH / 2 - boardH / 2) + r * pieceH;
 
-          // Piece Element
           const piece = document.createElement('div');
           piece.className = 'puzzle-piece';
           piece.style.width = `${pieceW}px`;
@@ -775,7 +899,6 @@
           piece.style.backgroundSize = `${boardW}px ${boardH}px`;
           piece.style.backgroundPosition = `-${c * pieceW}px -${r * pieceH}px`;
 
-          // Random Scatter Position on Sides
           const isLeft = Math.random() < 0.5;
           const randomX = isLeft 
             ? Math.random() * (stageW * 0.15) + 20 
@@ -812,7 +935,6 @@
       const dist = Math.hypot(dx, dy);
 
       if (dist < 55) {
-        // Snap Success
         pieceObj.x = pieceObj.targetX;
         pieceObj.y = pieceObj.targetY;
         pieceObj.el.style.left = `${pieceObj.x}px`;
@@ -873,7 +995,7 @@
     }
 
     /* =========================================================
-       7. LEVEL COMPLETION & VICTORY LOGIC
+       7. LEVEL COMPLETION & VICTORY
        ========================================================= */
     const infoModal = document.getElementById('info-modal');
     const modalTitle = document.getElementById('modal-title');
@@ -897,7 +1019,6 @@
       if (currentLevelIdx < LEVELS.length - 1) {
         initLevel(currentLevelIdx + 1);
       } else {
-        // Complete All Stages
         const totalSecs = Math.floor((Date.now() - gameStartTime) / 1000);
         victoryStats.textContent = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที`;
         victoryModal.classList.add('active');
@@ -911,7 +1032,7 @@
     });
 
     /* =========================================================
-       8. MEDIAPIPE AR POSE & HAND TRACKING INTEGRATION
+       8. MEDIAPIPE AR POSE & HANDS
        ========================================================= */
     const videoElement = document.getElementById('webcam-video');
     const canvasElement = document.getElementById('ar-canvas');
@@ -921,7 +1042,6 @@
     let handResults = null;
     let arHeldPiece = null;
 
-    // MediaPipe Pose Setup
     const pose = new Pose({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
     });
@@ -933,7 +1053,6 @@
     });
     pose.onResults((results) => { poseResults = results; });
 
-    // MediaPipe Hands Setup
     const hands = new Hands({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
     });
@@ -945,7 +1064,6 @@
     });
     hands.onResults((results) => { handResults = results; });
 
-    // Render AR Scene
     function onFrame() {
       canvasElement.width = window.innerWidth;
       canvasElement.height = window.innerHeight;
@@ -954,14 +1072,13 @@
 
       canvasCtx.clearRect(0, 0, w, h);
 
-      // 1. AR Thai Costume Overlay (via Pose)
+      // AR Costume Fitting
       if (poseResults && poseResults.poseLandmarks) {
         const lm = poseResults.poseLandmarks;
         const leftShoulder = lm[11];
         const rightShoulder = lm[12];
 
         if (leftShoulder.visibility > 0.4 && rightShoulder.visibility > 0.4) {
-          // Flip X Coordinate for mirrored display
           const lsX = (1 - leftShoulder.x) * w;
           const lsY = leftShoulder.y * h;
           const rsX = (1 - rightShoulder.x) * w;
@@ -992,7 +1109,7 @@
         }
       }
 
-      // 2. AR Hand Cursor & Pinch Drag Interaction (via Hands)
+      // AR Hands Tracking & Pinching
       if (handResults && handResults.multiHandLandmarks) {
         for (const landmarks of handResults.multiHandLandmarks) {
           const indexTip = landmarks[8];
@@ -1003,7 +1120,6 @@
           const tx = (1 - thumbTip.x) * w;
           const ty = thumbTip.y * h;
 
-          // Draw Glowing Lotus Hand Cursor
           canvasCtx.save();
           canvasCtx.shadowColor = '#D4AF37';
           canvasCtx.shadowBlur = 15;
@@ -1011,19 +1127,16 @@
           canvasCtx.beginPath();
           canvasCtx.arc(ix, iy, 12, 0, Math.PI * 2);
           canvasCtx.fill();
-          // Inner Lotus Dot
           canvasCtx.fillStyle = '#8B1E1E';
           canvasCtx.beginPath();
           canvasCtx.arc(ix, iy, 5, 0, Math.PI * 2);
           canvasCtx.fill();
           canvasCtx.restore();
 
-          // Detect Pinch Gesture (Distance between Thumb and Index Tip)
           const pinchDist = Math.hypot(ix - tx, iy - ty);
           const isPinching = pinchDist < 45;
 
           if (isPinching) {
-            // Draw pinch ripple effect
             canvasCtx.strokeStyle = '#D4AF37';
             canvasCtx.lineWidth = 3;
             canvasCtx.beginPath();
@@ -1031,7 +1144,6 @@
             canvasCtx.stroke();
 
             if (!arHeldPiece) {
-              // Hit test for available puzzle piece
               for (const p of puzzlePieces) {
                 if (!p.isSnapped && ix >= p.x && ix <= p.x + p.w && iy >= p.y && iy <= p.y + p.h) {
                   arHeldPiece = p;
@@ -1040,7 +1152,6 @@
                 }
               }
             } else {
-              // Move Held Piece
               arHeldPiece.x = ix - arHeldPiece.w / 2;
               arHeldPiece.y = iy - arHeldPiece.h / 2;
               arHeldPiece.el.style.left = `${arHeldPiece.x}px`;
@@ -1056,14 +1167,12 @@
         }
       }
 
-      // 3. Sparkle Particle System Update
       renderParticles(canvasCtx);
-
       requestAnimationFrame(onFrame);
     }
 
     /* =========================================================
-       9. INITIALIZATION & CAMERA FEED
+       9. INITIALIZATION
        ========================================================= */
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
@@ -1110,3 +1219,9 @@
   </script>
 </body>
 </html>
+"""
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html_code)
+
+print("Saved index.html successfully!")
