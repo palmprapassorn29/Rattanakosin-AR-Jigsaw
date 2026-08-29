@@ -64,7 +64,7 @@
       background-image: 
         linear-gradient(180deg, rgba(10, 25, 47, 0.15) 0%, rgba(10, 25, 47, 0.3) 50%, rgba(10, 15, 25, 0.88) 100%),
         url('Gemini_Generated_Image_89ya1c89ya1c89ya.png'),
-        url('Gemini_Generated_Image_89ya1c89ya1c89ya.png');
+        url('bg-rattanakosin.jpg');
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
@@ -722,8 +722,8 @@
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(659.25, this.ctx.currentTime); // E5
-        osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.1); // A5
+        osc.frequency.setValueAtTime(659.25, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.1);
         gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
         gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
         osc.connect(gain);
@@ -805,7 +805,7 @@
         <path d="M140 60 Q200 120 260 60" fill="none" stroke="url(#sgold)" stroke-width="6"/>
       </svg>`,
       sabai_pleat: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-        <defs><linearGradient id="sruby" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF758F"/><stop offset="100%" stop-color="#A4133C"/></linearGradient></defs>
+        <defs><linearGradient id="sruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF758F"/><stop offset="100%" stop-color="#A4133C"/></linearGradient></defs>
         <path d="M110 50 Q210 80 290 220 L310 340 L230 340 L170 190 Z" fill="url(#sruby)" stroke="#FFCCD5" stroke-width="1.5"/>
         <line x1="130" y1="80" x2="250" y2="340" stroke="#FFF0F3" stroke-width="2" stroke-dasharray="6,4"/>
         <line x1="150" y1="100" x2="270" y2="340" stroke="#FFF0F3" stroke-width="2" stroke-dasharray="6,4"/>
@@ -1037,7 +1037,7 @@
       const lvl = LEVELS[currentLevelIdx];
       levelTitle.textContent = lvl.title;
       levelSubtitle.textContent = lvl.subtitle;
-      minimapImg.src = lvl.image; // Exact match thumbnail
+      minimapImg.src = lvl.image;
 
       puzzleBoard.innerHTML = '';
       puzzlePieces.forEach(p => p.el.remove());
@@ -1047,12 +1047,12 @@
       const stageW = window.innerWidth;
       const stageH = window.innerHeight;
       const boardW = Math.min(stageW * 0.44, 460);
-      const boardH = boardW * (360 / 600); // 4x2 grid aspect ratio
+      const boardH = boardW * (360 / 600);
 
       puzzleBoard.style.width = `${boardW}px`;
       puzzleBoard.style.height = `${boardH}px`;
       puzzleBoard.style.top = `${stageH / 2}px`;
-      puzzleBoard.style.left = `${stageW * 0.58}px`; // Centered comfortably with wardrobe panel
+      puzzleBoard.style.left = `${stageW * 0.58}px`;
 
       const pieceW = boardW / lvl.cols; // 4 columns
       const pieceH = boardH / lvl.rows; // 2 rows = 8 pieces
@@ -1081,7 +1081,6 @@
           piece.style.backgroundSize = `${boardW}px ${boardH}px`;
           piece.style.backgroundPosition = `-${c * pieceW}px -${r * pieceH}px`;
 
-          // Scatter pieces on the right and bottom area
           const randomX = stageW - pieceW - Math.random() * (stageW * 0.22) - 20;
           const randomY = Math.random() * (stageH - pieceH - 180) + 100;
 
@@ -1401,7 +1400,7 @@
         startScreen.style.display = 'none';
         gameStartTime = Date.now();
         initLevel(0);
-        setMode('wardrobe'); // เริ่มต้นที่ห้องแต่งตัวเพื่อให้ผู้เล่นลองแปลงโฉม
+        setMode('wardrobe');
         requestAnimationFrame(onFrame);
       } catch (err) {
         alert('กรุณาอนุญาตการเข้าถึงกล้องหน้าเพื่อสัมผัสประสบการณ์ AR จิ๊กซอว์ประวัติศาสตร์');
@@ -1417,9 +1416,3 @@
   </script>
 </body>
 </html>
-"""
-
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write(full_html)
-
-print("index.html updated successfully with all requested features!")
