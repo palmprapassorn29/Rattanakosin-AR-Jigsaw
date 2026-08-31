@@ -89,7 +89,7 @@
     }
 
     /* =========================================================
-       1. START SCREEN (Centered, Kanok Border & Golden Glitter)
+       1. START SCREEN (Centered, Kanok Border & Glitter)
        ========================================================= */
     #start-screen {
       position: absolute;
@@ -104,7 +104,7 @@
       text-align: center;
       padding: 20px;
       background-image: 
-        linear-gradient(180deg, rgba(10, 25, 47, 0.25) 0%, rgba(10, 25, 47, 0.45) 50%, rgba(10, 15, 25, 0.94) 100%),
+        linear-gradient(180deg, rgba(10, 25, 47, 0.2) 0%, rgba(10, 25, 47, 0.4) 50%, rgba(10, 15, 25, 0.92) 100%),
         url('Gemini_Generated_Image_rnecb1rnecb1rnec.jpg'),
         url('Gemini_Generated_Image_89ya1c89ya1c89ya.png'),
         url('bg-rattanakosin.jpg'),
@@ -343,7 +343,7 @@
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map */
+    /* Thumbnail Mini-map (ขยายขนาดชัดเจน) */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
@@ -636,8 +636,8 @@
       border: 2px solid var(--gold);
       border-radius: 24px;
       padding: 32px 28px;
-      max-width: 860px;
-      width: 92%;
+      max-width: 900px;
+      width: 94%;
       text-align: left;
       box-shadow: 0 10px 45px rgba(0,0,0,0.85), 0 0 25px rgba(212, 175, 55, 0.4);
       display: flex;
@@ -653,7 +653,7 @@
     }
 
     .modal-jigsaw-right {
-      flex: 0 0 320px;
+      flex: 0 0 350px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -662,7 +662,7 @@
 
     .modal-jigsaw-right img {
       width: 100%;
-      max-height: 220px;
+      max-height: 240px;
       object-fit: cover;
       border-radius: 12px;
       border: 2px solid var(--gold);
@@ -682,34 +682,6 @@
       color: var(--ivory);
       margin-bottom: 22px;
       font-weight: 300;
-    }
-
-    /* Final Victory Modal Card Custom Design */
-    .victory-card-full {
-      position: relative;
-      background: linear-gradient(145deg, #1b283d, #0b1320);
-      border: 2.5px solid var(--gold);
-      border-radius: 28px;
-      padding: 30px;
-      max-width: 820px;
-      width: 94%;
-      text-align: center;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.9), 0 0 35px rgba(212, 175, 55, 0.5);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow: hidden;
-    }
-
-    .victory-image-banner {
-      width: 100%;
-      max-height: 320px;
-      object-fit: contain;
-      border-radius: 16px;
-      border: 2px solid rgba(212, 175, 55, 0.7);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
-      margin-bottom: 16px;
-      background-color: #0A192F;
     }
 
     .reward-banner {
@@ -743,6 +715,27 @@
       box-shadow: 0 6px 20px rgba(255, 240, 153, 0.8);
     }
 
+    /* Final Victory Modal Custom Card (เน้นภาพกลุ่มตัวละครอวยพรขนาดใหญ่) */
+    .victory-card {
+      max-width: 860px;
+      width: 94%;
+      flex-direction: column !important;
+      text-align: center !important;
+      padding: 24px 28px 28px 28px !important;
+      align-items: center !important;
+    }
+
+    .victory-main-img {
+      width: 100%;
+      max-height: 330px;
+      object-fit: contain;
+      border-radius: 16px;
+      border: 2px solid var(--gold);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 20px rgba(212, 175, 55, 0.5);
+      margin-bottom: 16px;
+      display: block;
+    }
+
     #yt-audio-frame {
       position: absolute;
       width: 1px;
@@ -754,7 +747,7 @@
 </head>
 <body>
 
-  <!-- Background Music (YouTube IFrame - รัตนโกสินทร์ สุทธิพงษ์ วัฒนจัง) -->
+  <!-- Background Music (YouTube IFrame: รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้) -->
   <div id="yt-audio-frame"></div>
 
   <!-- Start Screen with Centered Kanok Card & Sparkles -->
@@ -859,13 +852,13 @@
     </div>
   </div>
 
-  <!-- Victory Modal with Custom Ending Banner & Restart Button -->
+  <!-- Final Victory Modal with Large Group Farewell Picture & Play Again Button -->
   <div id="victory-modal" class="modal-overlay">
-    <div class="victory-card-full">
-      <img src="ขอให้สนุกกับวิชาประวัติศาสตร์.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์" class="victory-image-banner">
-      <h2 style="font-family: var(--font-title); font-size: 32px; color: var(--gold-light); margin-bottom: 6px;">ออเจ้าสำเร็จบริบูรณ์ทั้ง ๕ ยุคสมัย!</h2>
-      <div class="reward-banner">ได้รับรางวัลใหญ่แห่งแผ่นดิน: 💵 +๓๐๐ อัฐ</div>
-      <p id="victory-stats" style="font-size: 16px; color: var(--ivory); margin-bottom: 18px;"></p>
+    <div class="modal-card victory-card">
+      <img src="ขอให้สนุกกับวิชาประวัติศาสตร์.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์นะคะ" class="victory-main-img">
+      <h2 style="font-size:32px; margin-bottom:8px;">ออเจ้าสำเร็จบริบูรณ์ทั้ง ๕ ยุคสมัย!</h2>
+      <div class="reward-banner" style="margin-bottom:10px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ อัฐ</div>
+      <p id="victory-stats" style="text-align:center; margin-bottom:16px; font-weight:bold;"></p>
       <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้ง (Play Again)</button>
     </div>
   </div>
@@ -1016,6 +1009,177 @@
 
     let activeFrameKey = 'none';
     let userMoney = 100;
+    let cameraStream = null;
+
+    /* =========================================================
+       3. POP CULTURE FRAMES SHOP (Seamless / No Freeze)
+       ========================================================= */
+    const SHOP_FRAMES = {
+      none: { name: 'ไม่ใส่กรอบ', price: 0, owned: true, render: (ctx, w, h) => {} },
+      labubu: {
+        name: 'ลาบูบู้ (Labubu)',
+        price: 80,
+        owned: false,
+        icon: '🐰',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#D4A373';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(70, 70);
+          ctx.fillStyle = '#C58958';
+          ctx.beginPath();
+          ctx.ellipse(-25, -40, 12, 35, -0.3, 0, Math.PI*2);
+          ctx.ellipse(25, -40, 12, 35, 0.3, 0, Math.PI*2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(0, 0, 36, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FFF';
+          ctx.beginPath();
+          ctx.arc(0, 8, 18, 0, Math.PI);
+          ctx.fill();
+          ctx.fillStyle = '#333';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('LABUBU', -22, 38);
+          ctx.restore();
+        }
+      },
+      carebears: {
+        name: 'แคร์แบร์ (Care Bears)',
+        price: 80,
+        owned: false,
+        icon: '🐻',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#FFB5A7';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(w - 75, 75);
+          ctx.fillStyle = '#90DBF4';
+          ctx.beginPath();
+          ctx.arc(0, 0, 34, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FF758F';
+          ctx.beginPath();
+          ctx.arc(-7, 4, 7, 0, Math.PI * 2);
+          ctx.arc(7, 4, 7, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#333';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('CARE BEARS', -35, 42);
+          ctx.restore();
+        }
+      },
+      monchhichi: {
+        name: 'ม่อนชิชิ (Monchhichi)',
+        price: 100,
+        owned: false,
+        icon: '🐵',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#BC6C25';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(70, h - 70);
+          ctx.fillStyle = '#6F4E37';
+          ctx.beginPath();
+          ctx.arc(0, 0, 34, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FCEADE';
+          ctx.beginPath();
+          ctx.arc(0, 3, 22, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FFB703';
+          ctx.beginPath();
+          ctx.arc(0, 12, 7, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FFF';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('MONCHHICHI', -35, -40);
+          ctx.restore();
+        }
+      },
+      kitty: {
+        name: 'คิตตี้ (Hello Kitty)',
+        price: 100,
+        owned: false,
+        icon: '🎀',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#FF4D6D';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(w - 70, h - 70);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.beginPath();
+          ctx.arc(0, 0, 32, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#E63946';
+          ctx.beginPath();
+          ctx.arc(20, -20, 10, 0, Math.PI * 2);
+          ctx.arc(32, -20, 8, 0, Math.PI * 2);
+          ctx.arc(8, -20, 8, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FFF';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('HELLO KITTY', -35, -38);
+          ctx.restore();
+        }
+      },
+      benten: {
+        name: 'เบ็นเท็น (Ben 10)',
+        price: 120,
+        owned: false,
+        icon: '⚡',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#38B000';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(70, 70);
+          ctx.fillStyle = '#101010';
+          ctx.beginPath();
+          ctx.arc(0, 0, 32, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#70E000';
+          ctx.beginPath();
+          ctx.moveTo(-18, -22); ctx.lineTo(0, 0); ctx.lineTo(-18, 22); ctx.closePath();
+          ctx.moveTo(18, -22); ctx.lineTo(0, 0); ctx.lineTo(18, 22); ctx.closePath();
+          ctx.fill();
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('BEN 10', -18, 42);
+          ctx.restore();
+        }
+      },
+      conan: {
+        name: 'โคนัน (Detective Conan)',
+        price: 120,
+        owned: false,
+        icon: '👓',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#0077B6';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(w - 70, 70);
+          ctx.strokeStyle = '#111';
+          ctx.lineWidth = 3;
+          ctx.strokeRect(-28, -16, 24, 18);
+          ctx.strokeRect(4, -16, 24, 18);
+          ctx.beginPath(); ctx.moveTo(-4, -7); ctx.lineTo(4, -7); ctx.stroke();
+          ctx.fillStyle = '#D90429';
+          ctx.beginPath();
+          ctx.moveTo(-15, 10); ctx.lineTo(0, 15); ctx.lineTo(-15, 20); ctx.closePath();
+          ctx.moveTo(15, 10); ctx.lineTo(0, 15); ctx.lineTo(15, 20); ctx.closePath();
+          ctx.fill();
+          ctx.fillStyle = '#FFF';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('CONAN', -20, 38);
+          ctx.restore();
+        }
+      }
+    };
 
     /* =========================================================
        4. LEFT DRESSING & SHOP PANELS (Interactive)
@@ -1199,7 +1363,7 @@
     };
 
     /* =========================================================
-       6. YOUTUBE BGM PLAYER (รัตนโกสินทร์ - สุทธิพงษ์ วัฒนจัง)
+       6. YOUTUBE BGM PLAYER ("รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้")
        ========================================================= */
     let ytPlayer = null;
     let isMuted = false;
@@ -1212,7 +1376,7 @@
       ytPlayer = new YT.Player('yt-audio-frame', {
         height: '1',
         width: '1',
-        videoId: '4J1WgPSB4sM',
+        videoId: '4J1WgPSB4sM', // เพลง รัตนโกสินทร์ - สุทธิพงษ์ วัฒนจัง (ชมพู ฟรุ๊ตตี้)
         playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': '4J1WgPSB4sM', 'controls': 0, 'disablekb': 1 }
       });
     };
@@ -1423,7 +1587,7 @@
         userMoney += 10;
         updateMoneyUI();
 
-        // เล่นเสียงสังเคราะห์แทนแสงปิ๊งๆ
+        // เล่นเสียงสังเคราะห์เมื่อต่อถูกต้อง
         AudioEngine.playSnap();
         createFlowerTouch(pieceObj.x + pieceObj.w / 2, pieceObj.y + pieceObj.h / 2);
 
@@ -1499,7 +1663,7 @@
       const currentLevel = LEVELS[currentLevelIdx];
       modalTitle.textContent = `${currentLevel.title} (สำเร็จ!)`;
       modalDesc.textContent = currentLevel.history;
-      modalHistoryImg.src = currentLevel.image; // แสดงภาพผลงานจิ๊กซอว์ของด่านนั้นๆ
+      modalHistoryImg.src = currentLevel.image;
       infoModal.classList.add('active');
     }
 
@@ -1521,6 +1685,7 @@
       }
     });
 
+    // ปุ่มเริ่มใหม่อีกครั้งในหน้าสุดท้ายหน้าเดียว
     restartGameBtn.addEventListener('click', () => {
       victoryModal.classList.remove('active');
       gameStartTime = Date.now();
@@ -1714,7 +1879,7 @@
           if (isPinching && !arHeldPiece) {
             const clickedEl = document.elementFromPoint((ix + tx) / 2, (iy + ty) / 2);
             if (clickedEl && clickedEl.closest('#next-level-btn') && totalSnapped < puzzlePieces.length) {
-              // ล็อกไว้
+              // ล็อกไว้ ไม่ให้เปลี่ยนด่าน
             } else {
               triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2);
             }
