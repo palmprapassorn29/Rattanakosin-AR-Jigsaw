@@ -33,7 +33,6 @@
       padding: 0;
       user-select: none;
       -webkit-user-select: none;
-      touch-action: none;
     }
 
     body, html {
@@ -351,15 +350,14 @@
     #npc-companion {
       position: absolute;
       bottom: 0;
-      right: 20px;
-      width: 240px;
-      height: 320px;
+      right: 25px;
+      width: 220px;
+      height: 300px;
       pointer-events: none;
       z-index: 12;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: transform 0.3s ease;
     }
 
     #npc-companion img {
@@ -371,8 +369,8 @@
 
     .npc-dialogue {
       position: absolute;
-      top: -65px;
-      right: 20px;
+      top: -55px;
+      right: 15px;
       background: var(--navy-glass);
       border: 1.5px solid var(--gold);
       border-radius: 14px;
@@ -697,11 +695,11 @@
 
   <div id="yt-audio-frame"></div>
 
-  <div id="start-screen">
+  <div id="start-screen" class="interactive">
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
       <h1>บุพเพรัตนโกสินทร์ AR Jigsaw</h1>
-      <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR จิ้มเลือกชุดไทย หมวก เครื่องประดับทางฝั่งซ้าย สะสมธนบัตรโบราณซื้อกรอบรูปน่ารัก และต่อจิ๊กซอว์ ๔ ชิ้นทั้ง ๕ ยุคสมัย</p>
+      <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR หรือคลิกสัมผัสหน้าจอเพื่อเลือกชุดไทย หมวก เครื่องประดับ สะสมธนบัตรโบราณซื้อกรอบรูป และต่อจิ๊กซอว์ ๔ ชิ้นทั้ง ๕ ยุคสมัย</p>
       <button class="gold-btn-start interactive" id="start-btn">
         <span>📷</span> เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)
       </button>
@@ -799,7 +797,7 @@
 
   <script>
     /* =========================================================
-       1. HISTORICAL STAGES (5 Historical Levels, 4 Pieces 2x2)
+       1. HISTORICAL STAGES (5 Levels, Linked to Attached Images)
        ========================================================= */
     const LEVELS = [
       {
@@ -807,7 +805,7 @@
         title: "ด่านที่ ๑ : กำเนิดพระนครและวัดพระแก้ว",
         subtitle: "กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒)",
         rows: 2, cols: 2, // 4 ชิ้น
-        image: "https://images.unsplash.com/photo-1583491954779-98c6d795a942?auto=format&fit=crop&w=800&q=80",
+        image: "Gemini_Generated_Image_80e9aj80e9aj80e9.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (ร.๑) ทรงสถาปนากรุงรัตนโกสินทร์ขึ้นเมื่อ พ.ศ. ๒๓๒๕ ทรงโปรดเกล้าฯ ให้สร้างพระบรมมหาราชวังและวัดพระศรีรัตนศาสดาราม (วัดพระแก้ว) พร้อมทั้งสร้างเสาชิงช้าและขุดคลองรอบกรุงเพื่อเป็นศูนย์กลางการค้าและศูนย์รวมจิตใจของราษฎร"
       },
       {
@@ -815,7 +813,7 @@
         title: "ด่านที่ ๒ : การค้าสำเภาและศิลปกรรมรุ่งเรือง",
         subtitle: "ยุคพาณิชย์นาวีรุ่งโรจน์ (รัชกาลที่ ๓)",
         rows: 2, cols: 2, // 4 ชิ้น
-        image: "https://images.unsplash.com/photo-1563492065599-3520f775eeed?auto=format&fit=crop&w=800&q=80",
+        image: "Gemini_Generated_Image_dcahnzdcahnzdcah.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
       },
       {
@@ -823,15 +821,15 @@
         title: "ด่านที่ ๓ : รุ่งอรุณแห่งดาราศาสตร์สากล",
         subtitle: "การเปิดรับวิทยาการสมัยใหม่ (รัชกาลที่ ๔)",
         rows: 2, cols: 2, // 4 ชิ้น
-        image: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=800&q=80",
-        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าเจ้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
+        image: "Gemini_Generated_Image_f2p7i9f2p7i9f2p7.jpg",
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
       },
       {
         id: 4,
         title: "ด่านที่ ๔ : การปฏิรูปสยามสู่สากลและเลิกทาส",
         subtitle: "ยุคศิวิไลซ์และความทันสมัย (รัชกาลที่ ๕ - ๗)",
         rows: 2, cols: 2, // 4 ชิ้น
-        image: "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?auto=format&fit=crop&w=800&q=80",
+        image: "Gemini_Generated_Image_jjyx97jjyx97jjyx.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจุลจอมเกล้าอยู่หัว (ร.๕) ทรงประกาศเลิกทาสอย่างสันติวิธี ให้คนไทยมีอิสรภาพ ทรงริเริ่มสร้างทางรถไฟสายแรก การไปรษณีย์โทรเลข ไฟฟ้า และก่อสร้างพระที่นั่งอนันตสมาคม นำพาสยามก้าวสู่ความเจริญทัดเทียมนานาอารยประเทศ"
       },
       {
@@ -839,13 +837,13 @@
         title: "ด่านที่ ๕ : พระบารมีปกเกล้าและเกษตรทฤษฎีใหม่",
         subtitle: "สืบสานศาสตร์พระราชา (รัชกาลที่ ๙)",
         rows: 2, cols: 2, // 4 ชิ้น
-        image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
+        image: "Gemini_Generated_Image_s6u0xls6u0xls6u0.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร ทรงอุทิศพระวรกายเพื่อปวงชน พระราชทานโครงการพระราชดำริกว่า ๔,๐๐๐ โครงการ อาทิ ฝนหลวง กังหันน้ำชัยพัฒนา และหลักปรัชญาเศรษฐกิจพอเพียง เพื่อความอยู่ดีกินดีอย่างยั่งยืน"
       }
     ];
 
     /* =========================================================
-       2. AR COSTUME & ITEM ASSETS (Men & Women)
+       2. AR COSTUME & ITEM ASSETS
        ========================================================= */
     const ASSETS = {
       clothes: {
@@ -855,18 +853,18 @@
         },
         sabai_pleat: {
           name: 'สไบจีบชมพู (หญิง)',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF758F"/><stop offset="100%" stop-color="#800F2F"/></linearGradient></defs><path d="M110 50 Q210 80 290 220 L310 340 L230 340 L170 190 Z" fill="url(#sruby)" stroke="#FFB3C1" stroke-width="2"/><line x1="130" y1="80" x2="250" y2="340" stroke="#FFF" stroke-width="1.5" stroke-dasharray="6,4"/><line x1="150" y1="100" x2="270" y2="340" stroke="#FFF" stroke-width="1.5" stroke-dasharray="6,4"/></svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF758F"/><stop offset="100%" stop-color="#800F2F"/></linearGradient></defs><path d="M110 50 Q210 80 290 220 L310 340 L230 340 L170 190 Z" fill="url(#sruby)" stroke="#FFB3C1" stroke-width="2"/><line x1="130" y1="80" x2="250" y2="340" stroke="#FFF" stroke-width="1.5" stroke-dasharray="6,4"/></svg>`
         },
         raj_pattern: {
           name: 'เสื้อราชปะแตนขาว (ชาย)',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><path d="M100 80 L300 80 L320 340 L80 340 Z" fill="#F8F9FA" stroke="#D4AF37" stroke-width="3"/><rect x="180" y="60" width="40" height="30" fill="#E9ECEF" stroke="#D4AF37" stroke-width="2" rx="4"/><line x1="200" y1="90" x2="200" y2="340" stroke="#D4AF37" stroke-width="3"/><circle cx="200" cy="120" r="5" fill="#D4AF37"/><circle cx="200" cy="160" r="5" fill="#D4AF37"/><circle cx="200" cy="200" r="5" fill="#D4AF37"/><circle cx="200" cy="240" r="5" fill="#D4AF37"/></svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><path d="M100 80 L300 80 L320 340 L80 340 Z" fill="#F8F9FA" stroke="#D4AF37" stroke-width="3"/><rect x="180" y="60" width="40" height="30" fill="#E9ECEF" stroke="#D4AF37" stroke-width="2" rx="4"/><line x1="200" y1="90" x2="200" y2="340" stroke="#D4AF37" stroke-width="3"/><circle cx="200" cy="120" r="5" fill="#D4AF37"/><circle cx="200" cy="160" r="5" fill="#D4AF37"/></svg>`
         }
       },
       hats: {
         none: { name: 'ไม่สวมหมวก', svg: '<svg viewBox="0 0 200 200"></svg>' },
         chada: {
           name: 'ชฎาทองคำมงกุฎ',
-          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFF099"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs><path d="M100 10 L115 80 L130 140 L70 140 L85 80 Z" fill="url(#hgold)" stroke="#FFF" stroke-width="1"/><circle cx="100" cy="15" r="5" fill="#FFF"/><rect x="65" y="140" width="70" height="25" fill="#8B1E1E" stroke="url(#hgold)" stroke-width="2" rx="4"/><circle cx="100" cy="152" r="5" fill="#FFF099"/></svg>`
+          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFF099"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs><path d="M100 10 L115 80 L130 140 L70 140 L85 80 Z" fill="url(#hgold)" stroke="#FFF" stroke-width="1"/><rect x="65" y="140" width="70" height="25" fill="#8B1E1E" stroke="url(#hgold)" stroke-width="2" rx="4"/></svg>`
         }
       },
       accessories: {
@@ -885,15 +883,11 @@
       none: { name: 'ไม่ใส่กรอบ', price: 0, owned: true, render: (ctx, w, h) => {} },
       labubu: {
         name: 'ลาบูบู้ (Labubu)', price: 80, owned: false, icon: '🐰',
-        render: (ctx, w, h) => {
-          ctx.strokeStyle = '#D4A373'; ctx.lineWidth = 14; ctx.strokeRect(7, 7, w - 14, h - 14);
-        }
+        render: (ctx, w, h) => { ctx.strokeStyle = '#D4A373'; ctx.lineWidth = 14; ctx.strokeRect(7, 7, w - 14, h - 14); }
       },
       carebears: {
         name: 'แคร์แบร์ (Care Bears)', price: 80, owned: false, icon: '🐻',
-        render: (ctx, w, h) => {
-          ctx.strokeStyle = '#FFB5A7'; ctx.lineWidth = 14; ctx.strokeRect(7, 7, w - 14, h - 14);
-        }
+        render: (ctx, w, h) => { ctx.strokeStyle = '#FFB5A7'; ctx.lineWidth = 14; ctx.strokeRect(7, 7, w - 14, h - 14); }
       }
     };
 
@@ -1073,7 +1067,6 @@
     let currentLevelIdx = 0;
     let totalSnapped = 0;
     let puzzlePieces = [];
-    let gameStartTime = 0;
     let isGameRunning = false;
 
     const gameStage = document.getElementById('game-stage');
@@ -1151,7 +1144,7 @@
         totalSnapped++;
         userMoney += 10;
         updateMoneyUI();
-        AudioEngine.playSnap(); // มีเสียงแทนแสงปิ๊งๆ
+        AudioEngine.playSnap();
 
         if (totalSnapped === 4) {
           setTimeout(levelCompleted, 500);
