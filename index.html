@@ -21,7 +21,6 @@
       --gold-light: #FFF099;
       --gold-glow: #FDE047;
       --crimson: #8B1E1E;
-      --crimson-dark: #5A0F0F;
       --ivory: #FFF8DC;
       --navy: #0A192F;
       --navy-glass: rgba(10, 25, 47, 0.94);
@@ -88,9 +87,7 @@
       z-index: 6;
     }
 
-    /* =========================================================
-       1. START SCREEN (Centered, Kanok Border & Glitter)
-       ========================================================= */
+    /* Start Screen */
     #start-screen {
       position: absolute;
       top: 0;
@@ -133,30 +130,6 @@
       flex-direction: column;
       align-items: center;
       pointer-events: auto;
-      animation: pulseGlow 4s infinite alternate ease-in-out;
-    }
-
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 25px rgba(212, 175, 55, 0.3); }
-      100% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(255, 240, 153, 0.7); }
-    }
-
-    .start-card::before {
-      content: '༺ ༻';
-      position: absolute;
-      top: -16px;
-      font-size: 24px;
-      color: var(--gold);
-      text-shadow: 0 0 10px var(--gold-glow);
-    }
-
-    .start-card::after {
-      content: '❖';
-      position: absolute;
-      bottom: 12px;
-      font-size: 16px;
-      color: var(--gold);
-      opacity: 0.7;
     }
 
     .badge-sub {
@@ -212,7 +185,6 @@
       box-shadow: 0 8px 35px rgba(255, 240, 153, 0.95);
     }
 
-    /* Live Camera Ready Prompt */
     #ar-start-prompt {
       display: none;
       position: absolute;
@@ -342,7 +314,7 @@
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map */
+    /* Mini-map */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
@@ -554,7 +526,7 @@
       pointer-events: none;
     }
 
-    /* Jigsaw Game Stage (6 Pieces: 3x2) */
+    /* Jigsaw Game Stage (4 Pieces: 2x2) with Elegant Golden Border Frame */
     #game-stage {
       position: absolute;
       top: 0;
@@ -570,10 +542,11 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      border: 2px dashed rgba(212, 175, 55, 0.65);
-      background: rgba(10, 25, 47, 0.45);
-      box-shadow: 0 0 30px rgba(0,0,0,0.7);
-      border-radius: 8px;
+      border: 4px solid var(--gold);
+      background: transparent;
+      box-shadow: 0 0 35px rgba(212, 175, 55, 0.6), inset 0 0 20px rgba(212, 175, 55, 0.3);
+      border-radius: 14px;
+      padding: 6px;
     }
 
     .puzzle-slot {
@@ -586,7 +559,7 @@
       cursor: grab;
       border-radius: 4px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.5);
-      border: 1.5px solid rgba(212, 175, 55, 0.6);
+      border: 1.5px solid rgba(212, 175, 55, 0.8);
       touch-action: none;
       pointer-events: auto;
       transition: transform 0.1s ease, box-shadow 0.1s ease;
@@ -596,7 +569,7 @@
     .puzzle-piece.dragging {
       cursor: grabbing;
       transform: scale(1.06);
-      box-shadow: 0 12px 25px rgba(212, 175, 55, 0.7);
+      box-shadow: 0 12px 25px rgba(212, 175, 55, 0.8);
       z-index: 1000 !important;
     }
 
@@ -604,9 +577,15 @@
       pointer-events: none;
       border: none;
       box-shadow: none;
+      animation: glowSnap 0.8s ease-in-out infinite alternate;
     }
 
-    /* Modals */
+    @keyframes glowSnap {
+      0% { filter: drop-shadow(0 0 3px #FFF) drop-shadow(0 0 8px #D4AF37); }
+      100% { filter: drop-shadow(0 0 10px #FFF) drop-shadow(0 0 20px #FFD700); }
+    }
+
+    /* Modals with NPC Support */
     .modal-overlay {
       position: absolute;
       top: 0;
@@ -632,12 +611,28 @@
     .modal-card {
       background: linear-gradient(145deg, #16243b, #0d1624);
       border: 2px solid var(--gold);
-      border-radius: 20px;
+      border-radius: 22px;
       padding: 32px 28px;
-      max-width: 560px;
-      width: 90%;
+      max-width: 620px;
+      width: 92%;
       text-align: center;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 25px rgba(212, 175, 55, 0.4);
+      position: relative;
+    }
+
+    /* NPC Character on the right side of the history modal */
+    .modal-npc {
+      position: absolute;
+      right: -45px;
+      bottom: -10px;
+      width: 150px;
+      height: 180px;
+      background-image: url('Gemini_Generated_Image_mn6c8vmn6c8vmn6c (1).jpg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: bottom right;
+      pointer-events: none;
+      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.6));
     }
 
     .modal-card h2 {
@@ -648,11 +643,12 @@
     }
 
     .modal-card p {
-      font-size: 16px;
+      font-size: 15.5px;
       line-height: 1.65;
       color: var(--ivory);
       margin-bottom: 24px;
       text-align: left;
+      padding-right: 70px; /* Leave space for NPC */
     }
 
     .reward-banner {
@@ -695,12 +691,12 @@
   <!-- Background Music (YouTube IFrame) -->
   <div id="yt-audio-frame"></div>
 
-  <!-- Start Screen with Centered Kanok Card & Sparkles -->
+  <!-- Start Screen -->
   <div id="start-screen">
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
       <h1>บุพเพรัตนโกสินทร์ AR Jigsaw</h1>
-      <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR จิ้มเลือกชุดไทย หมวก เครื่องประดับทางฝั่งซ้าย สะสมธนบัตรโบราณซื้อกรอบรูปน่ารัก และต่อจิ๊กซอว์ ๖ ชิ้นทั้ง ๕ ยุคสมัย</p>
+      <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR จิ้มเลือกชุดไทย หมวก เครื่องประดับทางฝั่งซ้าย สะสมธนบัตรโบราณซื้อกรอบรูปน่ารัก และต่อจิ๊กซอว์ ๔ ชิ้นทั้ง ๕ ยุคสมัย</p>
       <button class="gold-btn-start interactive" id="start-btn">
         <span>📷</span> เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)
       </button>
@@ -725,7 +721,7 @@
     <canvas id="frame-overlay"></canvas>
   </div>
 
-  <!-- Jigsaw Game Stage (6 Pieces) -->
+  <!-- Jigsaw Game Stage (4 Pieces with Golden Border & No Background Fill) -->
   <div id="game-stage">
     <div id="puzzle-board" class="puzzle-target-board"></div>
   </div>
@@ -748,9 +744,9 @@
       </div>
     </header>
 
-    <!-- Mini-map Reference Thumbnail (Strictly Matches Current Stage) -->
+    <!-- Mini-map Reference Thumbnail -->
     <div id="minimap-wrapper" class="interactive">
-      <h4>ภาพตัวอย่างเฉลย (๖ ชิ้น)</h4>
+      <h4>ภาพตัวอย่างเฉลย (๔ ชิ้น)</h4>
       <img id="minimap-img" src="" alt="Thumbnail">
     </div>
 
@@ -783,9 +779,10 @@
     </div>
   </div>
 
-  <!-- History Modal -->
+  <!-- History Modal with NPC on the Right -->
   <div id="info-modal" class="modal-overlay">
     <div class="modal-card">
+      <div class="modal-npc"></div>
       <h2 id="modal-title">เฉลยสตอรี่เรื่องราวประวัติศาสตร์</h2>
       <div class="reward-banner">ได้รับรางวัล: 💵 +๑๐๐ อัฐ</div>
       <p id="modal-desc"></p>
@@ -806,14 +803,14 @@
 
   <script>
     /* =========================================================
-       1. HISTORICAL STAGES (5 Historical Levels with Attached Images)
+       1. HISTORICAL STAGES (5 Historical Levels, 4 Pieces 2x2)
        ========================================================= */
     const LEVELS = [
       {
         id: 1,
         title: "ด่านที่ ๑ : กำเนิดพระนครและวัดพระแก้ว",
         subtitle: "กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒)",
-        rows: 2, cols: 3,
+        rows: 2, cols: 2, // 4 ชิ้น
         image: "Gemini_Generated_Image_80e9aj80e9aj80e9.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (ร.๑) ทรงสถาปนากรุงรัตนโกสินทร์ขึ้นเมื่อ พ.ศ. ๒๓๒๕ ทรงโปรดเกล้าฯ ให้สร้างพระบรมมหาราชวังและวัดพระศรีรัตนศาสดาราม (วัดพระแก้ว) พร้อมทั้งสร้างเสาชิงช้าและขุดคลองรอบกรุงเพื่อเป็นศูนย์กลางการค้าและศูนย์รวมจิตใจของราษฎร"
       },
@@ -821,7 +818,7 @@
         id: 2,
         title: "ด่านที่ ๒ : การค้าสำเภาและศิลปกรรมรุ่งเรือง",
         subtitle: "ยุคพาณิชย์นาวีรุ่งโรจน์ (รัชกาลที่ ๓)",
-        rows: 2, cols: 3,
+        rows: 2, cols: 2, // 4 ชิ้น
         image: "Gemini_Generated_Image_dcahnzdcahnzdcah.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
       },
@@ -829,15 +826,15 @@
         id: 3,
         title: "ด่านที่ ๓ : รุ่งอรุณแห่งดาราศาสตร์สากล",
         subtitle: "การเปิดรับวิทยาการสมัยใหม่ (รัชกาลที่ ๔)",
-        rows: 2, cols: 3,
+        rows: 2, cols: 2, // 4 ชิ้น
         image: "Gemini_Generated_Image_f2p7i9f2p7i9f2p7.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าเจ้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
       },
       {
         id: 4,
         title: "ด่านที่ ๔ : การปฏิรูปสยามสู่สากลและเลิกทาส",
         subtitle: "ยุคศิวิไลซ์และความทันสมัย (รัชกาลที่ ๕ - ๗)",
-        rows: 2, cols: 3,
+        rows: 2, cols: 2, // 4 ชิ้น
         image: "Gemini_Generated_Image_jjyx97jjyx97jjyx.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (ร.๕) ทรงประกาศเลิกทาสอย่างสันติวิธี ให้คนไทยมีอิสรภาพ ทรงริเริ่มสร้างทางรถไฟสายแรก การไปรษณีย์โทรเลข ไฟฟ้า และก่อสร้างพระที่นั่งอนันตสมาคม นำพาสยามก้าวสู่ความเจริญทัดเทียมนานาอารยประเทศ"
       },
@@ -845,7 +842,7 @@
         id: 5,
         title: "ด่านที่ ๕ : พระบารมีปกเกล้าและเกษตรทฤษฎีใหม่",
         subtitle: "สืบสานศาสตร์พระราชา (รัชกาลที่ ๙)",
-        rows: 2, cols: 3,
+        rows: 2, cols: 2, // 4 ชิ้น
         image: "Gemini_Generated_Image_s6u0xls6u0xls6u0.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร ทรงอุทิศพระวรกายเพื่อปวงชน พระราชทานโครงการพระราชดำริกว่า ๔,๐๐๐ โครงการ อาทิ ฝนหลวง กังหันน้ำชัยพัฒนา และหลักปรัชญาเศรษฐกิจพอเพียง เพื่อความอยู่ดีกินดีอย่างยั่งยืน"
       }
@@ -931,7 +928,7 @@
     };
 
     /* =========================================================
-       3. POP CULTURE FRAMES SHOP (Seamless / No Freeze)
+       3. POP CULTURE FRAMES SHOP
        ========================================================= */
     const SHOP_FRAMES = {
       none: { name: 'ไม่ใส่กรอบ', price: 0, owned: true, render: (ctx, w, h) => {} },
@@ -1119,7 +1116,6 @@
 
     let activeFrameKey = 'none';
     let userMoney = 100;
-    let cameraStream = null; // เก็บสิทธิ์ใช้งานกล้องเอาไว้ตลอดเวลา
 
     /* =========================================================
        4. LEFT DRESSING & SHOP PANELS (Interactive)
@@ -1143,7 +1139,6 @@
     }
 
     homeBtn.addEventListener('click', () => {
-      // กลับหน้าเริ่มต้นโดยยังคงสิทธิ์เปิดกล้อง (กล้องจับตลอดเวลา ไม่ต้องขอใหม่)
       document.getElementById('start-screen').style.display = 'flex';
       document.getElementById('start-screen').classList.remove('camera-ready');
       document.getElementById('start-main-card').style.display = 'flex';
@@ -1243,7 +1238,6 @@
       });
     }
 
-    // ซื้อและเปลี่ยนกรอบรูปได้ทันทีแบบไม่ค้าง ไม่มี alert
     function handleShopSelection(key) {
       const item = SHOP_FRAMES[key];
       if (item.owned) {
@@ -1267,7 +1261,7 @@
     renderDressingItems();
 
     /* =========================================================
-       5. WEB AUDIO SYNTHESIZER
+       5. WEB AUDIO SYNTHESIZER & AI SPEECH SYNTHESIS
        ========================================================= */
     const AudioEngine = {
       ctx: null,
@@ -1306,8 +1300,19 @@
       }
     };
 
+    function speakAI(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'th-TH';
+        utterance.rate = 1.0;
+        utterance.pitch = 1.1;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
     /* =========================================================
-       6. YOUTUBE BGM PLAYER ("ออเจ้าเอย OST.บุพเพสันนิวาส")
+       6. YOUTUBE BGM PLAYER
        ========================================================= */
     let ytPlayer = null;
     let isMuted = false;
@@ -1420,7 +1425,7 @@
     }
 
     /* =========================================================
-       8. JIGSAW PUZZLE SYSTEM (6 PIECES: 3x2)
+       8. JIGSAW PUZZLE SYSTEM (4 Pieces: 2x2, Strict Locking)
        ========================================================= */
     let currentLevelIdx = 0;
     let totalSnapped = 0;
@@ -1455,7 +1460,7 @@
       puzzleBoard.style.top = `${stageH / 2}px`;
       puzzleBoard.style.left = `${stageW / 2}px`;
 
-      const pieceW = boardW / lvl.cols; // 3 cols
+      const pieceW = boardW / lvl.cols; // 2 cols
       const pieceH = boardH / lvl.rows; // 2 rows
 
       let pieceIndex = 0;
@@ -1520,7 +1525,7 @@
         pieceObj.y = pieceObj.targetY;
         pieceObj.el.style.left = `${pieceObj.x}px`;
         pieceObj.el.style.top = `${pieceObj.y}px`;
-        pieceObj.el.classList.add('snapped');
+        pieceObj.el.classList.add('snapped'); // แสดงแสงปิ๊งๆ กระพริบที่ภาพถูกต้อง
         pieceObj.isSnapped = true;
         totalSnapped++;
 
@@ -1530,6 +1535,7 @@
         AudioEngine.playSnap();
         createFlowerTouch(pieceObj.x + pieceObj.w / 2, pieceObj.y + pieceObj.h / 2);
 
+        // เช็คว่าต่อครบ 4 ชิ้นหรือยัง
         if (totalSnapped === puzzlePieces.length) {
           setTimeout(levelCompleted, 600);
         }
@@ -1581,7 +1587,7 @@
     }
 
     /* =========================================================
-       9. MODAL & LEVEL TRANSITIONS
+       9. MODAL & AI SPEECH (เก่งมากเลยค่ะเด็กๆ)
        ========================================================= */
     const infoModal = document.getElementById('info-modal');
     const modalTitle = document.getElementById('modal-title');
@@ -1597,6 +1603,9 @@
       userMoney += 100;
       updateMoneyUI();
 
+      // AI Speech: "เก่งมากเลยค่ะเด็ก ๆ"
+      speakAI("เก่งมากเลยค่ะเด็ก ๆ");
+
       const currentLevel = LEVELS[currentLevelIdx];
       modalTitle.textContent = `${currentLevel.title} (สำเร็จ!)`;
       modalDesc.textContent = currentLevel.history;
@@ -1604,6 +1613,12 @@
     }
 
     nextLevelBtn.addEventListener('click', () => {
+      // ล็อกห้ามผ่านด่านถ้ายังไม่เสร็จด่านที่ 1 (หรือด่านปัจจุบัน)
+      if (totalSnapped < puzzlePieces.length) {
+        alert("ออเจ้าต้องต่อจิ๊กซอว์ด่านนี้ให้เสร็จสมบูรณ์เสียก่อนจึงจะเดินทางไปด่านถัดไปได้!");
+        return;
+      }
+
       infoModal.classList.remove('active');
       if (currentLevelIdx < LEVELS.length - 1) {
         initLevel(currentLevelIdx + 1);
@@ -1623,7 +1638,7 @@
     });
 
     /* =========================================================
-       10. MEDIAPIPE AR POSE, HAND TRACKING & REALTIME FITTING
+       10. MEDIAPIPE AR POSE & HAND TRACKING (ห้ามเปลี่ยนด่านเมื่อจิ๊กซอว์ยังไม่เสร็จ)
        ========================================================= */
     const videoElement = document.getElementById('webcam-video');
     const canvasElement = document.getElementById('ar-canvas');
@@ -1679,6 +1694,10 @@
       if (el) {
         const clickTarget = el.closest('button, .ar-touch-item, .btn-top, .btn-icon, .panel-close, .cat-tab, .gold-btn');
         if (clickTarget) {
+          // ป้องกันไม่ให้การกดหน้าจอหรือสะบัดมือเปลี่ยนด่านข้ามหากยังต่อจิ๊กซอว์ไม่ครบ 4 ชิ้น
+          if (clickTarget.id === 'next-level-btn' && totalSnapped < puzzlePieces.length) {
+            return;
+          }
           clickTarget.click();
           lastArClickTime = now;
           return;
@@ -1697,12 +1716,10 @@
       canvasCtx.clearRect(0, 0, w, h);
       frameCtx.clearRect(0, 0, w, h);
 
-      // Render Pop Culture Camera Frame (Zero Lag)
       if (SHOP_FRAMES[activeFrameKey] && SHOP_FRAMES[activeFrameKey].render) {
         SHOP_FRAMES[activeFrameKey].render(frameCtx, w, h);
       }
 
-      // AR Fitting Costume Overlay
       if (poseResults && poseResults.poseLandmarks) {
         const lm = poseResults.poseLandmarks;
         const leftShoulder = lm[11];
@@ -1720,7 +1737,6 @@
           const shoulderDist = Math.hypot(rsX - lsX, rsY - lsY);
           const angle = Math.atan2(rsY - lsY, rsX - lsX);
 
-          // Clothes
           const cKey = currentSelection.clothes;
           const cImg = loadedImages.clothes[cKey];
           if (cImg && cImg.complete) {
@@ -1734,7 +1750,6 @@
             canvasCtx.restore();
           }
 
-          // Accessories
           const accKey = currentSelection.accessories;
           if (accKey !== 'none') {
             const accImg = loadedImages.accessories[accKey];
@@ -1749,7 +1764,6 @@
             }
           }
 
-          // Bags
           const bagKey = currentSelection.bags;
           if (bagKey !== 'none') {
             const bagImg = loadedImages.bags[bagKey];
@@ -1764,7 +1778,6 @@
             }
           }
 
-          // Hats
           if (nose && nose.visibility > 0.4) {
             const hKey = currentSelection.hats;
             if (hKey !== 'none') {
@@ -1786,7 +1799,6 @@
         }
       }
 
-      // AR Hand Interaction (Pikul Flower Cursor & Universal Click)
       if (handResults && handResults.multiHandLandmarks) {
         for (const landmarks of handResults.multiHandLandmarks) {
           const indexTip = landmarks[8];
@@ -1806,7 +1818,6 @@
             triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2);
           }
 
-          // AR Drag Puzzle Pieces
           if (isGameRunning) {
             if (isPinching) {
               if (!arHeldPiece) {
@@ -1839,7 +1850,7 @@
     }
 
     /* =========================================================
-       11. CAMERA START & PERSISTENT STREAM
+       11. CAMERA START & FLOW
        ========================================================= */
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
@@ -1871,7 +1882,6 @@
       }
     }
 
-    // ขออนุญาตเปิดกล้องทันทีตั้งแต่เข้าหน้าเว็บครั้งแรก และคงสิทธิ์ไว้ตลอดเวลาแม้กลับหน้าหลัก
     window.addEventListener('DOMContentLoaded', () => {
       initCameraStream();
     });
