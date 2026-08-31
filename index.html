@@ -33,6 +33,7 @@
       padding: 0;
       user-select: none;
       -webkit-user-select: none;
+      touch-action: none;
     }
 
     body, html {
@@ -316,7 +317,7 @@
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map (Larger size) */
+    /* Thumbnail Mini-map (Larger Size) */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
@@ -338,21 +339,21 @@
     }
 
     #minimap-img {
-      width: 220px;
-      height: 145px;
+      width: 210px;
+      height: 138px;
       object-fit: cover;
       border-radius: 6px;
       border: 1.5px solid rgba(212, 175, 55, 0.7);
       display: block;
     }
 
-    /* NPC Character on Right Side */
+    /* NPC Character on Right Side (Large) */
     #npc-companion {
       position: absolute;
       bottom: 0;
-      right: 25px;
+      right: 20px;
       width: 220px;
-      height: 300px;
+      height: 310px;
       pointer-events: none;
       z-index: 12;
       display: flex;
@@ -750,7 +751,7 @@
 
     <div id="npc-companion">
       <div class="npc-dialogue">ออเจ้าเก่งมากเลยค่ะ! 🌸</div>
-      <img src="data:image/svg+xml;utf8,<svg viewBox='0 0 300 400' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='ng' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='%23FFF099'/><stop offset='100%' stop-color='%23D4AF37'/></linearGradient></defs><circle cx='150' cy='90' r='55' fill='%23FCEADE' stroke='%23D4AF37' stroke-width='3'/><path d='M95 90 Q150 20 205 90 Q180 120 150 110 Q120 120 95 90 Z' fill='%232B2D42'/><path d='M100 140 Q150 120 200 140 L230 350 L70 350 Z' fill='%238B1E1E' stroke='%23D4AF37' stroke-width='3'/><path d='M110 150 Q150 170 190 150 L210 280 L90 280 Z' fill='url(%23ng)'/><circle cx='150' cy='60' r='18' fill='url(%23ng)'/></svg>" alt="NPC แม่หญิง">
+      <img src="Gemini_Generated_Image_mn6c8vmn6c8vmn6c (1)-Photoroom.jpg" alt="NPC แม่หญิง">
     </div>
 
     <div id="dressing-panel" class="interactive">
@@ -804,7 +805,7 @@
         id: 1,
         title: "ด่านที่ ๑ : กำเนิดพระนครและวัดพระแก้ว",
         subtitle: "กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒)",
-        rows: 2, cols: 2, // 4 ชิ้น
+        rows: 2, cols: 2, // 4 ชิ้น (ตาราง 2x2)
         image: "Gemini_Generated_Image_80e9aj80e9aj80e9.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (ร.๑) ทรงสถาปนากรุงรัตนโกสินทร์ขึ้นเมื่อ พ.ศ. ๒๓๒๕ ทรงโปรดเกล้าฯ ให้สร้างพระบรมมหาราชวังและวัดพระศรีรัตนศาสดาราม (วัดพระแก้ว) พร้อมทั้งสร้างเสาชิงช้าและขุดคลองรอบกรุงเพื่อเป็นศูนย์กลางการค้าและศูนย์รวมจิตใจของราษฎร"
       },
@@ -1062,7 +1063,84 @@
     });
 
     /* =========================================================
-       5. JIGSAW PUZZLE (4 Pieces: 2x2)
+       5. GOLDEN THAI PIKUL FLOWER TOUCH EFFECT (ดอกพิกุลทอง)
+       ========================================================= */
+    const thaiFlowerParticles = [];
+
+    function drawThaiPikulFlower(ctx, cx, cy, size, alpha, rot) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(rot);
+      ctx.globalAlpha = alpha;
+
+      const petals = 8;
+      for (let i = 0; i < petals; i++) {
+        const angle = (i * Math.PI * 2) / petals;
+        ctx.save();
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(size * 0.32, -size * 0.5);
+        ctx.lineTo(0, -size);
+        ctx.lineTo(-size * 0.32, -size * 0.5);
+        ctx.closePath();
+        const grad = ctx.createLinearGradient(0, 0, 0, -size);
+        grad.addColorStop(0, '#FFE79A');
+        grad.addColorStop(0.5, '#D4AF37');
+        grad.addColorStop(1, '#8B1E1E');
+        ctx.fillStyle = grad;
+        ctx.fill();
+        ctx.strokeStyle = '#FFF099';
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      ctx.beginPath();
+      ctx.arc(0, 0, size * 0.3, 0, Math.PI * 2);
+      ctx.fillStyle = '#FFE066';
+      ctx.fill();
+      ctx.strokeStyle = '#D4AF37';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, size * 0.14, 0, Math.PI * 2);
+      ctx.fillStyle = '#8B1E1E';
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function createFlowerTouch(x, y) {
+      thaiFlowerParticles.push({
+        x, y,
+        size: 14,
+        maxSize: 42,
+        rot: Math.random() * Math.PI,
+        rotSpeed: 0.05,
+        alpha: 1.0
+      });
+    }
+
+    function renderFlowerParticles(ctx) {
+      for (let i = thaiFlowerParticles.length - 1; i >= 0; i--) {
+        const p = thaiFlowerParticles[i];
+        p.size += (p.maxSize - p.size) * 0.15;
+        p.rot += p.rotSpeed;
+        p.alpha -= 0.035;
+
+        if (p.alpha <= 0) {
+          thaiFlowerParticles.splice(i, 1);
+          continue;
+        }
+
+        drawThaiPikulFlower(ctx, p.x, p.y, p.size, p.alpha, p.rot);
+      }
+    }
+
+    /* =========================================================
+       6. JIGSAW PUZZLE (4 Pieces: 2x2)
        ========================================================= */
     let currentLevelIdx = 0;
     let totalSnapped = 0;
@@ -1145,6 +1223,7 @@
         userMoney += 10;
         updateMoneyUI();
         AudioEngine.playSnap();
+        createFlowerTouch(pObj.x + pObj.w / 2, pObj.y + pObj.h / 2);
 
         if (totalSnapped === 4) {
           setTimeout(levelCompleted, 500);
@@ -1160,6 +1239,7 @@
         const cy = e.touches ? e.touches[0].clientY : e.clientY;
         startX = cx; startY = cy; origX = pObj.x; origY = pObj.y;
         pObj.el.classList.add('dragging');
+        createFlowerTouch(cx, cy);
         window.addEventListener('pointermove', onMove);
         window.addEventListener('pointerup', onUp);
       };
@@ -1181,7 +1261,7 @@
     }
 
     /* =========================================================
-       6. MODAL & AI SPEECH TRIGGER
+       7. MODAL & AI SPEECH TRIGGER
        ========================================================= */
     const infoModal = document.getElementById('info-modal');
     const modalTitle = document.getElementById('modal-title');
@@ -1222,7 +1302,7 @@
     });
 
     /* =========================================================
-       7. MEDIAPIPE AR & CAMERA
+       8. MEDIAPIPE AR & CAMERA
        ========================================================= */
     const videoEl = document.getElementById('webcam-video');
     const canvasEl = document.getElementById('ar-canvas');
@@ -1231,6 +1311,8 @@
     const fCtx = frameCanvas.getContext('2d');
 
     let poseRes = null, handRes = null;
+    let arHeldPiece = null;
+    let lastArClickTime = 0;
 
     const pose = new Pose({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${f}` });
     pose.setOptions({ modelComplexity: 1, smoothLandmarks: true });
@@ -1239,6 +1321,32 @@
     const hands = new Hands({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}` });
     hands.setOptions({ maxNumHands: 2, modelComplexity: 1 });
     hands.onResults(r => { handRes = r; });
+
+    function triggerUniversalARClick(x, y) {
+      const now = Date.now();
+      if (now - lastArClickTime < 450) return;
+      createFlowerTouch(x, y);
+
+      const promptBtn = document.getElementById('confirm-start-btn');
+      if (promptBtn && promptBtn.offsetParent !== null) {
+        const pRect = promptBtn.getBoundingClientRect();
+        if (x >= pRect.left && x <= pRect.right && y >= pRect.top && y <= pRect.bottom) {
+          promptBtn.click();
+          lastArClickTime = now;
+          return;
+        }
+      }
+
+      const el = document.elementFromPoint(x, y);
+      if (el) {
+        const clickTarget = el.closest('button, .ar-touch-item, .btn-top, .btn-icon, .panel-close, .cat-tab, .gold-btn');
+        if (clickTarget) {
+          clickTarget.click();
+          lastArClickTime = now;
+          return;
+        }
+      }
+    }
 
     function onFrame() {
       canvasEl.width = window.innerWidth; canvasEl.height = window.innerHeight;
@@ -1271,6 +1379,51 @@
           }
         }
       }
+
+      if (handRes && handRes.multiHandLandmarks) {
+        for (const landmarks of handRes.multiHandLandmarks) {
+          const indexTip = landmarks[8];
+          const thumbTip = landmarks[4];
+          const ix = (1 - indexTip.x) * w, iy = indexTip.y * h;
+          const tx = (1 - thumbTip.x) * w, ty = thumbTip.y * h;
+
+          drawThaiPikulFlower(ctx, ix, iy, 16, 0.95, 0);
+
+          const pinchDist = Math.hypot(ix - tx, iy - ty);
+          const isPinching = pinchDist < 45;
+
+          if (isPinching) {
+            triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2);
+          }
+
+          if (isGameRunning) {
+            if (isPinching) {
+              if (!arHeldPiece) {
+                for (const p of puzzlePieces) {
+                  if (!p.isSnapped && ix >= p.x && ix <= p.x + p.w && iy >= p.y && iy <= p.y + p.h) {
+                    arHeldPiece = p;
+                    p.el.classList.add('dragging');
+                    break;
+                  }
+                }
+              } else {
+                arHeldPiece.x = ix - arHeldPiece.w / 2;
+                arHeldPiece.y = iy - arHeldPiece.h / 2;
+                arHeldPiece.el.style.left = `${arHeldPiece.x}px`;
+                arHeldPiece.el.style.top = `${arHeldPiece.y}px`;
+              }
+            } else {
+              if (arHeldPiece) {
+                arHeldPiece.el.classList.remove('dragging');
+                checkSnap(arHeldPiece);
+                arHeldPiece = null;
+              }
+            }
+          }
+        }
+      }
+
+      renderFlowerParticles(ctx);
       requestAnimationFrame(onFrame);
     }
 
