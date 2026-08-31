@@ -21,6 +21,7 @@
       --gold-light: #FFF099;
       --gold-glow: #FDE047;
       --crimson: #8B1E1E;
+      --crimson-dark: #5A0F0F;
       --ivory: #FFF8DC;
       --navy: #0A192F;
       --navy-glass: rgba(10, 25, 47, 0.94);
@@ -130,6 +131,30 @@
       flex-direction: column;
       align-items: center;
       pointer-events: auto;
+      animation: pulseGlow 4s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 25px rgba(212, 175, 55, 0.3); }
+      100% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(255, 240, 153, 0.7); }
+    }
+
+    .start-card::before {
+      content: '༺ ༻';
+      position: absolute;
+      top: -16px;
+      font-size: 24px;
+      color: var(--gold);
+      text-shadow: 0 0 10px var(--gold-glow);
+    }
+
+    .start-card::after {
+      content: '❖';
+      position: absolute;
+      bottom: 12px;
+      font-size: 16px;
+      color: var(--gold);
+      opacity: 0.7;
     }
 
     .badge-sub {
@@ -314,7 +339,7 @@
       cursor: pointer;
     }
 
-    /* Mini-map */
+    /* Thumbnail Mini-map */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
@@ -526,7 +551,7 @@
       pointer-events: none;
     }
 
-    /* Jigsaw Game Stage (4 Pieces: 2x2) with Elegant Golden Border Frame */
+    /* Jigsaw Game Stage (4 Pieces: 2x2) */
     #game-stage {
       position: absolute;
       top: 0;
@@ -542,11 +567,10 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      border: 4px solid var(--gold);
-      background: transparent;
-      box-shadow: 0 0 35px rgba(212, 175, 55, 0.6), inset 0 0 20px rgba(212, 175, 55, 0.3);
-      border-radius: 14px;
-      padding: 6px;
+      border: 2px dashed rgba(212, 175, 55, 0.65);
+      background: rgba(10, 25, 47, 0.45);
+      box-shadow: 0 0 30px rgba(0,0,0,0.7);
+      border-radius: 8px;
     }
 
     .puzzle-slot {
@@ -559,7 +583,7 @@
       cursor: grab;
       border-radius: 4px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.5);
-      border: 1.5px solid rgba(212, 175, 55, 0.8);
+      border: 1.5px solid rgba(212, 175, 55, 0.6);
       touch-action: none;
       pointer-events: auto;
       transition: transform 0.1s ease, box-shadow 0.1s ease;
@@ -569,7 +593,7 @@
     .puzzle-piece.dragging {
       cursor: grabbing;
       transform: scale(1.06);
-      box-shadow: 0 12px 25px rgba(212, 175, 55, 0.8);
+      box-shadow: 0 12px 25px rgba(212, 175, 55, 0.7);
       z-index: 1000 !important;
     }
 
@@ -581,11 +605,11 @@
     }
 
     @keyframes glowSnap {
-      0% { filter: drop-shadow(0 0 3px #FFF) drop-shadow(0 0 8px #D4AF37); }
-      100% { filter: drop-shadow(0 0 10px #FFF) drop-shadow(0 0 20px #FFD700); }
+      0% { filter: drop-shadow(0 0 2px #FFF) drop-shadow(0 0 6px #D4AF37); }
+      100% { filter: drop-shadow(0 0 8px #FFF) drop-shadow(0 0 16px #FFD700); }
     }
 
-    /* Modals with NPC Support */
+    /* Modals & NPC layout */
     .modal-overlay {
       position: absolute;
       top: 0;
@@ -608,58 +632,71 @@
       pointer-events: auto;
     }
 
+    .modal-card-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 820px;
+      padding: 20px;
+    }
+
     .modal-card {
       background: linear-gradient(145deg, #16243b, #0d1624);
       border: 2px solid var(--gold);
-      border-radius: 22px;
+      border-radius: 20px;
       padding: 32px 28px;
-      max-width: 620px;
-      width: 92%;
+      width: 100%;
+      max-width: 540px;
       text-align: center;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 25px rgba(212, 175, 55, 0.4);
-      position: relative;
-    }
-
-    /* NPC Character on the right side of the history modal */
-    .modal-npc {
-      position: absolute;
-      right: -45px;
-      bottom: -10px;
-      width: 150px;
-      height: 180px;
-      background-image: url('Gemini_Generated_Image_mn6c8vmn6c8vmn6c (1).jpg');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: bottom right;
-      pointer-events: none;
-      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.6));
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+      z-index: 2;
     }
 
     .modal-card h2 {
       font-family: var(--font-title);
-      font-size: 30px;
+      font-size: 28px;
       color: var(--gold-light);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .modal-card p {
-      font-size: 15.5px;
-      line-height: 1.65;
+      font-size: 15px;
+      line-height: 1.6;
       color: var(--ivory);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       text-align: left;
-      padding-right: 70px; /* Leave space for NPC */
+    }
+
+    /* NPC Female Character on the right side of History Modal (Large, prominent) */
+    .npc-character {
+      position: absolute;
+      right: -30px;
+      bottom: -15px;
+      width: 240px;
+      height: 320px;
+      object-fit: contain;
+      z-index: 3;
+      pointer-events: none;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.7));
+      animation: bounceNpc 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes bounceNpc {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
     }
 
     .reward-banner {
       background: rgba(139, 30, 30, 0.85);
       border: 1px solid var(--gold);
       border-radius: 12px;
-      padding: 8px 16px;
+      padding: 6px 14px;
       color: var(--gold-light);
-      font-size: 16px;
+      font-size: 15px;
       font-weight: bold;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
       display: inline-block;
     }
 
@@ -671,7 +708,7 @@
       font-weight: 700;
       border: none;
       border-radius: 30px;
-      padding: 12px 36px;
+      padding: 10px 32px;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
       transition: all 0.25s ease;
@@ -691,7 +728,7 @@
   <!-- Background Music (YouTube IFrame) -->
   <div id="yt-audio-frame"></div>
 
-  <!-- Start Screen -->
+  <!-- Start Screen with Centered Kanok Card & Sparkles -->
   <div id="start-screen">
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
@@ -721,7 +758,7 @@
     <canvas id="frame-overlay"></canvas>
   </div>
 
-  <!-- Jigsaw Game Stage (4 Pieces with Golden Border & No Background Fill) -->
+  <!-- Jigsaw Game Stage (4 Pieces) -->
   <div id="game-stage">
     <div id="puzzle-board" class="puzzle-target-board"></div>
   </div>
@@ -781,36 +818,42 @@
 
   <!-- History Modal with NPC on the Right -->
   <div id="info-modal" class="modal-overlay">
-    <div class="modal-card">
-      <div class="modal-npc"></div>
-      <h2 id="modal-title">เฉลยสตอรี่เรื่องราวประวัติศาสตร์</h2>
-      <div class="reward-banner">ได้รับรางวัล: 💵 +๑๐๐ อัฐ</div>
-      <p id="modal-desc"></p>
-      <button class="gold-btn interactive" id="next-level-btn">ท่องมิติสู่ด่านถัดไป ➔</button>
+    <div class="modal-card-container">
+      <div class="modal-card">
+        <h2 id="modal-title">เฉลยสตอรี่เรื่องราวประวัติศาสตร์</h2>
+        <div class="reward-banner">ได้รับรางวัล: 💵 +๑๐๐ อัฐ</div>
+        <p id="modal-desc"></p>
+        <button class="gold-btn interactive" id="next-level-btn">ท่องมิติสู่ด่านถัดไป ➔</button>
+      </div>
+      <!-- NPC Female Character Image -->
+      <img src="Gemini_Generated_Image_mn6c8vmn6c8vmn6c (1).jpg" alt="NPC Character" class="npc-character">
     </div>
   </div>
 
   <!-- Victory Modal -->
   <div id="victory-modal" class="modal-overlay">
-    <div class="modal-card">
-      <h2>ออเจ้าสำเร็จบริบูรณ์!</h2>
-      <div class="reward-banner">ได้รับรางวัลใหญ่: 💵 +๓๐๐ อัฐ</div>
-      <p id="victory-stats" style="text-align:center;"></p>
-      <p style="text-align:center;">ขอขอบน้ำใจออเจ้าที่ร่วมสืบสานและร้อยเรียงเรื่องราวประวัติศาสตร์รัตนโกสินทร์อันรุ่งเรือง</p>
-      <button class="gold-btn interactive" id="restart-game-btn">ท่องมิติใหม่อีกครา ↺</button>
+    <div class="modal-card-container">
+      <div class="modal-card">
+        <h2>ออเจ้าสำเร็จบริบูรณ์!</h2>
+        <div class="reward-banner">ได้รับรางวัลใหญ่: 💵 +๓๐๐ อัฐ</div>
+        <p id="victory-stats" style="text-align:center;"></p>
+        <p style="text-align:center;">ขอขอบน้ำใจออเจ้าที่ร่วมสืบสานและร้อยเรียงเรื่องราวประวัติศาสตร์รัตนโกสินทร์อันรุ่งเรือง</p>
+        <button class="gold-btn interactive" id="restart-game-btn">ท่องมิติใหม่อีกครา ↺</button>
+      </div>
+      <img src="Gemini_Generated_Image_mn6c8vmn6c8vmn6c (1).jpg" alt="NPC Character" class="npc-character">
     </div>
   </div>
 
   <script>
     /* =========================================================
-       1. HISTORICAL STAGES (5 Historical Levels, 4 Pieces 2x2)
+       1. HISTORICAL STAGES (5 Levels, 4 Pieces 2x2)
        ========================================================= */
     const LEVELS = [
       {
         id: 1,
         title: "ด่านที่ ๑ : กำเนิดพระนครและวัดพระแก้ว",
         subtitle: "กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒)",
-        rows: 2, cols: 2, // 4 ชิ้น
+        rows: 2, cols: 2, // 4 pieces
         image: "Gemini_Generated_Image_80e9aj80e9aj80e9.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (ร.๑) ทรงสถาปนากรุงรัตนโกสินทร์ขึ้นเมื่อ พ.ศ. ๒๓๒๕ ทรงโปรดเกล้าฯ ให้สร้างพระบรมมหาราชวังและวัดพระศรีรัตนศาสดาราม (วัดพระแก้ว) พร้อมทั้งสร้างเสาชิงช้าและขุดคลองรอบกรุงเพื่อเป็นศูนย์กลางการค้าและศูนย์รวมจิตใจของราษฎร"
       },
@@ -818,15 +861,15 @@
         id: 2,
         title: "ด่านที่ ๒ : การค้าสำเภาและศิลปกรรมรุ่งเรือง",
         subtitle: "ยุคพาณิชย์นาวีรุ่งโรจน์ (รัชกาลที่ ๓)",
-        rows: 2, cols: 2, // 4 ชิ้น
+        rows: 2, cols: 2, // 4 pieces
         image: "Gemini_Generated_Image_dcahnzdcahnzdcah.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
+        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
       },
       {
         id: 3,
         title: "ด่านที่ ๓ : รุ่งอรุณแห่งดาราศาสตร์สากล",
         subtitle: "การเปิดรับวิทยาการสมัยใหม่ (รัชกาลที่ ๔)",
-        rows: 2, cols: 2, // 4 ชิ้น
+        rows: 2, cols: 2, // 4 pieces
         image: "Gemini_Generated_Image_f2p7i9f2p7i9f2p7.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าเจ้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
       },
@@ -834,15 +877,15 @@
         id: 4,
         title: "ด่านที่ ๔ : การปฏิรูปสยามสู่สากลและเลิกทาส",
         subtitle: "ยุคศิวิไลซ์และความทันสมัย (รัชกาลที่ ๕ - ๗)",
-        rows: 2, cols: 2, // 4 ชิ้น
+        rows: 2, cols: 2, // 4 pieces
         image: "Gemini_Generated_Image_jjyx97jjyx97jjyx.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (ร.๕) ทรงประกาศเลิกทาสอย่างสันติวิธี ให้คนไทยมีอิสรภาพ ทรงริเริ่มสร้างทางรถไฟสายแรก การไปรษณีย์โทรเลข ไฟฟ้า และก่อสร้างพระที่นั่งอนันตสมาคม นำพาสยามก้าวสู่ความเจริญทัดเทียมนานาอารยประเทศ"
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจุลจอมเกล้าอยู่หัว (ร.๕) ทรงประกาศเลิกทาสอย่างสันติวิธี ให้คนไทยมีอิสรภาพ ทรงริเริ่มสร้างทางรถไฟสายแรก การไปรษณีย์โทรเลข ไฟฟ้า และก่อสร้างพระที่นั่งอนันตสมาคม นำพาสยามก้าวสู่ความเจริญทัดเทียมนานาอารยประเทศ"
       },
       {
         id: 5,
         title: "ด่านที่ ๕ : พระบารมีปกเกล้าและเกษตรทฤษฎีใหม่",
         subtitle: "สืบสานศาสตร์พระราชา (รัชกาลที่ ๙)",
-        rows: 2, cols: 2, // 4 ชิ้น
+        rows: 2, cols: 2, // 4 pieces
         image: "Gemini_Generated_Image_s6u0xls6u0xls6u0.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร ทรงอุทิศพระวรกายเพื่อปวงชน พระราชทานโครงการพระราชดำริกว่า ๔,๐๐๐ โครงการ อาทิ ฝนหลวง กังหันน้ำชัยพัฒนา และหลักปรัชญาเศรษฐกิจพอเพียง เพื่อความอยู่ดีกินดีอย่างยั่งยืน"
       }
@@ -1587,7 +1630,7 @@
     }
 
     /* =========================================================
-       9. MODAL & AI SPEECH (เก่งมากเลยค่ะเด็กๆ)
+       9. MODAL & LEVEL TRANSITIONS
        ========================================================= */
     const infoModal = document.getElementById('info-modal');
     const modalTitle = document.getElementById('modal-title');
@@ -1613,7 +1656,7 @@
     }
 
     nextLevelBtn.addEventListener('click', () => {
-      // ล็อกห้ามผ่านด่านถ้ายังไม่เสร็จด่านที่ 1 (หรือด่านปัจจุบัน)
+      // ล็อกห้ามผ่านด่านถ้ายังต่อจิ๊กซอว์ไม่ครบ
       if (totalSnapped < puzzlePieces.length) {
         alert("ออเจ้าต้องต่อจิ๊กซอว์ด่านนี้ให้เสร็จสมบูรณ์เสียก่อนจึงจะเดินทางไปด่านถัดไปได้!");
         return;
@@ -1638,7 +1681,7 @@
     });
 
     /* =========================================================
-       10. MEDIAPIPE AR POSE & HAND TRACKING (ห้ามเปลี่ยนด่านเมื่อจิ๊กซอว์ยังไม่เสร็จ)
+       10. MEDIAPIPE AR POSE & HAND TRACKING
        ========================================================= */
     const videoElement = document.getElementById('webcam-video');
     const canvasElement = document.getElementById('ar-canvas');
@@ -1694,7 +1737,7 @@
       if (el) {
         const clickTarget = el.closest('button, .ar-touch-item, .btn-top, .btn-icon, .panel-close, .cat-tab, .gold-btn');
         if (clickTarget) {
-          // ป้องกันไม่ให้การกดหน้าจอหรือสะบัดมือเปลี่ยนด่านข้ามหากยังต่อจิ๊กซอว์ไม่ครบ 4 ชิ้น
+          // ป้องกัน: ห้ามกดเปลี่ยนด่านขณะกำลังต่อถ้ายังไม่เสร็จ
           if (clickTarget.id === 'next-level-btn' && totalSnapped < puzzlePieces.length) {
             return;
           }
@@ -1814,8 +1857,14 @@
           const pinchDist = Math.hypot(ix - tx, iy - ty);
           const isPinching = pinchDist < 45;
 
+          // ป้องกัน: เมื่อสะบัดมือหรือจิ้มหน้าจอขณะเล่น ห้ามเปลี่ยนด่านหรือสลับมั่วซั่ว
           if (isPinching) {
-            triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2);
+            const clickedEl = document.elementFromPoint((ix + tx) / 2, (iy + ty) / 2);
+            if (clickedEl && clickedEl.closest('#next-level-btn') && totalSnapped < puzzlePieces.length) {
+              // ล็อกไว้ ไม่ให้เปลี่ยนด่าน
+            } else {
+              triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2);
+            }
           }
 
           if (isGameRunning) {
