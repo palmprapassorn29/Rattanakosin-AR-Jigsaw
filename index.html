@@ -341,7 +341,7 @@
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map (ขยายขนาดชัดเจน) */
+    /* Thumbnail Mini-map (ขนาดใหญ่คมชัด) */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
@@ -483,7 +483,6 @@
       scrollbar-width: thin;
       touch-action: pan-y;
       -webkit-overflow-scrolling: touch;
-      overscroll-behavior: contain;
     }
 
     .horizontal-item-grid {
@@ -494,7 +493,6 @@
       scrollbar-width: thin;
       touch-action: pan-x;
       -webkit-overflow-scrolling: touch;
-      overscroll-behavior: contain;
     }
 
     .ar-touch-item {
@@ -1584,6 +1582,7 @@
         userMoney += 10;
         updateMoneyUI();
 
+        // เล่นเสียงสังเคราะห์แทนแสงปิ๊งๆ
         AudioEngine.playSnap();
         createFlowerTouch(pieceObj.x + pieceObj.w / 2, pieceObj.y + pieceObj.h / 2);
 
