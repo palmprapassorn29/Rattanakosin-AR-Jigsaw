@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>บุพเพรัตนโกสินทร์ AR Jigsaw: ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์</title>
+  <title>รัตนโกสินทร์ AR Jigsaw: ท่องมิติเวลาร้อยเรียงประวัติศาสตร์</title>
   
   <!-- Google Fonts Thai -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -752,8 +752,8 @@
   <div id="start-screen">
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
-      <h1>บุพเพรัตนโกสินทร์ AR Jigsaw</h1>
-      <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR จิ้มเลือกชุดไทย หมวก เครื่องประดับทางฝั่งซ้าย สะสมธนบัตรโบราณซื้อกรอบรูปน่ารัก และต่อจิ๊กซอว์ ๔ ชิ้นทั้ง ๕ ยุคสมัย</p>
+      <h1>รัตนโกสินทร์ AR Jigsaw</h1>
+      <p>ท่องมิติเวลาร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR ต่อจิ๊กซอว์มหาสนุก</p>
       <button class="gold-btn-start interactive" id="start-btn">
         <span>📷</span> เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)
       </button>
@@ -763,7 +763,7 @@
   <!-- Hand Gesture Ready Prompt on Live Camera -->
   <div id="ar-start-prompt" class="interactive">
     <div class="prompt-box">
-      <h2>✨ กล้องพร้อมแล้วออเจ้า ✨</h2>
+      <h2>✨ กล้องพร้อมแล้วหนาท่าน ✨</h2>
       <p>ยื่นนิ้วชี้หรือจีบนิ้วกลางอากาศเพื่อกดปุ่มด้านล่าง หรือใช้นิ้วสัมผัสหน้าจอได้ทุกจุด</p>
       <button class="gold-btn interactive" id="confirm-start-btn">
         🌸 เริ่มท่องมิติเวลา (Start Playing)
@@ -793,7 +793,7 @@
       <div class="top-controls">
         <button class="btn-top interactive" id="home-btn" title="กลับหน้าเริ่มต้น">🏠 หน้าหลัก</button>
         <div class="money-pill">
-          <span>💵</span> <span id="money-count">100</span> อัฐ
+          <span>💵</span> <span id="money-count">100</span> สตางค์
         </div>
         <button class="btn-top interactive" id="dress-toggle-btn">👗 แต่งตัวชุดไทย</button>
         <button class="btn-top interactive" id="shop-toggle-btn">🛍️ ร้านกรอบรูป</button>
@@ -827,7 +827,7 @@
     <!-- 2. Pop Culture Frame Shop Panel -->
     <div id="shop-panel" class="interactive">
       <div class="panel-header">
-        <h3>🛍️ ร้านค้ากรอบรูปขวัญใจออเจ้า (สะสมธนบัตรเพื่อปลดล็อก)</h3>
+        <h3>🛍️ ร้านค้ากรอบรูปขวัญใจชาวสยาม (สะสมสตางค์เพื่อปลดล็อก)</h3>
         <button class="panel-close" id="shop-close-btn">✖</button>
       </div>
       <div class="horizontal-item-grid" id="shop-items-container">
@@ -841,7 +841,7 @@
     <div class="modal-card">
       <div class="modal-content-left">
         <h2 id="modal-title">เฉลยสตอรี่เรื่องราวประวัติศาสตร์</h2>
-        <div class="reward-banner">ได้รับรางวัล: 💵 +๑๐๐ อัฐ</div>
+        <div class="reward-banner">ได้รับรางวัล: 💵 +๑๐๐ สตางค์</div>
         <p id="modal-desc"></p>
         <button class="gold-btn interactive" id="next-level-btn">ท่องมิติสู่ด่านถัดไป ➔</button>
       </div>
@@ -855,8 +855,8 @@
   <div id="victory-modal" class="modal-overlay">
     <div class="modal-card victory-card">
       <img src="ending.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์นะคะ" class="victory-main-img">
-      <h2 style="font-size:32px; margin-bottom:8px;">ออเจ้าสำเร็จบริบูรณ์ทั้ง ๕ ยุคสมัย!</h2>
-      <div class="reward-banner" style="margin-bottom:10px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ อัฐ</div>
+      <h2 style="font-size:32px; margin-bottom:8px;">ท่านสำเร็จบริบูรณ์ทั้ง ๕ เรื่องราวแล้วเจ้าค่ะ!</h2>
+      <div class="reward-banner" style="margin-bottom:10px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ สตางค์เจ้าค่ะ</div>
       <p id="victory-stats" style="text-align:center; margin-bottom:16px; font-weight:bold;"></p>
       <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้ง (Play Again)</button>
     </div>
