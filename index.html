@@ -339,33 +339,33 @@
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map */
+    /* Thumbnail Mini-map (Larger size) */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
       right: 20px;
       background: var(--navy-glass);
       border: 2px solid var(--gold);
-      border-radius: 12px;
-      padding: 8px;
+      border-radius: 14px;
+      padding: 10px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.6);
       text-align: center;
       backdrop-filter: blur(8px);
     }
 
     #minimap-wrapper h4 {
-      font-size: 12px;
+      font-size: 14px;
       color: var(--gold);
-      margin-bottom: 5px;
+      margin-bottom: 6px;
       font-family: var(--font-title);
     }
 
     #minimap-img {
-      width: 150px;
-      height: 98px;
+      width: 190px;
+      height: 125px;
       object-fit: cover;
-      border-radius: 6px;
-      border: 1.5px solid rgba(212, 175, 55, 0.5);
+      border-radius: 8px;
+      border: 2px solid rgba(212, 175, 55, 0.6);
       display: block;
     }
 
@@ -601,12 +601,7 @@
       pointer-events: none;
       border: none;
       box-shadow: none;
-      animation: glowSnap 0.8s ease-in-out infinite alternate;
-    }
-
-    @keyframes glowSnap {
-      0% { filter: drop-shadow(0 0 2px #FFF) drop-shadow(0 0 6px #D4AF37); }
-      100% { filter: drop-shadow(0 0 8px #FFF) drop-shadow(0 0 16px #FFD700); }
+      /* ไม่มีแสงปิ๊งๆ กระพริบ มีเสียงแทนตามที่ขอ */
     }
 
     /* Modals & NPC layout */
@@ -781,7 +776,7 @@
       </div>
     </header>
 
-    <!-- Mini-map Reference Thumbnail -->
+    <!-- Mini-map Reference Thumbnail (Larger size) -->
     <div id="minimap-wrapper" class="interactive">
       <h4>ภาพตัวอย่างเฉลย (๔ ชิ้น)</h4>
       <img id="minimap-img" src="" alt="Thumbnail">
@@ -825,7 +820,7 @@
         <p id="modal-desc"></p>
         <button class="gold-btn interactive" id="next-level-btn">ท่องมิติสู่ด่านถัดไป ➔</button>
       </div>
-      <!-- NPC Female Character Image -->
+      <!-- NPC Female Character -->
       <img src="Gemini_Generated_Image_mn6c8vmn6c8vmn6c (1).jpg" alt="NPC Character" class="npc-character">
     </div>
   </div>
@@ -863,7 +858,7 @@
         subtitle: "ยุคพาณิชย์นาวีรุ่งโรจน์ (รัชกาลที่ ๓)",
         rows: 2, cols: 2, // 4 pieces
         image: "Gemini_Generated_Image_dcahnzdcahnzdcah.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
+        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
       },
       {
         id: 3,
@@ -1568,7 +1563,7 @@
         pieceObj.y = pieceObj.targetY;
         pieceObj.el.style.left = `${pieceObj.x}px`;
         pieceObj.el.style.top = `${pieceObj.y}px`;
-        pieceObj.el.classList.add('snapped'); // แสดงแสงปิ๊งๆ กระพริบที่ภาพถูกต้อง
+        pieceObj.el.classList.add('snapped');
         pieceObj.isSnapped = true;
         totalSnapped++;
 
@@ -1578,7 +1573,6 @@
         AudioEngine.playSnap();
         createFlowerTouch(pieceObj.x + pieceObj.w / 2, pieceObj.y + pieceObj.h / 2);
 
-        // เช็คว่าต่อครบ 4 ชิ้นหรือยัง
         if (totalSnapped === puzzlePieces.length) {
           setTimeout(levelCompleted, 600);
         }
@@ -1681,7 +1675,7 @@
     });
 
     /* =========================================================
-       10. MEDIAPIPE AR POSE & HAND TRACKING
+       10. MEDIAPIPE AR POSE, HAND TRACKING & STRICT LEVEL LOCK
        ========================================================= */
     const videoElement = document.getElementById('webcam-video');
     const canvasElement = document.getElementById('ar-canvas');
@@ -1737,7 +1731,7 @@
       if (el) {
         const clickTarget = el.closest('button, .ar-touch-item, .btn-top, .btn-icon, .panel-close, .cat-tab, .gold-btn');
         if (clickTarget) {
-          // ป้องกัน: ห้ามกดเปลี่ยนด่านขณะกำลังต่อถ้ายังไม่เสร็จ
+          // ล็อกเด็ดขาด: ห้ามเปลี่ยนด่านหากกดปุ่มเปลี่ยนด่านในขณะที่ยังต่อจิ๊กซอว์ไม่ครบ
           if (clickTarget.id === 'next-level-btn' && totalSnapped < puzzlePieces.length) {
             return;
           }
@@ -1857,7 +1851,7 @@
           const pinchDist = Math.hypot(ix - tx, iy - ty);
           const isPinching = pinchDist < 45;
 
-          // ป้องกัน: เมื่อสะบัดมือหรือจิ้มหน้าจอขณะเล่น ห้ามเปลี่ยนด่านหรือสลับมั่วซั่ว
+          // ป้องกัน: เมื่อสะบัดมือหรือจิ้มหน้าจอขณะเล่น ห้ามเปลี่ยนด่านเด็ดขาด
           if (isPinching) {
             const clickedEl = document.elementFromPoint((ix + tx) / 2, (iy + ty) / 2);
             if (clickedEl && clickedEl.closest('#next-level-btn') && totalSnapped < puzzlePieces.length) {
@@ -1899,7 +1893,7 @@
     }
 
     /* =========================================================
-       11. CAMERA START & FLOW
+       11. CAMERA START & PERSISTENT STREAM
        ========================================================= */
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
