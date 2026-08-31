@@ -88,9 +88,7 @@
       z-index: 6;
     }
 
-    /* =========================================================
-       1. START SCREEN (Centered, Kanok Border & Glitter)
-       ========================================================= */
+    /* Start Screen */
     #start-screen {
       position: absolute;
       top: 0;
@@ -343,25 +341,25 @@
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map (ขยายขนาดชัดเจน) */
+    /* Thumbnail Mini-map */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
       right: 20px;
       background: var(--navy-glass);
       border: 2px solid var(--gold);
-      border-radius: 14px;
-      padding: 10px;
-      box-shadow: 0 8px 26px rgba(0,0,0,0.7);
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
       text-align: center;
       backdrop-filter: blur(8px);
       z-index: 15;
     }
 
     #minimap-wrapper h4 {
-      font-size: 14px;
-      color: var(--gold-light);
-      margin-bottom: 6px;
+      font-size: 12px;
+      color: var(--gold);
+      margin-bottom: 5px;
       font-family: var(--font-title);
     }
 
@@ -715,7 +713,7 @@
       box-shadow: 0 6px 20px rgba(255, 240, 153, 0.8);
     }
 
-    /* Final Victory Modal Custom Card (ภาพกลุ่มตัวละครอวยพรขนาดใหญ่) */
+    /* Final Victory Modal Custom Card (ใช้ภาพ ending.jpg) */
     .victory-card {
       max-width: 860px;
       width: 94%;
@@ -793,6 +791,7 @@
         <p id="level-subtitle">กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒)</p>
       </div>
       <div class="top-controls">
+        <button class="btn-top interactive" id="home-btn" title="กลับหน้าเริ่มต้น">🏠 หน้าหลัก</button>
         <div class="money-pill">
           <span>💵</span> <span id="money-count">100</span> อัฐ
         </div>
@@ -852,10 +851,10 @@
     </div>
   </div>
 
-  <!-- Final Victory Modal with Large Group Farewell Picture & Play Again Button Only Here -->
+  <!-- Final Victory Modal with ending.jpg & Play Again Button Only -->
   <div id="victory-modal" class="modal-overlay">
     <div class="modal-card victory-card">
-      <img src="ขอให้สนุกกับวิชาประวัติศาสตร์.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์นะคะ" class="victory-main-img">
+      <img src="ending.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์นะคะ" class="victory-main-img">
       <h2 style="font-size:32px; margin-bottom:8px;">ออเจ้าสำเร็จบริบูรณ์ทั้ง ๕ ยุคสมัย!</h2>
       <div class="reward-banner" style="margin-bottom:10px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ อัฐ</div>
       <p id="victory-stats" style="text-align:center; margin-bottom:16px; font-weight:bold;"></p>
@@ -898,7 +897,7 @@
         subtitle: "ยุคศิวิไลซ์และความทันสมัย (รัชกาลที่ ๕ - ๗)",
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_jjyx97jjyx97jjyx.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (ร.๕) ทรงประกาศเลิกทาสอย่างสันติวิธี ให้คนไทยมีอิสรภาพ ทรงริเริ่มสร้างทางรถไฟสายแรก การไปรษณีย์โทรเลข ไฟฟ้า และก่อสร้างพระที่นั่งอนันตสมาคม นำพาสยามก้าวสู่ความเจริญทัดเทียมนานาอารยประเทศ"
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจุลจอมเกล้าอยู่หัว (ร.๕) ทรงประกาศเลิกทาสอย่างสันติวิธี ให้คนไทยมีอิสรภาพ ทรงริเริ่มสร้างทางรถไฟสายแรก การไปรษณีย์โทรเลข ไฟฟ้า และก่อสร้างพระที่นั่งอนันตสมาคม นำพาสยามก้าวสู่ความเจริญทัดเทียมนานาอารยประเทศ"
       },
       {
         id: 5,
@@ -1012,6 +1011,176 @@
     let cameraStream = null;
 
     /* =========================================================
+       3. POP CULTURE FRAMES SHOP (Seamless / No Freeze)
+       ========================================================= */
+    const SHOP_FRAMES = {
+      none: { name: 'ไม่ใส่กรอบ', price: 0, owned: true, render: (ctx, w, h) => {} },
+      labubu: {
+        name: 'ลาบูบู้ (Labubu)',
+        price: 80,
+        owned: false,
+        icon: '🐰',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#D4A373';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(70, 70);
+          ctx.fillStyle = '#C58958';
+          ctx.beginPath();
+          ctx.ellipse(-25, -40, 12, 35, -0.3, 0, Math.PI*2);
+          ctx.ellipse(25, -40, 12, 35, 0.3, 0, Math.PI*2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(0, 0, 36, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FFF';
+          ctx.beginPath();
+          ctx.arc(0, 8, 18, 0, Math.PI);
+          ctx.fill();
+          ctx.fillStyle = '#333';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('LABUBU', -22, 38);
+          ctx.restore();
+        }
+      },
+      carebears: {
+        name: 'แคร์แบร์ (Care Bears)',
+        price: 80,
+        owned: false,
+        icon: '🐻',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#FFB5A7';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(w - 75, 75);
+          ctx.fillStyle = '#90DBF4';
+          ctx.beginPath();
+          ctx.arc(0, 0, 34, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FF758F';
+          ctx.beginPath();
+          ctx.arc(-7, 4, 7, 0, Math.PI * 2);
+          ctx.arc(7, 4, 7, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#333';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('CARE BEARS', -35, 42);
+          ctx.restore();
+        }
+      },
+      monchhichi: {
+        name: 'ม่อนชิชิ (Monchhichi)',
+        price: 100,
+        owned: false,
+        icon: '🐵',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#BC6C25';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(70, h - 70);
+          ctx.fillStyle = '#6F4E37';
+          ctx.beginPath();
+          ctx.arc(0, 0, 34, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FCEADE';
+          ctx.beginPath();
+          ctx.arc(0, 3, 22, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FFB703';
+          ctx.beginPath();
+          ctx.arc(0, 12, 7, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FFF';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('MONCHHICHI', -35, -40);
+          ctx.restore();
+        }
+      },
+      kitty: {
+        name: 'คิตตี้ (Hello Kitty)',
+        price: 100,
+        owned: false,
+        icon: '🎀',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#FF4D6D';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(w - 70, h - 70);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.beginPath();
+          ctx.arc(0, 0, 32, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#E63946';
+          ctx.beginPath();
+          ctx.arc(20, -20, 10, 0, Math.PI * 2);
+          ctx.arc(32, -20, 8, 0, Math.PI * 2);
+          ctx.arc(8, -20, 8, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FFF';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('HELLO KITTY', -35, -38);
+          ctx.restore();
+        }
+      },
+      benten: {
+        name: 'เบ็นเท็น (Ben 10)',
+        price: 120,
+        owned: false,
+        icon: '⚡',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#38B000';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(70, 70);
+          ctx.fillStyle = '#101010';
+          ctx.beginPath();
+          ctx.arc(0, 0, 32, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#70E000';
+          ctx.beginPath();
+          ctx.moveTo(-18, -22); ctx.lineTo(0, 0); ctx.lineTo(-18, 22); ctx.closePath();
+          ctx.moveTo(18, -22); ctx.lineTo(0, 0); ctx.lineTo(18, 22); ctx.closePath();
+          ctx.fill();
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('BEN 10', -18, 42);
+          ctx.restore();
+        }
+      },
+      conan: {
+        name: 'โคนัน (Detective Conan)',
+        price: 120,
+        owned: false,
+        icon: '👓',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#0077B6';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(w - 70, 70);
+          ctx.strokeStyle = '#111';
+          ctx.lineWidth = 3;
+          ctx.strokeRect(-28, -16, 24, 18);
+          ctx.strokeRect(4, -16, 24, 18);
+          ctx.beginPath(); ctx.moveTo(-4, -7); ctx.lineTo(4, -7); ctx.stroke();
+          ctx.fillStyle = '#D90429';
+          ctx.beginPath();
+          ctx.moveTo(-15, 10); ctx.lineTo(0, 15); ctx.lineTo(-15, 20); ctx.closePath();
+          ctx.moveTo(15, 10); ctx.lineTo(0, 15); ctx.lineTo(15, 20); ctx.closePath();
+          ctx.fill();
+          ctx.fillStyle = '#FFF';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('CONAN', -20, 38);
+          ctx.restore();
+        }
+      }
+    };
+
+    /* =========================================================
        4. LEFT DRESSING & SHOP PANELS (Interactive)
        ========================================================= */
     const dressingPanel = document.getElementById('dressing-panel');
@@ -1024,12 +1193,24 @@
     const shopCloseBtn = document.getElementById('shop-close-btn');
     const shopItemsContainer = document.getElementById('shop-items-container');
     const moneyCountEl = document.getElementById('money-count');
+    const homeBtn = document.getElementById('home-btn');
 
     let currentCategory = 'clothes';
 
     function updateMoneyUI() {
       moneyCountEl.textContent = userMoney;
     }
+
+    homeBtn.addEventListener('click', () => {
+      document.getElementById('start-screen').style.display = 'flex';
+      document.getElementById('start-screen').classList.remove('camera-ready');
+      document.getElementById('start-main-card').style.display = 'flex';
+      document.getElementById('ar-start-prompt').style.display = 'none';
+      dressingPanel.classList.remove('open');
+      shopPanel.classList.remove('open');
+      isGameRunning = false;
+      AudioEngine.playSnap();
+    });
 
     dressToggleBtn.addEventListener('click', () => {
       dressingPanel.classList.toggle('open');
@@ -1206,7 +1387,7 @@
       ytPlayer = new YT.Player('yt-audio-frame', {
         height: '1',
         width: '1',
-        videoId: '4J1WgPSB4sM', // รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้
+        videoId: '4J1WgPSB4sM', // รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้ (https://youtu.be/4J1WgPSB4sM)
         playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': '4J1WgPSB4sM', 'controls': 0, 'disablekb': 1 }
       });
     };
@@ -1514,7 +1695,7 @@
       }
     });
 
-    // ปุ่มเริ่มใหม่อีกครั้งในหน้าสุดท้ายหน้าเดียว
+    // ปุ่มเล่นใหม่อีกครั้งในหน้าสุดท้ายหน้าเดียว
     restartGameBtn.addEventListener('click', () => {
       victoryModal.classList.remove('active');
       gameStartTime = Date.now();
