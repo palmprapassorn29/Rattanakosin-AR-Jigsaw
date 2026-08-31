@@ -88,7 +88,9 @@
       z-index: 6;
     }
 
-    /* Start Screen */
+    /* =========================================================
+       1. START SCREEN (Centered, Kanok Border & Glitter)
+       ========================================================= */
     #start-screen {
       position: absolute;
       top: 0;
@@ -341,7 +343,7 @@
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map (ขนาดใหญ่คมชัด) */
+    /* Thumbnail Mini-map (ขยายขนาดชัดเจน) */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
@@ -713,9 +715,9 @@
       box-shadow: 0 6px 20px rgba(255, 240, 153, 0.8);
     }
 
-    /* Final Victory Modal: แสดงภาพกลุ่มตัวละครอวยพรขนาดใหญ่และปุ่มเริ่มใหม่อีกครั้ง */
+    /* Final Victory Modal Custom Card (ภาพกลุ่มตัวละครอวยพรขนาดใหญ่) */
     .victory-card {
-      max-width: 880px;
+      max-width: 860px;
       width: 94%;
       flex-direction: column !important;
       text-align: center !important;
@@ -725,11 +727,11 @@
 
     .victory-main-img {
       width: 100%;
-      max-height: 350px;
+      max-height: 340px;
       object-fit: contain;
       border-radius: 16px;
-      border: 2.5px solid var(--gold);
-      box-shadow: 0 10px 35px rgba(0,0,0,0.75), 0 0 25px rgba(212, 175, 55, 0.55);
+      border: 2px solid var(--gold);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 20px rgba(212, 175, 55, 0.5);
       margin-bottom: 16px;
       display: block;
     }
@@ -745,7 +747,7 @@
 </head>
 <body>
 
-  <!-- Background Music (YouTube IFrame: เพลงรัตนโกสินทร์ - สุทธิพงษ์ วัฒนจัง) -->
+  <!-- Background Music (YouTube IFrame: รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้) -->
   <div id="yt-audio-frame"></div>
 
   <!-- Start Screen with Centered Kanok Card & Sparkles -->
@@ -800,7 +802,7 @@
       </div>
     </header>
 
-    <!-- Mini-map Reference Thumbnail (ขนาดใหญ่คมชัด) -->
+    <!-- Mini-map Reference Thumbnail -->
     <div id="minimap-wrapper" class="interactive">
       <h4>ภาพตัวอย่างเฉลย (๔ ชิ้น)</h4>
       <img id="minimap-img" src="" alt="Thumbnail">
@@ -850,7 +852,7 @@
     </div>
   </div>
 
-  <!-- Final Victory Modal with Group Farewell Picture & Single Restart Button -->
+  <!-- Final Victory Modal with Large Group Farewell Picture & Play Again Button Only Here -->
   <div id="victory-modal" class="modal-overlay">
     <div class="modal-card victory-card">
       <img src="ขอให้สนุกกับวิชาประวัติศาสตร์.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์นะคะ" class="victory-main-img">
@@ -1008,176 +1010,6 @@
     let activeFrameKey = 'none';
     let userMoney = 100;
     let cameraStream = null;
-
-    /* =========================================================
-       3. POP CULTURE FRAMES SHOP (Seamless / No Freeze)
-       ========================================================= */
-    const SHOP_FRAMES = {
-      none: { name: 'ไม่ใส่กรอบ', price: 0, owned: true, render: (ctx, w, h) => {} },
-      labubu: {
-        name: 'ลาบูบู้ (Labubu)',
-        price: 80,
-        owned: false,
-        icon: '🐰',
-        render: (ctx, w, h) => {
-          ctx.strokeStyle = '#D4A373';
-          ctx.lineWidth = 14;
-          ctx.strokeRect(7, 7, w - 14, h - 14);
-          ctx.save();
-          ctx.translate(70, 70);
-          ctx.fillStyle = '#C58958';
-          ctx.beginPath();
-          ctx.ellipse(-25, -40, 12, 35, -0.3, 0, Math.PI*2);
-          ctx.ellipse(25, -40, 12, 35, 0.3, 0, Math.PI*2);
-          ctx.fill();
-          ctx.beginPath();
-          ctx.arc(0, 0, 36, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#FFF';
-          ctx.beginPath();
-          ctx.arc(0, 8, 18, 0, Math.PI);
-          ctx.fill();
-          ctx.fillStyle = '#333';
-          ctx.font = 'bold 11px sans-serif';
-          ctx.fillText('LABUBU', -22, 38);
-          ctx.restore();
-        }
-      },
-      carebears: {
-        name: 'แคร์แบร์ (Care Bears)',
-        price: 80,
-        owned: false,
-        icon: '🐻',
-        render: (ctx, w, h) => {
-          ctx.strokeStyle = '#FFB5A7';
-          ctx.lineWidth = 14;
-          ctx.strokeRect(7, 7, w - 14, h - 14);
-          ctx.save();
-          ctx.translate(w - 75, 75);
-          ctx.fillStyle = '#90DBF4';
-          ctx.beginPath();
-          ctx.arc(0, 0, 34, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#FF758F';
-          ctx.beginPath();
-          ctx.arc(-7, 4, 7, 0, Math.PI * 2);
-          ctx.arc(7, 4, 7, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#333';
-          ctx.font = 'bold 11px sans-serif';
-          ctx.fillText('CARE BEARS', -35, 42);
-          ctx.restore();
-        }
-      },
-      monchhichi: {
-        name: 'ม่อนชิชิ (Monchhichi)',
-        price: 100,
-        owned: false,
-        icon: '🐵',
-        render: (ctx, w, h) => {
-          ctx.strokeStyle = '#BC6C25';
-          ctx.lineWidth = 14;
-          ctx.strokeRect(7, 7, w - 14, h - 14);
-          ctx.save();
-          ctx.translate(70, h - 70);
-          ctx.fillStyle = '#6F4E37';
-          ctx.beginPath();
-          ctx.arc(0, 0, 34, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#FCEADE';
-          ctx.beginPath();
-          ctx.arc(0, 3, 22, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#FFB703';
-          ctx.beginPath();
-          ctx.arc(0, 12, 7, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#FFF';
-          ctx.font = 'bold 11px sans-serif';
-          ctx.fillText('MONCHHICHI', -35, -40);
-          ctx.restore();
-        }
-      },
-      kitty: {
-        name: 'คิตตี้ (Hello Kitty)',
-        price: 100,
-        owned: false,
-        icon: '🎀',
-        render: (ctx, w, h) => {
-          ctx.strokeStyle = '#FF4D6D';
-          ctx.lineWidth = 14;
-          ctx.strokeRect(7, 7, w - 14, h - 14);
-          ctx.save();
-          ctx.translate(w - 70, h - 70);
-          ctx.fillStyle = '#FFFFFF';
-          ctx.beginPath();
-          ctx.arc(0, 0, 32, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#E63946';
-          ctx.beginPath();
-          ctx.arc(20, -20, 10, 0, Math.PI * 2);
-          ctx.arc(32, -20, 8, 0, Math.PI * 2);
-          ctx.arc(8, -20, 8, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#FFF';
-          ctx.font = 'bold 11px sans-serif';
-          ctx.fillText('HELLO KITTY', -35, -38);
-          ctx.restore();
-        }
-      },
-      benten: {
-        name: 'เบ็นเท็น (Ben 10)',
-        price: 120,
-        owned: false,
-        icon: '⚡',
-        render: (ctx, w, h) => {
-          ctx.strokeStyle = '#38B000';
-          ctx.lineWidth = 14;
-          ctx.strokeRect(7, 7, w - 14, h - 14);
-          ctx.save();
-          ctx.translate(70, 70);
-          ctx.fillStyle = '#101010';
-          ctx.beginPath();
-          ctx.arc(0, 0, 32, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#70E000';
-          ctx.beginPath();
-          ctx.moveTo(-18, -22); ctx.lineTo(0, 0); ctx.lineTo(-18, 22); ctx.closePath();
-          ctx.moveTo(18, -22); ctx.lineTo(0, 0); ctx.lineTo(18, 22); ctx.closePath();
-          ctx.fill();
-          ctx.font = 'bold 11px sans-serif';
-          ctx.fillText('BEN 10', -18, 42);
-          ctx.restore();
-        }
-      },
-      conan: {
-        name: 'โคนัน (Detective Conan)',
-        price: 120,
-        owned: false,
-        icon: '👓',
-        render: (ctx, w, h) => {
-          ctx.strokeStyle = '#0077B6';
-          ctx.lineWidth = 14;
-          ctx.strokeRect(7, 7, w - 14, h - 14);
-          ctx.save();
-          ctx.translate(w - 70, 70);
-          ctx.strokeStyle = '#111';
-          ctx.lineWidth = 3;
-          ctx.strokeRect(-28, -16, 24, 18);
-          ctx.strokeRect(4, -16, 24, 18);
-          ctx.beginPath(); ctx.moveTo(-4, -7); ctx.lineTo(4, -7); ctx.stroke();
-          ctx.fillStyle = '#D90429';
-          ctx.beginPath();
-          ctx.moveTo(-15, 10); ctx.lineTo(0, 15); ctx.lineTo(-15, 20); ctx.closePath();
-          ctx.moveTo(15, 10); ctx.lineTo(0, 15); ctx.lineTo(15, 20); ctx.closePath();
-          ctx.fill();
-          ctx.fillStyle = '#FFF';
-          ctx.font = 'bold 11px sans-serif';
-          ctx.fillText('CONAN', -20, 38);
-          ctx.restore();
-        }
-      }
-    };
 
     /* =========================================================
        4. LEFT DRESSING & SHOP PANELS (Interactive)
@@ -1374,7 +1206,7 @@
       ytPlayer = new YT.Player('yt-audio-frame', {
         height: '1',
         width: '1',
-        videoId: '4J1WgPSB4sM', // รัตนโกสินทร์ - สุทธิพงษ์ วัฒนจัง (ชมพู ฟรุ๊ตตี้)
+        videoId: '4J1WgPSB4sM', // รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้
         playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': '4J1WgPSB4sM', 'controls': 0, 'disablekb': 1 }
       });
     };
@@ -1654,24 +1486,14 @@
     function levelCompleted() {
       AudioEngine.playVictory();
       AudioEngine.speakVictorySpeech();
+      userMoney += 100;
+      updateMoneyUI();
 
       const currentLevel = LEVELS[currentLevelIdx];
-      
-      if (currentLevelIdx < LEVELS.length - 1) {
-        userMoney += 100;
-        updateMoneyUI();
-        modalTitle.textContent = `${currentLevel.title} (สำเร็จ!)`;
-        modalDesc.textContent = currentLevel.history;
-        modalHistoryImg.src = currentLevel.image;
-        infoModal.classList.add('active');
-      } else {
-        // Complete All Stages - Final Screen
-        userMoney += 300;
-        updateMoneyUI();
-        const totalSecs = Math.floor((Date.now() - gameStartTime) / 1000);
-        victoryStats.textContent = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที (ยอดเงินสะสม ${userMoney} อัฐ)`;
-        victoryModal.classList.add('active');
-      }
+      modalTitle.textContent = `${currentLevel.title} (สำเร็จ!)`;
+      modalDesc.textContent = currentLevel.history;
+      modalHistoryImg.src = currentLevel.image;
+      infoModal.classList.add('active');
     }
 
     nextLevelBtn.addEventListener('click', () => {
@@ -1681,7 +1503,15 @@
       }
 
       infoModal.classList.remove('active');
-      initLevel(currentLevelIdx + 1);
+      if (currentLevelIdx < LEVELS.length - 1) {
+        initLevel(currentLevelIdx + 1);
+      } else {
+        userMoney += 300;
+        updateMoneyUI();
+        const totalSecs = Math.floor((Date.now() - gameStartTime) / 1000);
+        victoryStats.textContent = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที (ยอดเงินสะสม ${userMoney} อัฐ)`;
+        victoryModal.classList.add('active');
+      }
     });
 
     // ปุ่มเริ่มใหม่อีกครั้งในหน้าสุดท้ายหน้าเดียว
