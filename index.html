@@ -341,7 +341,7 @@
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map (ขนาดใหญ่คมชัด) */
+    /* Thumbnail Mini-map (ขยายขนาดชัดเจน) */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
@@ -634,8 +634,8 @@
       border: 2px solid var(--gold);
       border-radius: 24px;
       padding: 32px 28px;
-      max-width: 860px;
-      width: 92%;
+      max-width: 900px;
+      width: 94%;
       text-align: left;
       box-shadow: 0 10px 45px rgba(0,0,0,0.85), 0 0 25px rgba(212, 175, 55, 0.4);
       display: flex;
@@ -651,7 +651,7 @@
     }
 
     .modal-jigsaw-right {
-      flex: 0 0 320px;
+      flex: 0 0 350px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -660,7 +660,7 @@
 
     .modal-jigsaw-right img {
       width: 100%;
-      max-height: 220px;
+      max-height: 240px;
       object-fit: cover;
       border-radius: 12px;
       border: 2px solid var(--gold);
@@ -770,7 +770,6 @@
         <p id="level-subtitle">กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒)</p>
       </div>
       <div class="top-controls">
-        <button class="btn-top interactive" id="home-btn" title="กลับหน้าเริ่มต้น">🏠 หน้าหลัก</button>
         <div class="money-pill">
           <span>💵</span> <span id="money-count">100</span> อัฐ
         </div>
@@ -838,7 +837,6 @@
         <div class="reward-banner">ได้รับรางวัลใหญ่: 💵 +๓๐๐ อัฐ</div>
         <p id="victory-stats"></p>
         <p>ขอขอบน้ำใจออเจ้าที่ร่วมสืบสานและร้อยเรียงเรื่องราวประวัติศาสตร์รัตนโกสินทร์อันรุ่งเรือง</p>
-        <button class="gold-btn interactive" id="restart-game-btn">ท่องมิติใหม่อีกครา ↺</button>
       </div>
       <div class="modal-jigsaw-right">
         <img src="Gemini_Generated_Image_s6u0xls6u0xls6u0.jpg" alt="Final Victory Puzzle">
@@ -1177,24 +1175,12 @@
     const shopCloseBtn = document.getElementById('shop-close-btn');
     const shopItemsContainer = document.getElementById('shop-items-container');
     const moneyCountEl = document.getElementById('money-count');
-    const homeBtn = document.getElementById('home-btn');
 
     let currentCategory = 'clothes';
 
     function updateMoneyUI() {
       moneyCountEl.textContent = userMoney;
     }
-
-    homeBtn.addEventListener('click', () => {
-      document.getElementById('start-screen').style.display = 'flex';
-      document.getElementById('start-screen').classList.remove('camera-ready');
-      document.getElementById('start-main-card').style.display = 'flex';
-      document.getElementById('ar-start-prompt').style.display = 'none';
-      dressingPanel.classList.remove('open');
-      shopPanel.classList.remove('open');
-      isGameRunning = false;
-      AudioEngine.playSnap();
-    });
 
     dressToggleBtn.addEventListener('click', () => {
       dressingPanel.classList.toggle('open');
@@ -1647,7 +1633,6 @@
 
     const victoryModal = document.getElementById('victory-modal');
     const victoryStats = document.getElementById('victory-stats');
-    const restartGameBtn = document.getElementById('restart-game-btn');
 
     function levelCompleted() {
       AudioEngine.playVictory();
@@ -1658,7 +1643,7 @@
       const currentLevel = LEVELS[currentLevelIdx];
       modalTitle.textContent = `${currentLevel.title} (สำเร็จ!)`;
       modalDesc.textContent = currentLevel.history;
-      modalHistoryImg.src = currentLevel.image; // แสดงภาพผลงานจิ๊กซอว์ของด่านนั้นๆ
+      modalHistoryImg.src = currentLevel.image;
       infoModal.classList.add('active');
     }
 
@@ -1678,12 +1663,6 @@
         victoryStats.textContent = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที (ยอดเงินสะสม ${userMoney} อัฐ)`;
         victoryModal.classList.add('active');
       }
-    });
-
-    restartGameBtn.addEventListener('click', () => {
-      victoryModal.classList.remove('active');
-      gameStartTime = Date.now();
-      initLevel(0);
     });
 
     /* =========================================================
@@ -1869,8 +1848,14 @@
           const pinchDist = Math.hypot(ix - tx, iy - ty);
           const isPinching = pinchDist < 45;
 
-          if (isPinching) {
-            triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2);
+          // Universal AR Click (เฉพาะตอนไม่ได้ลากชิ้นส่วนจิ๊กซอว์)
+          if (isPinching && !arHeldPiece) {
+            const clickedEl = document.elementFromPoint((ix + tx) / 2, (iy + ty) / 2);
+            if (clickedEl && clickedEl.closest('#next-level-btn') && totalSnapped < puzzlePieces.length) {
+              // ล็อกไว้ ไม่ให้เปลี่ยนด่าน
+            } else {
+              triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2);
+            }
           }
 
           // AR Drag Puzzle Pieces
