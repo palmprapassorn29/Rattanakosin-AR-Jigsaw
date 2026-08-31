@@ -820,7 +820,7 @@
       <h2 id="modal-title">เฉลยสตอรี่เรื่องราวประวัติศาสตร์</h2>
       <div class="reward-banner">ได้รับรางวัล: 💵 +๑๐๐ อัฐ</div>
       <p id="modal-desc"></p>
-      <button class="gold-btn interactive" id="next-level-btn" onclick="if(totalSnapped < 4) { alert('ออเจ้าต้องต่อจิ๊กซอว์ให้ครบทั้ง ๔ ชิ้นเสียก่อนจึงจะไปด่านถัดไปได้!'); return; }">ท่องมิติสู่ด่านถัดไป ➔</button>
+      <button class="gold-btn interactive" id="next-level-btn">ท่องมิติสู่ด่านถัดไป ➔</button>
     </div>
   </div>
 
@@ -1172,8 +1172,7 @@
       moneyCountEl.textContent = userMoney;
     }
 
-    homeBtn.addEventListener('click', (e) => {
-      if(e) { e.stopPropagation(); e.preventDefault(); }
+    homeBtn.addEventListener('click', () => {
       document.getElementById('start-screen').style.display = 'flex';
       document.getElementById('start-screen').classList.remove('camera-ready');
       document.getElementById('start-main-card').style.display = 'flex';
@@ -1184,22 +1183,19 @@
       AudioEngine.playSnap();
     });
 
-    dressToggleBtn.addEventListener('click', (e) => {
-      if(e) { e.stopPropagation(); e.preventDefault(); }
+    dressToggleBtn.addEventListener('click', () => {
       dressingPanel.classList.toggle('open');
       shopPanel.classList.remove('open');
       dressToggleBtn.classList.toggle('active');
       shopToggleBtn.classList.remove('active');
     });
 
-    dressCloseBtn.addEventListener('click', (e) => {
-      if(e) { e.stopPropagation(); e.preventDefault(); }
+    dressCloseBtn.addEventListener('click', () => {
       dressingPanel.classList.remove('open');
       dressToggleBtn.classList.remove('active');
     });
 
-    shopToggleBtn.addEventListener('click', (e) => {
-      if(e) { e.stopPropagation(); e.preventDefault(); }
+    shopToggleBtn.addEventListener('click', () => {
       shopPanel.classList.toggle('open');
       dressingPanel.classList.remove('open');
       shopToggleBtn.classList.toggle('active');
@@ -1207,15 +1203,13 @@
       renderShopItems();
     });
 
-    shopCloseBtn.addEventListener('click', (e) => {
-      if(e) { e.stopPropagation(); e.preventDefault(); }
+    shopCloseBtn.addEventListener('click', () => {
       shopPanel.classList.remove('open');
       shopToggleBtn.classList.remove('active');
     });
 
     document.querySelectorAll('.cat-tab').forEach(tab => {
-      tab.addEventListener('click', (e) => {
-        if(e) { e.stopPropagation(); e.preventDefault(); }
+      tab.addEventListener('click', () => {
         document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         currentCategory = tab.getAttribute('data-cat');
@@ -1239,8 +1233,7 @@
           <span>${item.name}</span>
         `;
 
-        div.addEventListener('click', (e) => {
-          if(e) { e.stopPropagation(); e.preventDefault(); }
+        div.addEventListener('click', () => {
           selectCostumeItem(currentCategory, key);
         });
 
@@ -1271,8 +1264,7 @@
           <div class="price-tag">${item.owned ? (activeFrameKey === key ? 'กำลังใช้' : 'สวมใส่') : `${item.price} อัฐ`}</div>
         `;
 
-        div.addEventListener('click', (e) => {
-          if(e) { e.stopPropagation(); e.preventDefault(); }
+        div.addEventListener('click', () => {
           handleShopSelection(key);
         });
 
@@ -1373,8 +1365,7 @@
     };
 
     const audioToggleBtn = document.getElementById('audio-toggle-btn');
-    audioToggleBtn.addEventListener('click', (e) => {
-      if(e) { e.stopPropagation(); e.preventDefault(); }
+    audioToggleBtn.addEventListener('click', () => {
       if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return;
       if (isMuted) {
         ytPlayer.unMute();
@@ -1633,7 +1624,7 @@
     }
 
     /* =========================================================
-       9. MODAL & LEVEL TRANSITIONS ( STRICTLY LOCKED )
+       9. MODAL & LEVEL TRANSITIONS (STRICT LOCKING)
        ========================================================= */
     const infoModal = document.getElementById('info-modal');
     const modalTitle = document.getElementById('modal-title');
@@ -1649,7 +1640,6 @@
       userMoney += 100;
       updateMoneyUI();
 
-      // เสียง AI พูดว่า "เก่งมากเลยค่ะเด็ก ๆ"
       speakAI("เก่งมากเลยค่ะเด็ก ๆ");
 
       const currentLevel = LEVELS[currentLevelIdx];
@@ -1658,11 +1648,10 @@
       infoModal.classList.add('active');
     }
 
-    nextLevelBtn.addEventListener('click', (e) => {
-      if(e) { e.stopPropagation(); e.preventDefault(); }
-      // ล็อกแน่นหนา: ห้ามผ่านเด็ดขาดหากยังต่อจิ๊กซอว์ไม่ครบ 4 ชิ้น
+    nextLevelBtn.addEventListener('click', () => {
+      // ระบบความปลอดภัยป้องกันด่านเปลี่ยนเอง: ตรวจสอบว่าต่อครบ 4 ชิ้นจริงหรือไม่
       if (totalSnapped < 4) {
-        alert("ออเจ้าต้องต่อจิ๊กซอว์ให้ครบทั้ง ๔ ชิ้นเสียก่อนจึงจะเดินทางไปด่านถัดไปได้!");
+        console.warn("พยายามเปลี่ยนด่านก่อนต่อจิ๊กซอว์เสร็จ - ถูกบล็อกไว้");
         return;
       }
 
@@ -1678,8 +1667,7 @@
       }
     });
 
-    restartGameBtn.addEventListener('click', (e) => {
-      if(e) { e.stopPropagation(); e.preventDefault(); }
+    restartGameBtn.addEventListener('click', () => {
       victoryModal.classList.remove('active');
       gameStartTime = Date.now();
       initLevel(0);
@@ -1724,7 +1712,7 @@
 
     function triggerUniversalARClick(x, y) {
       const now = Date.now();
-      if (now - lastArClickTime < 650) return; // เพิ่มเวลา Debounce กันการคลิกซ้ำซ้อนบน iPad
+      if (now - lastArClickTime < 450) return;
 
       createFlowerTouch(x, y);
 
@@ -1742,7 +1730,7 @@
       if (el) {
         const clickTarget = el.closest('button, .ar-touch-item, .btn-top, .btn-icon, .panel-close, .cat-tab, .gold-btn');
         if (clickTarget) {
-          // ป้องกันไม่ให้ AR หรือการจิ้มมือเผลอไปกดปุ่ม Next Level ถ้ายังต่อจิ๊กซอว์ไม่ครบ 4 ชิ้น
+          // ป้องกันไม่ให้ AR Hand หรือ Touch เผลอกดปุ่มเปลี่ยนด่านหากยังต่อจิ๊กซอว์ไม่ครบ 4 ชิ้น
           if (clickTarget.id === 'next-level-btn' && totalSnapped < 4) {
             return;
           }
@@ -1934,8 +1922,7 @@
       initCameraStream();
     });
 
-    startBtn.addEventListener('click', (e) => {
-      if(e) { e.stopPropagation(); e.preventDefault(); }
+    startBtn.addEventListener('click', () => {
       AudioEngine.init();
       if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
         ytPlayer.playVideo();
@@ -1946,8 +1933,7 @@
       arStartPrompt.style.display = 'block';
     });
 
-    confirmStartBtn.addEventListener('click', (e) => {
-      if(e) { e.stopPropagation(); e.preventDefault(); }
+    confirmStartBtn.addEventListener('click', () => {
       startScreen.style.display = 'none';
       arStartPrompt.style.display = 'none';
       isGameRunning = true;
