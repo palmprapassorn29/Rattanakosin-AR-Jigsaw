@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>รัตนโกสินทร์ AR Jigsaw: ท่องมิติเวลาร้อยเรียงประวัติศาสตร์</title>
+  <title>บุพเพรัตนโกสินทร์ AR Jigsaw: ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์</title>
   
   <!-- Google Fonts Thai -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   
-  <!-- MediaPipe AI Libraries (Stable CDN) -->
+  <!-- MediaPipe AI Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/pose.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
 
   <style>
     :root {
@@ -86,10 +86,6 @@
       height: 100%;
       pointer-events: none;
       z-index: 6;
-      background-image: url('bgratta.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
     }
 
     /* Start Screen */
@@ -106,9 +102,11 @@
       text-align: center;
       padding: 20px;
       background-image: 
-        linear-gradient(180deg, rgba(10, 25, 47, 0.2) 0%, rgba(10, 25, 47, 0.4) 50%, rgba(10, 15, 25, 0.85) 100%),
-        url('bgratta.png'),
-        url('Gemini_Generated_Image_rnecb1rnec.jpg');
+        linear-gradient(180deg, rgba(10, 25, 47, 0.2) 0%, rgba(10, 25, 47, 0.4) 50%, rgba(10, 15, 25, 0.92) 100%),
+        url('Gemini_Generated_Image_rnecb1rnecb1rnec.jpg'),
+        url('Gemini_Generated_Image_89ya1c89ya1c89ya.png'),
+        url('bg-rattanakosin.jpg'),
+        radial-gradient(circle at 50% 30%, #ffd97d 0%, #b85d19 40%, #4a150c 75%, #0d060c 100%);
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
@@ -140,6 +138,24 @@
     @keyframes pulseGlow {
       0% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 25px rgba(212, 175, 55, 0.3); }
       100% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(255, 240, 153, 0.7); }
+    }
+
+    .start-card::before {
+      content: '༺ ༻';
+      position: absolute;
+      top: -16px;
+      font-size: 24px;
+      color: var(--gold);
+      text-shadow: 0 0 10px var(--gold-glow);
+    }
+
+    .start-card::after {
+      content: '❖';
+      position: absolute;
+      bottom: 12px;
+      font-size: 16px;
+      color: var(--gold);
+      opacity: 0.7;
     }
 
     .badge-sub {
@@ -193,6 +209,37 @@
     .gold-btn-start:hover {
       transform: scale(1.05);
       box-shadow: 0 8px 35px rgba(255, 240, 153, 0.95);
+    }
+
+    /* Live Camera Ready Prompt */
+    #ar-start-prompt {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 210;
+      text-align: center;
+      pointer-events: auto;
+    }
+
+    .prompt-box {
+      background: var(--navy-glass);
+      border: 2px solid var(--gold);
+      border-radius: 25px;
+      padding: 24px 36px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 30px rgba(212, 175, 55, 0.5);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .prompt-box h2 {
+      font-family: var(--font-title);
+      font-size: 28px;
+      color: var(--gold-light);
     }
 
     /* UI Overlay */
@@ -468,8 +515,8 @@
 
     .horizontal-item-grid .ar-touch-item {
       flex: 0 0 auto;
-      width: 120px;
-      height: 125px;
+      width: 105px;
+      height: 110px;
     }
 
     .ar-touch-item.active {
@@ -494,7 +541,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 110px;
+      max-width: 90px;
       pointer-events: none;
     }
 
@@ -637,7 +684,7 @@
 
     .reward-banner {
       background: rgba(139, 30, 30, 0.85);
-      border: 1.5px solid var(--gold);
+      border: 1px solid var(--gold);
       border-radius: 12px;
       padding: 8px 16px;
       color: var(--gold-light);
@@ -666,6 +713,7 @@
       box-shadow: 0 6px 20px rgba(255, 240, 153, 0.8);
     }
 
+    /* Final Victory Modal Custom Card (ใช้ภาพ ending.jpg) */
     .victory-card {
       max-width: 860px;
       width: 94%;
@@ -704,13 +752,14 @@
   <div id="start-screen">
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
-      <h1>รัตนโกสินทร์ AR Jigsaw</h1>
-      <p>ท่องมิติเวลาร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR ต่อจิ๊กซอว์มหาสนุก พร้อมกรอบรูปเหตุการณ์สำคัญและชุดไทยงามสง่า</p>
+      <h1>บุพเพรัตนโกสินทร์ AR Jigsaw</h1>
+      <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR จิ้มเลือกชุดไทย หมวก เครื่องประดับทางฝั่งซ้าย สะสมธนบัตรโบราณซื้อกรอบรูปน่ารัก และต่อจิ๊กซอว์ ๔ ชิ้นทั้ง ๕ ยุคสมัย</p>
       <button class="gold-btn-start interactive" id="start-btn">
         <span>📷</span> เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)
       </button>
     </div>
   </div>
+
   <!-- Hand Gesture Ready Prompt on Live Camera -->
   <div id="ar-start-prompt" class="interactive">
     <div class="prompt-box">
@@ -721,6 +770,7 @@
       </button>
     </div>
   </div>
+
   <!-- AR Viewport -->
   <div id="ar-container">
     <video id="webcam-video" playsinline muted></video>
@@ -741,11 +791,12 @@
         <p id="level-subtitle">กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒)</p>
       </div>
       <div class="top-controls">
+        <button class="btn-top interactive" id="home-btn" title="กลับหน้าเริ่มต้น">🏠 หน้าหลัก</button>
         <div class="money-pill">
-          <span>💵</span> <span id="money-count">100</span> สตางค์
+          <span>💵</span> <span id="money-count">100</span> อัฐ
         </div>
         <button class="btn-top interactive" id="dress-toggle-btn">👗 แต่งตัวชุดไทย</button>
-        <button class="btn-top interactive" id="shop-toggle-btn">🛍️ กรอบเหตุการณ์</button>
+        <button class="btn-top interactive" id="shop-toggle-btn">🛍️ ร้านกรอบรูป</button>
         <button class="btn-icon interactive" id="audio-toggle-btn" title="เปิด/ปิดเสียงดนตรี">🎵</button>
       </div>
     </header>
@@ -766,16 +817,17 @@
         <button class="cat-tab active" data-cat="clothes">ชุดไทย</button>
         <button class="cat-tab" data-cat="hats">หมวก/ชฎา</button>
         <button class="cat-tab" data-cat="accessories">เครื่องประดับ</button>
+        <button class="cat-tab" data-cat="bags">กระเป๋า/ย่าม</button>
       </div>
       <div class="vertical-item-grid" id="dress-items-container">
         <!-- Rendered dynamically -->
       </div>
     </div>
 
-    <!-- 2. Rattanakosin Historical Milestone Frame Shop Panel -->
+    <!-- 2. Pop Culture Frame Shop Panel -->
     <div id="shop-panel" class="interactive">
       <div class="panel-header">
-        <h3>🛍️ กรอบเหตุการณ์สำคัญในยุครัตนโกสินทร์</h3>
+        <h3>🛍️ ร้านค้ากรอบรูปขวัญใจออเจ้า (สะสมธนบัตรเพื่อปลดล็อก)</h3>
         <button class="panel-close" id="shop-close-btn">✖</button>
       </div>
       <div class="horizontal-item-grid" id="shop-items-container">
@@ -789,7 +841,7 @@
     <div class="modal-card">
       <div class="modal-content-left">
         <h2 id="modal-title">เฉลยสตอรี่เรื่องราวประวัติศาสตร์</h2>
-        <div class="reward-banner">ได้รับรางวัล: 💵 +๑๐๐ สตางค์</div>
+        <div class="reward-banner">ได้รับรางวัล: 💵 +๑๐๐ อัฐ</div>
         <p id="modal-desc"></p>
         <button class="gold-btn interactive" id="next-level-btn">ท่องมิติสู่ด่านถัดไป ➔</button>
       </div>
@@ -799,11 +851,12 @@
     </div>
   </div>
 
-  <!-- Final Victory Modal -->
+  <!-- Final Victory Modal with ending.jpg & Play Again Button Only -->
   <div id="victory-modal" class="modal-overlay">
     <div class="modal-card victory-card">
-      <h2 style="font-size:32px; margin-bottom:8px;">ท่านสำเร็จบริบูรณ์ทั้ง ๕ เรื่องราวแล้วเจ้าค่ะ!</h2>
-      <div class="reward-banner" style="margin-bottom:10px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ สตางค์เจ้าค่ะ</div>
+      <img src="ending.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์นะคะ" class="victory-main-img">
+      <h2 style="font-size:32px; margin-bottom:8px;">ออเจ้าสำเร็จบริบูรณ์ทั้ง ๕ ยุคสมัย!</h2>
+      <div class="reward-banner" style="margin-bottom:10px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ อัฐ</div>
       <p id="victory-stats" style="text-align:center; margin-bottom:16px; font-weight:bold;"></p>
       <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้ง (Play Again)</button>
     </div>
@@ -828,7 +881,7 @@
         subtitle: "ยุคพาณิชย์นาวีรุ่งโรจน์ (รัชกาลที่ ๓)",
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_dcahnzdcahnzdcah.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
+        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
       },
       {
         id: 3,
@@ -836,7 +889,7 @@
         subtitle: "การเปิดรับวิทยาการสมัยใหม่ (รัชกาลที่ ๔)",
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_f2p7i9f2p7i9f2p7.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าเจ้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
       },
       {
         id: 4,
@@ -857,7 +910,7 @@
     ];
 
     /* =========================================================
-       2. AR COSTUME & ITEM ASSETS
+       2. AR COSTUME & ITEM ASSETS (Men & Women)
        ========================================================= */
     const ASSETS = {
       clothes: {
@@ -919,11 +972,24 @@
           name: 'พวงมาลัยดอกรักคล้องมือ',
           svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="45" fill="none" stroke="#FFF" stroke-width="10" stroke-dasharray="8,6"/><path d="M100 145 L100 185 M90 185 L110 185" stroke="#C9184A" stroke-width="6"/><circle cx="100" cy="185" r="8" fill="#FF758F"/></svg>`
         }
+      },
+      bags: {
+        none: { name: 'ไม่มี', svg: '<svg viewBox="0 0 200 200"></svg>' },
+        thai_basket: {
+          name: 'ชะลอมสานใส่ดอกบัว',
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M60 90 L140 90 L130 170 L70 170 Z" fill="#DDA15E" stroke="#BC6C25" stroke-width="3"/><path d="M70 90 C70 50 130 50 130 90" fill="none" stroke="#BC6C25" stroke-width="4"/><circle cx="90" cy="85" r="12" fill="#FF758F"/><circle cx="110" cy="85" r="12" fill="#FF758F"/></svg>`
+        },
+        embroidered_pouch: {
+          name: 'ย่ามไหมปักดิ้นทอง (ชาย/หญิง)',
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M40 30 L160 170" stroke="#D4AF37" stroke-width="6"/>
+          <path d="M120 130 L170 130 L165 185 L125 185 Z" fill="#8B1E1E" stroke="#D4AF37" stroke-width="2"/>
+          <circle cx="145" cy="155" r="8" fill="#FFEE80"/></svg>`
+        }
       }
     };
 
     // Preload SVG assets
-    const loadedImages = { clothes: {}, hats: {}, accessories: {} };
+    const loadedImages = { clothes: {}, hats: {}, accessories: {}, bags: {} };
     Object.keys(ASSETS).forEach(cat => {
       loadedImages[cat] = {};
       Object.keys(ASSETS[cat]).forEach(k => {
@@ -936,116 +1002,179 @@
     let currentSelection = {
       clothes: 'sabai_gold',
       hats: 'none',
-      accessories: 'none'
+      accessories: 'none',
+      bags: 'none'
     };
 
     let activeFrameKey = 'none';
     let userMoney = 100;
+    let cameraStream = null;
 
     /* =========================================================
-       3. RATTANAKOSIN HISTORICAL MILESTONE FRAMES SHOP
+       3. POP CULTURE FRAMES SHOP (Seamless / No Freeze)
        ========================================================= */
-    const RATTANAKOSIN_FRAMES = {
-      none: { 
-        name: 'กรอบมาตรฐาน', 
-        price: 0, 
-        owned: true, 
-        icon: '🖼️',
-        desc: 'กรอบทองคำสุริยะคลาสสิก',
-        render: (ctx, w, h) => {} 
-      },
-      r1_palace: {
-        name: 'กำแพงพระบรมมหาราชวัง (ร.๑)',
+    const SHOP_FRAMES = {
+      none: { name: 'ไม่ใส่กรอบ', price: 0, owned: true, render: (ctx, w, h) => {} },
+      labubu: {
+        name: 'ลาบูบู้ (Labubu)',
         price: 80,
         owned: false,
-        icon: '🏛️',
-        desc: 'จำลองสถาปัตยกรรมพระบรมมหาราชวังยุคต้นกรุง',
+        icon: '🐰',
         render: (ctx, w, h) => {
-          ctx.strokeStyle = '#D4AF37';
-          ctx.lineWidth = 16;
-          ctx.strokeRect(8, 8, w - 16, h - 16);
+          ctx.strokeStyle = '#D4A373';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
           ctx.save();
-          ctx.fillStyle = 'rgba(139, 30, 30, 0.85)';
-          ctx.fillRect(16, 16, 260, 42);
-          ctx.fillStyle = '#FFF099';
-          ctx.font = 'bold 15px ' + getComputedStyle(document.body).getPropertyValue('--font-body');
-          ctx.fillText('🏛️ พระบรมมหาราชวังและวัดพระแก้ว พ.ศ. ๒๓๒๕', 26, 43);
+          ctx.translate(70, 70);
+          ctx.fillStyle = '#C58958';
+          ctx.beginPath();
+          ctx.ellipse(-25, -40, 12, 35, -0.3, 0, Math.PI*2);
+          ctx.ellipse(25, -40, 12, 35, 0.3, 0, Math.PI*2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(0, 0, 36, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FFF';
+          ctx.beginPath();
+          ctx.arc(0, 8, 18, 0, Math.PI);
+          ctx.fill();
+          ctx.fillStyle = '#333';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('LABUBU', -22, 38);
           ctx.restore();
         }
       },
-      r3_trade: {
-        name: 'สำเภาทองค้าขาย (ร.๓)',
+      carebears: {
+        name: 'แคร์แบร์ (Care Bears)',
         price: 80,
         owned: false,
-        icon: '⛵',
-        desc: 'ยุคการค้าสำเภาไทย-จีนรุ่งเรืองเฟื่องฟู',
+        icon: '🐻',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#FFB5A7';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(w - 75, 75);
+          ctx.fillStyle = '#90DBF4';
+          ctx.beginPath();
+          ctx.arc(0, 0, 34, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FF758F';
+          ctx.beginPath();
+          ctx.arc(-7, 4, 7, 0, Math.PI * 2);
+          ctx.arc(7, 4, 7, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#333';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('CARE BEARS', -35, 42);
+          ctx.restore();
+        }
+      },
+      monchhichi: {
+        name: 'ม่อนชิชิ (Monchhichi)',
+        price: 100,
+        owned: false,
+        icon: '🐵',
         render: (ctx, w, h) => {
           ctx.strokeStyle = '#BC6C25';
-          ctx.lineWidth = 16;
-          ctx.strokeRect(8, 8, w - 16, h - 16);
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
           ctx.save();
-          ctx.fillStyle = 'rgba(188, 108, 37, 0.85)';
-          ctx.fillRect(16, 16, 260, 42);
-          ctx.fillStyle = '#FFF8DC';
-          ctx.font = 'bold 15px ' + getComputedStyle(document.body).getPropertyValue('--font-body');
-          ctx.fillText('⛵ การค้าสำเภาและศิลปกรรมไทย-จีน', 26, 43);
+          ctx.translate(70, h - 70);
+          ctx.fillStyle = '#6F4E37';
+          ctx.beginPath();
+          ctx.arc(0, 0, 34, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FCEADE';
+          ctx.beginPath();
+          ctx.arc(0, 3, 22, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FFB703';
+          ctx.beginPath();
+          ctx.arc(0, 12, 7, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FFF';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('MONCHHICHI', -35, -40);
           ctx.restore();
         }
       },
-      r4_wahkor: {
-        name: 'ดาราศาสตร์หว้ากอ (ร.๔)',
+      kitty: {
+        name: 'คิตตี้ (Hello Kitty)',
         price: 100,
         owned: false,
-        icon: '🔭',
-        desc: 'เฉลิมฉลองดาราศาสตร์สากลและวิทยาศาสตร์ไทย',
+        icon: '🎀',
         render: (ctx, w, h) => {
-          ctx.strokeStyle = '#0077B6';
-          ctx.lineWidth = 16;
-          ctx.strokeRect(8, 8, w - 16, h - 16);
+          ctx.strokeStyle = '#FF4D6D';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
           ctx.save();
-          ctx.fillStyle = 'rgba(0, 119, 182, 0.85)';
-          ctx.fillRect(16, 16, 240, 42);
-          ctx.fillStyle = '#CAF0F8';
-          ctx.font = 'bold 15px ' + getComputedStyle(document.body).getPropertyValue('--font-body');
-          ctx.fillText('🔭 สุริยุปราคาหว้ากอ พ.ศ. ๒๔๑๑', 26, 43);
+          ctx.translate(w - 70, h - 70);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.beginPath();
+          ctx.arc(0, 0, 32, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#E63946';
+          ctx.beginPath();
+          ctx.arc(20, -20, 10, 0, Math.PI * 2);
+          ctx.arc(32, -20, 8, 0, Math.PI * 2);
+          ctx.arc(8, -20, 8, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FFF';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('HELLO KITTY', -35, -38);
           ctx.restore();
         }
       },
-      r5_train: {
-        name: 'รถไฟและเลิกทาส (ร.๕)',
-        price: 100,
-        owned: false,
-        icon: '🚂',
-        desc: 'ยุคปฏิรูปสยามสู่ความทันสมัยและเลิกทาส',
-        render: (ctx, w, h) => {
-          ctx.strokeStyle = '#2B2D42';
-          ctx.lineWidth = 16;
-          ctx.strokeRect(8, 8, w - 16, h - 16);
-          ctx.save();
-          ctx.fillStyle = 'rgba(43, 45, 66, 0.85)';
-          ctx.fillRect(16, 16, 250, 42);
-          ctx.fillStyle = '#EDF2F4';
-          ctx.font = 'bold 15px ' + getComputedStyle(document.body).getPropertyValue('--font-body');
-          ctx.fillText('🚂 การปฏิรูปสยามและเลิกทาส', 26, 43);
-          ctx.restore();
-        }
-      },
-      r9_sufficiency: {
-        name: 'เศรษฐกิจพอเพียง (ร.๙)',
+      benten: {
+        name: 'เบ็นเท็น (Ben 10)',
         price: 120,
         owned: false,
-        icon: '🌾',
-        desc: 'ศาสตร์พระราชาและเกษตรทฤษฎีใหม่',
+        icon: '⚡',
         render: (ctx, w, h) => {
-          ctx.strokeStyle = '#2D6A4F';
-          ctx.lineWidth = 16;
-          ctx.strokeRect(8, 8, w - 16, h - 16);
+          ctx.strokeStyle = '#38B000';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
           ctx.save();
-          ctx.fillStyle = 'rgba(45, 106, 79, 0.85)';
-          ctx.fillRect(16, 16, 250, 42);
-          ctx.fillStyle = '#D8F3DC';
-          ctx.font = 'bold 15px ' + getComputedStyle(document.body).getPropertyValue('--font-body');
-          ctx.fillText('🌾 สืบสานศาสตร์พระราชา ร.๙', 26, 43);
+          ctx.translate(70, 70);
+          ctx.fillStyle = '#101010';
+          ctx.beginPath();
+          ctx.arc(0, 0, 32, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#70E000';
+          ctx.beginPath();
+          ctx.moveTo(-18, -22); ctx.lineTo(0, 0); ctx.lineTo(-18, 22); ctx.closePath();
+          ctx.moveTo(18, -22); ctx.lineTo(0, 0); ctx.lineTo(18, 22); ctx.closePath();
+          ctx.fill();
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('BEN 10', -18, 42);
+          ctx.restore();
+        }
+      },
+      conan: {
+        name: 'โคนัน (Detective Conan)',
+        price: 120,
+        owned: false,
+        icon: '👓',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#0077B6';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.save();
+          ctx.translate(w - 70, 70);
+          ctx.strokeStyle = '#111';
+          ctx.lineWidth = 3;
+          ctx.strokeRect(-28, -16, 24, 18);
+          ctx.strokeRect(4, -16, 24, 18);
+          ctx.beginPath(); ctx.moveTo(-4, -7); ctx.lineTo(4, -7); ctx.stroke();
+          ctx.fillStyle = '#D90429';
+          ctx.beginPath();
+          ctx.moveTo(-15, 10); ctx.lineTo(0, 15); ctx.lineTo(-15, 20); ctx.closePath();
+          ctx.moveTo(15, 10); ctx.lineTo(0, 15); ctx.lineTo(15, 20); ctx.closePath();
+          ctx.fill();
+          ctx.fillStyle = '#FFF';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('CONAN', -20, 38);
           ctx.restore();
         }
       }
@@ -1064,12 +1193,24 @@
     const shopCloseBtn = document.getElementById('shop-close-btn');
     const shopItemsContainer = document.getElementById('shop-items-container');
     const moneyCountEl = document.getElementById('money-count');
+    const homeBtn = document.getElementById('home-btn');
 
     let currentCategory = 'clothes';
 
     function updateMoneyUI() {
       moneyCountEl.textContent = userMoney;
     }
+
+    homeBtn.addEventListener('click', () => {
+      document.getElementById('start-screen').style.display = 'flex';
+      document.getElementById('start-screen').classList.remove('camera-ready');
+      document.getElementById('start-main-card').style.display = 'flex';
+      document.getElementById('ar-start-prompt').style.display = 'none';
+      dressingPanel.classList.remove('open');
+      shopPanel.classList.remove('open');
+      isGameRunning = false;
+      AudioEngine.playSnap();
+    });
 
     dressToggleBtn.addEventListener('click', () => {
       dressingPanel.classList.toggle('open');
@@ -1139,17 +1280,17 @@
 
     function renderShopItems() {
       shopItemsContainer.innerHTML = '';
-      Object.keys(RATTANAKOSIN_FRAMES).forEach(key => {
-        const item = RATTANAKOSIN_FRAMES[key];
+      Object.keys(SHOP_FRAMES).forEach(key => {
+        const item = SHOP_FRAMES[key];
         const div = document.createElement('div');
         div.className = `ar-touch-item ${activeFrameKey === key ? 'active' : ''}`;
         div.setAttribute('data-type', 'shop');
         div.setAttribute('data-key', key);
 
         div.innerHTML = `
-          <div style="font-size:32px; margin-bottom:4px;">${item.icon}</div>
+          <div style="font-size:32px; margin-bottom:4px;">${item.icon || '🖼️'}</div>
           <span>${item.name}</span>
-          <div class="price-tag">${item.owned ? (activeFrameKey === key ? 'กำลังใช้' : 'สวมใส่') : `${item.price} สตางค์`}</div>
+          <div class="price-tag">${item.owned ? (activeFrameKey === key ? 'กำลังใช้' : 'สวมใส่') : `${item.price} อัฐ`}</div>
         `;
 
         div.addEventListener('click', () => {
@@ -1161,7 +1302,7 @@
     }
 
     function handleShopSelection(key) {
-      const item = RATTANAKOSIN_FRAMES[key];
+      const item = SHOP_FRAMES[key];
       if (item.owned) {
         activeFrameKey = key;
         renderShopItems();
@@ -1246,7 +1387,7 @@
       ytPlayer = new YT.Player('yt-audio-frame', {
         height: '1',
         width: '1',
-        videoId: '4J1WgPSB4sM', // รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้
+        videoId: '4J1WgPSB4sM', // รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้ (https://youtu.be/4J1WgPSB4sM)
         playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': '4J1WgPSB4sM', 'controls': 0, 'disablekb': 1 }
       });
     };
@@ -1385,8 +1526,8 @@
       puzzleBoard.style.top = `${stageH / 2}px`;
       puzzleBoard.style.left = `${stageW / 2}px`;
 
-      const pieceW = boardW / lvl.cols;
-      const pieceH = boardH / lvl.rows;
+      const pieceW = boardW / lvl.cols; // 2 cols
+      const pieceH = boardH / lvl.rows; // 2 rows
 
       let pieceIndex = 0;
       for (let r = 0; r < lvl.rows; r++) {
@@ -1549,11 +1690,12 @@
         userMoney += 300;
         updateMoneyUI();
         const totalSecs = Math.floor((Date.now() - gameStartTime) / 1000);
-        victoryStats.textContent = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที (ยอดเงินสะสม ${userMoney} สตางค์)`;
+        victoryStats.textContent = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที (ยอดเงินสะสม ${userMoney} อัฐ)`;
         victoryModal.classList.add('active');
       }
     });
 
+    // ปุ่มเล่นใหม่อีกครั้งในหน้าสุดท้ายหน้าเดียว
     restartGameBtn.addEventListener('click', () => {
       victoryModal.classList.remove('active');
       gameStartTime = Date.now();
@@ -1575,40 +1717,43 @@
     let lastArClickTime = 0;
     let isGameRunning = false;
 
-    let pose = null;
-    let hands = null;
+    const pose = new Pose({
+      locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
+    });
+    pose.setOptions({
+      modelComplexity: 1,
+      smoothLandmarks: true,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
+    });
+    pose.onResults((results) => { poseResults = results; });
 
-    if (typeof Pose !== 'undefined') {
-      pose = new Pose({
-        locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/${file}`
-      });
-      pose.setOptions({
-        modelComplexity: 1,
-        smoothLandmarks: true,
-        minDetectionConfidence: 0.5,
-        minTrackingConfidence: 0.5
-      });
-      pose.onResults((results) => { poseResults = results; });
-    }
-
-    if (typeof Hands !== 'undefined') {
-      hands = new Hands({
-        locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/${file}`
-      });
-      hands.setOptions({
-        maxNumHands: 2,
-        modelComplexity: 1,
-        minDetectionConfidence: 0.5,
-        minTrackingConfidence: 0.5
-      });
-      hands.onResults((results) => { handResults = results; });
-    }
+    const hands = new Hands({
+      locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+    });
+    hands.setOptions({
+      maxNumHands: 2,
+      modelComplexity: 1,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
+    });
+    hands.onResults((results) => { handResults = results; });
 
     function triggerUniversalARClick(x, y) {
       const now = Date.now();
       if (now - lastArClickTime < 450) return;
 
       createFlowerTouch(x, y);
+
+      const promptBtn = document.getElementById('confirm-start-btn');
+      if (promptBtn && promptBtn.offsetParent !== null) {
+        const pRect = promptBtn.getBoundingClientRect();
+        if (x >= pRect.left && x <= pRect.right && y >= pRect.top && y <= pRect.bottom) {
+          promptBtn.click();
+          lastArClickTime = now;
+          return;
+        }
+      }
 
       const el = document.elementFromPoint(x, y);
       if (el) {
@@ -1635,9 +1780,9 @@
       canvasCtx.clearRect(0, 0, w, h);
       frameCtx.clearRect(0, 0, w, h);
 
-      // Render Pop Culture / Historical Milestone Frame Overlay
-      if (RATTANAKOSIN_FRAMES[activeFrameKey] && RATTANAKOSIN_FRAMES[activeFrameKey].render) {
-        RATTANAKOSIN_FRAMES[activeFrameKey].render(frameCtx, w, h);
+      // Render Pop Culture Camera Frame
+      if (SHOP_FRAMES[activeFrameKey] && SHOP_FRAMES[activeFrameKey].render) {
+        SHOP_FRAMES[activeFrameKey].render(frameCtx, w, h);
       }
 
       // AR Fitting Costume Overlay
@@ -1672,7 +1817,7 @@
             canvasCtx.restore();
           }
 
-          // Accessories (Jewelry)
+          // Accessories
           const accKey = currentSelection.accessories;
           if (accKey !== 'none') {
             const accImg = loadedImages.accessories[accKey];
@@ -1683,6 +1828,21 @@
               canvasCtx.translate(midX, midY + 10);
               canvasCtx.rotate(angle);
               canvasCtx.drawImage(accImg, -accW / 2, -accH * 0.2, accW, accH);
+              canvasCtx.restore();
+            }
+          }
+
+          // Bags
+          const bagKey = currentSelection.bags;
+          if (bagKey !== 'none') {
+            const bagImg = loadedImages.bags[bagKey];
+            if (bagImg && bagImg.complete) {
+              const bagW = shoulderDist * 1.4;
+              const bagH = bagW;
+              canvasCtx.save();
+              canvasCtx.translate(rsX + 20, rsY + 60);
+              canvasCtx.rotate(angle * 0.5);
+              canvasCtx.drawImage(bagImg, -bagW / 2, -bagH / 2, bagW, bagH);
               canvasCtx.restore();
             }
           }
@@ -1725,15 +1885,17 @@
           const pinchDist = Math.hypot(ix - tx, iy - ty);
           const isPinching = pinchDist < 45;
 
+          // Universal AR Click (เฉพาะตอนไม่ได้ลากชิ้นส่วนจิ๊กซอว์)
           if (isPinching && !arHeldPiece) {
             const clickedEl = document.elementFromPoint((ix + tx) / 2, (iy + ty) / 2);
             if (clickedEl && clickedEl.closest('#next-level-btn') && totalSnapped < puzzlePieces.length) {
-              // Locked
+              // ล็อกไว้ ไม่ให้เปลี่ยนด่าน
             } else {
               triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2);
             }
           }
 
+          // AR Drag Puzzle Pieces
           if (isGameRunning) {
             if (isPinching) {
               if (!arHeldPiece) {
@@ -1766,11 +1928,13 @@
     }
 
     /* =========================================================
-       11. CAMERA START & FLOW (Auto request camera on load)
+       11. CAMERA START & FLOW
        ========================================================= */
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
     const startMainCard = document.getElementById('start-main-card');
+    const arStartPrompt = document.getElementById('ar-start-prompt');
+    const confirmStartBtn = document.getElementById('confirm-start-btn');
 
     async function initCameraStream() {
       try {
@@ -1783,8 +1947,8 @@
 
         const camera = new Camera(videoElement, {
           onFrame: async () => {
-            if (pose) await pose.send({ image: videoElement });
-            if (hands) await hands.send({ image: videoElement });
+            await pose.send({ image: videoElement });
+            await hands.send({ image: videoElement });
           },
           width: 1280,
           height: 720
@@ -1792,21 +1956,28 @@
         camera.start();
         requestAnimationFrame(onFrame);
       } catch (err) {
-        console.warn('Camera stream permission denied or unavailable:', err);
+        console.warn('Camera stream permission pending or unavailable:', err);
       }
     }
 
-    startBtn.addEventListener('click', async () => {
+    window.addEventListener('DOMContentLoaded', () => {
+      initCameraStream();
+    });
+
+    startBtn.addEventListener('click', () => {
       AudioEngine.init();
       if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
         ytPlayer.playVideo();
       }
 
-      // ขออนุญาตเปิดกล้องทันทีที่กดปุ่มเริ่มเล่น
-      await initCameraStream();
-
       startScreen.classList.add('camera-ready');
+      startMainCard.style.display = 'none';
+      arStartPrompt.style.display = 'block';
+    });
+
+    confirmStartBtn.addEventListener('click', () => {
       startScreen.style.display = 'none';
+      arStartPrompt.style.display = 'none';
       isGameRunning = true;
       gameStartTime = Date.now();
       initLevel(0);
