@@ -78,6 +78,7 @@
       z-index: 5;
     }
 
+    /* ใช้ bgratta.png เป็นกรอบหน้าเกมต่อจิ๊กซอว์ (รูปที่ 2) */
     #frame-overlay {
       position: absolute;
       top: 0;
@@ -86,9 +87,13 @@
       height: 100%;
       pointer-events: none;
       z-index: 6;
+      background-image: url('bgratta.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
-    /* Start Screen */
+    /* Start Screen ใช้ภาพ Gemini_Generated_Image_rnecb1rnec.jpg เป็นฉากหลัง (รูปที่ 1) */
     #start-screen {
       position: absolute;
       top: 0;
@@ -102,9 +107,8 @@
       text-align: center;
       padding: 20px;
       background-image: 
-        linear-gradient(180deg, rgba(10, 25, 47, 0.2) 0%, rgba(10, 25, 47, 0.4) 50%, rgba(10, 15, 25, 0.92) 100%),
-        url('bgratta.png'),
-        radial-gradient(circle at 50% 30%, #ffd97d 0%, #b85d19 40%, #4a150c 75%, #0d060c 100%);
+        linear-gradient(180deg, rgba(10, 25, 47, 0.15) 0%, rgba(10, 25, 47, 0.35) 50%, rgba(10, 15, 25, 0.88) 100%),
+        url('Gemini_Generated_Image_rnecb1rnec.jpg');
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
@@ -727,7 +731,7 @@
   <!-- Background Music (YouTube IFrame: รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้) -->
   <div id="yt-audio-frame"></div>
 
-  <!-- Start Screen with Centered Kanok Card & Sparkles -->
+  <!-- Start Screen with Centered Kanok Card & Sparkles (ใช้รูปที่ 1 เป็นฉากหลัง) -->
   <div id="start-screen">
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
@@ -785,7 +789,7 @@
       <img id="minimap-img" src="" alt="Thumbnail">
     </div>
 
-    <!-- 1. LEFT SIDE Dressing Panel (No bags, clothes/hats/accessories only) -->
+    <!-- 1. LEFT SIDE Dressing Panel -->
     <div id="dressing-panel" class="interactive">
       <div class="panel-header">
         <h3>👗 ห้องเครื่องแต่งกาย</h3>
@@ -804,7 +808,7 @@
     <!-- 2. Rattanakosin Historical Milestone Frame Shop Panel -->
     <div id="shop-panel" class="interactive">
       <div class="panel-header">
-        <h3>🛍️ กรอบเหตุการณ์สำคัญในยุครัตนโกสินทร์ (ใส่รูปภาพสะสม)</h3>
+        <h3>🛍️ กรอบเหตุการณ์สำคัญในยุครัตนโกสินทร์</h3>
         <button class="panel-close" id="shop-close-btn">✖</button>
       </div>
       <div class="horizontal-item-grid" id="shop-items-container">
@@ -857,7 +861,7 @@
         subtitle: "ยุคพาณิชย์นาวีรุ่งโรจน์ (รัชกาลที่ ๓)",
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_dcahnzdcahnzdcah.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
+        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
       },
       {
         id: 3,
@@ -886,7 +890,7 @@
     ];
 
     /* =========================================================
-       2. AR COSTUME & ITEM ASSETS (No bags, clothes, hats, jewelry only)
+       2. AR COSTUME & ITEM ASSETS
        ========================================================= */
     const ASSETS = {
       clothes: {
