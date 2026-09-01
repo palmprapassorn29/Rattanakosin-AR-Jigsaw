@@ -78,7 +78,7 @@
       z-index: 5;
     }
 
-    /* กรอบหน้าตัวเกมจาก bgratta.png ทับด้านบนสุด */
+    /* กรอบหน้าตัวเกมจาก bgratta.png (จะถูกซ่อนอัตโนมัติเมื่อเลือกซื้อกรอบรูปเหตุการณ์) */
     #game-border-frame {
       position: absolute;
       top: 0;
@@ -90,6 +90,11 @@
       background-repeat: no-repeat;
       pointer-events: none;
       z-index: 20;
+      transition: opacity 0.3s ease;
+    }
+
+    #game-border-frame.hidden {
+      opacity: 0;
     }
 
     #frame-overlay {
@@ -355,7 +360,7 @@
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map (ขยายขนาดชัดเจน) */
+    /* Thumbnail Mini-map */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
@@ -767,7 +772,7 @@
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
       <h1>บุพเพรัตนโกสินทร์ AR Jigsaw</h1>
-      <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR จิ้มเลือกชุดไทย หมวก เครื่องประดับทางฝั่งซ้าย สะสมธนบัตรโบราณซื้อกรอบรูปน่ารัก และต่อจิ๊กซอว์ ๔ ชิ้นทั้ง ๕ ยุคสมัย</p>
+      <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR จิ้มเลือกชุดไทย หมวก เครื่องประดับทางฝั่งซ้าย สะสมธนบัตรโบราณซื้อกรอบรูปสำคัญ และต่อจิ๊กซอว์ ๔ ชิ้นทั้ง ๕ ยุคสมัย</p>
       <button class="gold-btn-start interactive" id="start-btn">
         <span>📷</span> เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)
       </button>
@@ -789,7 +794,7 @@
   <div id="ar-container">
     <video id="webcam-video" playsinline muted></video>
     <canvas id="ar-canvas"></canvas>
-    <!-- กรอบหน้าตัวเกมจาก bgratta.png -->
+    <!-- กรอบหน้าตัวเกมจาก bgratta.png (จะถูกปิดเมื่อเลือกกรอบรูปเหตุการณ์) -->
     <div id="game-border-frame"></div>
     <canvas id="frame-overlay"></canvas>
   </div>
@@ -1015,7 +1020,12 @@
        3. POP CULTURE FRAMES SHOP (เหตุการณ์สำคัญยุครัตนโกสินทร์)
        ========================================================= */
     const SHOP_FRAMES = {
-      none: { name: 'ไม่ใส่กรอบ', price: 0, owned: true, render: (ctx, w, h) => {} },
+      none: { 
+        name: 'ไม่ใส่กรอบ', 
+        price: 0, 
+        owned: true, 
+        render: (ctx, w, h) => {} 
+      },
       temple: {
         name: 'วัดพระแก้ว',
         price: 60,
@@ -1023,11 +1033,11 @@
         icon: '🛕',
         render: (ctx, w, h) => {
           ctx.strokeStyle = '#D4AF37';
-          ctx.lineWidth = 12;
-          ctx.strokeRect(6, 6, w - 12, h - 12);
-          ctx.fillStyle = 'rgba(212, 175, 55, 0.85)';
-          ctx.font = 'bold 14px Sarabun';
-          ctx.fillText('🏛️ สถาปนากรุงรัตนโกสินทร์ พ.ศ. 2325', 24, 32);
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
+          ctx.fillStyle = 'rgba(212, 175, 55, 0.9)';
+          ctx.font = 'bold 15px Sarabun';
+          ctx.fillText('🏛️ สถาปนากรุงรัตนโกสินทร์ พ.ศ. 2325', 26, 36);
         }
       },
       watarun: {
@@ -1037,11 +1047,11 @@
         icon: '🏯',
         render: (ctx, w, h) => {
           ctx.strokeStyle = '#065A82';
-          ctx.lineWidth = 12;
-          ctx.strokeRect(6, 6, w - 12, h - 12);
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
           ctx.fillStyle = '#FFF099';
-          ctx.font = 'bold 14px Sarabun';
-          ctx.fillText('⚓ ยุคการค้าสำเภาและพระปรางค์วัดอรุณ', 24, 32);
+          ctx.font = 'bold 15px Sarabun';
+          ctx.fillText('⚓ ยุคการค้าสำเภาและพระปรางค์วัดอรุณ', 26, 36);
         }
       },
       waghor: {
@@ -1051,11 +1061,11 @@
         icon: '🔭',
         render: (ctx, w, h) => {
           ctx.strokeStyle = '#E0A96D';
-          ctx.lineWidth = 12;
-          ctx.strokeRect(6, 6, w - 12, h - 14);
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
           ctx.fillStyle = '#FFF099';
-          ctx.font = 'bold 14px Sarabun';
-          ctx.fillText('⭐ สุริยุปราคาเต็มดวง ณ หอดูดาวหว้ากอ', 24, 32);
+          ctx.font = 'bold 15px Sarabun';
+          ctx.fillText('⭐ สุริยุปราคาเต็มดวง ณ หอดูดาวหว้ากอ', 26, 36);
         }
       },
       train: {
@@ -1065,11 +1075,11 @@
         icon: '🚂',
         render: (ctx, w, h) => {
           ctx.strokeStyle = '#8B1E1E';
-          ctx.lineWidth = 12;
-          ctx.strokeRect(6, 6, w - 12, h - 14);
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
           ctx.fillStyle = '#FFF099';
-          ctx.font = 'bold 14px Sarabun';
-          ctx.fillText('🚂 ประกาศเลิกทาสและการรถไฟสยาม', 24, 32);
+          ctx.font = 'bold 15px Sarabun';
+          ctx.fillText('🚂 ประกาศเลิกทาสและการรถไฟสยาม', 26, 36);
         }
       },
       king9: {
@@ -1079,11 +1089,11 @@
         icon: '👑',
         render: (ctx, w, h) => {
           ctx.strokeStyle = '#5B8E7D';
-          ctx.lineWidth = 12;
-          ctx.strokeRect(6, 6, w - 12, h - 14);
+          ctx.lineWidth = 14;
+          ctx.strokeRect(7, 7, w - 14, h - 14);
           ctx.fillStyle = '#FFF099';
-          ctx.font = 'bold 14px Sarabun';
-          ctx.fillText('🌾 โครงการพระราชดำริ ฝนหลวง', 24, 32);
+          ctx.font = 'bold 15px Sarabun';
+          ctx.fillText('🌾 โครงการพระราชดำริ ฝนหลวง', 26, 36);
         }
       }
     };
@@ -1102,6 +1112,7 @@
     const shopItemsContainer = document.getElementById('shop-items-container');
     const moneyCountEl = document.getElementById('money-count');
     const homeBtn = document.getElementById('home-btn');
+    const gameBorderFrame = document.getElementById('game-border-frame');
 
     let currentCategory = 'clothes';
 
@@ -1213,6 +1224,12 @@
       const item = SHOP_FRAMES[key];
       if (item.owned) {
         activeFrameKey = key;
+        // เมื่อเลือกซื้อ/เปลี่ยนกรอบรูปใหม่ ให้เอากรอบ bgratta.png ออก
+        if (key !== 'none') {
+          gameBorderFrame.classList.add('hidden');
+        } else {
+          gameBorderFrame.classList.remove('hidden');
+        }
         renderShopItems();
         AudioEngine.playSnap();
       } else {
@@ -1220,6 +1237,11 @@
           userMoney -= item.price;
           item.owned = true;
           activeFrameKey = key;
+          if (key !== 'none') {
+            gameBorderFrame.classList.add('hidden');
+          } else {
+            gameBorderFrame.classList.remove('hidden');
+          }
           updateMoneyUI();
           renderShopItems();
           AudioEngine.playVictory();
@@ -1623,6 +1645,7 @@
     let arHeldPiece = null;
     let lastArClickTime = 0;
     let isGameRunning = false;
+    let lastHandY = null; // สำหรับตรวจจับการปัดมือลง (Swipe Down) เพื่อปิดแท็บ
 
     const pose = new Pose({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
@@ -1761,16 +1784,33 @@
         }
       }
 
-      // AR Hand Interaction (Pikul Flower Cursor & Universal Click)
+      // AR Hand Interaction (Pikul Flower Cursor & Universal Click & Swipe Down Gesture)
       if (handResults && handResults.multiHandLandmarks) {
         for (const landmarks of handResults.multiHandLandmarks) {
           const indexTip = landmarks[8];
           const thumbTip = landmarks[4];
+          const wrist = landmarks[0];
 
           const ix = (1 - indexTip.x) * w;
           const iy = indexTip.y * h;
           const tx = (1 - thumbTip.x) * w;
           const ty = thumbTip.y * h;
+          const wy = wrist.y * h;
+
+          // ตรวจจับการปัดมือลง (Swipe Down Gesture) เพื่อปิดแท็บร้านค้าหรือแต่งตัวที่เปิดอยู่
+          if (lastHandY !== null) {
+            const deltaY = wy - lastHandY;
+            if (deltaY > 60) { // หากข้อมือเลื่อนลงเร็วเกิน 60 พิกเซล
+              if (dressingPanel.classList.contains('open') || shopPanel.classList.contains('open')) {
+                dressingPanel.classList.remove('open');
+                shopPanel.classList.remove('open');
+                dressToggleBtn.classList.remove('active');
+                shopToggleBtn.classList.remove('active');
+                AudioEngine.playSnap();
+              }
+            }
+          }
+          lastHandY = wy;
 
           drawThaiPikulFlower(canvasCtx, ix, iy, 16, 0.95, 0);
 
