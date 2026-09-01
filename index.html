@@ -946,14 +946,56 @@
           name: 'สไบแพรมรกต (หญิง)',
           svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gem" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#52B788"/><stop offset="100%" stop-color="#1B4332"/></linearGradient></defs><path d="M115 45 Q205 75 285 210 L315 340 L235 340 L175 185 Z" fill="url(#gem)" stroke="#D4AF37" stroke-width="2"/><circle cx="150" cy="85" r="12" fill="#D4AF37"/></svg>`
         },
-        r5_ham: {
-          name: 'ชุดแขนหมูแฮม ร.๕ (หญิง)',
-          isImage: true,
-          src: 'หมูแฮม.jpg'
-        },
         raj_pattern: {
-          name: 'เสื้อราชปะแตนขาว (ชาย)',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><path d="M100 80 L300 80 L320 340 L80 340 Z" fill="#F8F9FA" stroke="#D4AF37" stroke-width="3"/><rect x="180" y="60" width="40" height="30" fill="#E9ECEF" stroke="#D4AF37" stroke-width="2" rx="4"/><line x1="200" y1="90" x2="200" y2="340" stroke="#D4AF37" stroke-width="3"/><circle cx="200" cy="120" r="5" fill="#D4AF37"/><circle cx="200" cy="160" r="5" fill="#D4AF37"/><circle cx="200" cy="200" r="5" fill="#D4AF37"/><circle cx="200" cy="240" r="5" fill="#D4AF37"/></svg>`
+         name: 'เสื้อราชปะแตนขาว (ชาย) - รุ่นละเอียด',
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#4a3b1a" flood-opacity="0.3"/>
+              </filter>
+            </defs>
+
+            <!-- ==================== 1. ตัวเสื้อราชปะแตน (White Jacket) ==================== -->
+            <!-- เพิ่มความโค้งมนที่ชายเสื้อ (bottom hem) ให้ดูเป็นธรรมชาติ -->
+            <path d="M 100,80 L 300,80 L 315,320 C 300,340 100,340 85,320 Z" fill="#F8F9FA" stroke="#D4AF37" stroke-width="2.5" filter="url(#shadow)"/>
+
+            <!-- ==================== 2. ปกเสื้อและสาบเสื้อ (Collar & Placket) ==================== -->
+            <!-- ปกคอตั้ง (Stand-up Collar) ปรับขอบบนให้โค้งมนขึ้น -->
+            <path d="M 180,60 C 180,50 220,50 220,60 L 215,90 L 185,90 Z" fill="#E9ECEF" stroke="#D4AF37" stroke-width="2" rx="5"/>
+            <!-- สาบเสื้อตรงกลาง (Placket) ปรับขอบให้ดูซ้อนทับกับตัวเสื้อจริง -->
+            <path d="M 192,85 L 208,85 L 205,340 L 195,340 Z" fill="#E9ECEF" stroke="#D4AF37" stroke-width="1.5"/>
+
+            <!-- ==================== 3. กระดุมเสื้อและรายละเอียด (Buttons & Details) ==================== -->
+            <!-- กระดุมเสื้อ (Buttons) - เพิ่มมิติด้วยการทำวงแหวนซ้อนกัน ให้เหมือนกระดุมทองเหลืองไทย -->
+            <g id="buttons" transform="translate(0, 0)">
+              <g id="button1">
+                <circle cx="200" cy="120" r="7" fill="#F1C40F"/>
+                <circle cx="200" cy="120" r="4" fill="#D4AF37"/>
+                <circle cx="200" cy="120" r="1.5" fill="#FFF9C4"/>
+                <circle cx="200" cy="120" r="1" fill="#D4AF37"/>
+                <line x1="198" y1="119" x2="202" y2="121" stroke="#5a440e" stroke-width="0.5"/>
+                <line x1="198" y1="121" x2="202" y2="119" stroke="#5a440e" stroke-width="0.5"/>
+              </g>
+              <use xlink:href="#button1" transform="translate(0, 40)"/>
+              <use xlink:href="#button1" transform="translate(0, 80)"/>
+              <use xlink:href="#button1" transform="translate(0, 120)"/>
+              <use xlink:href="#button1" transform="translate(0, 160)"/>
+              <use xlink:href="#button1" transform="translate(0, 200)"/>
+              <use xlink:href="#button1" transform="translate(0, 240)"/>
+              <use xlink:href="#button1" transform="translate(0, 280)"/>
+            </g>
+
+            <!-- แนวสาบเสื้อ (ป้ายเสื้อ) - เพิ่มเส้นแนวเย็บละเอียด -->
+            <line x1="192" y1="85" x2="192" y2="340" stroke="#D4AF37" stroke-width="0.8" stroke-dasharray="5,5" opacity="0.5"/>
+
+            <!-- ==================== 4. รายละเอียดเนื้อผ้าและการทับซ้อน ==================== -->
+            <!-- เส้นแนวตัดแขนเสื้อ (Sleeve Attachment) -->
+            <path d="M 100,80 Q 110,100 130,95" stroke="#b89326" stroke-width="1" fill="none" opacity="0.4"/>
+            <path d="M 300,80 Q 290,100 270,95" stroke="#b89326" stroke-width="1" fill="none" opacity="0.4"/>
+
+            <!-- เส้นขอบชายเสื้อด้านใน (Inner Hem Detail) -->
+            <path d="M 87,320 C 100,330 300,330 313,320" stroke="#D4AF37" stroke-width="1.5" fill="none" opacity="0.7"/>
+            </svg>`
         },
         warrior_male: {
           name: 'เสื้องานพิธีโบราณ (ชาย)',
