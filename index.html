@@ -78,6 +78,20 @@
       z-index: 5;
     }
 
+    /* กรอบหน้าตัวเกมจาก bgratta.png ทับด้านบนสุด */
+    #game-border-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('bgratta.png');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: 20;
+    }
+
     #frame-overlay {
       position: absolute;
       top: 0;
@@ -341,25 +355,25 @@
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map */
+    /* Thumbnail Mini-map (ขยายขนาดชัดเจน) */
     #minimap-wrapper {
       position: absolute;
       top: 75px;
       right: 20px;
       background: var(--navy-glass);
       border: 2px solid var(--gold);
-      border-radius: 12px;
-      padding: 8px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.7);
       text-align: center;
       backdrop-filter: blur(8px);
       z-index: 15;
     }
 
     #minimap-wrapper h4 {
-      font-size: 12px;
-      color: var(--gold);
-      margin-bottom: 5px;
+      font-size: 14px;
+      color: var(--gold-light);
+      margin-bottom: 6px;
       font-family: var(--font-title);
     }
 
@@ -775,6 +789,8 @@
   <div id="ar-container">
     <video id="webcam-video" playsinline muted></video>
     <canvas id="ar-canvas"></canvas>
+    <!-- กรอบหน้าตัวเกมจาก bgratta.png -->
+    <div id="game-border-frame"></div>
     <canvas id="frame-overlay"></canvas>
   </div>
 
@@ -807,7 +823,7 @@
       <img id="minimap-img" src="" alt="Thumbnail">
     </div>
 
-    <!-- 1. LEFT SIDE Dressing Panel -->
+    <!-- 1. LEFT SIDE Dressing Panel (ชุด, หมวก, เครื่องประดับ ไม่มีกระเป๋า) -->
     <div id="dressing-panel" class="interactive">
       <div class="panel-header">
         <h3>👗 ห้องเครื่องแต่งกาย</h3>
@@ -817,17 +833,16 @@
         <button class="cat-tab active" data-cat="clothes">ชุดไทย</button>
         <button class="cat-tab" data-cat="hats">หมวก/ชฎา</button>
         <button class="cat-tab" data-cat="accessories">เครื่องประดับ</button>
-        <button class="cat-tab" data-cat="bags">กระเป๋า/ย่าม</button>
       </div>
       <div class="vertical-item-grid" id="dress-items-container">
         <!-- Rendered dynamically -->
       </div>
     </div>
 
-    <!-- 2. Pop Culture Frame Shop Panel -->
+    <!-- 2. Pop Culture Frame Shop Panel (กรอบเหตุการณ์สำคัญยุครัตนโกสินทร์) -->
     <div id="shop-panel" class="interactive">
       <div class="panel-header">
-        <h3>🛍️ ร้านค้ากรอบรูปขวัญใจออเจ้า (สะสมธนบัตรเพื่อปลดล็อก)</h3>
+        <h3>🛍️ ร้านค้ากรอบรูปเหตุการณ์สำคัญรัตนโกสินทร์</h3>
         <button class="panel-close" id="shop-close-btn">✖</button>
       </div>
       <div class="horizontal-item-grid" id="shop-items-container">
@@ -881,7 +896,7 @@
         subtitle: "ยุคพาณิชย์นาวีรุ่งโรจน์ (รัชกาลที่ ๓)",
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_dcahnzdcahnzdcah.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
+        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
       },
       {
         id: 3,
@@ -889,7 +904,7 @@
         subtitle: "การเปิดรับวิทยาการสมัยใหม่ (รัชกาลที่ ๔)",
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_f2p7i9f2p7i9f2p7.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าเจ้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
       },
       {
         id: 4,
@@ -910,7 +925,7 @@
     ];
 
     /* =========================================================
-       2. AR COSTUME & ITEM ASSETS (Men & Women)
+       2. AR COSTUME & ITEM ASSETS (Men & Women - No bags)
        ========================================================= */
     const ASSETS = {
       clothes: {
@@ -972,24 +987,11 @@
           name: 'พวงมาลัยดอกรักคล้องมือ',
           svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="45" fill="none" stroke="#FFF" stroke-width="10" stroke-dasharray="8,6"/><path d="M100 145 L100 185 M90 185 L110 185" stroke="#C9184A" stroke-width="6"/><circle cx="100" cy="185" r="8" fill="#FF758F"/></svg>`
         }
-      },
-      bags: {
-        none: { name: 'ไม่มี', svg: '<svg viewBox="0 0 200 200"></svg>' },
-        thai_basket: {
-          name: 'ชะลอมสานใส่ดอกบัว',
-          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M60 90 L140 90 L130 170 L70 170 Z" fill="#DDA15E" stroke="#BC6C25" stroke-width="3"/><path d="M70 90 C70 50 130 50 130 90" fill="none" stroke="#BC6C25" stroke-width="4"/><circle cx="90" cy="85" r="12" fill="#FF758F"/><circle cx="110" cy="85" r="12" fill="#FF758F"/></svg>`
-        },
-        embroidered_pouch: {
-          name: 'ย่ามไหมปักดิ้นทอง (ชาย/หญิง)',
-          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M40 30 L160 170" stroke="#D4AF37" stroke-width="6"/>
-          <path d="M120 130 L170 130 L165 185 L125 185 Z" fill="#8B1E1E" stroke="#D4AF37" stroke-width="2"/>
-          <circle cx="145" cy="155" r="8" fill="#FFEE80"/></svg>`
-        }
       }
     };
 
     // Preload SVG assets
-    const loadedImages = { clothes: {}, hats: {}, accessories: {}, bags: {} };
+    const loadedImages = { clothes: {}, hats: {}, accessories: {} };
     Object.keys(ASSETS).forEach(cat => {
       loadedImages[cat] = {};
       Object.keys(ASSETS[cat]).forEach(k => {
@@ -1002,8 +1004,7 @@
     let currentSelection = {
       clothes: 'sabai_gold',
       hats: 'none',
-      accessories: 'none',
-      bags: 'none'
+      accessories: 'none'
     };
 
     let activeFrameKey = 'none';
@@ -1011,171 +1012,78 @@
     let cameraStream = null;
 
     /* =========================================================
-       3. POP CULTURE FRAMES SHOP (Seamless / No Freeze)
+       3. POP CULTURE FRAMES SHOP (เหตุการณ์สำคัญยุครัตนโกสินทร์)
        ========================================================= */
     const SHOP_FRAMES = {
       none: { name: 'ไม่ใส่กรอบ', price: 0, owned: true, render: (ctx, w, h) => {} },
-      labubu: {
-        name: 'ลาบูบู้ (Labubu)',
+      temple: {
+        name: 'วัดพระแก้ว',
+        price: 60,
+        owned: false,
+        icon: '🛕',
+        render: (ctx, w, h) => {
+          ctx.strokeStyle = '#D4AF37';
+          ctx.lineWidth = 12;
+          ctx.strokeRect(6, 6, w - 12, h - 12);
+          ctx.fillStyle = 'rgba(212, 175, 55, 0.85)';
+          ctx.font = 'bold 14px Sarabun';
+          ctx.fillText('🏛️ สถาปนากรุงรัตนโกสินทร์ พ.ศ. 2325', 24, 32);
+        }
+      },
+      watarun: {
+        name: 'วัดอรุณฯ',
         price: 80,
         owned: false,
-        icon: '🐰',
+        icon: '🏯',
         render: (ctx, w, h) => {
-          ctx.strokeStyle = '#D4A373';
-          ctx.lineWidth = 14;
-          ctx.strokeRect(7, 7, w - 14, h - 14);
-          ctx.save();
-          ctx.translate(70, 70);
-          ctx.fillStyle = '#C58958';
-          ctx.beginPath();
-          ctx.ellipse(-25, -40, 12, 35, -0.3, 0, Math.PI*2);
-          ctx.ellipse(25, -40, 12, 35, 0.3, 0, Math.PI*2);
-          ctx.fill();
-          ctx.beginPath();
-          ctx.arc(0, 0, 36, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#FFF';
-          ctx.beginPath();
-          ctx.arc(0, 8, 18, 0, Math.PI);
-          ctx.fill();
-          ctx.fillStyle = '#333';
-          ctx.font = 'bold 11px sans-serif';
-          ctx.fillText('LABUBU', -22, 38);
-          ctx.restore();
+          ctx.strokeStyle = '#065A82';
+          ctx.lineWidth = 12;
+          ctx.strokeRect(6, 6, w - 12, h - 12);
+          ctx.fillStyle = '#FFF099';
+          ctx.font = 'bold 14px Sarabun';
+          ctx.fillText('⚓ ยุคการค้าสำเภาและพระปรางค์วัดอรุณ', 24, 32);
         }
       },
-      carebears: {
-        name: 'แคร์แบร์ (Care Bears)',
-        price: 80,
-        owned: false,
-        icon: '🐻',
-        render: (ctx, w, h) => {
-          ctx.strokeStyle = '#FFB5A7';
-          ctx.lineWidth = 14;
-          ctx.strokeRect(7, 7, w - 14, h - 14);
-          ctx.save();
-          ctx.translate(w - 75, 75);
-          ctx.fillStyle = '#90DBF4';
-          ctx.beginPath();
-          ctx.arc(0, 0, 34, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#FF758F';
-          ctx.beginPath();
-          ctx.arc(-7, 4, 7, 0, Math.PI * 2);
-          ctx.arc(7, 4, 7, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#333';
-          ctx.font = 'bold 11px sans-serif';
-          ctx.fillText('CARE BEARS', -35, 42);
-          ctx.restore();
-        }
-      },
-      monchhichi: {
-        name: 'ม่อนชิชิ (Monchhichi)',
+      waghor: {
+        name: 'หว้ากอ',
         price: 100,
         owned: false,
-        icon: '🐵',
+        icon: '🔭',
         render: (ctx, w, h) => {
-          ctx.strokeStyle = '#BC6C25';
-          ctx.lineWidth = 14;
-          ctx.strokeRect(7, 7, w - 14, h - 14);
-          ctx.save();
-          ctx.translate(70, h - 70);
-          ctx.fillStyle = '#6F4E37';
-          ctx.beginPath();
-          ctx.arc(0, 0, 34, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#FCEADE';
-          ctx.beginPath();
-          ctx.arc(0, 3, 22, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#FFB703';
-          ctx.beginPath();
-          ctx.arc(0, 12, 7, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#FFF';
-          ctx.font = 'bold 11px sans-serif';
-          ctx.fillText('MONCHHICHI', -35, -40);
-          ctx.restore();
+          ctx.strokeStyle = '#E0A96D';
+          ctx.lineWidth = 12;
+          ctx.strokeRect(6, 6, w - 12, h - 14);
+          ctx.fillStyle = '#FFF099';
+          ctx.font = 'bold 14px Sarabun';
+          ctx.fillText('⭐ สุริยุปราคาเต็มดวง ณ หอดูดาวหว้ากอ', 24, 32);
         }
       },
-      kitty: {
-        name: 'คิตตี้ (Hello Kitty)',
+      train: {
+        name: 'รถไฟสยาม',
         price: 100,
         owned: false,
-        icon: '🎀',
+        icon: '🚂',
         render: (ctx, w, h) => {
-          ctx.strokeStyle = '#FF4D6D';
-          ctx.lineWidth = 14;
-          ctx.strokeRect(7, 7, w - 14, h - 14);
-          ctx.save();
-          ctx.translate(w - 70, h - 70);
-          ctx.fillStyle = '#FFFFFF';
-          ctx.beginPath();
-          ctx.arc(0, 0, 32, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#E63946';
-          ctx.beginPath();
-          ctx.arc(20, -20, 10, 0, Math.PI * 2);
-          ctx.arc(32, -20, 8, 0, Math.PI * 2);
-          ctx.arc(8, -20, 8, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#FFF';
-          ctx.font = 'bold 11px sans-serif';
-          ctx.fillText('HELLO KITTY', -35, -38);
-          ctx.restore();
+          ctx.strokeStyle = '#8B1E1E';
+          ctx.lineWidth = 12;
+          ctx.strokeRect(6, 6, w - 12, h - 14);
+          ctx.fillStyle = '#FFF099';
+          ctx.font = 'bold 14px Sarabun';
+          ctx.fillText('🚂 ประกาศเลิกทาสและการรถไฟสยาม', 24, 32);
         }
       },
-      benten: {
-        name: 'เบ็นเท็น (Ben 10)',
+      king9: {
+        name: 'ศาสตร์พระราชา',
         price: 120,
         owned: false,
-        icon: '⚡',
+        icon: '👑',
         render: (ctx, w, h) => {
-          ctx.strokeStyle = '#38B000';
-          ctx.lineWidth = 14;
-          ctx.strokeRect(7, 7, w - 14, h - 14);
-          ctx.save();
-          ctx.translate(70, 70);
-          ctx.fillStyle = '#101010';
-          ctx.beginPath();
-          ctx.arc(0, 0, 32, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#70E000';
-          ctx.beginPath();
-          ctx.moveTo(-18, -22); ctx.lineTo(0, 0); ctx.lineTo(-18, 22); ctx.closePath();
-          ctx.moveTo(18, -22); ctx.lineTo(0, 0); ctx.lineTo(18, 22); ctx.closePath();
-          ctx.fill();
-          ctx.font = 'bold 11px sans-serif';
-          ctx.fillText('BEN 10', -18, 42);
-          ctx.restore();
-        }
-      },
-      conan: {
-        name: 'โคนัน (Detective Conan)',
-        price: 120,
-        owned: false,
-        icon: '👓',
-        render: (ctx, w, h) => {
-          ctx.strokeStyle = '#0077B6';
-          ctx.lineWidth = 14;
-          ctx.strokeRect(7, 7, w - 14, h - 14);
-          ctx.save();
-          ctx.translate(w - 70, 70);
-          ctx.strokeStyle = '#111';
-          ctx.lineWidth = 3;
-          ctx.strokeRect(-28, -16, 24, 18);
-          ctx.strokeRect(4, -16, 24, 18);
-          ctx.beginPath(); ctx.moveTo(-4, -7); ctx.lineTo(4, -7); ctx.stroke();
-          ctx.fillStyle = '#D90429';
-          ctx.beginPath();
-          ctx.moveTo(-15, 10); ctx.lineTo(0, 15); ctx.lineTo(-15, 20); ctx.closePath();
-          ctx.moveTo(15, 10); ctx.lineTo(0, 15); ctx.lineTo(15, 20); ctx.closePath();
-          ctx.fill();
-          ctx.fillStyle = '#FFF';
-          ctx.font = 'bold 11px sans-serif';
-          ctx.fillText('CONAN', -20, 38);
-          ctx.restore();
+          ctx.strokeStyle = '#5B8E7D';
+          ctx.lineWidth = 12;
+          ctx.strokeRect(6, 6, w - 12, h - 14);
+          ctx.fillStyle = '#FFF099';
+          ctx.font = 'bold 14px Sarabun';
+          ctx.fillText('🌾 โครงการพระราชดำริ ฝนหลวง', 24, 32);
         }
       }
     };
@@ -1387,7 +1295,7 @@
       ytPlayer = new YT.Player('yt-audio-frame', {
         height: '1',
         width: '1',
-        videoId: '4J1WgPSB4sM', // รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้ (https://youtu.be/4J1WgPSB4sM)
+        videoId: '4J1WgPSB4sM', // รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้
         playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': '4J1WgPSB4sM', 'controls': 0, 'disablekb': 1 }
       });
     };
@@ -1695,7 +1603,6 @@
       }
     });
 
-    // ปุ่มเล่นใหม่อีกครั้งในหน้าสุดท้ายหน้าเดียว
     restartGameBtn.addEventListener('click', () => {
       victoryModal.classList.remove('active');
       gameStartTime = Date.now();
@@ -1828,21 +1735,6 @@
               canvasCtx.translate(midX, midY + 10);
               canvasCtx.rotate(angle);
               canvasCtx.drawImage(accImg, -accW / 2, -accH * 0.2, accW, accH);
-              canvasCtx.restore();
-            }
-          }
-
-          // Bags
-          const bagKey = currentSelection.bags;
-          if (bagKey !== 'none') {
-            const bagImg = loadedImages.bags[bagKey];
-            if (bagImg && bagImg.complete) {
-              const bagW = shoulderDist * 1.4;
-              const bagH = bagW;
-              canvasCtx.save();
-              canvasCtx.translate(rsX + 20, rsY + 60);
-              canvasCtx.rotate(angle * 0.5);
-              canvasCtx.drawImage(bagImg, -bagW / 2, -bagH / 2, bagW, bagH);
               canvasCtx.restore();
             }
           }
