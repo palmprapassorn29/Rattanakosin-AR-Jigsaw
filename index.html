@@ -772,7 +772,7 @@
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
       <h1>บุพเพรัตนโกสินทร์ AR Jigsaw</h1>
-      <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR จิ้มเลือกชุดไทย หมวก เครื่องประดับทางฝั่งซ้าย สะสมธนบัตรโบราณซื้อกรอบรูปสำคัญ และต่อจิ๊กซอว์ ๔ ชิ้นทั้ง ๕ ยุคสมัย</p>
+      <p>ท่องมิติเวลาแปลงกายร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR จิ้มเลือกชุดไทย หมวก เครื่องประดับทางฝั่งซ้าย สะสมธนบัตรโบราณซื้อกรอบรูปเหตุการณ์ และต่อจิ๊กซอว์ ๔ ชิ้นทั้ง ๕ ยุคสมัย</p>
       <button class="gold-btn-start interactive" id="start-btn">
         <span>📷</span> เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)
       </button>
@@ -794,7 +794,7 @@
   <div id="ar-container">
     <video id="webcam-video" playsinline muted></video>
     <canvas id="ar-canvas"></canvas>
-    <!-- กรอบหน้าตัวเกมจาก bgratta.png (จะถูกปิดเมื่อเลือกกรอบรูปเหตุการณ์) -->
+    <!-- กรอบหน้าตัวเกมจาก bgratta.png (จะถูกซ่อนอัตโนมัติเมื่อเลือกซื้อกรอบรูปเหตุการณ์) -->
     <div id="game-border-frame"></div>
     <canvas id="frame-overlay"></canvas>
   </div>
@@ -828,7 +828,7 @@
       <img id="minimap-img" src="" alt="Thumbnail">
     </div>
 
-    <!-- 1. LEFT SIDE Dressing Panel (ชุด, หมวก, เครื่องประดับ ไม่มีกระเป๋า) -->
+    <!-- 1. LEFT SIDE Dressing Panel (ชุด, หมวก, เครื่องประดับ - ไม่มีกระเป๋า) -->
     <div id="dressing-panel" class="interactive">
       <div class="panel-header">
         <h3>👗 ห้องเครื่องแต่งกาย</h3>
@@ -844,7 +844,7 @@
       </div>
     </div>
 
-    <!-- 2. Pop Culture Frame Shop Panel (กรอบเหตุการณ์สำคัญยุครัตนโกสินทร์) -->
+    <!-- 2. Pop Culture Frame Shop Panel (กรอบเหตุการณ์สำคัญรัตนโกสินทร์) -->
     <div id="shop-panel" class="interactive">
       <div class="panel-header">
         <h3>🛍️ ร้านค้ากรอบรูปเหตุการณ์สำคัญรัตนโกสินทร์</h3>
@@ -909,7 +909,7 @@
         subtitle: "การเปิดรับวิทยาการสมัยใหม่ (รัชกาลที่ ๔)",
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_f2p7i9f2p7i9f2p7.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าเจ้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
       },
       {
         id: 4,
@@ -930,7 +930,7 @@
     ];
 
     /* =========================================================
-       2. AR COSTUME & ITEM ASSETS (Men & Women - No bags)
+       2. AR COSTUME & ITEM ASSETS (ชุดแขนหมูแฮมใช้รูป หมูแฮม.jpg)
        ========================================================= */
     const ASSETS = {
       clothes: {
@@ -948,7 +948,8 @@
         },
         r5_ham: {
           name: 'ชุดแขนหมูแฮม ร.๕ (หญิง)',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lace" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#E2D9D2"/></linearGradient></defs><ellipse cx="90" cy="110" rx="45" ry="35" fill="url(#lace)" stroke="#D4AF37" stroke-width="1.5"/><ellipse cx="310" cy="110" rx="45" ry="35" fill="url(#lace)" stroke="#D4AF37" stroke-width="1.5"/><path d="M130 90 L270 90 L285 340 L115 340 Z" fill="url(#lace)" stroke="#C6AC8F" stroke-width="2"/><path d="M160 95 Q200 140 240 95" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="6,4"/></svg>`
+          isImage: true,
+          src: 'หมูแฮม.jpg'
         },
         raj_pattern: {
           name: 'เสื้อราชปะแตนขาว (ชาย)',
@@ -995,13 +996,18 @@
       }
     };
 
-    // Preload SVG assets
+    // Preload Assets (รองรับทั้ง SVG และไฟล์ภาพ หมูแฮม.jpg)
     const loadedImages = { clothes: {}, hats: {}, accessories: {} };
     Object.keys(ASSETS).forEach(cat => {
       loadedImages[cat] = {};
       Object.keys(ASSETS[cat]).forEach(k => {
+        const item = ASSETS[cat][k];
         const img = new Image();
-        img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(ASSETS[cat][k].svg);
+        if (item.isImage) {
+          img.src = item.src;
+        } else {
+          img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(item.svg);
+        }
         loadedImages[cat][k] = img;
       });
     });
@@ -1224,7 +1230,6 @@
       const item = SHOP_FRAMES[key];
       if (item.owned) {
         activeFrameKey = key;
-        // เมื่อเลือกซื้อ/เปลี่ยนกรอบรูปใหม่ ให้เอากรอบ bgratta.png ออก
         if (key !== 'none') {
           gameBorderFrame.classList.add('hidden');
         } else {
@@ -1645,7 +1650,7 @@
     let arHeldPiece = null;
     let lastArClickTime = 0;
     let isGameRunning = false;
-    let lastHandY = null; // สำหรับตรวจจับการปัดมือลง (Swipe Down) เพื่อปิดแท็บ
+    let lastHandY = null; // สำหรับตรวจจับการปัดมือลงเพื่อปิดแท็บ
 
     const pose = new Pose({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
@@ -1710,7 +1715,7 @@
       canvasCtx.clearRect(0, 0, w, h);
       frameCtx.clearRect(0, 0, w, h);
 
-      // Render Pop Culture Camera Frame
+      // Render Pop Culture Frame Shop / Historical Event Frame
       if (SHOP_FRAMES[activeFrameKey] && SHOP_FRAMES[activeFrameKey].render) {
         SHOP_FRAMES[activeFrameKey].render(frameCtx, w, h);
       }
@@ -1733,7 +1738,7 @@
           const shoulderDist = Math.hypot(rsX - lsX, rsY - lsY);
           const angle = Math.atan2(rsY - lsY, rsX - lsX);
 
-          // Clothes
+          // Clothes (รองรับภาพ หมูแฮม.jpg)
           const cKey = currentSelection.clothes;
           const cImg = loadedImages.clothes[cKey];
           if (cImg && cImg.complete) {
@@ -1784,7 +1789,7 @@
         }
       }
 
-      // AR Hand Interaction (Pikul Flower Cursor & Universal Click & Swipe Down Gesture)
+      // AR Hand Interaction (Pikul Flower Cursor & Swipe Down to close tabs)
       if (handResults && handResults.multiHandLandmarks) {
         for (const landmarks of handResults.multiHandLandmarks) {
           const indexTip = landmarks[8];
@@ -1797,10 +1802,10 @@
           const ty = thumbTip.y * h;
           const wy = wrist.y * h;
 
-          // ตรวจจับการปัดมือลง (Swipe Down Gesture) เพื่อปิดแท็บร้านค้าหรือแต่งตัวที่เปิดอยู่
+          // ตรวจจับการปัดมือลง (Swipe Down) เพื่อปิดแท็บแต่งตัวหรือร้านค้า
           if (lastHandY !== null) {
             const deltaY = wy - lastHandY;
-            if (deltaY > 60) { // หากข้อมือเลื่อนลงเร็วเกิน 60 พิกเซล
+            if (deltaY > 60) {
               if (dressingPanel.classList.contains('open') || shopPanel.classList.contains('open')) {
                 dressingPanel.classList.remove('open');
                 shopPanel.classList.remove('open');
@@ -1817,7 +1822,6 @@
           const pinchDist = Math.hypot(ix - tx, iy - ty);
           const isPinching = pinchDist < 45;
 
-          // Universal AR Click (เฉพาะตอนไม่ได้ลากชิ้นส่วนจิ๊กซอว์)
           if (isPinching && !arHeldPiece) {
             const clickedEl = document.elementFromPoint((ix + tx) / 2, (iy + ty) / 2);
             if (clickedEl && clickedEl.closest('#next-level-btn') && totalSnapped < puzzlePieces.length) {
@@ -1827,7 +1831,6 @@
             }
           }
 
-          // AR Drag Puzzle Pieces
           if (isGameRunning) {
             if (isPinching) {
               if (!arHeldPiece) {
