@@ -108,7 +108,7 @@
       text-align: center;
       padding: 20px;
       background-image: 
-        linear-gradient(180deg, rgba(10, 25, 47, 0.2) 0%, rgba(10, 25, 47, 0.4) 50%, rgba(10, 15, 25, 0.9) 100%),
+        linear-gradient(180deg, rgba(10, 25, 47, 0.2) 0%, rgba(10, 25, 47, 0.4) 50%, rgba(10, 15, 25, 0.92) 100%),
         url('Gemini_Generated_Image_rnecb1rnecb1rnec.jpg'),
         radial-gradient(circle at 50% 30%, #ffd97d 0%, #b85d19 40%, #4a150c 75%, #0d060c 100%);
       background-size: cover;
@@ -753,7 +753,7 @@
   <!-- Background Music (YouTube IFrame: 4J1WgPSB4sM - รัตนโกสินทร์ / ชมพู ฟรุ๊ตตี้) -->
   <div id="yt-audio-frame"></div>
 
-  <!-- Start Screen with Centered Kanok Card & Sparkles (ใช้รูปที่ 1 เป็นภาพหน้าแรก) -->
+  <!-- Start Screen with Centered Kanok Card & Sparkles (รูปที่ 1: หน้าแรกเกม) -->
   <div id="start-screen">
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
@@ -780,7 +780,7 @@
   <div id="ar-container">
     <video id="webcam-video" playsinline muted></video>
     <canvas id="ar-canvas"></canvas>
-    <div id="frame-overlay"></div> <!-- ใช้รูปที่ 2 (bgratta.png) เป็นกรอบหน้าเกม -->
+    <div id="frame-overlay"></div> <!-- รูปที่ 2: กรอบหน้าเกมต่อจิ๊กซอว์ (bgratta.png) -->
   </div>
 
   <!-- Jigsaw Game Stage (4 Pieces) -->
@@ -812,7 +812,7 @@
       <img id="minimap-img" src="" alt="Thumbnail">
     </div>
 
-    <!-- 1. LEFT SIDE Dressing Panel (เอากระเป๋าออก เหลือแค่ชุด หมวก และเครื่องประดับ รองรับการใส่ไฟล์รูปภาพจริง) -->
+    <!-- 1. LEFT SIDE Dressing Panel (เอากระเป๋าออก เหลือแค่ชุด หมวก เครื่องประดับ / รองรับใส่รูปภาพจริงผ่าน imgSrc) -->
     <div id="dressing-panel" class="interactive">
       <div class="panel-header">
         <h3>👗 ห้องเครื่องแต่งกาย</h3>
@@ -828,7 +828,7 @@
       </div>
     </div>
 
-    <!-- 2. Shop Panel (ร้านกรอบรูปเหตุการณ์สำคัญยุครัตนโกสินทร์ รองรับการใส่ไฟล์รูปภาพจริง) -->
+    <!-- 2. Pop Culture Frame Shop Panel (กรอบเหตุการณ์สำคัญยุครัตนโกสินทร์ / รองรับใส่รูปภาพจริงผ่าน imgSrc) -->
     <div id="shop-panel" class="interactive">
       <div class="panel-header">
         <h3>🛍️ ร้านกรอบรูปเหตุการณ์สำคัญ (สะสมสตางค์เพื่อปลดล็อก)</h3>
@@ -914,13 +914,13 @@
     ];
 
     /* =========================================================
-       2. AR COSTUME & ITEM ASSETS (รองรับการใส่รูปภาพจริงผ่าน imgSrc)
+       2. AR COSTUME & ITEM ASSETS (รองรับใส่ path รูปภาพจริงผ่าน imgSrc)
        ========================================================= */
     const ASSETS = {
       clothes: {
         sabai_gold: {
           name: 'สไบปักทอง (หญิง)',
-          imgSrc: '', // ท่านสามารถใส่ path รูปภาพจริง เช่น 'images/sabai.png' ได้ที่นี่
+          imgSrc: '', // ใส่ path รูปภาพจริงได้ เช่น 'images/sabai1.png'
           svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFE79A"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#996515"/></linearGradient></defs><path d="M120 40 Q200 70 280 200 L320 340 L240 340 L180 180 Q140 100 120 40 Z" fill="url(#sgold)" stroke="#FFF099" stroke-width="2"/><circle cx="160" cy="90" r="14" fill="#8B1E1E" stroke="#FFE79A" stroke-width="2"/><path d="M140 60 Q200 120 260 60" fill="none" stroke="url(#sgold)" stroke-width="6"/></svg>`
         },
         sabai_pleat: {
@@ -962,7 +962,7 @@
       }
     };
 
-    // Preload Dressing Assets (รองรับทั้งรูปภาพจริงและ SVG)
+    // Preload Dressing Assets
     const loadedImages = { clothes: {}, hats: {}, accessories: {} };
     Object.keys(ASSETS).forEach(cat => {
       loadedImages[cat] = {};
@@ -985,8 +985,7 @@
     };
 
     /* =========================================================
-       3. SHOP FRAMES (กรอบเหตุการณ์สำคัญยุครัตนโกสินทร์ รองรับรูปภาพจริง)
-       ท่านสามารถใส่ path รูปภาพจริงใน imgSrc ได้ เช่น imgSrc: 'images/frame_r1.png'
+       3. SHOP FRAMES (กรอบเหตุการณ์สำคัญยุครัตนโกสินทร์ รองรับใส่รูปภาพจริง)
        ========================================================= */
     const SHOP_FRAMES = {
       none: { name: 'ไม่ใส่กรอบ', price: 0, owned: true, imgSrc: '', render: (ctx, w, h) => {} },
@@ -994,7 +993,7 @@
         name: 'กรอบลายไทยกนกทอง',
         price: 50,
         owned: false,
-        imgSrc: '',
+        imgSrc: '', // ใส่ path รูปกรอบจริงได้ เช่น 'images/frame1.png'
         icon: '👑',
         render: (ctx, w, h) => {
           ctx.strokeStyle = '#D4AF37';
@@ -1067,7 +1066,6 @@
       }
     };
 
-    // Preload frame images if provided
     const loadedFrameImages = {};
     Object.keys(SHOP_FRAMES).forEach(key => {
       const item = SHOP_FRAMES[key];
@@ -1682,13 +1680,8 @@
       frameCtx.clearRect(0, 0, w, h);
 
       // Render Pop Culture Frame
-      if (SHOP_FRAMES[activeFrameKey]) {
-        const frameItem = SHOP_FRAMES[activeFrameKey];
-        if (loadedFrameImages[activeFrameKey] && loadedFrameImages[activeFrameKey].complete) {
-          frameCtx.drawImage(loadedFrameImages[activeFrameKey], 0, 0, w, h);
-        } else if (frameItem.render) {
-          frameItem.render(frameCtx, w, h);
-        }
+      if (SHOP_FRAMES[activeFrameKey] && SHOP_FRAMES[activeFrameKey].render) {
+        SHOP_FRAMES[activeFrameKey].render(frameCtx, w, h);
       }
 
       // AR Fitting Costume Overlay
