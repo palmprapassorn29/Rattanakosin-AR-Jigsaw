@@ -78,7 +78,7 @@
       z-index: 5;
     }
 
-    /* กรอบหน้าตัวเกมเริ่มต้น (bgratta.png) จะถูกซ่อนเมื่อเลือกกรอบรูป 1-5 */
+    /* กรอบหน้าตัวเกมพื้นฐาน (bgratta.png) ซ่อนอัตโนมัติเมื่อเลือกกรอบ 1-5 */
     #game-border-frame {
       position: absolute;
       top: 0;
@@ -843,7 +843,7 @@
       </div>
     </div>
 
-    <!-- 2. Pop Culture Frame Shop Panel (กรอบเหตุการณ์สำคัญ 5 รูป ตามลำดับ 1.png ถึง 5.jpg) -->
+    <!-- 2. Pop Culture Frame Shop Panel (กรอบเหตุการณ์สำคัญ 1_2.png, 2_2.png, 3_2.png, 4_2.png, 5_2.jpg) -->
     <div id="shop-panel" class="interactive">
       <div class="panel-header">
         <h3>🛍️ ร้านค้ากรอบรูปเหตุการณ์สำคัญรัตนโกสินทร์</h3>
@@ -929,43 +929,43 @@
     ];
 
     /* =========================================================
-       2. AR COSTUME & ITEM ASSETS (Men & Women - รองรับ 'หมูแฮม.jpg')
+       2. AR COSTUME & ITEM ASSETS (ชุดแขนหมูแฮมใช้ SVG เดิม และรองรับ 'หมูแฮม.jpg')
        ========================================================= */
     const ASSETS = {
       clothes: {
         ham_dress: {
-          name: 'ชุดไทยแขนหมูแฮม (หญิง)',
+          name: 'ชุดแขนหมูแฮม',
           imgSrc: 'หมูแฮม.jpg',
           svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lace" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#E2D9D2"/></linearGradient></defs><ellipse cx="90" cy="110" rx="45" ry="35" fill="url(#lace)" stroke="#D4AF37" stroke-width="1.5"/><ellipse cx="310" cy="110" rx="45" ry="35" fill="url(#lace)" stroke="#D4AF37" stroke-width="1.5"/><path d="M130 90 L270 90 L285 340 L115 340 Z" fill="url(#lace)" stroke="#C6AC8F" stroke-width="2"/><path d="M160 95 Q200 140 240 95" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="6,4"/></svg>`
         },
         sabai_gold: {
-          name: 'สไบปักทอง (หญิง)',
+          name: 'สไบปักทอง',
           svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFE79A"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#996515"/></linearGradient></defs><path d="M120 30 Q200 65 285 190 Q315 250 300 340 L230 340 Q200 250 175 180 Q140 100 120 30 Z" fill="url(#sgold)" stroke="#FFF099" stroke-width="2"/><path d="M140 50 Q200 110 265 50" fill="none" stroke="url(#sgold)" stroke-width="7"/></svg>`
         },
         sabai_pleat: {
-          name: 'สไบจีบชมพู (หญิง)',
+          name: 'สไบจีบชมพู',
           svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF758F"/><stop offset="100%" stop-color="#800F2F"/></linearGradient></defs><path d="M115 35 Q205 70 290 205 Q310 270 295 340 L225 340 Q200 260 170 170 Q135 95 115 35 Z" fill="url(#sruby)" stroke="#FFB3C1" stroke-width="2"/><line x1="135" y1="70" x2="255" y2="340" stroke="#FFF" stroke-width="1.8" stroke-dasharray="6,4"/></svg>`
         },
         raj_pattern: {
-          name: 'เสื้อราชปะแตนขาว (ชาย)',
+          name: 'เสื้อราชปะแตน',
           svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><path d="M100 70 L300 70 L320 340 L80 340 Z" fill="#F8F9FA" stroke="#D4AF37" stroke-width="3"/><rect x="180" y="55" width="40" height="25" fill="#E9ECEF" stroke="#D4AF37" stroke-width="2" rx="4"/><line x1="200" y1="80" x2="200" y2="340" stroke="#D4AF37" stroke-width="3"/><circle cx="200" cy="110" r="4.5" fill="#D4AF37"/><circle cx="200" cy="150" r="4.5" fill="#D4AF37"/><circle cx="200" cy="190" r="4.5" fill="#D4AF37"/></svg>`
         }
       },
       hats: {
-        none: { name: 'ไม่สวมหมวก', svg: '<svg viewBox="0 0 200 200"></svg>' },
+        none: { name: 'ไม่มี', svg: '<svg viewBox="0 0 200 200"></svg>' },
         chada: {
-          name: 'ชฎาทองคำมงกุฎ',
+          name: 'ชฎาทองคำ',
           svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFF099"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs><path d="M100 10 L118 75 L135 140 L65 140 L82 75 Z" fill="url(#hgold)" stroke="#FFF" stroke-width="1.2"/><circle cx="100" cy="12" r="6" fill="#FFF"/><rect x="62" y="140" width="76" height="25" fill="#8B1E1E" stroke="url(#hgold)" stroke-width="2" rx="4"/><circle cx="100" cy="152" r="5" fill="#FFF099"/></svg>`
         },
         male_kile: {
-          name: 'มาลาเกี้ยวขุนนาง (ชาย)',
+          name: 'มาลาเกี้ยว',
           svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><path d="M100 35 L122 115 L78 115 Z" fill="#D4AF37"/><path d="M55 115 Q100 95 145 115 L155 145 L45 145 Z" fill="#2B2D42" stroke="#D4AF37" stroke-width="2"/><circle cx="100" cy="130" r="7" fill="#8B1E1E" stroke="#D4AF37" stroke-width="1.5"/></svg>`
         }
       },
       accessories: {
         none: { name: 'ไม่มี', svg: '<svg viewBox="0 0 200 200"></svg>' },
         gold_necklace: {
-          name: 'สังวาลย์และพวงมาลัยดอกรัก',
+          name: 'สังวาลย์และพวงมาลัย',
           svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M45 35 Q100 130 155 35" fill="none" stroke="#D4AF37" stroke-width="5"/><circle cx="100" cy="90" r="13" fill="#8B1E1E" stroke="#FFEE80" stroke-width="2"/><path d="M100 103 Q100 150 100 185" fill="none" stroke="#FFF" stroke-width="7" stroke-dasharray="4,4"/><circle cx="100" cy="185" r="9" fill="#FF758F"/></svg>`
         }
       }
@@ -998,7 +998,7 @@
     let cameraStream = null;
 
     /* =========================================================
-       3. POP CULTURE FRAMES SHOP (นำทั้ง 5 รูปมาใส่เป็นกรอบรูปตามลำดับ)
+       3. POP CULTURE FRAMES SHOP (นำทั้ง 5 รูป 1_2.png ถึง 5_2.jpg มาใส่)
        ========================================================= */
     const SHOP_FRAMES = {
       none: { 
@@ -1008,43 +1008,43 @@
         render: (ctx, w, h) => {} 
       },
       frame1: {
-        name: 'กรอบที่ 1 (วัดพระแก้ว)',
+        name: 'กรอบวัดพระแก้ว',
         price: 60,
         owned: false,
         icon: '🛕',
-        imgSrc: '1.png',
+        imgSrc: '1_2.png',
         render: (ctx, w, h) => {}
       },
       frame2: {
-        name: 'กรอบที่ 2 (วัดอรุณฯ)',
+        name: 'กรอบวัดอรุณฯ',
         price: 80,
         owned: false,
         icon: '🏯',
-        imgSrc: '2.png',
+        imgSrc: '2_2.png',
         render: (ctx, w, h) => {}
       },
       frame3: {
-        name: 'กรอบที่ 3 (หว้ากอ)',
+        name: 'กรอบหว้ากอ',
         price: 100,
         owned: false,
         icon: '🔭',
-        imgSrc: '3.png',
+        imgSrc: '3_2.png',
         render: (ctx, w, h) => {}
       },
       frame4: {
-        name: 'กรอบที่ 4 (รถไฟสยาม)',
+        name: 'กรอบรถไฟสยาม',
         price: 100,
         owned: false,
         icon: '🚂',
-        imgSrc: '4.png',
+        imgSrc: '4_2.png',
         render: (ctx, w, h) => {}
       },
       frame5: {
-        name: 'กรอบที่ 5 (ฝนหลวง)',
+        name: 'กรอบศาสตร์พระราชา',
         price: 120,
         owned: false,
         icon: '👑',
-        imgSrc: '5.jpg',
+        imgSrc: '5_2.jpg',
         render: (ctx, w, h) => {}
       }
     };
@@ -1179,7 +1179,6 @@
       const item = SHOP_FRAMES[key];
       if (item.owned) {
         activeFrameKey = key;
-        // เมื่อเลือกซื้อ/เปลี่ยนกรอบรูปใหม่ ให้เอากรอบ bgratta.png ออก
         if (key !== 'none') {
           gameBorderFrame.classList.add('hidden');
         } else {
@@ -1664,11 +1663,16 @@
       canvasCtx.clearRect(0, 0, w, h);
       frameCtx.clearRect(0, 0, w, h);
 
-      // Render Image-based Historical Frame (1.png ถึง 5.jpg) เต็มจอ AR เป็นกรอบรูป
-      if (activeFrameKey !== 'none' && loadedShopImages[activeFrameKey] && loadedShopImages[activeFrameKey].complete) {
-        frameCtx.save();
-        frameCtx.drawImage(loadedShopImages[activeFrameKey], 0, 0, w, h);
-        frameCtx.restore();
+      // Render Shop Frame Image (1_2.png ถึง 5_2.jpg) เป็นกรอบรูป AR
+      if (activeFrameKey !== 'none' && SHOP_FRAMES[activeFrameKey]) {
+        const sf = SHOP_FRAMES[activeFrameKey];
+        if (loadedShopImages[activeFrameKey] && loadedShopImages[activeFrameKey].complete) {
+          frameCtx.save();
+          frameCtx.drawImage(loadedShopImages[activeFrameKey], 0, 0, w, h);
+          frameCtx.restore();
+        } else if (sf.render) {
+          sf.render(frameCtx, w, h);
+        }
       }
 
       // AR Fitting Costume Overlay
@@ -1756,7 +1760,6 @@
           const pinchDist = Math.hypot(ix - tx, iy - ty);
           const isPinching = pinchDist < 45;
 
-          // Universal AR Click (เฉพาะตอนไม่ได้ลากชิ้นส่วนจิ๊กซอว์)
           if (isPinching && !arHeldPiece) {
             const clickedEl = document.elementFromPoint((ix + tx) / 2, (iy + ty) / 2);
             if (clickedEl && clickedEl.closest('#next-level-btn') && totalSnapped < puzzlePieces.length) {
@@ -1766,7 +1769,6 @@
             }
           }
 
-          // AR Drag Puzzle Pieces
           if (isGameRunning) {
             if (isPinching) {
               if (!arHeldPiece) {
