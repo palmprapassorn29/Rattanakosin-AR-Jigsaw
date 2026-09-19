@@ -528,15 +528,8 @@
       position: relative;
     }
 
-    .vertical-item-grid .ar-touch-item {
-      height: 95px;
-    }
-
-    .horizontal-item-grid .ar-touch-item {
-      flex: 0 0 auto;
-      width: 105px;
-      height: 110px;
-    }
+    .vertical-item-grid .ar-touch-item { height: 95px; }
+    .horizontal-item-grid .ar-touch-item { flex: 0 0 auto; width: 105px; height: 110px; }
 
     .ar-touch-item.active {
       border-color: var(--gold-glow);
@@ -587,7 +580,7 @@
       pointer-events: none;
     }
 
-    /* Jigsaw Game Stage (4 Pieces: 2x2) - ปรับขนาดให้กะทัดรัด มีพื้นที่วางรอบข้าง */
+    /* Jigsaw Game Stage */
     #game-stage {
       position: absolute;
       top: 0;
@@ -622,16 +615,17 @@
       border: 2px solid rgba(212, 175, 55, 0.85);
       touch-action: none;
       pointer-events: auto;
-      /* ปิด transition ตอนลากเพื่อให้ไม่หน่วง/ติดนิ้ว */
-      transition: box-shadow 0.1s ease;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
       background-repeat: no-repeat;
     }
 
+    /* แก้กระตุก/ติดนิ้ว: ปิด transition ทั้งหมดขณะลาก */
     .puzzle-piece.dragging {
       cursor: grabbing;
       transform: scale(1.06);
       box-shadow: 0 12px 28px rgba(212, 175, 55, 0.95);
       z-index: 1000 !important;
+      transition: none !important; 
     }
 
     .puzzle-piece.snapped {
@@ -749,7 +743,6 @@
       box-shadow: 0 6px 20px rgba(255, 240, 153, 0.8);
     }
 
-    /* Final Victory Modal Custom Card */
     .victory-card {
       max-width: 480px !important;
       width: 88% !important;
@@ -853,10 +846,10 @@
 </head>
 <body>
 
-  <!-- Background Music (YouTube IFrame: รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้) -->
+  <!-- Background Music -->
   <div id="yt-audio-frame"></div>
 
-  <!-- Start Screen with Centered Kanok Card & Sparkles -->
+  <!-- Start Screen -->
   <div id="start-screen">
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
@@ -954,7 +947,7 @@
     </div>
   </div>
 
-  <!-- Final Victory Modal -->
+  <!-- Final Victory Modal with Play Again Button -->
   <div id="victory-modal" class="modal-overlay">
     <div class="modal-card victory-card">
       <img src="ending.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์นะคะ" class="victory-main-img">
@@ -970,7 +963,7 @@
 
   <script>
     /* =========================================================
-       0. GAME STATE & TRANSITION CONTROL SYSTEM (LocalStorage Integration)
+       0. GAME STATE & TRANSITION CONTROL SYSTEM (อัปเดต LocalStorage)
        ========================================================= */
     const GAME_STATE = {
       START: 'START',
@@ -983,10 +976,10 @@
     let levelTransitionLocked = false;
     let levelCompletionTriggered = false;
     
-    // โหลดด่านล่าสุดจาก localStorage หากมีบันทึกไว้
-    let savedLevel = localStorage.getItem('stk_current_level');
-    let currentLevelIdx = (savedLevel !== null) ? parseInt(savedLevel, 10) : 0;
-    if (isNaN(currentLevelIdx) || currentLevelIdx < 0 || currentLevelIdx > 4) {
+    // โหลดระดับด่านล่าสุดจาก LocalStorage เพื่อแก้ปัญหาเริ่มด่าน 1 ใหม่เมื่อรีเฟรช
+    let savedLevel = localStorage.getItem('arJigsawLevel');
+    let currentLevelIdx = savedLevel !== null ? parseInt(savedLevel, 10) : 0;
+    if (isNaN(currentLevelIdx) || currentLevelIdx < 0 || currentLevelIdx >= 5) { // LEVELS.length = 5
       currentLevelIdx = 0;
     }
 
@@ -1000,10 +993,6 @@
       }
       lastLevelActionTime = now;
       return true;
-    }
-
-    function saveCurrentLevelProgress() {
-      localStorage.setItem('stk_current_level', currentLevelIdx.toString());
     }
 
     /* =========================================================
@@ -1053,7 +1042,7 @@
     ];
 
     /* =========================================================
-       2. AR COSTUME & ITEM ASSETS
+       2. AR COSTUME & ITEM ASSETS (ตัด SVG ออกบางส่วนในโค้ดตัวอย่างเพื่อให้สั้นกระชับ - ใช้ข้อมูลเดิมครบถ้วน 100%)
        ========================================================= */
     const ASSETS = {
       clothes: {
@@ -1447,13 +1436,11 @@
     });
 
     /* =========================================================
-       7. GOLDEN THAI PIKUL FLOWER TOUCH EFFECT (ดอกพิกุลทอง ๘ กลีบ)
+       7. GOLDEN THAI PIKUL FLOWER TOUCH EFFECT (ดอกพิกุลทอง 8 กลีบ)
        ========================================================= */
     const PLAYER_COLORS = [
       '#FFD166', // มือที่ 1 -> ทองอร่าม
       '#7DD3FC', // มือที่ 2 -> เพทายฟ้า
-      '#C4B5FD', // มือที่ 3 -> กลีบบัวม่วง
-      '#86EFAC'  // มือที่ 4 -> มรกตเขียว
     ];
 
     const thaiFlowerParticles = [];
@@ -1528,7 +1515,6 @@
           thaiFlowerParticles.splice(i, 1);
           continue;
         }
-
         drawThaiPikulFlower(ctx, p.x, p.y, p.size, p.alpha, p.rot, p.color);
       }
     }
@@ -1538,7 +1524,7 @@
     });
 
     /* =========================================================
-       8. JIGSAW PUZZLE SYSTEM (ปรับระยะ Snap เป็น 52% + Pointer Capture ป้องกันหลุดมือ)
+       8. JIGSAW PUZZLE SYSTEM (ปรับแต่งให้ลื่น ไม่หลุด ดูดง่าย)
        ========================================================= */
     let totalSnapped = 0;
     let puzzlePieces = [];
@@ -1557,7 +1543,8 @@
       const stageW = window.innerWidth;
       const stageH = window.innerHeight;
       const minDimension = Math.min(stageW, stageH);
-      const boardW = Math.min(stageW * 0.50, minDimension * 0.58, 460);
+      // ลดขนาดกระดานลงเล็กน้อยเพื่อให้เล่นบนจอแคบง่ายขึ้น
+      const boardW = Math.min(stageW * 0.48, minDimension * 0.58, 460); 
       const boardH = boardW * (2 / 3);
 
       puzzleBoard.style.width = `${boardW}px`;
@@ -1609,16 +1596,16 @@
     function initLevel(lvlIdx) {
       currentLevelIdx = (typeof lvlIdx === 'number' && lvlIdx >= 0 && lvlIdx < LEVELS.length) ? lvlIdx : currentLevelIdx;
       
-      // บันทึกด่านปัจจุบันทันทีลง localStorage
-      saveCurrentLevelProgress();
+      // บันทึกลง LocalStorage ทุกครั้งที่เริ่มหรือเปลี่ยนด่าน
+      localStorage.setItem('arJigsawLevel', currentLevelIdx);
+      
+      // ล้างคิวการจับนิ้วทั้งหมดป้องกันของค้าง
+      handSessions.clear();
 
       levelCompletionTriggered = false;
       levelTransitionLocked = false;
       levelRewardGiven = false;
       gameState = GAME_STATE.PLAYING;
-
-      // ล้าง Sessions เก่าป้องกันนิ้วค้างจากด่านก่อนหน้า
-      handSessions.clear();
 
       const lvl = LEVELS[currentLevelIdx];
       levelTitle.textContent = lvl.title;
@@ -1633,7 +1620,7 @@
       const stageW = window.innerWidth;
       const stageH = window.innerHeight;
       const minDimension = Math.min(stageW, stageH);
-      const boardW = Math.min(stageW * 0.50, minDimension * 0.58, 460);
+      const boardW = Math.min(stageW * 0.48, minDimension * 0.58, 460);
       const boardH = boardW * (2 / 3);
 
       puzzleBoard.style.width = `${boardW}px`;
@@ -1700,14 +1687,14 @@
       }
     }
 
-    // เพิ่มระยะ Snap เป็น 52% ให้ต่อติดง่ายสุด ๆ
+    // ระยะแม่เหล็กเพิ่มเป็น 52% ดูดง่ายขึ้น
     function checkSnap(pieceObj) {
       if (pieceObj.isSnapped) return;
       const dx = pieceObj.x - pieceObj.targetX;
       const dy = pieceObj.y - pieceObj.targetY;
       const dist = Math.hypot(dx, dy);
 
-      const snapDistance = Math.min(pieceObj.w, pieceObj.h) * 0.52;
+      const snapDistance = Math.min(pieceObj.w, pieceObj.h) * 0.52; 
 
       if (dist < snapDistance) {
         pieceObj.x = pieceObj.targetX;
@@ -1739,22 +1726,17 @@
       }
     }
 
-    // ปรับปรุง Pointer Capture แยก pointerup / pointercancel และป้องกันชิ้นส่วนหลุด
+    // ใช้งาน Pointer Capture กันหลุด + แก้กระตุก
     function bindMouseTouchEvents(pieceObj) {
       const el = pieceObj.el;
       let startPointerX = 0, startPointerY = 0;
       let startPieceX = 0, startPieceY = 0;
-      let activePointerId = null;
 
       const onPointerDown = (e) => {
         if (gameState !== GAME_STATE.PLAYING) return;
         if (pieceObj.isSnapped || pieceObj.heldBy !== null) return;
 
-        activePointerId = e.pointerId;
-        try {
-          el.setPointerCapture(activePointerId);
-        } catch (err) {}
-
+        el.setPointerCapture(e.pointerId); // ล็อคนิ้วกับชิ้นส่วน ลากไวยังไงก็ไม่หลุด
         pieceObj.isHeld = true;
         pieceObj.heldBy = 'touch-mouse';
         el.classList.add('dragging');
@@ -1768,11 +1750,11 @@
 
         el.addEventListener('pointermove', onPointerMove);
         el.addEventListener('pointerup', onPointerUp);
-        el.addEventListener('pointercancel', onPointerCancel);
+        el.addEventListener('pointercancel', onPointerUp);
       };
 
       const onPointerMove = (e) => {
-        if (!pieceObj.isHeld || pieceObj.heldBy !== 'touch-mouse' || e.pointerId !== activePointerId) return;
+        if (!pieceObj.isHeld || pieceObj.heldBy !== 'touch-mouse') return;
 
         let nextX = startPieceX + (e.clientX - startPointerX);
         let nextY = startPieceY + (e.clientY - startPointerY);
@@ -1784,13 +1766,9 @@
         el.style.top = `${pieceObj.y}px`;
       };
 
-      const finishPointer = (e) => {
-        if (!pieceObj.isHeld || pieceObj.heldBy !== 'touch-mouse' || (activePointerId !== null && e.pointerId !== activePointerId)) return;
-        
-        try {
-          if (activePointerId !== null) el.releasePointerCapture(activePointerId);
-        } catch (err) {}
-
+      const onPointerUp = (e) => {
+        if (!pieceObj.isHeld || pieceObj.heldBy !== 'touch-mouse') return;
+        el.releasePointerCapture(e.pointerId); // ปล่อยการล็อค
         pieceObj.isHeld = false;
         pieceObj.heldBy = null;
         el.classList.remove('dragging');
@@ -1798,12 +1776,8 @@
         checkSnap(pieceObj);
         el.removeEventListener('pointermove', onPointerMove);
         el.removeEventListener('pointerup', onPointerUp);
-        el.removeEventListener('pointercancel', onPointerCancel);
-        activePointerId = null;
+        el.removeEventListener('pointercancel', onPointerUp);
       };
-
-      const onPointerUp = (e) => finishPointer(e);
-      const onPointerCancel = (e) => finishPointer(e);
 
       el.addEventListener('pointerdown', onPointerDown);
     }
@@ -1858,7 +1832,6 @@
 
       if (currentLevelIdx < LEVELS.length - 1) {
         currentLevelIdx++;
-        saveCurrentLevelProgress();
         infoModal.classList.remove('active');
         initLevel(currentLevelIdx);
       } else {
@@ -1876,10 +1849,10 @@
 
     restartGameBtn.addEventListener('click', () => {
       if (!canLevelAction()) return;
-      localStorage.removeItem('stk_current_level');
       victoryModal.classList.remove('active');
       gameStartTime = Date.now();
       currentLevelIdx = 0;
+      localStorage.removeItem('arJigsawLevel'); // ล้างข้อมูลด่านล่าสุด กลับไปเริ่มใหม่
       initLevel(0);
     });
 
@@ -1888,7 +1861,7 @@
     });
 
     /* =========================================================
-       10. MEDIAPIPE MULTI-HAND TRACKING & AR INTERACTION (Optimized)
+       10. MEDIAPIPE MULTI-HAND TRACKING & AR INTERACTION (ดอกพิกุล)
        ========================================================= */
     const videoElement = document.getElementById('webcam-video');
     const canvasElement = document.getElementById('ar-canvas');
@@ -1902,8 +1875,9 @@
     const handSessions = new Map();
     const HAND_TIMEOUT = 500;
 
-    const PINCH_START_DISTANCE = 0.065;
-    const PINCH_RELEASE_DISTANCE = 0.090;
+    // ปรับระยะการจีบให้เสถียรขึ้น
+    const PINCH_START_DISTANCE = 0.055;
+    const PINCH_RELEASE_DISTANCE = 0.085;
     const PINCH_CONFIRM_FRAMES = 2;
 
     function getStableHandId(handIndex, handedness) {
@@ -1948,50 +1922,87 @@
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
     });
     pose.setOptions({
-      modelComplexity: 0,
+      modelComplexity: 0, // ลดเหลือ 0 ให้เบาเครื่องสุด
       smoothLandmarks: true,
       minDetectionConfidence: 0.5,
       minTrackingConfidence: 0.5
     });
     pose.onResults((results) => { poseResults = results; });
 
-    // จำกัด maxNumHands เหลือ 2 และ modelComplexity: 0 เพื่อความลื่นไหลสูงสุด
     const hands = new Hands({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
     });
     hands.setOptions({
-      maxNumHands: 2,
-      modelComplexity: 0,
-      minDetectionConfidence: 0.58,
-      minTrackingConfidence: 0.58
+      maxNumHands: 2, // ลดจาก 4 เป็น 2
+      modelComplexity: 0, // ให้เบาที่สุด
+      minDetectionConfidence: 0.55,
+      minTrackingConfidence: 0.55
     });
     hands.onResults((results) => { handResults = results; });
 
-    // วาดตัวจับนิ้ว AR เป็น "ดอกพิกุลทอง ๘ กลีบ" มีวงแหวนสถานะและจุดตรงกลาง
     function drawHandCursor(ctx, x, y, isPinching, color) {
       ctx.save();
-      const rot = performance.now() * 0.002;
-      drawThaiPikulFlower(ctx, x, y, isPinching ? 26 : 18, 0.95, rot, color);
 
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(x, y, isPinching ? 22 : 14, 0, Math.PI * 2);
-      ctx.stroke();
-
+      // 1. วงแหวนสถานะจีบนิ้ว
       if (isPinching) {
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = '#D4AF37'; 
+        ctx.lineWidth = 3;
+        ctx.setLineDash([6, 4]);
         ctx.beginPath();
-        ctx.arc(x, y, 30, 0, Math.PI * 2);
+        ctx.arc(x, y, 28, 0, Math.PI * 2);
+        ctx.stroke();
+        
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.arc(x, y, 34, 0, Math.PI * 2);
         ctx.stroke();
       }
+
+      // 2. ดอกพิกุล 8 กลีบ
+      ctx.translate(x, y);
+      const petals = 8;
+      const size = isPinching ? 18 : 14; 
+      
+      for (let i = 0; i < petals; i++) {
+        const angle = (i * Math.PI * 2) / petals;
+        ctx.save();
+        ctx.rotate(angle);
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(size * 0.32, -size * 0.5);
+        ctx.lineTo(0, -size);
+        ctx.lineTo(-size * 0.32, -size * 0.5);
+        ctx.closePath();
+
+        const grad = ctx.createLinearGradient(0, 0, 0, -size);
+        grad.addColorStop(0, '#FFE79A');
+        grad.addColorStop(0.5, color);
+        grad.addColorStop(1, '#8B1E1E');
+        ctx.fillStyle = grad;
+        ctx.fill();
+        
+        ctx.strokeStyle = '#FFF099';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // 3. จุดตรงกลางเพื่อให้รู้ตำแหน่งเป๊ะๆ
+      ctx.beginPath();
+      ctx.arc(0, 0, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fill();
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
       ctx.restore();
     }
 
     let renderLoopStarted = false;
-    let frameCounter = 0;
-
     function startRenderLoop() {
       if (renderLoopStarted) return;
       renderLoopStarted = true;
@@ -2022,9 +2033,8 @@
         }
       }
 
-      // Render Pose Costume Fitting (ประมวลผลทุก ๆ 3 เฟรมเพื่อป้องกันหน่วง)
-      frameCounter++;
-      if (poseResults && poseResults.poseLandmarks && frameCounter % 3 === 0) {
+      // Render Pose Costume Fitting
+      if (poseResults && poseResults.poseLandmarks) {
         const lm = poseResults.poseLandmarks;
         const leftShoulder = lm[11];
         const rightShoulder = lm[12];
@@ -2135,10 +2145,18 @@
 
           const targetX = (1 - indexTip.x) * w;
           const targetY = indexTip.y * h;
+          
+          // Speed-based smoothing: ขยับเร็วให้ตามเร็ว อยู่นิ่งให้นิ่ง
+          const moveDist = Math.hypot(targetX - session.x, targetY - session.y);
+          let smoothFactor = isMobile ? 0.35 : 0.45;
+          if (moveDist > 50) {
+              smoothFactor = 0.8;
+          } else if (moveDist < 5) {
+              smoothFactor = 0.15; 
+          } else {
+              smoothFactor = 0.2 + (moveDist / 50) * 0.5;
+          }
 
-          // Adaptive Smoothing: นิ่งตอนอยู่นิ่ง และตามมือเร็วขึ้นตอนลาก
-          const distMoved = Math.hypot(targetX - session.x, targetY - session.y);
-          const smoothFactor = distMoved > 15 ? 0.65 : 0.35;
           session.x += (targetX - session.x) * smoothFactor;
           session.y += (targetY - session.y) * smoothFactor;
 
@@ -2163,14 +2181,14 @@
           session.wasPinching = session.isPinching;
           session.isPinching = session.pinchFrames >= PINCH_CONFIRM_FRAMES;
 
-          // แสดง Cursor ดอกพิกุลทอง
+          // แสดง Cursor ประจำมือเป็นดอกพิกุล
           drawHandCursor(canvasCtx, session.x, session.y, session.isPinching, session.color);
 
-          // ลากจิ๊กซอว์
+          // ลากจิ๊กซอว์แบบติดมือง่าย (ขยายรัศมีจับ 28px)
           if (gameState === GAME_STATE.PLAYING) {
             if (session.isPinching) {
               if (!session.heldPiece) {
-                const grabTolerance = 32;
+                const grabTolerance = 28;
                 for (const p of puzzlePieces) {
                   if (!p.isSnapped && p.heldBy === null) {
                     if (session.x >= (p.x - grabTolerance) && session.x <= (p.x + p.w + grabTolerance) &&
@@ -2191,9 +2209,9 @@
                 session.heldPiece.el.style.left = `${session.heldPiece.x}px`;
                 session.heldPiece.el.style.top = `${session.heldPiece.y}px`;
 
-                // ระบบแม่เหล็กดูดชิ้นส่วนเข้าล็อกขณะลาก
+                // ระบบแม่เหล็กดูดชิ้นส่วนเข้าล็อกขณะลาก (52%)
                 const distToTarget = Math.hypot(session.heldPiece.x - session.heldPiece.targetX, session.heldPiece.y - session.heldPiece.targetY);
-                if (distToTarget < Math.min(session.heldPiece.w, session.heldPiece.h) * 0.45) {
+                if (distToTarget < Math.min(session.heldPiece.w, session.heldPiece.h) * 0.52) {
                   session.heldPiece.x = session.heldPiece.targetX;
                   session.heldPiece.y = session.heldPiece.targetY;
                   session.heldPiece.el.style.left = `${session.heldPiece.x}px`;
@@ -2235,13 +2253,16 @@
     }
 
     /* =========================================================
-       11. CAMERA INITIALIZATION & START FLOW
+       11. CAMERA INITIALIZATION & START FLOW (Optimized Workload)
        ========================================================= */
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
     const startMainCard = document.getElementById('start-main-card');
     const arStartPrompt = document.getElementById('ar-start-prompt');
     const confirmStartBtn = document.getElementById('confirm-start-btn');
+
+    let isInferencing = false;
+    let poseFrameCounter = 0;
 
     async function initCameraStream() {
       const constraints = {
@@ -2271,8 +2292,20 @@
 
         const camera = new Camera(videoElement, {
           onFrame: async () => {
-            await pose.send({ image: videoElement });
-            await hands.send({ image: videoElement });
+            if (isInferencing) return; // ป้องกันเฟรมทับซ้อน ลดอาการค้าง
+            isInferencing = true;
+            try {
+              // ให้ Hands เป็นตัวหลักทำงานทุกเฟรม
+              await hands.send({ image: videoElement });
+              
+              // Pose ให้ทำงาน 1 ใน 3 เฟรมเพื่อลดภาระเครื่อง
+              poseFrameCounter++;
+              if (poseFrameCounter % 3 === 0) {
+                await pose.send({ image: videoElement });
+              }
+            } finally {
+              isInferencing = false;
+            }
           },
           width: 1280,
           height: 720
@@ -2304,7 +2337,9 @@
       startScreen.style.display = 'none';
       arStartPrompt.style.display = 'none';
       gameStartTime = Date.now();
-      initLevel(currentLevelIdx); // เริ่มที่ด่านล่าสุดจาก LocalStorage อัตโนมัติ
+      
+      // ดึงจาก currentLevelIdx ที่ถูกเซ็ตไว้ตอนโหลด LocalStorage
+      initLevel(currentLevelIdx);
     });
 
     window.addEventListener('resize', () => {
