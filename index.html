@@ -47,6 +47,7 @@
       color: var(--ivory);
     }
 
+    /* Fullscreen AR Viewport */
     #ar-container {
       position: absolute;
       top: 0;
@@ -105,6 +106,7 @@
       z-index: 6;
     }
 
+    /* Start Screen (คงเดิมทุกประการ) */
     #start-screen {
       position: absolute;
       top: 0;
@@ -116,9 +118,12 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: clamp(12px, 3vw, 24px);
+      padding: 20px;
       background-image: 
         linear-gradient(180deg, rgba(10, 25, 47, 0.2) 0%, rgba(10, 25, 47, 0.4) 50%, rgba(10, 15, 25, 0.92) 100%),
+        url('Gemini_Generated_Image_rnecb1rnecb1rnec.jpg'),
+        url('Gemini_Generated_Image_89ya1c89ya1c89ya.png'),
+        url('bg-rattanakosin.jpg'),
         radial-gradient(circle at 50% 30%, #ffd97d 0%, #b85d19 40%, #4a150c 75%, #0d060c 100%);
       background-size: cover;
       background-position: center center;
@@ -135,37 +140,59 @@
       position: relative;
       background: linear-gradient(145deg, rgba(20, 12, 8, 0.95) 0%, rgba(10, 25, 47, 0.96) 100%);
       border: 2px solid var(--gold);
-      border-radius: clamp(20px, 4vw, 32px);
-      padding: clamp(20px, 4vw, 38px) clamp(16px, 4vw, 42px);
+      border-radius: 32px;
+      padding: 38px 42px;
       max-width: 660px;
       width: 92%;
-      max-height: 90vh;
-      overflow-y: auto;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(212, 175, 55, 0.45);
       backdrop-filter: blur(16px);
       display: flex;
       flex-direction: column;
       align-items: center;
       pointer-events: auto;
+      animation: pulseGlow 4s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 25px rgba(212, 175, 55, 0.3); }
+      100% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(255, 240, 153, 0.7); }
+    }
+
+    .start-card::before {
+      content: '༺ ༻';
+      position: absolute;
+      top: -16px;
+      font-size: 24px;
+      color: var(--gold);
+      text-shadow: 0 0 10px var(--gold-glow);
+    }
+
+    .start-card::after {
+      content: '❖';
+      position: absolute;
+      bottom: 12px;
+      font-size: 16px;
+      color: var(--gold);
+      opacity: 0.7;
     }
 
     .badge-sub {
       display: inline-block;
       border: 1px solid var(--gold);
       background: rgba(139, 30, 30, 0.85);
-      padding: 4px 18px;
+      padding: 4px 20px;
       border-radius: 20px;
-      font-size: clamp(12px, 2vw, 14px);
+      font-size: 14px;
       color: var(--gold-light);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       letter-spacing: 1px;
     }
 
     #start-screen h1 {
       font-family: var(--font-title);
-      font-size: clamp(24px, 5vw, 36px);
+      font-size: 36px;
       color: var(--gold-light);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       background: linear-gradient(180deg, #FFF099 20%, #D4AF37 80%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -173,10 +200,10 @@
     }
 
     #start-screen p {
-      font-size: clamp(13.5px, 2vw, 15.5px);
-      line-height: 1.6;
+      font-size: 15.5px;
+      line-height: 1.65;
       color: var(--ivory);
-      margin-bottom: 22px;
+      margin-bottom: 26px;
       font-weight: 300;
     }
 
@@ -184,11 +211,11 @@
       background: linear-gradient(180deg, #FFE79A 0%, #D4AF37 50%, #996515 100%);
       color: #381A00;
       font-family: var(--font-title);
-      font-size: clamp(17px, 3vw, 22px);
+      font-size: 22px;
       font-weight: 700;
       border: 1.5px solid #FFF8DC;
       border-radius: 40px;
-      padding: 12px 36px;
+      padding: 14px 44px;
       cursor: pointer;
       box-shadow: 0 6px 25px rgba(0,0,0,0.6), 0 0 30px rgba(212, 175, 55, 0.7);
       transition: all 0.25s ease;
@@ -202,6 +229,7 @@
       box-shadow: 0 8px 35px rgba(255, 240, 153, 0.95);
     }
 
+    /* Live Camera Ready Prompt */
     #ar-start-prompt {
       display: none;
       position: absolute;
@@ -211,34 +239,28 @@
       z-index: 210;
       text-align: center;
       pointer-events: auto;
-      width: 90%;
-      max-width: 460px;
     }
 
     .prompt-box {
       background: var(--navy-glass);
       border: 2px solid var(--gold);
-      border-radius: 24px;
-      padding: clamp(20px, 4vw, 26px);
+      border-radius: 25px;
+      padding: 24px 36px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 30px rgba(212, 175, 55, 0.5);
       backdrop-filter: blur(12px);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
     .prompt-box h2 {
       font-family: var(--font-title);
-      font-size: clamp(20px, 4vw, 26px);
+      font-size: 28px;
       color: var(--gold-light);
     }
 
-    .prompt-box p {
-      font-size: clamp(13px, 2vw, 14.5px);
-      line-height: 1.5;
-    }
-
+    /* UI Overlay */
     #ui-container {
       position: absolute;
       top: 0;
@@ -260,20 +282,18 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: clamp(8px, 2vh, 14px) clamp(12px, 3vw, 24px);
+      padding: 12px 20px;
       background: linear-gradient(180deg, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.4) 70%, transparent 100%);
-      flex-wrap: wrap;
-      gap: 8px;
     }
 
     .title-group h1 {
       font-family: var(--font-title);
-      font-size: clamp(17px, 3.5vw, 24px);
+      font-size: 22px;
       color: var(--gold-light);
     }
 
     .title-group p {
-      font-size: clamp(11px, 2vw, 13px);
+      font-size: 13px;
       color: var(--ivory);
       opacity: 0.9;
     }
@@ -289,29 +309,24 @@
       background: rgba(139, 30, 30, 0.85);
       border: 1.5px solid var(--gold);
       border-radius: 20px;
-      padding: 5px 12px;
+      padding: 6px 12px;
       display: flex;
       align-items: center;
       gap: 6px;
       font-weight: 700;
       color: var(--gold-light);
-      font-size: clamp(13px, 2vw, 15px);
+      font-size: 14px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    }
-
-    .money-pill span {
-      font-family: var(--font-title);
-      font-size: clamp(15px, 2.5vw, 18px);
     }
 
     .btn-top {
       background: var(--navy-glass);
       border: 1.5px solid var(--gold);
       color: var(--gold-light);
-      padding: clamp(5px, 1.5vh, 8px) clamp(10px, 2vw, 14px);
+      padding: 6px 12px;
       border-radius: 20px;
       font-family: var(--font-body);
-      font-size: clamp(12px, 1.8vw, 13.5px);
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -319,7 +334,6 @@
       gap: 6px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.4);
       transition: all 0.2s ease;
-      white-space: nowrap;
     }
 
     .btn-top:hover, .btn-top.active {
@@ -331,61 +345,62 @@
       background: var(--navy-glass);
       border: 1.5px solid var(--gold);
       color: var(--gold-light);
-      width: clamp(34px, 4vw, 40px);
-      height: clamp(34px, 4vw, 40px);
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: clamp(15px, 2.2vw, 18px);
+      font-size: 16px;
       cursor: pointer;
     }
 
+    /* Thumbnail Mini-map */
     #minimap-wrapper {
       position: absolute;
-      top: clamp(64px, 10vh, 78px);
-      right: clamp(12px, 2.5vw, 20px);
+      top: 75px;
+      right: 16px;
       background: var(--navy-glass);
       border: 2px solid var(--gold);
-      border-radius: 14px;
+      border-radius: 12px;
       padding: 8px;
-      box-shadow: 0 8px 26px rgba(0,0,0,0.7);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.7);
       text-align: center;
       backdrop-filter: blur(8px);
       z-index: 15;
     }
 
     #minimap-wrapper h4 {
-      font-size: clamp(11px, 1.8vw, 13px);
+      font-size: 12px;
       color: var(--gold-light);
       margin-bottom: 4px;
       font-family: var(--font-title);
     }
 
     #minimap-img {
-      width: clamp(130px, 18vw, 200px);
-      height: clamp(85px, 12vw, 130px);
+      width: 140px;
+      height: 95px;
       object-fit: cover;
-      border-radius: 8px;
-      border: 2px solid rgba(212, 175, 55, 0.7);
+      border-radius: 6px;
+      border: 1.5px solid rgba(212, 175, 55, 0.7);
       display: block;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
 
+    /* Panels */
     #dressing-panel {
       position: absolute;
-      top: clamp(64px, 10vh, 78px);
-      left: clamp(12px, 2.5vw, 18px);
-      width: clamp(240px, 30vw, 270px);
-      max-height: calc(100vh - 90px);
+      top: 75px;
+      left: 14px;
+      width: 250px;
+      max-height: calc(100% - 90px);
       background: var(--navy-glass);
       border: 2px solid var(--gold);
-      border-radius: 20px;
-      padding: 12px 10px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 20px rgba(212, 175, 55, 0.3);
+      border-radius: 18px;
+      padding: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.85);
       backdrop-filter: blur(12px);
-      transform: translateX(-125%);
-      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform: translateX(-120%);
+      transition: transform 0.35s ease;
       z-index: 25;
       display: flex;
       flex-direction: column;
@@ -403,13 +418,13 @@
       transform: translateX(-50%) translateY(125%);
       background: var(--navy-glass);
       border: 2px solid var(--gold);
-      border-radius: 20px;
-      padding: 14px 16px;
-      width: 95%;
-      max-width: 900px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 20px rgba(212, 175, 55, 0.3);
+      border-radius: 18px;
+      padding: 14px;
+      width: 92%;
+      max-width: 850px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.85);
       backdrop-filter: blur(12px);
-      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: transform 0.35s ease;
       z-index: 25;
     }
 
@@ -428,7 +443,7 @@
 
     .panel-header h3 {
       font-family: var(--font-title);
-      font-size: clamp(15px, 2.5vw, 17px);
+      font-size: 16px;
       color: var(--gold-light);
     }
 
@@ -442,25 +457,21 @@
 
     .left-cat-tabs {
       display: flex;
-      flex-direction: row;
       gap: 4px;
       margin-bottom: 8px;
       overflow-x: auto;
-      scrollbar-width: none;
-      touch-action: pan-x;
     }
 
     .cat-tab {
       background: transparent;
       border: 1px solid rgba(212, 175, 55, 0.4);
       color: var(--ivory);
-      font-size: clamp(11px, 1.8vw, 12.5px);
+      font-size: 11.5px;
       font-family: var(--font-title);
       padding: 4px 8px;
       cursor: pointer;
-      border-radius: 10px;
+      border-radius: 8px;
       white-space: nowrap;
-      transition: all 0.2s;
     }
 
     .cat-tab.active {
@@ -473,99 +484,66 @@
     .vertical-item-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
+      gap: 6px;
       overflow-y: auto;
-      max-height: calc(100vh - 190px);
-      padding-right: 4px;
-      scrollbar-width: thin;
-      touch-action: pan-y;
-      -webkit-overflow-scrolling: touch;
+      max-height: calc(100vh - 200px);
     }
 
     .horizontal-item-grid {
       display: flex;
       gap: 10px;
       overflow-x: auto;
-      padding: 4px 2px 8px 2px;
-      scrollbar-width: thin;
-      touch-action: pan-x;
-      -webkit-overflow-scrolling: touch;
+      padding: 4px;
     }
 
     .ar-touch-item {
       background: rgba(255, 255, 255, 0.08);
       border: 1.5px solid rgba(212, 175, 55, 0.4);
-      border-radius: 12px;
+      border-radius: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       padding: 6px;
-      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-      position: relative;
     }
 
-    .vertical-item-grid .ar-touch-item {
-      height: clamp(85px, 14vh, 100px);
-    }
-
-    .horizontal-item-grid .ar-touch-item {
-      flex: 0 0 auto;
-      width: clamp(90px, 14vw, 110px);
-      height: clamp(95px, 15vh, 115px);
-    }
+    .vertical-item-grid .ar-touch-item { height: 85px; }
+    .horizontal-item-grid .ar-touch-item { flex: 0 0 auto; width: 95px; height: 100px; }
 
     .ar-touch-item.active {
       border-color: var(--gold-glow);
       background: rgba(139, 30, 30, 0.75);
-      box-shadow: 0 0 12px var(--gold);
-      transform: scale(1.04);
-    }
-
-    .ar-touch-item.none-item {
-      font-size: clamp(22px, 4vw, 28px);
-      color: #FF4D4D;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .ar-touch-item.none-item span {
-      margin-top: 4px;
-      font-size: clamp(10px, 1.6vw, 11.5px);
-      color: #FFF;
-      font-family: var(--font-body);
+      box-shadow: 0 0 10px var(--gold);
     }
 
     .ar-touch-item img {
-      width: clamp(34px, 5vw, 42px);
-      height: clamp(34px, 5vw, 42px);
+      width: 36px;
+      height: 36px;
       object-fit: contain;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
       pointer-events: none;
     }
 
     .ar-touch-item span {
-      font-size: clamp(9.5px, 1.5vw, 11px);
+      font-size: 10px;
       color: var(--ivory);
       text-align: center;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 90px;
+      max-width: 80px;
       pointer-events: none;
     }
 
     .ar-touch-item .price-tag {
-      font-size: clamp(10px, 1.6vw, 11.5px);
+      font-size: 10px;
       color: var(--gold-light);
       font-weight: bold;
-      margin-top: 2px;
       pointer-events: none;
     }
 
+    /* Jigsaw Game Stage */
     #game-stage {
       position: absolute;
       top: 0;
@@ -581,9 +559,9 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      border: 2.5px dashed rgba(212, 175, 55, 0.75);
-      background: rgba(10, 25, 47, 0.5);
-      box-shadow: 0 0 35px rgba(0,0,0,0.75);
+      border: 2.5px dashed rgba(212, 175, 55, 0.85);
+      background: rgba(10, 25, 47, 0.55);
+      box-shadow: 0 0 30px rgba(0,0,0,0.8);
       border-radius: 12px;
     }
 
@@ -596,18 +574,17 @@
       position: absolute;
       cursor: grab;
       border-radius: 6px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-      border: 2px solid rgba(212, 175, 55, 0.8);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+      border: 2px solid rgba(212, 175, 55, 0.85);
       touch-action: none;
       pointer-events: auto;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
       background-repeat: no-repeat;
     }
 
     .puzzle-piece.dragging {
       cursor: grabbing;
-      transform: scale(1.06);
-      box-shadow: 0 12px 28px rgba(212, 175, 55, 0.8);
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(212, 175, 55, 0.9);
       z-index: 1000 !important;
     }
 
@@ -615,8 +592,10 @@
       pointer-events: none;
       border: none;
       box-shadow: none;
+      z-index: 10 !important;
     }
 
+    /* Modals */
     .modal-overlay {
       position: absolute;
       top: 0;
@@ -631,8 +610,7 @@
       z-index: 100;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.35s ease;
-      padding: 16px;
+      transition: opacity 0.3s ease;
     }
 
     .modal-overlay.active {
@@ -644,63 +622,40 @@
       position: relative;
       background: linear-gradient(145deg, #16243b, #0d1624);
       border: 2px solid var(--gold);
-      border-radius: 24px;
-      padding: clamp(20px, 4vw, 32px);
-      max-width: 880px;
-      width: 95%;
-      max-height: 90vh;
-      overflow-y: auto;
-      text-align: left;
-      box-shadow: 0 10px 45px rgba(0,0,0,0.85), 0 0 25px rgba(212, 175, 55, 0.4);
+      border-radius: 20px;
+      padding: 24px;
+      max-width: 820px;
+      width: 92%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.85);
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 20px;
     }
 
-    @media (max-width: 768px) {
-      .modal-card {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
-
-    .modal-content-left {
-      flex: 1;
-      z-index: 2;
-    }
-
-    .modal-jigsaw-right {
-      flex: 0 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 3;
-    }
+    .modal-content-left { flex: 1; }
+    .modal-jigsaw-right { flex: 0 0 280px; }
 
     .modal-jigsaw-right img {
       width: 100%;
-      max-width: 260px;
       max-height: 200px;
       object-fit: cover;
-      border-radius: 12px;
+      border-radius: 10px;
       border: 2px solid var(--gold);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 15px rgba(212, 175, 55, 0.4);
     }
 
     .modal-card h2 {
       font-family: var(--font-title);
-      font-size: clamp(20px, 4vw, 28px);
+      font-size: 24px;
       color: var(--gold-light);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .modal-card p {
-      font-size: clamp(13.5px, 2vw, 15.5px);
+      font-size: 14.5px;
       line-height: 1.6;
       color: var(--ivory);
       margin-bottom: 18px;
-      font-weight: 300;
     }
 
     .reward-banner {
@@ -709,7 +664,7 @@
       border-radius: 12px;
       padding: 6px 14px;
       color: var(--gold-light);
-      font-size: clamp(13px, 2vw, 16px);
+      font-size: 14px;
       font-weight: bold;
       margin-bottom: 14px;
       display: inline-block;
@@ -719,15 +674,14 @@
       background: linear-gradient(180deg, #E6CA65 0%, #B8860B 100%);
       color: #3B2404;
       font-family: var(--font-title);
-      font-size: clamp(17px, 3vw, 20px);
+      font-size: 18px;
       font-weight: 700;
       border: none;
-      border-radius: 30px;
-      padding: 10px 32px;
+      border-radius: 25px;
+      padding: 10px 28px;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-      transition: all 0.25s ease;
-      margin: 4px;
+      transition: all 0.2s ease;
     }
 
     .gold-btn:hover {
@@ -735,22 +689,41 @@
       box-shadow: 0 6px 20px rgba(255, 240, 153, 0.8);
     }
 
+    .btn-secondary {
+      background: linear-gradient(180deg, #2A3B53 0%, #101F33 100%);
+      color: var(--gold-light);
+      border: 1.5px solid var(--gold);
+      margin-top: 10px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Victory Card */
     .victory-card {
-      max-width: 820px;
+      max-width: 720px;
+      width: 92%;
       flex-direction: column !important;
       text-align: center !important;
-      align-items: center !important;
+      padding: 24px !important;
     }
 
     .victory-main-img {
       width: 100%;
       max-height: 280px;
       object-fit: contain;
-      border-radius: 16px;
+      border-radius: 14px;
       border: 2px solid var(--gold);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 20px rgba(212, 175, 55, 0.5);
-      margin-bottom: 14px;
-      display: block;
+      margin-bottom: 12px;
+    }
+
+    .victory-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 8px;
     }
 
     #yt-audio-frame {
@@ -760,29 +733,44 @@
       opacity: 0;
       pointer-events: none;
     }
+
+    /* Responsive Design adjustments */
+    @media (max-width: 768px) {
+      .modal-card { flex-direction: column-reverse; padding: 18px; }
+      .modal-jigsaw-right { flex: 0 0 auto; width: 100%; }
+      .modal-jigsaw-right img { max-height: 150px; }
+      #minimap-wrapper { top: 65px; right: 10px; }
+      #minimap-img { width: 95px; height: 65px; }
+      header { padding: 8px 12px; }
+      .title-group h1 { font-size: 16px; }
+      .title-group p { font-size: 11px; }
+      .money-pill, .btn-top { padding: 4px 8px; font-size: 11px; }
+      .btn-icon { width: 30px; height: 30px; }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Background Music -->
   <div id="yt-audio-frame"></div>
 
-  <!-- Original Start Screen exactly as requested -->
+  <!-- Start Screen -->
   <div id="start-screen">
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
       <h1>รัตนโกสินทร์ AR Jigsaw</h1>
-      <p>ท่องมิติเวลาร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR หรือสัมผัสหน้าจอต่อจิ๊กซอว์</p>
+      <p>ท่องมิติเวลาร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR ต่อจิ๊กซอว์</p>
       <button class="gold-btn-start interactive" id="start-btn">
         <span>📷</span> เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)
       </button>
     </div>
   </div>
 
-  <!-- Hand Gesture Ready Prompt on Live Camera -->
+  <!-- Hand Gesture Ready Prompt -->
   <div id="ar-start-prompt" class="interactive">
     <div class="prompt-box">
-      <h2>✨ กล้องพร้อมแล้วหนาท่านผู้น่ารัก ✨</h2>
-      <p>ยื่นนิ้วชี้หรือจีบนิ้วกลางอากาศเพื่อกดปุ่มด้านล่าง หรือใช้นิ้วสัมผัสหน้าจอได้ทุกจุด</p>
+      <h2>✨ กล้องพร้อมแล้วหนาท่านผู้น่ารัก✨</h2>
+      <p>ยื่นนิ้วชี้หรือจีบนิ้วกลางอากาศเพื่อกดปุ่ม หรือสัมผัสหน้าจอได้เลย</p>
       <button class="gold-btn interactive" id="confirm-start-btn">
         🌸 เริ่มท่องมิติเวลา (Start Playing)
       </button>
@@ -825,7 +813,7 @@
       <img id="minimap-img" src="" alt="Thumbnail">
     </div>
 
-    <!-- 1. LEFT SIDE Dressing Panel -->
+    <!-- Dressing Panel -->
     <div id="dressing-panel" class="interactive">
       <div class="panel-header">
         <h3>👗 ห้องเครื่องแต่งกาย</h3>
@@ -839,7 +827,7 @@
       <div class="vertical-item-grid" id="dress-items-container"></div>
     </div>
 
-    <!-- 2. Pop Culture Frame Shop Panel -->
+    <!-- Shop Panel -->
     <div id="shop-panel" class="interactive">
       <div class="panel-header">
         <h3>🛍️ ร้านค้ากรอบรูปเหตุการณ์สำคัญรัตนโกสินทร์</h3>
@@ -864,21 +852,23 @@
     </div>
   </div>
 
-  <!-- Final Victory Modal with Index Home Button -->
+  <!-- Final Victory Modal พร้อมปุ่มกลับ index.html -->
   <div id="victory-modal" class="modal-overlay">
     <div class="modal-card victory-card">
-      <img src="ending.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์นะคะ" class="victory-main-img" onerror="this.src='https://placehold.co/400x250/16243b/FFF8DC?text=Rattanakosin+Victory'">
-      <h2 style="font-size:clamp(22px, 4vw, 32px); margin-bottom:8px;">ท่านสำเร็จบริบูรณ์แล้วเจ้าค่ะ!</h2>
-      <div class="reward-banner" style="margin-bottom:10px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ สตางค์</div>
-      <p id="victory-stats" style="text-align:center; margin-bottom:16px; font-weight:bold;"></p>
-      <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
-        <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้ง</button>
-        <button class="gold-btn interactive" id="home-index-btn" style="background: linear-gradient(180deg, #A82323 0%, #5A0F0F 100%); color: #FFF8DC;">🏠 กลับหน้าแรก (Index)</button>
+      <img src="ending.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์นะคะ" class="victory-main-img">
+      <h2 style="font-size:26px; margin-bottom:6px;">ท่านสำเร็จบริบูรณ์แล้วเจ้าค่ะ!</h2>
+      <div class="reward-banner" style="margin-bottom:8px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ สตางค์</div>
+      <p id="victory-stats" style="text-align:center; margin-bottom:14px; font-weight:bold; font-size: 14.5px;"></p>
+      
+      <div class="victory-buttons">
+        <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้งไหมเจ้าคะ (Play Again)</button>
+        <a href="index.html" class="gold-btn btn-secondary interactive" id="back-index-btn">🏠 กลับสู่หน้าแรก (index.html)</a>
       </div>
     </div>
   </div>
 
   <script>
+    /* 1. HISTORICAL STAGES */
     const LEVELS = [
       {
         id: 1,
@@ -922,6 +912,7 @@
       }
     ];
 
+    /* 2. AR ASSETS */
     const ASSETS = {
       clothes: {
         none: { name: 'ไม่มี' },
@@ -1044,15 +1035,11 @@
       });
     });
 
-    let currentSelection = {
-      clothes: 'sabai_gold',
-      hats: 'none',
-      accessories: 'none'
-    };
-
+    let currentSelection = { clothes: 'sabai_gold', hats: 'none', accessories: 'none' };
     let activeFrameKey = 'none';
     let userMoney = 100;
 
+    /* 3. POP CULTURE FRAMES SHOP */
     const SHOP_FRAMES = {
       none: { name: 'ไม่มี', price: 0, owned: true },
       frame1: { name: 'กรอบวัดพระแก้ว', price: 60, owned: false, icon: '🛕', imgSrc: '1.png' },
@@ -1072,6 +1059,7 @@
       }
     });
 
+    /* 4. UI HANDLERS */
     const dressingPanel = document.getElementById('dressing-panel');
     const dressToggleBtn = document.getElementById('dress-toggle-btn');
     const dressCloseBtn = document.getElementById('dress-close-btn');
@@ -1131,9 +1119,9 @@
         const item = items[key];
         const div = document.createElement('div');
         div.className = `ar-touch-item ${currentSelection[currentCategory] === key ? 'active' : ''}`;
-        if (key === 'none') div.classList.add('none-item');
-        div.setAttribute('data-cat', currentCategory);
+        div.setAttribute('data-type', 'costume');
         div.setAttribute('data-key', key);
+        div.setAttribute('data-cat', currentCategory);
 
         if (key === 'none') {
           div.innerHTML = `❌<span>${item.name}</span>`;
@@ -1145,19 +1133,15 @@
         }
 
         div.addEventListener('click', () => {
-          selectCostumeItem(currentCategory, key);
+          currentSelection[currentCategory] = key;
+          document.querySelectorAll(`.ar-touch-item[data-cat="${currentCategory}"]`).forEach(el => {
+            el.classList.toggle('active', el.getAttribute('data-key') === key);
+          });
+          AudioEngine.playSnap();
         });
 
         dressItemsContainer.appendChild(div);
       });
-    }
-
-    function selectCostumeItem(cat, key) {
-      currentSelection[cat] = key;
-      document.querySelectorAll(`.ar-touch-item[data-cat="${cat}"]`).forEach(el => {
-        el.classList.toggle('active', el.getAttribute('data-key') === key);
-      });
-      AudioEngine.playSnap();
     }
 
     function renderShopItems() {
@@ -1166,15 +1150,15 @@
         const item = SHOP_FRAMES[key];
         const div = document.createElement('div');
         div.className = `ar-touch-item ${activeFrameKey === key ? 'active' : ''}`;
-        if (key === 'none') div.classList.add('none-item');
+        div.setAttribute('data-type', 'shop');
         div.setAttribute('data-key', key);
 
         if (key === 'none') {
           div.innerHTML = `❌<span>${item.name}</span><div class="price-tag">ฟรี</div>`;
         } else {
-          let iconContent = `<div style="font-size:28px; margin-bottom:4px;">${item.icon || '🖼️'}</div>`;
+          let iconContent = `<div style="font-size:28px; margin-bottom:2px;">${item.icon || '🖼️'}</div>`;
           if (loadedShopImages[key] && loadedShopImages[key].src) {
-            iconContent = `<img src="${loadedShopImages[key].src}" alt="${item.name}" style="width:38px; height:38px; object-fit:cover; border-radius:4px; margin-bottom:4px;">`;
+            iconContent = `<img src="${loadedShopImages[key].src}" alt="${item.name}">`;
           }
           div.innerHTML = `
             ${iconContent}
@@ -1184,37 +1168,33 @@
         }
 
         div.addEventListener('click', () => {
-          handleShopSelection(key);
+          if (item.owned) {
+            activeFrameKey = key;
+            gameBorderFrame.classList.toggle('hidden', key !== 'none');
+            renderShopItems();
+            AudioEngine.playSnap();
+          } else {
+            if (userMoney >= item.price) {
+              userMoney -= item.price;
+              item.owned = true;
+              activeFrameKey = key;
+              gameBorderFrame.classList.toggle('hidden', key !== 'none');
+              updateMoneyUI();
+              renderShopItems();
+              AudioEngine.playVictory();
+            } else {
+              AudioEngine.playSnap();
+            }
+          }
         });
 
         shopItemsContainer.appendChild(div);
       });
     }
 
-    function handleShopSelection(key) {
-      const item = SHOP_FRAMES[key];
-      if (item.owned) {
-        activeFrameKey = key;
-        gameBorderFrame.classList.toggle('hidden', key !== 'none');
-        renderShopItems();
-        AudioEngine.playSnap();
-      } else {
-        if (userMoney >= item.price) {
-          userMoney -= item.price;
-          item.owned = true;
-          activeFrameKey = key;
-          gameBorderFrame.classList.toggle('hidden', key !== 'none');
-          updateMoneyUI();
-          renderShopItems();
-          AudioEngine.playVictory();
-        } else {
-          AudioEngine.playSnap();
-        }
-      }
-    }
-
     renderDressingItems();
 
+    /* 5. AUDIO SYNTHESIZER & SPEECH */
     const AudioEngine = {
       ctx: null,
       init() {
@@ -1226,13 +1206,13 @@
         const gain = this.ctx.createGain();
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(523.25, this.ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1046.5, this.ctx.currentTime + 0.15);
-        gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
+        osc.frequency.exponentialRampToValueAtTime(1046.5, this.ctx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.12);
         osc.connect(gain);
         gain.connect(this.ctx.destination);
         osc.start();
-        osc.stop(this.ctx.currentTime + 0.15);
+        osc.stop(this.ctx.currentTime + 0.12);
       },
       playVictory() {
         this.init();
@@ -1241,13 +1221,13 @@
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.12);
-          gain.gain.setValueAtTime(0.25, this.ctx.currentTime + idx * 0.12);
-          gain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.12 + 0.35);
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.1);
+          gain.gain.setValueAtTime(0.2, this.ctx.currentTime + idx * 0.1);
+          gain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.1 + 0.3);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
-          osc.start(this.ctx.currentTime + idx * 0.12);
-          osc.stop(this.ctx.currentTime + idx * 0.12 + 0.35);
+          osc.start(this.ctx.currentTime + idx * 0.1);
+          osc.stop(this.ctx.currentTime + idx * 0.1 + 0.3);
         });
       },
       speakVictorySpeech() {
@@ -1262,6 +1242,7 @@
       }
     };
 
+    /* 6. YOUTUBE BGM PLAYER */
     let ytPlayer = null;
     let isMuted = false;
 
@@ -1293,16 +1274,19 @@
       }
     });
 
-    const thaiFlowerParticles = [];
-
-    const USER_PALETTES = [
-      { primary: '#D4AF37', secondary: '#8B1E1E', center: '#FFE066' }, // Player 1: Gold & Crimson
-      { primary: '#FF758F', secondary: '#5A0F0F', center: '#FFF099' }, // Player 2: Ruby Pink
-      { primary: '#00B4D8', secondary: '#03045E', center: '#90E0EF' }, // Player 3: Ocean Blue
-      { primary: '#70E000', secondary: '#386641', center: '#D8F3DC' }  // Player 4: Emerald Green
+    /* 7. MULTI-PLAYER PIKUL FLOWER TOUCH EFFECT */
+    // จานสีดอกพิกุลสำหรับผู้เล่นแต่ละคนเพื่อไม่ให้สับสน
+    const PLAYER_FLOWER_THEMES = [
+      { petalStart: '#FFE79A', petalMid: '#D4AF37', petalEnd: '#8B1E1E', center: '#FFE066', core: '#8B1E1E' }, // คนที่ 1: ทอง-ทับทิม
+      { petalStart: '#D8F3DC', petalMid: '#52B788', petalEnd: '#1B4332', center: '#B7E4C7', core: '#081C15' }, // คนที่ 2: มรกตเขียว
+      { petalStart: '#CAF0F8', petalMid: '#0096C7', petalEnd: '#03045E', center: '#90E0EF', core: '#023E8A' }, // คนที่ 3: ไพลินน้ำเงิน
+      { petalStart: '#FFE5EC', petalMid: '#FB6F92', petalEnd: '#9B1D48', center: '#FFC2D1', core: '#67001E' }  // คนที่ 4: พลอยบานเย็น
     ];
 
-    function drawThaiPikulFlower(ctx, cx, cy, size, alpha, rot, palette = USER_PALETTES[0]) {
+    const thaiFlowerParticles = [];
+
+    function drawThaiPikulFlower(ctx, cx, cy, size, alpha, rot, themeIndex = 0) {
+      const theme = PLAYER_FLOWER_THEMES[themeIndex % PLAYER_FLOWER_THEMES.length];
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(rot);
@@ -1322,42 +1306,42 @@
         ctx.closePath();
 
         const grad = ctx.createLinearGradient(0, 0, 0, -size);
-        grad.addColorStop(0, '#FFFFFF');
-        grad.addColorStop(0.5, palette.primary);
-        grad.addColorStop(1, palette.secondary);
+        grad.addColorStop(0, theme.petalStart);
+        grad.addColorStop(0.5, theme.petalMid);
+        grad.addColorStop(1, theme.petalEnd);
         ctx.fillStyle = grad;
         ctx.fill();
-        ctx.strokeStyle = '#FFF099';
-        ctx.lineWidth = 1.2;
+        ctx.strokeStyle = theme.petalStart;
+        ctx.lineWidth = 1;
         ctx.stroke();
         ctx.restore();
       }
 
       ctx.beginPath();
       ctx.arc(0, 0, size * 0.3, 0, Math.PI * 2);
-      ctx.fillStyle = palette.center;
+      ctx.fillStyle = theme.center;
       ctx.fill();
-      ctx.strokeStyle = palette.primary;
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = theme.petalMid;
+      ctx.lineWidth = 1.2;
       ctx.stroke();
 
       ctx.beginPath();
       ctx.arc(0, 0, size * 0.14, 0, Math.PI * 2);
-      ctx.fillStyle = palette.secondary;
+      ctx.fillStyle = theme.core;
       ctx.fill();
 
       ctx.restore();
     }
 
-    function createFlowerTouch(x, y, paletteIdx = 0) {
+    function createFlowerTouch(x, y, playerIdx = 0) {
       thaiFlowerParticles.push({
         x, y,
+        playerIdx,
         size: 14,
-        maxSize: 42,
+        maxSize: 38,
         rot: Math.random() * Math.PI,
         rotSpeed: 0.05,
-        alpha: 1.0,
-        palette: USER_PALETTES[paletteIdx % USER_PALETTES.length]
+        alpha: 1.0
       });
     }
 
@@ -1373,7 +1357,7 @@
           continue;
         }
 
-        drawThaiPikulFlower(ctx, p.x, p.y, p.size, p.alpha, p.rot, p.palette);
+        drawThaiPikulFlower(ctx, p.x, p.y, p.size, p.alpha, p.rot, p.playerIdx);
       }
     }
 
@@ -1381,11 +1365,12 @@
       createFlowerTouch(e.clientX, e.clientY, 0);
     });
 
+    /* 8. JIGSAW PUZZLE SYSTEM (Multi-touch & Multi-hands Supported) */
     let currentLevelIdx = 0;
     let totalSnapped = 0;
     let puzzlePieces = [];
     let gameStartTime = 0;
-    let levelCompletedTriggered = false;
+    let isLevelTransitioning = false;
 
     const gameStage = document.getElementById('game-stage');
     const puzzleBoard = document.getElementById('puzzle-board');
@@ -1394,7 +1379,8 @@
     const minimapImg = document.getElementById('minimap-img');
 
     function initLevel(lvlIdx) {
-      currentLevelIdx = (typeof lvlIdx === 'number' && lvlIdx >= 0) ? lvlIdx : currentLevelIdx;
+      currentLevelIdx = (typeof lvlIdx === 'number') ? lvlIdx : currentLevelIdx;
+      isLevelTransitioning = false;
       const lvl = LEVELS[currentLevelIdx];
       levelTitle.textContent = lvl.title;
       levelSubtitle.textContent = lvl.subtitle;
@@ -1404,11 +1390,13 @@
       puzzlePieces.forEach(p => p.el.remove());
       puzzlePieces = [];
       totalSnapped = 0;
-      levelCompletedTriggered = false;
 
       const stageW = window.innerWidth;
       const stageH = window.innerHeight;
-      const boardW = Math.min(stageW * 0.52, 460);
+      
+      // ปรับขนาดกระดานให้พอเหมาะทั้ง มือถือ แท็บเล็ต โน้ตบุ๊ก
+      let boardW = Math.min(stageW * 0.55, 480);
+      if (stageW < 600) boardW = stageW * 0.75;
       const boardH = boardW * (2 / 3);
 
       puzzleBoard.style.width = `${boardW}px`;
@@ -1441,11 +1429,12 @@
           piece.style.backgroundSize = `${boardW}px ${boardH}px`;
           piece.style.backgroundPosition = `-${c * pieceW}px -${r * pieceH}px`;
 
-          const isLeft = Math.random() < 0.5;
+          // สุ่มตำแหน่งซ้ายขวาอย่างสมดุล ไม่ทับซ้อนกลางกระดาน
+          const isLeft = (pieceIndex % 2 === 0);
           const randomX = isLeft 
-            ? Math.random() * (stageW * 0.12) + 20 
-            : stageW - Math.random() * (stageW * 0.12) - pieceW - 20;
-          const randomY = Math.random() * (stageH - pieceH - 160) + 90;
+            ? Math.random() * Math.max(10, (stageW / 2 - boardW / 2 - pieceW - 15)) + 15
+            : (stageW / 2 + boardW / 2 + 15) + Math.random() * Math.max(10, (stageW / 2 - boardW / 2 - pieceW - 30));
+          const randomY = Math.random() * (stageH - pieceH - 180) + 90;
 
           piece.style.left = `${randomX}px`;
           piece.style.top = `${randomY}px`;
@@ -1461,7 +1450,8 @@
             targetX: targetScreenX,
             targetY: targetScreenY,
             isSnapped: false,
-            isHeld: false
+            heldByHandIndex: -1, // สำหรับ AR Lock ผู้เล่นคนนั้นๆ
+            isHeldByTouch: false
           };
 
           bindMouseTouchEvents(pieceObj);
@@ -1476,13 +1466,15 @@
       const dy = pieceObj.y - pieceObj.targetY;
       const dist = Math.hypot(dx, dy);
 
-      if (dist < 65) {
+      if (dist < 55) {
         pieceObj.x = pieceObj.targetX;
         pieceObj.y = pieceObj.targetY;
         pieceObj.el.style.left = `${pieceObj.x}px`;
         pieceObj.el.style.top = `${pieceObj.y}px`;
         pieceObj.el.classList.add('snapped');
         pieceObj.isSnapped = true;
+        pieceObj.heldByHandIndex = -1;
+        pieceObj.isHeldByTouch = false;
         totalSnapped++;
 
         userMoney += 10;
@@ -1491,9 +1483,9 @@
         AudioEngine.playSnap();
         createFlowerTouch(pieceObj.x + pieceObj.w / 2, pieceObj.y + pieceObj.h / 2, 0);
 
-        if (totalSnapped === puzzlePieces.length && !levelCompletedTriggered) {
-          levelCompletedTriggered = true;
-          setTimeout(levelCompleted, 400);
+        if (totalSnapped === puzzlePieces.length && !isLevelTransitioning) {
+          isLevelTransitioning = true;
+          setTimeout(levelCompleted, 500);
         }
       }
     }
@@ -1504,11 +1496,12 @@
       let startPieceX = 0, startPieceY = 0;
 
       const onPointerDown = (e) => {
-        if (pieceObj.isSnapped) return;
-        pieceObj.isHeld = true;
+        if (pieceObj.isSnapped || pieceObj.heldByHandIndex !== -1) return;
+        pieceObj.isHeldByTouch = true;
         el.classList.add('dragging');
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        const clientX = e.clientX;
+        const clientY = e.clientY;
         startPointerX = clientX;
         startPointerY = clientY;
         startPieceX = pieceObj.x;
@@ -1516,32 +1509,31 @@
 
         createFlowerTouch(clientX, clientY, 0);
 
+        const onPointerMove = (ev) => {
+          if (!pieceObj.isHeldByTouch) return;
+          pieceObj.x = startPieceX + (ev.clientX - startPointerX);
+          pieceObj.y = startPieceY + (ev.clientY - startPointerY);
+          el.style.left = `${pieceObj.x}px`;
+          el.style.top = `${pieceObj.y}px`;
+        };
+
+        const onPointerUp = () => {
+          if (!pieceObj.isHeldByTouch) return;
+          pieceObj.isHeldByTouch = false;
+          el.classList.remove('dragging');
+          checkSnap(pieceObj);
+          window.removeEventListener('pointermove', onPointerMove);
+          window.removeEventListener('pointerup', onPointerUp);
+        };
+
         window.addEventListener('pointermove', onPointerMove);
         window.addEventListener('pointerup', onPointerUp);
-      };
-
-      const onPointerMove = (e) => {
-        if (!pieceObj.isHeld) return;
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        pieceObj.x = startPieceX + (clientX - startPointerX);
-        pieceObj.y = startPieceY + (clientY - startPointerY);
-        el.style.left = `${pieceObj.x}px`;
-        el.style.top = `${pieceObj.y}px`;
-      };
-
-      const onPointerUp = () => {
-        if (!pieceObj.isHeld) return;
-        pieceObj.isHeld = false;
-        el.classList.remove('dragging');
-        checkSnap(pieceObj);
-        window.removeEventListener('pointermove', onPointerMove);
-        window.removeEventListener('pointerup', onPointerUp);
       };
 
       el.addEventListener('pointerdown', onPointerDown);
     }
 
+    /* 9. MODALS & LEVEL TRANSITIONS */
     const infoModal = document.getElementById('info-modal');
     const modalTitle = document.getElementById('modal-title');
     const modalDesc = document.getElementById('modal-desc');
@@ -1551,7 +1543,6 @@
     const victoryModal = document.getElementById('victory-modal');
     const victoryStats = document.getElementById('victory-stats');
     const restartGameBtn = document.getElementById('restart-game-btn');
-    const homeIndexBtn = document.getElementById('home-index-btn');
 
     function levelCompleted() {
       AudioEngine.playVictory();
@@ -1566,10 +1557,9 @@
       infoModal.classList.add('active');
     }
 
-    nextLevelBtn.addEventListener('click', () => {
-      if (totalSnapped < puzzlePieces.length) {
-        return; 
-      }
+    function advanceToNextLevel() {
+      if (totalSnapped < puzzlePieces.length) return;
+
       infoModal.classList.remove('active');
       if (currentLevelIdx < LEVELS.length - 1) {
         currentLevelIdx++;
@@ -1581,7 +1571,9 @@
         victoryStats.textContent = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที (ยอดเงินสะสม ${userMoney} สตางค์)`;
         victoryModal.classList.add('active');
       }
-    });
+    }
+
+    nextLevelBtn.addEventListener('click', advanceToNextLevel);
 
     restartGameBtn.addEventListener('click', () => {
       victoryModal.classList.remove('active');
@@ -1590,10 +1582,7 @@
       initLevel(0);
     });
 
-    homeIndexBtn.addEventListener('click', () => {
-      window.location.href = 'index.html';
-    });
-
+    /* 10. MEDIAPIPE MULTI-HAND & MULTI-PLAYER TRACKING */
     const videoElement = document.getElementById('webcam-video');
     const canvasElement = document.getElementById('ar-canvas');
     const frameCanvas = document.getElementById('frame-overlay');
@@ -1602,7 +1591,6 @@
 
     let poseResults = null;
     let handResults = null;
-    const arHeldPieces = {}; 
     let lastArClickTime = 0;
     let isGameRunning = false;
 
@@ -1612,28 +1600,30 @@
     pose.setOptions({
       modelComplexity: 1,
       smoothLandmarks: true,
-      minDetectionConfidence: 0.6,
-      minTrackingConfidence: 0.6
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
     });
     pose.onResults((results) => { poseResults = results; });
 
+    // รองรับ 4 มือสำหรับเล่นพร้อมกันหลายคน
     const hands = new Hands({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
     });
     hands.setOptions({
-      maxNumHands: 4, 
+      maxNumHands: 4,
       modelComplexity: 1,
-      minDetectionConfidence: 0.65,
-      minTrackingConfidence: 0.65
+      minDetectionConfidence: 0.6,
+      minTrackingConfidence: 0.6
     });
     hands.onResults((results) => { handResults = results; });
 
-    function triggerUniversalARClick(x, y) {
+    function triggerUniversalARClick(x, y, playerIdx = 0) {
       const now = Date.now();
-      if (now - lastArClickTime < 450) return;
+      if (now - lastArClickTime < 380) return;
 
-      createFlowerTouch(x, y, 1);
+      createFlowerTouch(x, y, playerIdx);
 
+      // ตรวจจับปุ่มเริ่มในกล้อง
       const promptBtn = document.getElementById('confirm-start-btn');
       if (promptBtn && promptBtn.offsetParent !== null) {
         const pRect = promptBtn.getBoundingClientRect();
@@ -1644,16 +1634,38 @@
         }
       }
 
-      const el = document.elementFromPoint(x, y);
-      if (el) {
-        const clickTarget = el.closest('button, .ar-touch-item, .btn-top, .btn-icon, .panel-close, .cat-tab, .gold-btn');
-        if (clickTarget) {
-          if (clickTarget.id === 'next-level-btn' && totalSnapped < puzzlePieces.length) {
-            return; 
-          }
-          clickTarget.click();
+      // ตรวจจับปุ่มไปด่านถัดไป
+      if (infoModal.classList.contains('active')) {
+        const nRect = nextLevelBtn.getBoundingClientRect();
+        if (x >= nRect.left && x <= nRect.right && y >= nRect.top && y <= nRect.bottom) {
+          advanceToNextLevel();
           lastArClickTime = now;
           return;
+        }
+      }
+
+      // ตรวจจับปุ่มหน้าจบสุดท้าย
+      if (victoryModal.classList.contains('active')) {
+        const rRect = restartGameBtn.getBoundingClientRect();
+        if (x >= rRect.left && x <= rRect.right && y >= rRect.top && y <= rRect.bottom) {
+          restartGameBtn.click();
+          lastArClickTime = now;
+          return;
+        }
+        const bRect = document.getElementById('back-index-btn').getBoundingClientRect();
+        if (x >= bRect.left && x <= bRect.right && y >= bRect.top && y <= bRect.bottom) {
+          window.location.href = 'index.html';
+          lastArClickTime = now;
+          return;
+        }
+      }
+
+      const el = document.elementFromPoint(x, y);
+      if (el) {
+        const clickTarget = el.closest('button, .ar-touch-item, .btn-top, .btn-icon, .panel-close, .cat-tab, .gold-btn, #back-index-btn');
+        if (clickTarget) {
+          clickTarget.click();
+          lastArClickTime = now;
         }
       }
     }
@@ -1673,8 +1685,8 @@
       canvasCtx.clearRect(0, 0, w, h);
       frameCtx.clearRect(0, 0, w, h);
 
+      // Render Shop Frame Image
       if (activeFrameKey !== 'none' && SHOP_FRAMES[activeFrameKey]) {
-        const sf = SHOP_FRAMES[activeFrameKey];
         if (loadedShopImages[activeFrameKey] && loadedShopImages[activeFrameKey].complete) {
           frameCtx.save();
           frameCtx.drawImage(loadedShopImages[activeFrameKey], 0, 0, w, h);
@@ -1682,6 +1694,7 @@
         }
       }
 
+      // AR Costume Fitting
       if (poseResults && poseResults.poseLandmarks) {
         const lm = poseResults.poseLandmarks;
         const leftShoulder = lm[11];
@@ -1713,42 +1726,42 @@
           }
 
           const accKey = currentSelection.accessories;
-          if (accKey !== 'none') {
+          if (accKey !== 'none' && loadedImages.accessories[accKey]?.complete) {
             const accImg = loadedImages.accessories[accKey];
-            if (accImg && accImg.complete) {
-              const accW = shoulderDist * 1.5;
-              const accH = accW;
-              canvasCtx.save();
-              canvasCtx.translate(midX, midY + 10);
-              canvasCtx.rotate(angle);
-              canvasCtx.drawImage(accImg, -accW / 2, -accH * 0.2, accW, accH);
-              canvasCtx.restore();
-            }
+            const accW = shoulderDist * 1.5;
+            const accH = accW;
+            canvasCtx.save();
+            canvasCtx.translate(midX, midY + 10);
+            canvasCtx.rotate(angle);
+            canvasCtx.drawImage(accImg, -accW / 2, -accH * 0.2, accW, accH);
+            canvasCtx.restore();
           }
 
           if (nose && nose.visibility > 0.4) {
             const hKey = currentSelection.hats;
-            if (hKey !== 'none') {
+            if (hKey !== 'none' && loadedImages.hats[hKey]?.complete) {
               const hImg = loadedImages.hats[hKey];
-              if (hImg && hImg.complete) {
-                const headX = (1 - nose.x) * w;
-                const headY = nose.y * h;
-                const hatW = shoulderDist * 1.2;
-                const hatH = hatW * (220 / 200);
+              const headX = (1 - nose.x) * w;
+              const headY = nose.y * h;
+              const hatW = shoulderDist * 1.2;
+              const hatH = hatW * (220 / 200);
 
-                canvasCtx.save();
-                canvasCtx.translate(headX, headY - hatH * 0.55);
-                canvasCtx.rotate(angle * 0.8);
-                canvasCtx.drawImage(hImg, -hatW / 2, -hatH * 0.45, hatW, hatH);
-                canvasCtx.restore();
-              }
+              canvasCtx.save();
+              canvasCtx.translate(headX, headY - hatH * 0.55);
+              canvasCtx.rotate(angle * 0.8);
+              canvasCtx.drawImage(hImg, -hatW / 2, -hatH * 0.45, hatW, hatH);
+              canvasCtx.restore();
             }
           }
         }
       }
 
+      // AR Multi-Hands Interaction (ห้ามแย่งชิ้นส่วนกันเด็ดขาด)
       if (handResults && handResults.multiHandLandmarks) {
-        handResults.multiHandLandmarks.forEach((landmarks, handIndex) => {
+        const activeHandIndices = new Set();
+
+        handResults.multiHandLandmarks.forEach((landmarks, handIdx) => {
+          activeHandIndices.add(handIdx);
           const indexTip = landmarks[8];
           const thumbTip = landmarks[4];
 
@@ -1757,42 +1770,71 @@
           const tx = (1 - thumbTip.x) * w;
           const ty = thumbTip.y * h;
 
-          const palette = USER_PALETTES[handIndex % USER_PALETTES.length];
-          drawThaiPikulFlower(canvasCtx, ix, iy, 16, 0.95, 0, palette);
+          const pinchX = (ix + tx) / 2;
+          const pinchY = (iy + ty) / 2;
+
+          // แสดงดอกไม้ประจำผู้เล่นแต่ละคน
+          drawThaiPikulFlower(canvasCtx, ix, iy, 15, 0.95, 0, handIdx);
 
           const pinchDist = Math.hypot(ix - tx, iy - ty);
-          const isPinching = pinchDist < 45;
+          const isPinching = pinchDist < 48;
 
+          // Universal AR Button Click
           if (isPinching) {
-            triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2);
+            triggerUniversalARClick(pinchX, pinchY, handIdx);
           }
 
-          if (isGameRunning) {
+          // การหยิบจับจิ๊กซอว์แบบแยกมือ
+          if (isGameRunning && !isLevelTransitioning) {
+            let heldPiece = puzzlePieces.find(p => p.heldByHandIndex === handIdx);
+
             if (isPinching) {
-              if (!arHeldPieces[handIndex]) {
+              if (!heldPiece) {
+                // หาชิ้นที่ยังไม่มีใครถือ และยังไม่ snapped
                 for (const p of puzzlePieces) {
-                  const isAlreadyHeld = Object.values(arHeldPieces).includes(p);
-                  if (!p.isSnapped && !isAlreadyHeld && ix >= p.x && ix <= p.x + p.w && iy >= p.y && iy <= p.y + p.h) {
-                    arHeldPieces[handIndex] = p;
-                    p.el.classList.add('dragging');
-                    break;
+                  if (!p.isSnapped && p.heldByHandIndex === -1 && !p.isHeldByTouch) {
+                    if (pinchX >= p.x && pinchX <= p.x + p.w && pinchY >= p.y && pinchY <= p.y + p.h) {
+                      p.heldByHandIndex = handIdx;
+                      p.el.classList.add('dragging');
+                      heldPiece = p;
+                      break;
+                    }
                   }
                 }
-              } else {
-                const heldP = arHeldPieces[handIndex];
-                heldP.x = ix - heldP.w / 2;
-                heldP.y = iy - heldP.h / 2;
-                heldP.el.style.left = `${heldP.x}px`;
-                heldP.el.style.top = `${heldP.y}px`;
+              }
+
+              if (heldPiece) {
+                heldPiece.x = pinchX - heldPiece.w / 2;
+                heldPiece.y = pinchY - heldPiece.h / 2;
+                heldPiece.el.style.left = `${heldPiece.x}px`;
+                heldPiece.el.style.top = `${heldPiece.y}px`;
               }
             } else {
-              if (arHeldPieces[handIndex]) {
-                const heldP = arHeldPieces[handIndex];
-                heldP.el.classList.remove('dragging');
-                checkSnap(heldP);
-                delete arHeldPieces[handIndex];
+              // ปล่อยชิ้นส่วน
+              if (heldPiece) {
+                heldPiece.el.classList.remove('dragging');
+                heldPiece.heldByHandIndex = -1;
+                checkSnap(heldPiece);
               }
             }
+          }
+        });
+
+        // คืนสถานะถ้ามือนั้นหลุดออกจากเฟรมกล้อง
+        puzzlePieces.forEach(p => {
+          if (p.heldByHandIndex !== -1 && !activeHandIndices.has(p.heldByHandIndex)) {
+            p.el.classList.remove('dragging');
+            p.heldByHandIndex = -1;
+            checkSnap(p);
+          }
+        });
+      } else {
+        // ไม่มีมือในกล้องเลย
+        puzzlePieces.forEach(p => {
+          if (p.heldByHandIndex !== -1) {
+            p.el.classList.remove('dragging');
+            p.heldByHandIndex = -1;
+            checkSnap(p);
           }
         });
       }
@@ -1801,6 +1843,7 @@
       requestAnimationFrame(onFrame);
     }
 
+    /* 11. CAMERA START & FLOW */
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
     const startMainCard = document.getElementById('start-main-card');
@@ -1827,7 +1870,7 @@
         camera.start();
         requestAnimationFrame(onFrame);
       } catch (err) {
-        console.warn('Camera stream permission pending or unavailable:', err);
+        console.warn('กล้องยังไม่พร้อมใช้งานหรือรอการอนุญาต:', err);
       }
     }
 
@@ -1855,14 +1898,15 @@
       initLevel(0);
     });
 
+    // ล็อกป้องกันการรีเซ็ตด่านกะทันหัน ปรับเฉพาะเมื่อเปลี่ยน Orientation ชัดเจน
     let lastKnownWinWidth = window.innerWidth;
     let lastKnownWinHeight = window.innerHeight;
 
     window.addEventListener('resize', () => {
-      if (Math.abs(window.innerWidth - lastKnownWinWidth) > 60 || Math.abs(window.innerHeight - lastKnownWinHeight) > 60) {
+      if (Math.abs(window.innerWidth - lastKnownWinWidth) > 100 || Math.abs(window.innerHeight - lastKnownWinHeight) > 100) {
         lastKnownWinWidth = window.innerWidth;
         lastKnownWinHeight = window.innerHeight;
-        if (isGameRunning) {
+        if (isGameRunning && !isLevelTransitioning) {
           initLevel(currentLevelIdx);
         }
       }
