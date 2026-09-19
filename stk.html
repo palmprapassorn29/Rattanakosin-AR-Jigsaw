@@ -945,7 +945,7 @@
         <h2 id="modal-title">เฉลยสตอรี่เรื่องราวประวัติศาสตร์</h2>
         <div class="reward-banner">ได้รับรางวัล: 💵 +๑๐๐ สตางค์</div>
         <p id="modal-desc"></p>
-        <button class="gold-btn interactive" id="next-level-btn">สำเร็จภารกิจประจำด่าน ➔</button>
+        <button class="gold-btn interactive" id="next-level-btn">ท่องมิติสู่ด่านถัดไป ➔</button>
       </div>
       <div class="modal-jigsaw-right">
         <img id="modal-history-img" src="" alt="Completed Puzzle">
@@ -962,7 +962,7 @@
       <p id="victory-stats" style="text-align:center; margin-bottom:12px; font-weight:bold;"></p>
       <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้งไหมเจ้าคะ (Play Again)</button>
       <button class="gold-btn interactive" id="back-index-btn" style="margin-top: 8px; background: linear-gradient(180deg, #2A3B53 0%, #101F33 100%); color: var(--gold-light); border: 1.5px solid var(--gold);">
-        🏠 กลับหน้าหลัก (index.html)
+        🏠 กลับหน้าหลัก (stk.html)
       </button>
     </div>
   </div>
@@ -996,7 +996,7 @@
     }
 
     /* =========================================================
-       1. HISTORICAL STAGES (จำกัดเฉพาะด่านที่ ๑ ตามที่กำหนด ไม่วนไปด่าน 2-5)
+       1. HISTORICAL STAGES (5 Historical Levels - 4 Pieces: 2x2)
        ========================================================= */
     const LEVELS = [
       {
@@ -1006,6 +1006,38 @@
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_80e9aj80e9aj80e9.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (ร.๑) ทรงสถาปนากรุงรัตนโกสินทร์ขึ้นเมื่อ พ.ศ. ๒๓๒๕ ทรงโปรดเกล้าฯ ให้สร้างพระบรมมหาราชวังและวัดพระศรีรัตนศาสดาราม (วัดพระแก้ว) พร้อมทั้งสร้างเสาชิงช้าและขุดคลองรอบกรุงเพื่อเป็นศูนย์กลางการค้าและศูนย์รวมจิตใจของราษฎร"
+      },
+      {
+        id: 2,
+        title: "ด่านที่ ๒ : การค้าสำเภาและศิลปกรรมรุ่งเรือง",
+        subtitle: "ยุคพาณิชย์นาวีรุ่งโรจน์ (รัชกาลที่ ๓)",
+        rows: 2, cols: 2,
+        image: "Gemini_Generated_Image_dcahnzdcahnzdcah.jpg",
+        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
+      },
+      {
+        id: 3,
+        title: "ด่านที่ ๓ : รุ่งอรุณแห่งดาราศาสตร์สากล",
+        subtitle: "การเปิดรับวิทยาการสมัยใหม่ (รัชกาลที่ ๔)",
+        rows: 2, cols: 2,
+        image: "Gemini_Generated_Image_f2p7i9f2p7i9f2p7.jpg",
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
+      },
+      {
+        id: 4,
+        title: "ด่านที่ ๔ : การปฏิรูปสยามสู่สากลและเลิกทาส",
+        subtitle: "ยุคศิวิไลซ์และความทันสมัย (รัชกาลที่ ๕ - ๗)",
+        rows: 2, cols: 2,
+        image: "Gemini_Generated_Image_jjyx97jjyx97jjyx.jpg",
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจุลจอมเกล้าอยู่หัว (ร.๕) ทรงประกาศเลิกทาสอย่างสันติวิธี ให้คนไทยมีอิสรภาพ ทรงริเริ่มสร้างทางรถไฟสายแรก การไปรษณีย์โทรเลข ไฟฟ้า และก่อสร้างพระที่นั่งอนันตสมาคม นำพาสยามก้าวสู่ความเจริญทัดเทียมนานาอารยประเทศ"
+      },
+      {
+        id: 5,
+        title: "ด่านที่ ๕ : พระบารมีปกเกล้าและเกษตรทฤษฎีใหม่",
+        subtitle: "สืบสานศาสตร์พระราชา (รัชกาลที่ ๙)",
+        rows: 2, cols: 2,
+        image: "Gemini_Generated_Image_s6u0xls6u0xls6u0.jpg",
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร ทรงอุทิศพระวรกายเพื่อปวงชน พระราชทานโครงการพระราชดำริกว่า ๔,๐๐๐ โครงการ อาทิ ฝนหลวง กังหันน้ำชัยพัฒนา และหลักปรัชญาเศรษฐกิจพอเพียง เพื่อความอยู่ดีกินดีอย่างยั่งยืน"
       }
     ];
 
@@ -1407,10 +1439,10 @@
        7. GOLDEN THAI PIKUL FLOWER TOUCH EFFECT (ดอกพิกุลทอง 8 กลีบ)
        ========================================================= */
     const PLAYER_COLORS = [
-      '#FFD166', // มือที่ 1 -> ทองอร่าม
-      '#7DD3FC', // มือที่ 2 -> เพทายฟ้า
-      '#C4B5FD', // มือที่ 3 -> กลีบบัวม่วง
-      '#86EFAC'  // มือที่ 4 -> มรกตเขียว
+      '#FFD166', // ทองอร่าม
+      '#7DD3FC', // เพทายฟ้า
+      '#C4B5FD', // กลีบบัวม่วง
+      '#86EFAC'  // มรกตเขียว
     ];
 
     const thaiFlowerParticles = [];
@@ -1495,7 +1527,7 @@
     });
 
     /* =========================================================
-       8. JIGSAW PUZZLE SYSTEM (ต่อติดง่าย + ดูดเข้าล็อกอัตโนมัติ)
+       8. JIGSAW PUZZLE SYSTEM (ต่อติดง่าย + แม่เหล็กดูดล็อกอัตโนมัติ)
        ========================================================= */
     let totalSnapped = 0;
     let puzzlePieces = [];
@@ -1564,7 +1596,7 @@
     }
 
     function initLevel(lvlIdx) {
-      currentLevelIdx = 0; // ล็อกให้เล่นแค่ด่านที่ ๑ เสมอ
+      currentLevelIdx = (typeof lvlIdx === 'number' && lvlIdx >= 0 && lvlIdx < LEVELS.length) ? lvlIdx : currentLevelIdx;
       
       levelCompletionTriggered = false;
       levelTransitionLocked = false;
@@ -1652,7 +1684,7 @@
       }
     }
 
-    // ขยายระยะ Snap เป็น 48% เพื่อให้ต่อติดง่ายและแม่นยำยิ่งขึ้น
+    // เพิ่มระยะ Snap เป็น 48% เพื่อให้ต่อติดผ่านด่านได้ง่ายยิ่งขึ้น
     function checkSnap(pieceObj) {
       if (pieceObj.isSnapped) return;
       const dx = pieceObj.x - pieceObj.targetX;
@@ -1747,7 +1779,7 @@
     }
 
     /* =========================================================
-       9. MODAL & LEVEL TRANSITIONS (ล็อกให้จบด่านที่ ๑ แล้วแสดงผลชัยชนะทันที)
+       9. MODAL & LEVEL TRANSITIONS
        ========================================================= */
     const infoModal = document.getElementById('info-modal');
     const modalTitle = document.getElementById('modal-title');
@@ -1780,10 +1812,9 @@
       }
 
       const currentLevel = LEVELS[currentLevelIdx];
-      modalTitle.textContent = `${currentLevel.title} (สำเร็จบริบูรณ์!)`;
+      modalTitle.textContent = `${currentLevel.title} (สำเร็จ!)`;
       modalDesc.textContent = currentLevel.history;
       modalHistoryImg.src = currentLevel.image;
-      nextLevelBtn.textContent = 'ไปยังสรุปผลงาน ➔';
       infoModal.classList.add('active');
     }
 
@@ -1794,14 +1825,20 @@
       if (!canLevelAction()) return;
 
       levelTransitionLocked = true;
-      infoModal.classList.remove('active');
-      gameState = GAME_STATE.VICTORY;
-      userMoney += 300;
-      updateMoneyUI();
 
-      const totalSecs = Math.floor((Date.now() - gameStartTime) / 1000);
-      victoryStats.textContent = `ออเจ้าผ่านภารกิจท่องมิติเวลาเรียบร้อยแล้ว ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที (ยอดเงินสะสม ${userMoney} สตางค์)`;
-      victoryModal.classList.add('active');
+      if (currentLevelIdx < LEVELS.length - 1) {
+        currentLevelIdx++;
+        infoModal.classList.remove('active');
+        initLevel(currentLevelIdx);
+      } else {
+        infoModal.classList.remove('active');
+        gameState = GAME_STATE.VICTORY;
+        userMoney += 300;
+        updateMoneyUI();
+        const totalSecs = Math.floor((Date.now() - gameStartTime) / 1000);
+        victoryStats.textContent = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที (ยอดเงินสะสม ${userMoney} สตางค์)`;
+        victoryModal.classList.add('active');
+      }
     }
 
     nextLevelBtn.addEventListener('click', goToNextLevel);
@@ -1810,11 +1847,12 @@
       if (!canLevelAction()) return;
       victoryModal.classList.remove('active');
       gameStartTime = Date.now();
+      currentLevelIdx = 0;
       initLevel(0);
     });
 
     backIndexBtn.addEventListener('click', () => {
-      window.location.href = 'index.html';
+      window.location.href = 'stk.html';
     });
 
     /* =========================================================
@@ -1896,7 +1934,7 @@
     });
     hands.onResults((results) => { handResults = results; });
 
-    // วาดเคอร์เซอร์จับนิ้ว AR เป็น "ดอกพิกุลทอง" 8 กลีบหมุนวนสวยงาม
+    // วาดเคอร์เซอร์จับนิ้ว AR เป็น "ดอกพิกุลทอง" ๘ กลีบสวยงามสมูท
     function drawHandCursor(ctx, x, y, isPinching, color) {
       ctx.save();
       const flowerSize = isPinching ? 24 : 16;
