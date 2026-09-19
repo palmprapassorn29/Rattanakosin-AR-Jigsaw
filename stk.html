@@ -635,7 +635,7 @@
       z-index: 8 !important;
     }
 
-    /* Modals */
+    /* Modals (แก้ไขแล้ว - ป้องกันการเผลอกดโดนปุ่มล่องหน) */
     .modal-overlay {
       position: absolute;
       top: 0;
@@ -649,12 +649,14 @@
       align-items: center;
       z-index: 100;
       opacity: 0;
+      visibility: hidden; /* <--- เพิ่มตัวนี้เพื่อซ่อนปุ่มอย่างสมบูรณ์ */
       pointer-events: none;
-      transition: opacity 0.35s ease;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
     }
 
     .modal-overlay.active {
       opacity: 1;
+      visibility: visible; /* <--- ให้แสดงผลและกดได้ตอน Active เท่านั้น */
       pointer-events: auto;
     }
 
@@ -955,8 +957,9 @@
       <div class="reward-banner" style="margin-bottom:8px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ สตางค์</div>
       <p id="victory-stats" style="text-align:center; margin-bottom:12px; font-weight:bold;"></p>
       <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้งไหมเจ้าคะ (Play Again)</button>
+      <!-- แก้ไขลิงก์เป็น stk.html ตามไฟล์หน้าเว็บปัจจุบัน -->
       <button class="gold-btn interactive" id="back-index-btn" style="margin-top: 8px; background: linear-gradient(180deg, #2A3B53 0%, #101F33 100%); color: var(--gold-light); border: 1.5px solid var(--gold);">
-        🏠 กลับหน้าหลัก (index.html)
+        🏠 กลับหน้าหลัก (stk.html)
       </button>
     </div>
   </div>
@@ -1042,7 +1045,7 @@
     ];
 
     /* =========================================================
-       2. AR COSTUME & ITEM ASSETS (ตัด SVG ออกบางส่วนในโค้ดตัวอย่างเพื่อให้สั้นกระชับ - ใช้ข้อมูลเดิมครบถ้วน 100%)
+       2. AR COSTUME & ITEM ASSETS
        ========================================================= */
     const ASSETS = {
       clothes: {
@@ -1857,7 +1860,7 @@
     });
 
     backIndexBtn.addEventListener('click', () => {
-      window.location.href = 'index.html';
+      window.location.href = 'stk.html'; // <--- เปลี่ยนให้เด้งกลับหน้าเดิมที่ถูกต้อง
     });
 
     /* =========================================================
@@ -1888,6 +1891,12 @@
       const candidates = document.elementsFromPoint(x, y);
       for (const el of candidates) {
         if (!el) continue;
+
+        // <--- ส่วนสำคัญ: ป้องกัน AR Raycast กดปุ่มใน Modal ที่ซ่อนอยู่ --->
+        const modal = el.closest('.modal-overlay');
+        if (modal && !modal.classList.contains('active')) {
+          continue; 
+        }
 
         if (el.matches('#next-level-btn')) {
           if (gameState === GAME_STATE.LEVEL_COMPLETE) {
