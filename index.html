@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>รัตนโกสินทร์ AR Jigsaw: ท่องมิติเวลาร้อยเรียงประวัติศาสตร์</title>
 
   <!-- Google Fonts Thai -->
@@ -24,7 +24,7 @@
       --crimson-dark: #5A0F0F;
       --ivory: #FFF8DC;
       --navy: #0A192F;
-      --navy-glass: rgba(10, 25, 47, 0.92);
+      --navy-glass: rgba(10, 25, 47, 0.94);
       --font-title: 'Charm', cursive, serif;
       --font-body: 'Sarabun', sans-serif;
     }
@@ -36,7 +36,6 @@
       user-select: none;
       -webkit-user-select: none;
       touch-action: none;
-      -webkit-tap-highlight-color: transparent;
     }
 
     body, html {
@@ -46,10 +45,9 @@
       background-color: var(--navy);
       font-family: var(--font-body);
       color: var(--ivory);
-      position: fixed;
     }
 
-    /* AR Viewport */
+    /* Fullscreen AR Viewport */
     #ar-container {
       position: absolute;
       top: 0;
@@ -77,7 +75,7 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 5;
+      z-index: 105; /* ให้พิกุลทอง AR อยู่เหนือ Modal และหน้าต่างเกม */
     }
 
     #game-border-frame {
@@ -120,9 +118,16 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 16px;
-      background: radial-gradient(circle at 50% 40%, rgba(20,30,55,0.85) 0%, rgba(10,15,25,0.98) 100%),
-                  url('bgratta.png') center/cover no-repeat;
+      padding: 20px;
+      background-image: 
+        linear-gradient(180deg, rgba(10, 25, 47, 0.2) 0%, rgba(10, 25, 47, 0.4) 50%, rgba(10, 15, 25, 0.92) 100%),
+        url('Gemini_Generated_Image_rnecb1rnecb1rnec.jpg'),
+        url('Gemini_Generated_Image_89ya1c89ya1c89ya.png'),
+        url('bg-rattanakosin.jpg'),
+        radial-gradient(circle at 50% 30%, #ffd97d 0%, #b85d19 40%, #4a150c 75%, #0d060c 100%);
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
       transition: opacity 0.5s ease;
     }
 
@@ -133,46 +138,72 @@
 
     .start-card {
       position: relative;
-      background: linear-gradient(145deg, rgba(20, 14, 10, 0.95) 0%, rgba(10, 25, 47, 0.96) 100%);
+      background: linear-gradient(145deg, rgba(20, 12, 8, 0.95) 0%, rgba(10, 25, 47, 0.96) 100%);
       border: 2px solid var(--gold);
-      border-radius: 28px;
-      padding: 28px 24px;
-      max-width: 580px;
+      border-radius: 32px;
+      padding: 38px 42px;
+      max-width: 660px;
       width: 92%;
-      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.4);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(212, 175, 55, 0.45);
       backdrop-filter: blur(16px);
       display: flex;
       flex-direction: column;
       align-items: center;
       pointer-events: auto;
+      animation: pulseGlow 4s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 25px rgba(212, 175, 55, 0.3); }
+      100% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(255, 240, 153, 0.7); }
+    }
+
+    .start-card::before {
+      content: '༺ ༻';
+      position: absolute;
+      top: -16px;
+      font-size: 24px;
+      color: var(--gold);
+      text-shadow: 0 0 10px var(--gold-glow);
+    }
+
+    .start-card::after {
+      content: '❖';
+      position: absolute;
+      bottom: 12px;
+      font-size: 16px;
+      color: var(--gold);
+      opacity: 0.7;
     }
 
     .badge-sub {
       display: inline-block;
       border: 1px solid var(--gold);
       background: rgba(139, 30, 30, 0.85);
-      padding: 3px 14px;
-      border-radius: 16px;
-      font-size: 13px;
+      padding: 4px 20px;
+      border-radius: 20px;
+      font-size: 14px;
       color: var(--gold-light);
-      margin-bottom: 10px;
+      margin-bottom: 14px;
+      letter-spacing: 1px;
     }
 
     #start-screen h1 {
       font-family: var(--font-title);
-      font-size: clamp(26px, 5vw, 36px);
+      font-size: 36px;
       color: var(--gold-light);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       background: linear-gradient(180deg, #FFF099 20%, #D4AF37 80%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
     }
 
     #start-screen p {
-      font-size: clamp(13px, 3.5vw, 15px);
-      line-height: 1.5;
+      font-size: 15.5px;
+      line-height: 1.65;
       color: var(--ivory);
-      margin-bottom: 22px;
+      margin-bottom: 26px;
       font-weight: 300;
     }
 
@@ -180,21 +211,22 @@
       background: linear-gradient(180deg, #FFE79A 0%, #D4AF37 50%, #996515 100%);
       color: #381A00;
       font-family: var(--font-title);
-      font-size: clamp(17px, 4vw, 22px);
+      font-size: 22px;
       font-weight: 700;
       border: 1.5px solid #FFF8DC;
       border-radius: 40px;
-      padding: 12px 28px;
+      padding: 14px 44px;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.6), 0 0 25px rgba(212, 175, 55, 0.6);
-      transition: transform 0.2s ease;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.6), 0 0 30px rgba(212, 175, 55, 0.7);
+      transition: all 0.25s ease;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
-    .gold-btn-start:active {
-      transform: scale(0.97);
+    .gold-btn-start:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 35px rgba(255, 240, 153, 0.95);
     }
 
     /* Live Camera Ready Prompt */
@@ -208,32 +240,26 @@
       text-align: center;
       pointer-events: auto;
       width: 90%;
-      max-width: 440px;
+      max-width: 500px;
     }
 
     .prompt-box {
       background: var(--navy-glass);
       border: 2px solid var(--gold);
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 25px rgba(212, 175, 55, 0.5);
+      border-radius: 25px;
+      padding: 24px 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 30px rgba(212, 175, 55, 0.5);
       backdrop-filter: blur(12px);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
     .prompt-box h2 {
       font-family: var(--font-title);
-      font-size: 22px;
+      font-size: 26px;
       color: var(--gold-light);
-    }
-
-    .prompt-box p {
-      font-size: 13px;
-      line-height: 1.4;
-      color: var(--ivory);
     }
 
     /* UI Overlay */
@@ -258,134 +284,141 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 14px;
-      background: linear-gradient(180deg, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.5) 75%, transparent 100%);
-      gap: 8px;
+      padding: 10px 16px;
+      background: linear-gradient(180deg, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.4) 70%, transparent 100%);
+      gap: 10px;
     }
 
     .title-group h1 {
       font-family: var(--font-title);
-      font-size: clamp(16px, 3.5vw, 22px);
+      font-size: clamp(16px, 2.5vw, 24px);
       color: var(--gold-light);
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 50vw;
     }
 
     .title-group p {
-      font-size: clamp(10px, 2.5vw, 12.5px);
+      font-size: clamp(11px, 1.6vw, 13px);
       color: var(--ivory);
       opacity: 0.9;
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 50vw;
     }
 
     .top-controls {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .money-pill {
       background: rgba(139, 30, 30, 0.85);
-      border: 1.2px solid var(--gold);
-      border-radius: 16px;
-      padding: 4px 10px;
+      border: 1.5px solid var(--gold);
+      border-radius: 20px;
+      padding: 5px 12px;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       font-weight: 700;
       color: var(--gold-light);
-      font-size: 13px;
+      font-size: clamp(12px, 1.8vw, 15px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      white-space: nowrap;
+    }
+
+    .money-pill span {
+      font-family: var(--font-title);
+      font-size: clamp(14px, 2vw, 18px);
     }
 
     .btn-top {
       background: var(--navy-glass);
-      border: 1.2px solid var(--gold);
+      border: 1.5px solid var(--gold);
       color: var(--gold-light);
-      padding: 6px 10px;
-      border-radius: 16px;
+      padding: 6px 12px;
+      border-radius: 20px;
       font-family: var(--font-body);
-      font-size: 12px;
+      font-size: clamp(11px, 1.6vw, 13px);
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 4px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      transition: all 0.2s ease;
       white-space: nowrap;
     }
 
-    .btn-top:active, .btn-top.active {
+    .btn-top:hover, .btn-top.active {
       background: var(--crimson);
+      box-shadow: 0 0 12px var(--gold);
     }
 
     .btn-icon {
       background: var(--navy-glass);
-      border: 1.2px solid var(--gold);
+      border: 1.5px solid var(--gold);
       color: var(--gold-light);
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 15px;
+      font-size: 16px;
       cursor: pointer;
       flex-shrink: 0;
     }
 
-    /* Thumbnail Mini-map */
+    /* Thumbnail Mini-map (Responsive) */
     #minimap-wrapper {
       position: absolute;
-      top: 64px;
+      top: 65px;
       right: 12px;
       background: var(--navy-glass);
-      border: 1.5px solid var(--gold);
-      border-radius: 10px;
-      padding: 6px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      padding: 6px 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.7);
       text-align: center;
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(8px);
       z-index: 15;
     }
 
     #minimap-wrapper h4 {
-      font-size: 11px;
+      font-size: clamp(11px, 1.5vw, 13px);
       color: var(--gold-light);
       margin-bottom: 4px;
       font-family: var(--font-title);
     }
 
     #minimap-img {
-      width: clamp(90px, 20vw, 150px);
-      height: clamp(60px, 14vw, 100px);
+      width: clamp(110px, 18vw, 180px);
+      height: auto;
+      aspect-ratio: 3/2;
       object-fit: cover;
       border-radius: 6px;
-      border: 1px solid rgba(212, 175, 55, 0.7);
+      border: 1.5px solid rgba(212, 175, 55, 0.7);
       display: block;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
 
     /* Dressing Sidebar */
     #dressing-panel {
       position: absolute;
-      top: 60px;
-      left: 10px;
-      width: min(280px, 86vw);
-      max-height: calc(100% - 80px);
+      top: 65px;
+      left: 12px;
+      width: clamp(210px, 32vw, 260px);
+      max-height: calc(100% - 85px);
       background: var(--navy-glass);
       border: 2px solid var(--gold);
-      border-radius: 18px;
-      padding: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.85);
+      border-radius: 20px;
+      padding: 12px 10px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 20px rgba(212, 175, 55, 0.3);
       backdrop-filter: blur(12px);
-      transform: translateX(-120%);
-      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
-      z-index: 35;
+      transform: translateX(-130%);
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 25;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     #dressing-panel.open {
@@ -395,19 +428,19 @@
     /* Shop Panel */
     #shop-panel {
       position: absolute;
-      bottom: 12px;
+      bottom: 15px;
       left: 50%;
-      transform: translateX(-50%) translateY(130%);
+      transform: translateX(-50%) translateY(125%);
       background: var(--navy-glass);
       border: 2px solid var(--gold);
-      border-radius: 18px;
-      padding: 12px 14px;
+      border-radius: 20px;
+      padding: 12px 16px;
       width: 95%;
-      max-width: 780px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.85);
+      max-width: 860px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 20px rgba(212, 175, 55, 0.3);
       backdrop-filter: blur(12px);
-      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
-      z-index: 35;
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 25;
     }
 
     #shop-panel.open {
@@ -420,12 +453,12 @@
       align-items: center;
       margin-bottom: 6px;
       border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-      padding-bottom: 4px;
+      padding-bottom: 5px;
     }
 
     .panel-header h3 {
       font-family: var(--font-title);
-      font-size: 15px;
+      font-size: clamp(14px, 2vw, 17px);
       color: var(--gold-light);
     }
 
@@ -433,29 +466,31 @@
       background: transparent;
       border: none;
       color: var(--ivory);
-      font-size: 16px;
+      font-size: 18px;
       cursor: pointer;
-      padding: 4px;
     }
 
     .left-cat-tabs {
       display: flex;
+      flex-direction: row;
       gap: 4px;
       margin-bottom: 8px;
       overflow-x: auto;
       scrollbar-width: none;
+      touch-action: pan-x;
     }
 
     .cat-tab {
       background: transparent;
       border: 1px solid rgba(212, 175, 55, 0.4);
       color: var(--ivory);
-      font-size: 11px;
+      font-size: 12px;
       font-family: var(--font-title);
-      padding: 4px 8px;
+      padding: 3px 7px;
       cursor: pointer;
       border-radius: 8px;
       white-space: nowrap;
+      transition: all 0.2s;
     }
 
     .cat-tab.active {
@@ -470,20 +505,26 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 6px;
       overflow-y: auto;
-      max-height: calc(100vh - 180px);
-      padding-right: 2px;
+      max-height: calc(100vh - 190px);
+      padding-right: 3px;
+      scrollbar-width: thin;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
     }
 
     .horizontal-item-grid {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       overflow-x: auto;
-      padding-bottom: 4px;
+      padding: 4px 2px 8px 2px;
+      scrollbar-width: thin;
+      touch-action: pan-x;
+      -webkit-overflow-scrolling: touch;
     }
 
     .ar-touch-item {
       background: rgba(255, 255, 255, 0.08);
-      border: 1.2px solid rgba(212, 175, 55, 0.4);
+      border: 1.5px solid rgba(212, 175, 55, 0.4);
       border-radius: 10px;
       display: flex;
       flex-direction: column;
@@ -491,46 +532,52 @@
       justify-content: center;
       cursor: pointer;
       padding: 5px;
-      transition: transform 0.1s ease;
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
       position: relative;
     }
 
     .vertical-item-grid .ar-touch-item {
-      height: 80px;
+      height: 85px;
     }
 
     .horizontal-item-grid .ar-touch-item {
       flex: 0 0 auto;
-      width: 90px;
-      height: 95px;
+      width: 95px;
+      height: 100px;
     }
 
     .ar-touch-item.active {
       border-color: var(--gold-glow);
       background: rgba(139, 30, 30, 0.75);
       box-shadow: 0 0 10px var(--gold);
+      transform: scale(1.03);
     }
 
     .ar-touch-item.none-item {
-      font-size: 22px;
+      font-size: 24px;
       color: #FF4D4D;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     .ar-touch-item.none-item span {
       margin-top: 4px;
       font-size: 11px;
       color: #FFF;
+      font-family: var(--font-body);
     }
 
     .ar-touch-item img {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       object-fit: contain;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
       pointer-events: none;
     }
 
     .ar-touch-item span {
-      font-size: 9.5px;
+      font-size: 10px;
       color: var(--ivory);
       text-align: center;
       white-space: nowrap;
@@ -544,7 +591,7 @@
       font-size: 10px;
       color: var(--gold-light);
       font-weight: bold;
-      margin-top: 1px;
+      margin-top: 2px;
       pointer-events: none;
     }
 
@@ -564,10 +611,10 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      border: 2px dashed rgba(212, 175, 55, 0.85);
+      border: 2.5px dashed rgba(212, 175, 55, 0.75);
       background: rgba(10, 25, 47, 0.55);
-      box-shadow: 0 0 25px rgba(0,0,0,0.8);
-      border-radius: 10px;
+      box-shadow: 0 0 35px rgba(0,0,0,0.75);
+      border-radius: 12px;
     }
 
     .puzzle-slot {
@@ -579,24 +626,26 @@
       position: absolute;
       cursor: grab;
       border-radius: 6px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-      border: 1.5px solid rgba(212, 175, 55, 0.9);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      border: 2px solid rgba(212, 175, 55, 0.85);
       touch-action: none;
       pointer-events: auto;
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
       background-repeat: no-repeat;
     }
 
     .puzzle-piece.dragging {
       cursor: grabbing;
-      transform: scale(1.08);
-      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.9);
-      z-index: 1000 !important;
+      transform: scale(1.06);
+      box-shadow: 0 12px 28px rgba(212, 175, 55, 0.9);
+      z-index: 95 !important;
     }
 
     .puzzle-piece.snapped {
       pointer-events: none;
       border: none;
       box-shadow: none;
+      z-index: 8 !important;
     }
 
     /* Modals Responsive */
@@ -607,14 +656,14 @@
       width: 100%;
       height: 100%;
       background: rgba(5, 12, 24, 0.9);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 150;
+      z-index: 100;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.35s ease;
       padding: 16px;
     }
 
@@ -627,72 +676,74 @@
       position: relative;
       background: linear-gradient(145deg, #16243b, #0d1624);
       border: 2px solid var(--gold);
-      border-radius: 20px;
-      padding: 20px;
-      max-width: 760px;
-      width: 100%;
+      border-radius: 24px;
+      padding: clamp(20px, 3vw, 32px);
+      max-width: 860px;
+      width: 95%;
       max-height: 90vh;
       overflow-y: auto;
       text-align: left;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+      box-shadow: 0 10px 45px rgba(0,0,0,0.85), 0 0 25px rgba(212, 175, 55, 0.4);
       display: flex;
-      flex-direction: column;
-      gap: 14px;
+      flex-direction: row;
+      align-items: center;
+      gap: 20px;
     }
 
-    @media (min-width: 640px) {
+    @media (max-width: 768px) {
       .modal-card {
-        flex-direction: row;
-        align-items: center;
-        padding: 28px;
-        gap: 20px;
+        flex-direction: column;
+        text-align: center;
+        gap: 14px;
       }
     }
 
     .modal-content-left {
       flex: 1;
+      z-index: 2;
     }
 
     .modal-jigsaw-right {
-      flex: 0 0 auto;
+      flex: 0 0 clamp(200px, 35vw, 320px);
       display: flex;
       justify-content: center;
       align-items: center;
+      z-index: 3;
     }
 
     .modal-jigsaw-right img {
       width: 100%;
-      max-width: 280px;
-      max-height: 180px;
+      max-height: 220px;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 2px solid var(--gold);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
     }
 
     .modal-card h2 {
       font-family: var(--font-title);
-      font-size: clamp(20px, 4vw, 26px);
+      font-size: clamp(20px, 3vw, 28px);
       color: var(--gold-light);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .modal-card p {
-      font-size: clamp(13px, 3.2vw, 15px);
-      line-height: 1.5;
+      font-size: clamp(13px, 1.8vw, 15.5px);
+      line-height: 1.6;
       color: var(--ivory);
-      margin-bottom: 14px;
+      margin-bottom: 18px;
       font-weight: 300;
     }
 
     .reward-banner {
-      background: rgba(139, 30, 30, 0.9);
+      background: rgba(139, 30, 30, 0.85);
       border: 1px solid var(--gold);
       border-radius: 10px;
-      padding: 6px 12px;
+      padding: 6px 14px;
       color: var(--gold-light);
-      font-size: 13.5px;
+      font-size: clamp(12px, 1.8vw, 15px);
       font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       display: inline-block;
     }
 
@@ -700,34 +751,40 @@
       background: linear-gradient(180deg, #E6CA65 0%, #B8860B 100%);
       color: #3B2404;
       font-family: var(--font-title);
-      font-size: clamp(16px, 3.8vw, 19px);
+      font-size: clamp(16px, 2.2vw, 20px);
       font-weight: 700;
       border: none;
-      border-radius: 25px;
-      padding: 10px 24px;
+      border-radius: 30px;
+      padding: 10px 30px;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+      transition: all 0.25s ease;
       display: inline-block;
-      text-align: center;
     }
 
-    .gold-btn:active {
-      transform: scale(0.96);
+    .gold-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 6px 20px rgba(255, 240, 153, 0.8);
     }
 
     .victory-card {
-      text-align: center !important;
-      align-items: center !important;
+      max-width: 800px;
+      width: 95%;
       flex-direction: column !important;
+      text-align: center !important;
+      padding: 20px 24px !important;
+      align-items: center !important;
     }
 
     .victory-main-img {
       width: 100%;
-      max-height: 240px;
+      max-height: 280px;
       object-fit: contain;
-      border-radius: 12px;
+      border-radius: 14px;
       border: 2px solid var(--gold);
-      margin-bottom: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+      margin-bottom: 14px;
+      display: block;
     }
 
     #yt-audio-frame {
@@ -741,40 +798,41 @@
 </head>
 <body>
 
+  <!-- Background Music (YouTube IFrame) -->
   <div id="yt-audio-frame"></div>
 
-  <!-- Start Screen -->
+  <!-- Start Screen (คงรูปแบบเดิมทั้งหมด) -->
   <div id="start-screen">
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
       <h1>รัตนโกสินทร์ AR Jigsaw</h1>
-      <p>ท่องมิติเวลาร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR หรือระบบสัมผัสต่อจิ๊กซอว์ร่วมกันได้หลายคน</p>
+      <p>ท่องมิติเวลาร้อยเรียงประวัติศาสตร์ ใช้นิ้วมือ AR ต่อจิ๊กซอว์ </p>
       <button class="gold-btn-start interactive" id="start-btn">
-        <span>📷</span> เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์
+        <span>📷</span> เปิดกล้องแต่งชุดไทยท่องประวัติศาสตร์ (AR Start)
       </button>
     </div>
   </div>
 
-  <!-- Camera Ready Prompt -->
+  <!-- Hand Gesture Ready Prompt on Live Camera -->
   <div id="ar-start-prompt" class="interactive">
     <div class="prompt-box">
-      <h2>✨ กล้องและระบบ AR พร้อมแล้ว ✨</h2>
-      <p>ยื่นนิ้วชี้หรือจีบนิ้วกลางอากาศเพื่อหยิบชิ้นส่วน หรือสัมผัสหน้าจอได้ตามสะดวก</p>
+      <h2>✨ กล้องพร้อมแล้วหนาท่านผู้น่ารัก✨</h2>
+      <p>ยื่นนิ้วชี้หรือจีบนิ้วกลางอากาศเพื่อกดปุ่มด้านล่าง หรือใช้นิ้วสัมผัสหน้าจอได้ทุกจุด</p>
       <button class="gold-btn interactive" id="confirm-start-btn">
-        🌸 เริ่มท่องมิติเวลา (Start)
+        🌸 เริ่มท่องมิติเวลา (Start Playing)
       </button>
     </div>
   </div>
 
   <!-- AR Viewport -->
   <div id="ar-container">
-    <video id="webcam-video" playsinline muted autoplay></video>
+    <video id="webcam-video" playsinline muted></video>
     <canvas id="ar-canvas"></canvas>
     <div id="game-border-frame"></div>
     <canvas id="frame-overlay"></canvas>
   </div>
 
-  <!-- Jigsaw Game Stage -->
+  <!-- Jigsaw Game Stage (4 Pieces) -->
   <div id="game-stage">
     <div id="puzzle-board" class="puzzle-target-board"></div>
   </div>
@@ -788,20 +846,21 @@
       </div>
       <div class="top-controls">
         <div class="money-pill">
-          <span>💵</span> <span id="money-count">100</span>
+          <span>💵</span> <span id="money-count">100</span> สตางค์
         </div>
-        <button class="btn-top interactive" id="dress-toggle-btn">👗 ชุดไทย</button>
-        <button class="btn-top interactive" id="shop-toggle-btn">🛍️ กรอบรูป</button>
-        <button class="btn-icon interactive" id="audio-toggle-btn" title="เปิด/ปิดเสียง">🎵</button>
+        <button class="btn-top interactive" id="dress-toggle-btn">👗 แต่งตัวชุดไทย</button>
+        <button class="btn-top interactive" id="shop-toggle-btn">🛍️ ร้านกรอบรูป</button>
+        <button class="btn-icon interactive" id="audio-toggle-btn" title="เปิด/ปิดเสียงดนตรี">🎵</button>
       </div>
     </header>
 
+    <!-- Mini-map Reference Thumbnail -->
     <div id="minimap-wrapper" class="interactive">
-      <h4>ภาพเฉลย (๔ ชิ้น)</h4>
+      <h4>ภาพตัวอย่างเฉลย (๔ ชิ้น)</h4>
       <img id="minimap-img" src="" alt="Thumbnail">
     </div>
 
-    <!-- Dressing Sidebar -->
+    <!-- 1. LEFT SIDE Dressing Panel -->
     <div id="dressing-panel" class="interactive">
       <div class="panel-header">
         <h3>👗 ห้องเครื่องแต่งกาย</h3>
@@ -815,17 +874,17 @@
       <div class="vertical-item-grid" id="dress-items-container"></div>
     </div>
 
-    <!-- Shop Panel -->
+    <!-- 2. Pop Culture Frame Shop Panel -->
     <div id="shop-panel" class="interactive">
       <div class="panel-header">
-        <h3>🛍️ ร้านค้ากรอบรูปประวัติศาสตร์</h3>
+        <h3>🛍️ ร้านค้ากรอบรูปเหตุการณ์สำคัญรัตนโกสินทร์</h3>
         <button class="panel-close" id="shop-close-btn">✖</button>
       </div>
       <div class="horizontal-item-grid" id="shop-items-container"></div>
     </div>
   </div>
 
-  <!-- History Modal -->
+  <!-- History Modal (แก้บั๊กจิ้มข้ามด่านได้ 100%) -->
   <div id="info-modal" class="modal-overlay">
     <div class="modal-card">
       <div class="modal-content-left">
@@ -840,14 +899,14 @@
     </div>
   </div>
 
-  <!-- Victory Modal -->
+  <!-- Final Victory Modal -->
   <div id="victory-modal" class="modal-overlay">
     <div class="modal-card victory-card">
-      <img src="ending.jpg" alt="จบภารกิจ" class="victory-main-img">
-      <h2 style="margin-bottom:6px;">ท่านสำเร็จบริบูรณ์แล้วเจ้าค่ะ!</h2>
-      <div class="reward-banner" style="margin-bottom:8px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ สตางค์</div>
-      <p id="victory-stats" style="margin-bottom:14px; font-weight:bold;"></p>
-      <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้ง (Play Again)</button>
+      <img src="ending.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์นะคะ" class="victory-main-img">
+      <h2 style="font-size:clamp(22px, 3.5vw, 32px); margin-bottom:8px;">ท่านสำเร็จบริบูรณ์แล้วเจ้าค่ะ!</h2>
+      <div class="reward-banner" style="margin-bottom:10px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ สตางค์</div>
+      <p id="victory-stats" style="text-align:center; margin-bottom:16px; font-weight:bold;"></p>
+      <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้งไหมเจ้าคะ (Play Again)</button>
     </div>
   </div>
 
@@ -862,7 +921,7 @@
         subtitle: "กรุงรัตนโกสินทร์ตอนต้น (รัชกาลที่ ๑ - ๒)",
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_80e9aj80e9aj80e9.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (ร.๑) ทรงสถาปนากรุงรัตนโกสินทร์ขึ้นเมื่อ พ.ศ. ๒๓๒๕ โปรดเกล้าฯ ให้สร้างพระบรมมหาราชวังและวัดพระศรีรัตนศาสดาราม (วัดพระแก้ว) พร้อมทั้งสร้างเสาชิงช้าและขุดคลองรอบกรุงเพื่อเป็นศูนย์กลางการค้าและจิตใจของราษฎร"
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (ร.๑) ทรงสถาปนากรุงรัตนโกสินทร์ขึ้นเมื่อ พ.ศ. ๒๓๒๕ ทรงโปรดเกล้าฯ ให้สร้างพระบรมมหาราชวังและวัดพระศรีรัตนศาสดาราม (วัดพระแก้ว) พร้อมทั้งสร้างเสาชิงช้าและขุดคลองรอบกรุงเพื่อเป็นศูนย์กลางการค้าและศูนย์รวมจิตใจของราษฎร"
       },
       {
         id: 2,
@@ -870,7 +929,7 @@
         subtitle: "ยุคพาณิชย์นาวีรุ่งโรจน์ (รัชกาลที่ ๓)",
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_dcahnzdcahnzdcah.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะพระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
+        history: "✦ สตอรี่ประวัติศาสตร์: ในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าอยู่หัว สยามมีการติดต่อค้าขายสำเภากับจีนอย่างมั่งคั่ง เกิดการผสมผสานศิลปกรรมไทย-จีนอันงดงาม ปรากฏในเครื่องถ้วยชามกระเบื้องเคลือบและการบูรณะปฏิสังขรณ์องค์พระปรางค์วัดอรุณราชวรารามริมแม่น้ำเจ้าพระยา"
       },
       {
         id: 3,
@@ -878,7 +937,7 @@
         subtitle: "การเปิดรับวิทยาการสมัยใหม่ (รัชกาลที่ ๔)",
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_f2p7i9f2p7i9f2p7.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้แม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนานาชาติทั่วโลก"
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจอมเกล้าอยู่หัว พระบิดาแห่งวิทยาศาสตร์ไทย ทรงคำนวณการเกิดสุริยุปราคาเต็มดวง ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์ เมื่อวันที่ ๑๘ สิงหาคม พ.ศ. ๒๔๑๑ ได้อย่างแม่นยำล่วงหน้าถึง ๒ ปี สร้างความยกย่องชื่นชมจากนักดาราศาสตร์นานาชาติทั่วโลก"
       },
       {
         id: 4,
@@ -886,7 +945,7 @@
         subtitle: "ยุคศิวิไลซ์และความทันสมัย (รัชกาลที่ ๕ - ๗)",
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_jjyx97jjyx97jjyx.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจุลจอมเกล้าอยู่หัว (ร.๕) ทรงประกาศเลิกทาสอย่างสันติวิธี ให้คนไทยมีอิสรภาพ ทรงริเริ่มสร้างทางรถไฟสายแรก การไปรษณีย์โทรเลข ไฟฟ้า และก่อสร้างพระที่นั่งอนันตสมาคม นำพาสยามก้าวสู่ความเจริญทัดเทียมอารยประเทศ"
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระจุลจอมเกล้าอยู่หัว (ร.๕) ทรงประกาศเลิกทาสอย่างสันติวิธี ให้คนไทยมีอิสรภาพ ทรงริเริ่มสร้างทางรถไฟสายแรก การไปรษณีย์โทรเลข ไฟฟ้า และก่อสร้างพระที่นั่งอนันตสมาคม นำพาสยามก้าวสู่ความเจริญทัดเทียมนานาอารยประเทศ"
       },
       {
         id: 5,
@@ -894,12 +953,12 @@
         subtitle: "สืบสานศาสตร์พระราชา (รัชกาลที่ ๙)",
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_s6u0xls6u0xls6u0.jpg",
-        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร ทรงอุทิศพระวรกายเพื่อปวงชน พระราชทานโครงการพระราชดำริกว่า ๔,๐๐๐ โครงการ อาทิ ฝนหลวง กังหันน้ำชัยพัฒนา และหลักปรัชญาเศรษฐกิจพอเพียง เพื่อความยั่งยืนของไทย"
+        history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร ทรงอุทิศพระวรกายเพื่อปวงชน พระราชทานโครงการพระราชดำริกว่า ๔,๐๐๐ โครงการ อาทิ ฝนหลวง กังหันน้ำชัยพัฒนา และหลักปรัชญาเศรษฐกิจพอเพียง เพื่อความอยู่ดีกินดีอย่างยั่งยืน"
       }
     ];
 
     /* =========================================================
-       2. ASSETS & PRELOAD
+       2. AR COSTUME & ITEM ASSETS
        ========================================================= */
     const ASSETS = {
       clothes: {
@@ -910,53 +969,106 @@
         },
         sabai_silver: {
           name: 'สไบปักเงิน',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ssilv" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F8F9FA"/><stop offset="50%" stop-color="#CED4DA"/><stop offset="100%" stop-color="#6C757D"/></linearGradient></defs><path d="M120 30 Q200 65 285 190 Q315 250 300 340 L230 340 Q200 250 175 180 Q140 100 120 30 Z" fill="url(#ssilv)" stroke="#F8F9FA" stroke-width="2"/></svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ssilv" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F8F9FA"/><stop offset="50%" stop-color="#CED4DA"/><stop offset="100%" stop-color="#6C757D"/></linearGradient></defs><path d="M120 30 Q200 65 285 190 Q315 250 300 340 L230 340 Q200 250 175 180 Q140 100 120 30 Z" fill="url(#ssilv)" stroke="#F8F9FA" stroke-width="2"/><path d="M140 50 Q200 110 265 50" fill="none" stroke="url(#ssilv)" stroke-width="7"/></svg>`
         },
         sabai_pleat: {
           name: 'สไบจีบชมพู',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF758F"/><stop offset="100%" stop-color="#800F2F"/></linearGradient></defs><path d="M115 35 Q205 70 290 205 Q310 270 295 340 L225 340 Q200 260 170 170 Q135 95 115 35 Z" fill="url(#sruby)" stroke="#FFB3C1" stroke-width="2"/></svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF758F"/><stop offset="100%" stop-color="#800F2F"/></linearGradient></defs><path d="M115 35 Q205 70 290 205 Q310 270 295 340 L225 340 Q200 260 170 170 Q135 95 115 35 Z" fill="url(#sruby)" stroke="#FFB3C1" stroke-width="2"/><line x1="135" y1="70" x2="255" y2="340" stroke="#FFF" stroke-width="1.8" stroke-dasharray="6,4"/></svg>`
         },
         sabai_blue: {
-          name: 'สไบสีคราม',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sblue" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#90E0EF"/><stop offset="100%" stop-color="#0077B6"/></linearGradient></defs><path d="M115 35 Q205 70 290 205 Q310 270 295 340 L225 340 Q200 260 170 170 Q135 95 115 35 Z" fill="url(#sblue)" stroke="#CAF0F8" stroke-width="2"/></svg>`
+          name: 'สไบสีฟ้าคราม',
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sblue" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#90E0EF"/><stop offset="100%" stop-color="#0077B6"/></linearGradient></defs><path d="M115 35 Q205 70 290 205 Q310 270 295 340 L225 340 Q200 260 170 170 Q135 95 115 35 Z" fill="url(#sblue)" stroke="#CAF0F8" stroke-width="2"/><line x1="135" y1="70" x2="255" y2="340" stroke="#FFF" stroke-width="1.8" stroke-dasharray="6,4"/></svg>`
         },
         ham_dress: {
           name: 'ชุดแขนหมูแฮม',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><ellipse cx="90" cy="110" rx="45" ry="35" fill="#FFF" stroke="#D4AF37" stroke-width="1.5"/><ellipse cx="310" cy="110" rx="45" ry="35" fill="#FFF" stroke="#D4AF37" stroke-width="1.5"/><path d="M130 90 L270 90 L285 340 L115 340 Z" fill="#F4EAD4" stroke="#C6AC8F" stroke-width="2"/></svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lace" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#E2D9D2"/></linearGradient></defs><ellipse cx="90" cy="110" rx="45" ry="35" fill="url(#lace)" stroke="#D4AF37" stroke-width="1.5"/><ellipse cx="310" cy="110" rx="45" ry="35" fill="url(#lace)" stroke="#D4AF37" stroke-width="1.5"/><path d="M130 90 L270 90 L285 340 L115 340 Z" fill="url(#lace)" stroke="#C6AC8F" stroke-width="2"/><path d="M160 95 Q200 140 240 95" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="6,4"/></svg>`
         },
         raj_pattern: {
           name: 'เสื้อราชปะแตน',
-          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><path d="M100 70 L300 70 L320 340 L80 340 Z" fill="#F8F9FA" stroke="#D4AF37" stroke-width="3"/><rect x="180" y="55" width="40" height="25" fill="#E9ECEF" stroke="#D4AF37" stroke-width="2" rx="4"/></svg>`
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><path d="M100 70 L300 70 L320 340 L80 340 Z" fill="#F8F9FA" stroke="#D4AF37" stroke-width="3"/><rect x="180" y="55" width="40" height="25" fill="#E9ECEF" stroke="#D4AF37" stroke-width="2" rx="4"/><line x1="200" y1="80" x2="200" y2="340" stroke="#D4AF37" stroke-width="3"/><circle cx="200" cy="110" r="4.5" fill="#D4AF37"/><circle cx="200" cy="150" r="4.5" fill="#D4AF37"/><circle cx="200" cy="190" r="4.5" fill="#D4AF37"/></svg>`
+        },
+        warrior_male: {
+          name: 'เสื้องานพิธีโบราณ',
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="crim" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#A82323"/><stop offset="100%" stop-color="#5A0F0F"/></linearGradient></defs><path d="M90 75 L310 75 L325 340 L75 340 Z" fill="url(#crim)" stroke="#D4AF37" stroke-width="3"/><path d="M160 75 L200 130 L240 75 Z" fill="#D4AF37"/><line x1="200" y1="130" x2="200" y2="340" stroke="#D4AF37" stroke-width="4"/><circle cx="200" cy="170" r="6" fill="#FFEE80"/><circle cx="200" cy="220" r="6" fill="#FFEE80"/></svg>`
+        },
+        r5_male_suit: {
+          name: 'สูทพระราชพิธี ร.๕',
+          svg: `<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg"><path d="M95 80 L305 80 L320 340 L80 340 Z" fill="#0A192F" stroke="#D4AF37" stroke-width="2.5"/><rect x="75" y="75" width="45" height="20" fill="#D4AF37" rx="5"/><rect x="280" y="75" width="45" height="20" fill="#D4AF37" rx="5"/><line x1="110" y1="80" x2="280" y2="340" stroke="#FFE79A" stroke-width="12"/></svg>`
         }
       },
       hats: {
         none: { name: 'ไม่มี' },
         chada: {
           name: 'ชฎาทองคำ',
-          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><path d="M100 10 L118 75 L135 140 L65 140 L82 75 Z" fill="#D4AF37" stroke="#FFF" stroke-width="1.2"/><circle cx="100" cy="12" r="6" fill="#FFF"/></svg>`
+          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFF099"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs><path d="M100 10 L118 75 L135 140 L65 140 L82 75 Z" fill="url(#hgold)" stroke="#FFF" stroke-width="1.2"/><circle cx="100" cy="12" r="6" fill="#FFF"/><rect x="62" y="140" width="76" height="25" fill="#8B1E1E" stroke="url(#hgold)" stroke-width="2" rx="4"/><circle cx="100" cy="152" r="5" fill="#FFF099"/></svg>`
+        },
+        chada_thai: {
+          name: 'ชฎาประยุกต์',
+          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFF099"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs><path d="M100 15 L115 65 L140 140 L60 140 L85 65 Z" fill="url(#hgold)" stroke="#8B1E1E" stroke-width="1.5"/><circle cx="100" cy="15" r="5" fill="#FF758F"/><rect x="60" y="140" width="80" height="20" fill="#D4AF37" stroke="#FFF" stroke-width="1" rx="2"/></svg>`
         },
         male_kile: {
           name: 'มาลาเกี้ยวขุนนาง',
-          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><path d="M100 35 L122 115 L78 115 Z" fill="#D4AF37"/><path d="M55 115 Q100 95 145 115 L155 145 L45 145 Z" fill="#2B2D42" stroke="#D4AF37" stroke-width="2"/></svg>`
+          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><path d="M100 35 L122 115 L78 115 Z" fill="#D4AF37"/><path d="M55 115 Q100 95 145 115 L155 145 L45 145 Z" fill="#2B2D42" stroke="#D4AF37" stroke-width="2"/><circle cx="100" cy="130" r="7" fill="#8B1E1E" stroke="#D4AF37" stroke-width="1.5"/></svg>`
         },
         r5_cap: {
-          name: 'หมวกทรงยุโรป',
-          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><ellipse cx="100" cy="150" rx="80" ry="20" fill="#EAE0D5" stroke="#D4AF37" stroke-width="2"/><path d="M50 145 C50 100 150 100 150 145 Z" fill="#F4F1DE" stroke="#D4AF37" stroke-width="2"/></svg>`
+          name: 'หมวกทรงยุโรป ร.๕',
+          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><ellipse cx="100" cy="150" rx="80" ry="20" fill="#EAE0D5" stroke="#D4AF37" stroke-width="2"/><path d="M50 145 C50 100 150 100 150 145 Z" fill="#F4F1DE" stroke="#D4AF37" stroke-width="2"/><rect x="60" y="135" width="80" height="10" fill="#8B1E1E"/></svg>`
+        },
+        thai_farmer_hat: {
+          name: 'งอบชาวนาไทย',
+          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><path d="M100 60 L180 150 L20 150 Z" fill="#DDA15E" stroke="#BC6C25" stroke-width="3"/><path d="M100 60 L160 150 M100 60 L140 150 M100 60 L120 150 M100 60 L80 150 M100 60 L60 150 M100 60 L40 150" stroke="#BC6C25" stroke-width="1.5"/><ellipse cx="100" cy="150" rx="80" ry="15" fill="#DDA15E" stroke="#BC6C25" stroke-width="2"/></svg>`
+        },
+        headband_red: {
+          name: 'ผ้าโพกหัวแดง',
+          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><path d="M50 130 Q100 110 150 130 L160 150 Q100 130 40 150 Z" fill="#8B1E1E"/><path d="M145 135 L170 160 L155 165 Z" fill="#8B1E1E"/></svg>`
+        },
+        flower_pin: {
+          name: 'ปิ่นปักผมดอกไม้',
+          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><path d="M150 100 L120 140" stroke="#D4AF37" stroke-width="4" stroke-linecap="round"/><circle cx="150" cy="100" r="12" fill="#FF758F"/><circle cx="150" cy="100" r="4" fill="#FFE79A"/></svg>`
+        },
+        gold_pin: {
+          name: 'ปิ่นทองคำ',
+          svg: `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg"><path d="M160 80 L110 140" stroke="#D4AF37" stroke-width="5" stroke-linecap="round"/><circle cx="160" cy="80" r="8" fill="#FFF099" stroke="#D4AF37" stroke-width="2"/></svg>`
         }
       },
       accessories: {
         none: { name: 'ไม่มี' },
         gold_necklace: {
-          name: 'สังวาลย์ทอง',
-          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M45 35 Q100 130 155 35" fill="none" stroke="#D4AF37" stroke-width="5"/><circle cx="100" cy="90" r="13" fill="#8B1E1E" stroke="#FFEE80" stroke-width="2"/></svg>`
+          name: 'สังวาลย์และพวงมาลัย',
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M45 35 Q100 130 155 35" fill="none" stroke="#D4AF37" stroke-width="5"/><circle cx="100" cy="90" r="13" fill="#8B1E1E" stroke="#FFEE80" stroke-width="2"/><path d="M100 103 Q100 150 100 185" fill="none" stroke="#FFF" stroke-width="7" stroke-dasharray="4,4"/><circle cx="100" cy="185" r="9" fill="#FF758F"/></svg>`
         },
         pearl_necklace: {
-          name: 'สร้อยไข่มุก',
-          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M60 40 Q100 110 140 40" fill="none" stroke="#F8F9FA" stroke-width="7" stroke-dasharray="7,7"/></svg>`
+          name: 'สร้อยไข่มุก ร.๕',
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M60 40 Q100 110 140 40" fill="none" stroke="#F8F9FA" stroke-width="8" stroke-dasharray="8,8"/><path d="M50 40 Q100 140 150 40" fill="none" stroke="#F8F9FA" stroke-width="8" stroke-dasharray="8,8"/></svg>`
+        },
+        gem_necklace: {
+          name: 'สร้อยทองประดับพลอย',
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M55 40 Q100 100 145 40" fill="none" stroke="#D4AF37" stroke-width="4"/><circle cx="100" cy="70" r="10" fill="#0077B6" stroke="#D4AF37" stroke-width="2"/><polygon points="100,80 95,95 105,95" fill="#D4AF37"/></svg>`
+        },
+        jasmine_garland: {
+          name: 'พวงมาลัยมะลิ',
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50 40 Q100 120 150 40" fill="none" stroke="#FFF" stroke-width="12" stroke-dasharray="8,4"/><circle cx="100" cy="80" r="12" fill="#FF758F"/><path d="M100 92 L100 130" stroke="#FFF" stroke-width="4" stroke-dasharray="6,4"/><circle cx="100" cy="130" r="6" fill="#FF758F"/></svg>`
+        },
+        gold_bracelets: {
+          name: 'กำไลข้อมือทองคำ',
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="160" rx="15" ry="8" fill="none" stroke="#D4AF37" stroke-width="4"/><ellipse cx="40" cy="168" rx="15" ry="8" fill="none" stroke="#D4AF37" stroke-width="4"/><ellipse cx="160" cy="160" rx="15" ry="8" fill="none" stroke="#D4AF37" stroke-width="4"/><ellipse cx="160" cy="168" rx="15" ry="8" fill="none" stroke="#D4AF37" stroke-width="4"/></svg>`
+        },
+        silver_belt: {
+          name: 'เข็มขัดเงิน',
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><rect x="60" y="160" width="80" height="15" fill="#CED4DA" stroke="#6C757D" stroke-width="2" rx="4"/><circle cx="100" cy="167" r="10" fill="#F8F9FA" stroke="#6C757D" stroke-width="2"/></svg>`
+        },
+        gold_belt: {
+          name: 'เข็มขัดทองคำ',
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><rect x="60" y="160" width="80" height="15" fill="#D4AF37" stroke="#996515" stroke-width="2" rx="4"/><polygon points="100,155 110,167 100,180 90,167" fill="#FFF099" stroke="#996515" stroke-width="1"/></svg>`
+        },
+        flower_earring: {
+          name: 'ต่างหูดอกไม้',
+          svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="75" cy="80" r="5" fill="#FFB3C1"/><path d="M75 85 L75 105" stroke="#D4AF37" stroke-width="2"/><circle cx="75" cy="105" r="3" fill="#D4AF37"/><circle cx="125" cy="80" r="5" fill="#FFB3C1"/><path d="M125 85 L125 105" stroke="#D4AF37" stroke-width="2"/><circle cx="125" cy="105" r="3" fill="#D4AF37"/></svg>`
         }
       }
     };
 
+    // Preload Assets
     const loadedImages = { clothes: {}, hats: {}, accessories: {} };
     Object.keys(ASSETS).forEach(cat => {
       loadedImages[cat] = {};
@@ -964,12 +1076,22 @@
         const item = ASSETS[cat][k];
         if (k === 'none') return;
         const img = new Image();
-        if (item.imgSrc) img.src = item.imgSrc;
-        else if (item.svg) img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(item.svg);
+        if (item.imgSrc) {
+          img.src = item.imgSrc;
+        } else if (item.svg) {
+          img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(item.svg);
+        }
         loadedImages[cat][k] = img;
       });
     });
 
+    let currentSelection = { clothes: 'sabai_gold', hats: 'none', accessories: 'none' };
+    let activeFrameKey = 'none';
+    let userMoney = 100;
+
+    /* =========================================================
+       3. SHOP FRAMES
+       ========================================================= */
     const SHOP_FRAMES = {
       none: { name: 'ไม่มี', price: 0, owned: true },
       frame1: { name: 'กรอบวัดพระแก้ว', price: 60, owned: false, icon: '🛕', imgSrc: '1.png' },
@@ -981,30 +1103,16 @@
 
     const loadedShopImages = {};
     Object.keys(SHOP_FRAMES).forEach(k => {
-      if (SHOP_FRAMES[k].imgSrc) {
-        const img = new Image();
-        img.src = SHOP_FRAMES[k].imgSrc;
-        loadedShopImages[k] = img;
+      const sf = SHOP_FRAMES[k];
+      if (sf.imgSrc) {
+        const sImg = new Image();
+        sImg.src = sf.imgSrc;
+        loadedShopImages[k] = sImg;
       }
     });
 
-    let currentSelection = { clothes: 'sabai_gold', hats: 'none', accessories: 'none' };
-    let activeFrameKey = 'none';
-    let userMoney = 100;
-    let currentCategory = 'clothes';
-
     /* =========================================================
-       3. PALETTE FOR MULTI-PLAYER HANDS (สีคุมโทน สวยงาม ไม่รก)
-       ========================================================= */
-    const PLAYER_PALETTES = [
-      { name: 'สุวรรณ (ทอง)', outer: '#FFE79A', mid: '#D4AF37', inner: '#8B1E1E', center: '#FFE066' },
-      { name: 'ทับทิม (ชมพูแดง)', outer: '#FFCCD5', mid: '#FF4D6D', inner: '#590D22', center: '#FFF0F3' },
-      { name: 'มรกต (เขียว)', outer: '#D8F3DC', mid: '#40916C', inner: '#1B4332', center: '#B7E4C7' },
-      { name: 'ไพลิน (ฟ้าคราม)', outer: '#CAF0F8', mid: '#0077B6', inner: '#03045E', center: '#90E0EF' }
-    ];
-
-    /* =========================================================
-       4. UI LOGIC & SHOP / DRESSING
+       4. UI PANELS LOGIC
        ========================================================= */
     const dressingPanel = document.getElementById('dressing-panel');
     const dressToggleBtn = document.getElementById('dress-toggle-btn');
@@ -1017,6 +1125,8 @@
     const shopItemsContainer = document.getElementById('shop-items-container');
     const moneyCountEl = document.getElementById('money-count');
     const gameBorderFrame = document.getElementById('game-border-frame');
+
+    let currentCategory = 'clothes';
 
     function updateMoneyUI() {
       moneyCountEl.textContent = userMoney;
@@ -1076,6 +1186,7 @@
             <span>${item.name}</span>
           `;
         }
+
         div.addEventListener('click', () => selectCostumeItem(currentCategory, key));
         dressItemsContainer.appendChild(div);
       });
@@ -1102,16 +1213,17 @@
         if (key === 'none') {
           div.innerHTML = `❌<span>${item.name}</span><div class="price-tag">ฟรี</div>`;
         } else {
-          let iconContent = `<div style="font-size:24px; margin-bottom:2px;">${item.icon || '🖼️'}</div>`;
+          let iconContent = `<div style="font-size:30px; margin-bottom:2px;">${item.icon || '🖼️'}</div>`;
           if (loadedShopImages[key] && loadedShopImages[key].src) {
-            iconContent = `<img src="${loadedShopImages[key].src}" alt="${item.name}" style="width:36px; height:36px; object-fit:cover; border-radius:4px;">`;
+            iconContent = `<img src="${loadedShopImages[key].src}" alt="${item.name}" style="width:40px; height:40px; object-fit:cover; border-radius:4px; margin-bottom:2px;">`;
           }
           div.innerHTML = `
             ${iconContent}
             <span>${item.name}</span>
-            <div class="price-tag">${item.owned ? (activeFrameKey === key ? 'ใช้อยู่' : 'ใส่') : `${item.price} สตางค์`}</div>
+            <div class="price-tag">${item.owned ? (activeFrameKey === key ? 'กำลังใช้' : 'สวมใส่') : `${item.price} สตางค์`}</div>
           `;
         }
+
         div.addEventListener('click', () => handleShopSelection(key));
         shopItemsContainer.appendChild(div);
       });
@@ -1121,7 +1233,8 @@
       const item = SHOP_FRAMES[key];
       if (item.owned) {
         activeFrameKey = key;
-        gameBorderFrame.classList.toggle('hidden', key !== 'none');
+        if (key !== 'none') gameBorderFrame.classList.add('hidden');
+        else gameBorderFrame.classList.remove('hidden');
         renderShopItems();
         AudioEngine.playSnap();
       } else {
@@ -1129,7 +1242,8 @@
           userMoney -= item.price;
           item.owned = true;
           activeFrameKey = key;
-          gameBorderFrame.classList.toggle('hidden', key !== 'none');
+          if (key !== 'none') gameBorderFrame.classList.add('hidden');
+          else gameBorderFrame.classList.remove('hidden');
           updateMoneyUI();
           renderShopItems();
           AudioEngine.playVictory();
@@ -1148,40 +1262,36 @@
       ctx: null,
       init() {
         if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-        if (this.ctx.state === 'suspended') this.ctx.resume();
       },
       playSnap() {
-        try {
-          this.init();
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(523.25, this.ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(1046.5, this.ctx.currentTime + 0.12);
-          gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
-          gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.12);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start();
-          osc.stop(this.ctx.currentTime + 0.12);
-        } catch(e){}
+        this.init();
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(523.25, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1046.5, this.ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.15);
       },
       playVictory() {
-        try {
-          this.init();
-          [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.1);
-            gain.gain.setValueAtTime(0.2, this.ctx.currentTime + idx * 0.1);
-            gain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.1 + 0.3);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(this.ctx.currentTime + idx * 0.1);
-            osc.stop(this.ctx.currentTime + idx * 0.1 + 0.3);
-          });
-        } catch(e){}
+        this.init();
+        const notes = [523.25, 659.25, 783.99, 1046.5];
+        notes.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.12);
+          gain.gain.setValueAtTime(0.25, this.ctx.currentTime + idx * 0.12);
+          gain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.12 + 0.35);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(this.ctx.currentTime + idx * 0.12);
+          osc.stop(this.ctx.currentTime + idx * 0.12 + 0.35);
+        });
       },
       speakVictorySpeech() {
         if ('speechSynthesis' in window) {
@@ -1189,6 +1299,7 @@
           const utterance = new SpeechSynthesisUtterance("เก่งมากเลยค่ะเด็ก ๆ");
           utterance.lang = 'th-TH';
           utterance.rate = 0.95;
+          utterance.pitch = 1.15;
           window.speechSynthesis.speak(utterance);
         }
       }
@@ -1199,13 +1310,16 @@
        ========================================================= */
     let ytPlayer = null;
     let isMuted = false;
+
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     document.head.appendChild(tag);
 
     window.onYouTubeIframeAPIReady = function() {
       ytPlayer = new YT.Player('yt-audio-frame', {
-        height: '1', width: '1', videoId: '4J1WgPSB4sM',
+        height: '1',
+        width: '1',
+        videoId: '4J1WgPSB4sM',
         playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': '4J1WgPSB4sM', 'controls': 0, 'disablekb': 1 }
       });
     };
@@ -1226,12 +1340,19 @@
     });
 
     /* =========================================================
-       7. THAI PIKUL FLOWER PARTICLES (หลายสีตามผู้เล่น)
+       7. MULTI-COLOR THAI PIKUL FLOWER SYSTEM (คนละสี ไม่รกตา)
        ========================================================= */
+    const HAND_PALETTES = [
+      { c1: '#FFE79A', c2: '#D4AF37', c3: '#8B1E1E', stroke: '#FFF099', center: '#FFE066' }, // มือที่ 1: ทองประกายชาด
+      { c1: '#FFCCD5', c2: '#FF4D6D', c3: '#590D22', stroke: '#FFF0F3', center: '#FF758F' }, // มือที่ 2: ทับทิมชมพู
+      { c1: '#E0FAFF', c2: '#00B4D8', c3: '#03045E', stroke: '#CAF0F8', center: '#90E0EF' }, // มือที่ 3: บุษราคัมฟ้า
+      { c1: '#F3E8FF', c2: '#A855F7', c3: '#3B0764', stroke: '#FAF5FF', center: '#C084FC' }  // มือที่ 4: กลีบมะปรางม่วง
+    ];
+
     const thaiFlowerParticles = [];
 
-    function drawThaiPikulFlower(ctx, cx, cy, size, alpha, rot, paletteIndex = 0) {
-      const p = PLAYER_PALETTES[paletteIndex % PLAYER_PALETTES.length];
+    function drawThaiPikulFlower(ctx, cx, cy, size, alpha, rot, paletteIdx = 0) {
+      const p = HAND_PALETTES[paletteIdx % HAND_PALETTES.length];
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(rot);
@@ -1239,22 +1360,24 @@
 
       const petals = 8;
       for (let i = 0; i < petals; i++) {
+        const angle = (i * Math.PI * 2) / petals;
         ctx.save();
-        ctx.rotate((i * Math.PI * 2) / petals);
+        ctx.rotate(angle);
+
         ctx.beginPath();
         ctx.moveTo(0, 0);
-        ctx.lineTo(size * 0.3, -size * 0.5);
+        ctx.lineTo(size * 0.32, -size * 0.5);
         ctx.lineTo(0, -size);
-        ctx.lineTo(-size * 0.3, -size * 0.5);
+        ctx.lineTo(-size * 0.32, -size * 0.5);
         ctx.closePath();
 
         const grad = ctx.createLinearGradient(0, 0, 0, -size);
-        grad.addColorStop(0, p.outer);
-        grad.addColorStop(0.5, p.mid);
-        grad.addColorStop(1, p.inner);
+        grad.addColorStop(0, p.c1);
+        grad.addColorStop(0.5, p.c2);
+        grad.addColorStop(1, p.c3);
         ctx.fillStyle = grad;
         ctx.fill();
-        ctx.strokeStyle = p.outer;
+        ctx.strokeStyle = p.stroke;
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.restore();
@@ -1264,7 +1387,7 @@
       ctx.arc(0, 0, size * 0.28, 0, Math.PI * 2);
       ctx.fillStyle = p.center;
       ctx.fill();
-      ctx.strokeStyle = p.mid;
+      ctx.strokeStyle = p.c2;
       ctx.lineWidth = 1.2;
       ctx.stroke();
 
@@ -1274,11 +1397,11 @@
     function createFlowerTouch(x, y, paletteIdx = 0) {
       thaiFlowerParticles.push({
         x, y,
-        size: 10,
-        maxSize: 34,
+        size: 14,
+        maxSize: 38,
         rot: Math.random() * Math.PI,
         rotSpeed: 0.05,
-        alpha: 0.95,
+        alpha: 1.0,
         paletteIdx
       });
     }
@@ -1294,6 +1417,7 @@
           thaiFlowerParticles.splice(i, 1);
           continue;
         }
+
         drawThaiPikulFlower(ctx, p.x, p.y, p.size, p.alpha, p.rot, p.paletteIdx);
       }
     }
@@ -1303,7 +1427,7 @@
     });
 
     /* =========================================================
-       8. JIGSAW PUZZLE SYSTEM (RESPONSIVE & MULTI-USER)
+       8. JIGSAW PUZZLE SYSTEM (Responsive โน้ตบุ๊ก iPad มือถือ)
        ========================================================= */
     let currentLevelIdx = 0;
     let totalSnapped = 0;
@@ -1330,10 +1454,12 @@
 
       const stageW = window.innerWidth;
       const stageH = window.innerHeight;
-      const isMobile = stageW < 600 || stageH < 600;
 
-      // กระดานปรับขนาดตามหน้าจอมือถือไม่ให้เกินขอบ
-      const boardW = isMobile ? Math.min(stageW * 0.75, 340) : Math.min(stageW * 0.5, 480);
+      // ปรับขนาดกระดานตามสัดส่วนจอ (โทรศัพท์ / iPad / Notebook)
+      let boardW = Math.min(stageW * 0.62, 480);
+      if (stageW < 560) {
+        boardW = stageW * 0.72; // มือถือจอเล็ก
+      }
       const boardH = boardW * (2 / 3);
 
       puzzleBoard.style.width = `${boardW}px`;
@@ -1366,18 +1492,18 @@
           piece.style.backgroundSize = `${boardW}px ${boardH}px`;
           piece.style.backgroundPosition = `-${c * pieceW}px -${r * pieceH}px`;
 
-          // สุ่มตำแหน่งซ้ายหรือขวา ไม่ให้ทับกระดานตรงกลาง
-          const isLeft = Math.random() < 0.5;
-          let randomX, randomY;
-          if (isMobile) {
-            randomX = isLeft ? Math.random() * 20 + 8 : stageW - pieceW - Math.random() * 20 - 8;
-            randomY = (stageH / 2 - boardH / 2) + (Math.random() * (boardH - pieceH));
-          } else {
-            randomX = isLeft 
-              ? Math.random() * (stageW * 0.12) + 20 
-              : stageW - Math.random() * (stageW * 0.12) - pieceW - 20;
-            randomY = Math.random() * (stageH - pieceH - 160) + 80;
+          // กระจายชิ้นส่วนไม่ให้ทับกับกระดานตรงกลางและไม่หลุดจอมือถือ
+          const isLeft = pieceIndex % 2 === 0;
+          let randomX = isLeft
+            ? Math.max(12, (stageW / 2 - boardW / 2) / 2 - pieceW / 2)
+            : Math.min(stageW - pieceW - 12, stageW - (stageW / 2 - boardW / 2) / 2 - pieceW / 2);
+          
+          if (stageW < 600) {
+            // โหมดจอมือถือแนวตั้ง
+            randomX = isLeft ? 14 : stageW - pieceW - 14;
           }
+
+          const randomY = (stageH / 2 - boardH / 2) + (pieceIndex < 2 ? -10 : pieceH + 20);
 
           piece.style.left = `${randomX}px`;
           piece.style.top = `${randomY}px`;
@@ -1393,8 +1519,7 @@
             targetX: targetScreenX,
             targetY: targetScreenY,
             isSnapped: false,
-            heldByPointer: null,
-            heldByHand: null
+            isHeld: false
           };
 
           bindMouseTouchEvents(pieceObj);
@@ -1409,14 +1534,15 @@
       const dy = pieceObj.y - pieceObj.targetY;
       const dist = Math.hypot(dx, dy);
 
-      // Snap Tolerance ปรับให้เข้าง่ายขึ้นบนมือถือ (70px)
-      if (dist < 70) {
+      // รัศมีดูดติด 65px เพื่อให้เล่นบนนิ้วมือถือได้ง่ายขึ้น
+      if (dist < 65) {
         pieceObj.x = pieceObj.targetX;
         pieceObj.y = pieceObj.targetY;
         pieceObj.el.style.left = `${pieceObj.x}px`;
         pieceObj.el.style.top = `${pieceObj.y}px`;
         pieceObj.el.classList.add('snapped');
         pieceObj.isSnapped = true;
+        pieceObj.isHeld = false;
         totalSnapped++;
 
         userMoney += 10;
@@ -1425,8 +1551,8 @@
         AudioEngine.playSnap();
         createFlowerTouch(pieceObj.x + pieceObj.w / 2, pieceObj.y + pieceObj.h / 2, 0);
 
-        if (totalSnapped >= puzzlePieces.length) {
-          setTimeout(levelCompleted, 400);
+        if (totalSnapped === puzzlePieces.length) {
+          setTimeout(levelCompleted, 500);
         }
       }
     }
@@ -1437,47 +1563,46 @@
       let startPieceX = 0, startPieceY = 0;
 
       const onPointerDown = (e) => {
-        if (pieceObj.isSnapped || pieceObj.heldByPointer !== null) return;
-        pieceObj.heldByPointer = e.pointerId;
-        el.setPointerCapture(e.pointerId);
+        if (pieceObj.isSnapped || pieceObj.isHeld) return;
+        pieceObj.isHeld = true;
         el.classList.add('dragging');
-
-        startPointerX = e.clientX;
-        startPointerY = e.clientY;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        startPointerX = clientX;
+        startPointerY = clientY;
         startPieceX = pieceObj.x;
         startPieceY = pieceObj.y;
-        createFlowerTouch(e.clientX, e.clientY, 0);
 
-        const onPointerMove = (ev) => {
-          if (pieceObj.heldByPointer !== ev.pointerId) return;
-          pieceObj.x = startPieceX + (ev.clientX - startPointerX);
-          pieceObj.y = startPieceY + (ev.clientY - startPointerY);
-          el.style.left = `${pieceObj.x}px`;
-          el.style.top = `${pieceObj.y}px`;
-        };
-
-        const onPointerUp = (ev) => {
-          if (pieceObj.heldByPointer !== ev.pointerId) return;
-          pieceObj.heldByPointer = null;
-          el.releasePointerCapture(ev.pointerId);
-          el.classList.remove('dragging');
-          checkSnap(pieceObj);
-
-          window.removeEventListener('pointermove', onPointerMove);
-          window.removeEventListener('pointerup', onPointerUp);
-          window.removeEventListener('pointercancel', onPointerUp);
-        };
+        createFlowerTouch(clientX, clientY, 0);
 
         window.addEventListener('pointermove', onPointerMove);
         window.addEventListener('pointerup', onPointerUp);
-        window.addEventListener('pointercancel', onPointerUp);
+      };
+
+      const onPointerMove = (e) => {
+        if (!pieceObj.isHeld) return;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        pieceObj.x = startPieceX + (clientX - startPointerX);
+        pieceObj.y = startPieceY + (clientY - startPointerY);
+        el.style.left = `${pieceObj.x}px`;
+        el.style.top = `${pieceObj.y}px`;
+      };
+
+      const onPointerUp = () => {
+        if (!pieceObj.isHeld) return;
+        pieceObj.isHeld = false;
+        el.classList.remove('dragging');
+        checkSnap(pieceObj);
+        window.removeEventListener('pointermove', onPointerMove);
+        window.removeEventListener('pointerup', onPointerUp);
       };
 
       el.addEventListener('pointerdown', onPointerDown);
     }
 
     /* =========================================================
-       9. LEVEL COMPLETION & BUG-FREE MODAL LOGIC
+       9. MODAL & LEVEL TRANSITIONS (แก้ไขให้กดเปลี่ยนด่านได้แน่นอน)
        ========================================================= */
     const infoModal = document.getElementById('info-modal');
     const modalTitle = document.getElementById('modal-title');
@@ -1502,11 +1627,8 @@
       infoModal.classList.add('active');
     }
 
-    // เอาเงื่อนไขดัก totalSnapped ที่เป็นสาเหตุของบั๊กออก เพื่อให้กดข้ามได้แน่นอน 100%
-    nextLevelBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
+    function goToNextLevel() {
       infoModal.classList.remove('active');
-
       if (currentLevelIdx < LEVELS.length - 1) {
         currentLevelIdx++;
         initLevel(currentLevelIdx);
@@ -1517,6 +1639,11 @@
         victoryStats.textContent = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที (ยอดเงินสะสม ${userMoney} สตางค์)`;
         victoryModal.classList.add('active');
       }
+    }
+
+    nextLevelBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      goToNextLevel();
     });
 
     restartGameBtn.addEventListener('click', (e) => {
@@ -1528,7 +1655,7 @@
     });
 
     /* =========================================================
-       10. MEDIAPIPE MULTI-HAND & POSE (EMA SMOOTHING)
+       10. MEDIAPIPE MULTI-HAND TRACKING & AR CLICK
        ========================================================= */
     const videoElement = document.getElementById('webcam-video');
     const canvasElement = document.getElementById('ar-canvas');
@@ -1538,17 +1665,18 @@
 
     let poseResults = null;
     let handResults = null;
+    let lastArClickTime = 0;
     let isGameRunning = false;
 
-    // ระบบกรองความสั่นของมือ (EMA Smoothing Filter) สำหรับผู้เล่นสูงสุด 4 มือ
+    // ระบบถือชิ้นส่วนแบบแยกมือ (ห้ามแย่งภาพกัน)
+    const heldPieces = [null, null, null, null]; 
     const smoothedHands = [];
-    const ALPHA = 0.65; // น้ำหนักการเกลี่ยตำแหน่ง
 
     const pose = new Pose({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
     });
     pose.setOptions({
-      modelComplexity: 0, // ปรับเป็น 0 เพื่อความลื่นไหลระดับสูงบนมือถือ
+      modelComplexity: 1,
       smoothLandmarks: true,
       minDetectionConfidence: 0.5,
       minTrackingConfidence: 0.5
@@ -1559,46 +1687,88 @@
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
     });
     hands.setOptions({
-      maxNumHands: 4, // รองรับเล่นพร้อมกันได้สูงสุด 4 มือ (หลายคน)
-      modelComplexity: 0, // ความเร็วสูง ไม่หน่วง CPU มือถือ
+      maxNumHands: 4, // รองรับผู้เล่นหลายมือพร้อมกัน
+      modelComplexity: 1,
       minDetectionConfidence: 0.55,
       minTrackingConfidence: 0.55
     });
     hands.onResults((results) => { handResults = results; });
 
-    let lastClickTime = 0;
-    function triggerARClick(x, y) {
+    // คลิกเสมือนจริงด้วยปลายนิ้ว AR
+    function triggerUniversalARClick(x, y, pIdx = 0) {
       const now = Date.now();
-      if (now - lastClickTime < 380) return;
+      if (now - lastArClickTime < 380) return;
 
+      createFlowerTouch(x, y, pIdx);
+
+      // 1. ตรวจสอบปุ่มเปิดเกมแรก
+      const promptBtn = document.getElementById('confirm-start-btn');
+      if (promptBtn && promptBtn.offsetParent !== null) {
+        const pRect = promptBtn.getBoundingClientRect();
+        if (x >= pRect.left && x <= pRect.right && y >= pRect.top && y <= pRect.bottom) {
+          promptBtn.click();
+          lastArClickTime = now;
+          return;
+        }
+      }
+
+      // 2. ตรวจสอบปุ่มเปลี่ยนด่านถัดไป (Next Level)
+      if (infoModal.classList.contains('active')) {
+        const nextRect = nextLevelBtn.getBoundingClientRect();
+        if (x >= nextRect.left && x <= nextRect.right && y >= nextRect.top && y <= nextRect.bottom) {
+          goToNextLevel();
+          lastArClickTime = now;
+          return;
+        }
+      }
+
+      // 3. ตรวจสอบปุ่มเริ่มเล่นใหม่ (Restart)
+      if (victoryModal.classList.contains('active')) {
+        const rRect = restartGameBtn.getBoundingClientRect();
+        if (x >= rRect.left && x <= rRect.right && y >= rRect.top && y <= rRect.bottom) {
+          restartGameBtn.click();
+          lastArClickTime = now;
+          return;
+        }
+      }
+
+      // 4. ปุ่มอื่นๆ ในหน้าจอทั่วไป
       const el = document.elementFromPoint(x, y);
       if (el) {
-        const target = el.closest('button, .ar-touch-item, .btn-top, .btn-icon, .panel-close, .cat-tab, .gold-btn');
-        if (target) {
-          target.click();
-          lastClickTime = now;
-          createFlowerTouch(x, y, 0);
+        const clickTarget = el.closest('button, .ar-touch-item, .btn-top, .btn-icon, .panel-close, .cat-tab, .gold-btn');
+        if (clickTarget) {
+          clickTarget.click();
+          lastArClickTime = now;
+          return;
         }
       }
     }
 
     function onFrame() {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      if (canvasElement.width !== w || canvasElement.height !== h) {
-        canvasElement.width = w; canvasElement.height = h;
-        frameCanvas.width = w; frameCanvas.height = h;
+      if (canvasElement.width !== window.innerWidth || canvasElement.height !== window.innerHeight) {
+        canvasElement.width = window.innerWidth;
+        canvasElement.height = window.innerHeight;
       }
+      if (frameCanvas.width !== window.innerWidth || frameCanvas.height !== window.innerHeight) {
+        frameCanvas.width = window.innerWidth;
+        frameCanvas.height = window.innerHeight;
+      }
+      const w = canvasElement.width;
+      const h = canvasElement.height;
 
       canvasCtx.clearRect(0, 0, w, h);
       frameCtx.clearRect(0, 0, w, h);
 
-      // Render Active Pop Culture Frame
-      if (activeFrameKey !== 'none' && loadedShopImages[activeFrameKey] && loadedShopImages[activeFrameKey].complete) {
-        frameCtx.drawImage(loadedShopImages[activeFrameKey], 0, 0, w, h);
+      // Render Shop Frame Image
+      if (activeFrameKey !== 'none' && SHOP_FRAMES[activeFrameKey]) {
+        if (loadedShopImages[activeFrameKey] && loadedShopImages[activeFrameKey].complete) {
+          frameCtx.save();
+          frameCtx.drawImage(loadedShopImages[activeFrameKey], 0, 0, w, h);
+          frameCtx.restore();
+        }
       }
 
-      // AR Fitting Costume (Pose)
+      // AR Fitting Costume Overlay
       if (poseResults && poseResults.poseLandmarks) {
         const lm = poseResults.poseLandmarks;
         const leftShoulder = lm[11];
@@ -1620,122 +1790,119 @@
           const cKey = currentSelection.clothes;
           const cImg = loadedImages.clothes[cKey];
           if (cKey !== 'none' && cImg && cImg.complete) {
-            const costumeWidth = shoulderDist * 2.4;
+            const costumeWidth = shoulderDist * 2.5;
             const costumeHeight = costumeWidth * (350 / 400);
+
             canvasCtx.save();
-            canvasCtx.translate(midX, midY - 10);
+            canvasCtx.translate(midX, midY - 20);
             canvasCtx.rotate(angle);
-            canvasCtx.drawImage(cImg, -costumeWidth / 2, -costumeHeight * 0.2, costumeWidth, costumeHeight);
+            canvasCtx.drawImage(cImg, -costumeWidth / 2, -costumeHeight * 0.22, costumeWidth, costumeHeight);
             canvasCtx.restore();
           }
 
           // Accessories
           const accKey = currentSelection.accessories;
-          if (accKey !== 'none' && loadedImages.accessories[accKey] && loadedImages.accessories[accKey].complete) {
+          if (accKey !== 'none') {
             const accImg = loadedImages.accessories[accKey];
-            const accW = shoulderDist * 1.4;
-            canvasCtx.save();
-            canvasCtx.translate(midX, midY + 5);
-            canvasCtx.rotate(angle);
-            canvasCtx.drawImage(accImg, -accW / 2, -accW * 0.2, accW, accW);
-            canvasCtx.restore();
+            if (accImg && accImg.complete) {
+              const accW = shoulderDist * 1.5;
+              const accH = accW;
+              canvasCtx.save();
+              canvasCtx.translate(midX, midY + 10);
+              canvasCtx.rotate(angle);
+              canvasCtx.drawImage(accImg, -accW / 2, -accH * 0.2, accW, accH);
+              canvasCtx.restore();
+            }
           }
 
           // Hats
           if (nose && nose.visibility > 0.4) {
             const hKey = currentSelection.hats;
-            if (hKey !== 'none' && loadedImages.hats[hKey] && loadedImages.hats[hKey].complete) {
+            if (hKey !== 'none') {
               const hImg = loadedImages.hats[hKey];
-              const headX = (1 - nose.x) * w;
-              const headY = nose.y * h;
-              const hatW = shoulderDist * 1.1;
-              const hatH = hatW * (220 / 200);
-              canvasCtx.save();
-              canvasCtx.translate(headX, headY - hatH * 0.5);
-              canvasCtx.rotate(angle * 0.7);
-              canvasCtx.drawImage(hImg, -hatW / 2, -hatH * 0.4, hatW, hatH);
-              canvasCtx.restore();
+              if (hImg && hImg.complete) {
+                const headX = (1 - nose.x) * w;
+                const headY = nose.y * h;
+                const hatW = shoulderDist * 1.2;
+                const hatH = hatW * (220 / 200);
+
+                canvasCtx.save();
+                canvasCtx.translate(headX, headY - hatH * 0.55);
+                canvasCtx.rotate(angle * 0.8);
+                canvasCtx.drawImage(hImg, -hatW / 2, -hatH * 0.45, hatW, hatH);
+                canvasCtx.restore();
+              }
             }
           }
         }
       }
 
-      // Multi-Hand Tracking with Color Separation & Smooth Handling
+      // Multi-Hand AR Interaction
       if (handResults && handResults.multiHandLandmarks) {
-        const detectedHands = handResults.multiHandLandmarks;
+        handResults.multiHandLandmarks.forEach((landmarks, hIdx) => {
+          if (hIdx >= 4) return;
 
-        // ซิงค์ขนาด array ของมือที่เกลี่ยตำแหน่ง
-        while (smoothedHands.length < detectedHands.length) {
-          smoothedHands.push({ ix: 0, iy: 0, tx: 0, ty: 0, heldPiece: null });
-        }
-
-        detectedHands.forEach((landmarks, idx) => {
           const rawIx = (1 - landmarks[8].x) * w;
           const rawIy = landmarks[8].y * h;
           const rawTx = (1 - landmarks[4].x) * w;
           const rawTy = landmarks[4].y * h;
 
-          const sh = smoothedHands[idx];
-          // EMA Filter ลดการกระตุกของนิ้วมือ
-          sh.ix = sh.ix ? sh.ix * (1 - ALPHA) + rawIx * ALPHA : rawIx;
-          sh.iy = sh.iy ? sh.iy * (1 - ALPHA) + rawIy * ALPHA : rawIy;
-          sh.tx = sh.tx ? sh.tx * (1 - ALPHA) + rawTx * ALPHA : rawTx;
-          sh.ty = sh.ty ? sh.ty * (1 - ALPHA) + rawTy * ALPHA : rawTy;
-
-          // แสดงดอกไม้ประจำสีของแต่ละคน
-          drawThaiPikulFlower(canvasCtx, sh.ix, sh.iy, 14, 0.92, 0, idx);
-
-          const pinchDist = Math.hypot(sh.ix - sh.tx, sh.iy - sh.ty);
-          const isPinching = pinchDist < 48;
-
-          // ตรวจจับการคลิกปุ่ม UI
-          if (isPinching && !sh.heldPiece) {
-            triggerARClick((sh.ix + sh.tx) / 2, (sh.iy + sh.ty) / 2);
+          // Low-pass smoothing ลดอาการมือสั่น
+          if (!smoothedHands[hIdx]) {
+            smoothedHands[hIdx] = { ix: rawIx, iy: rawIy, tx: rawTx, ty: rawTy };
+          } else {
+            smoothedHands[hIdx].ix += (rawIx - smoothedHands[hIdx].ix) * 0.45;
+            smoothedHands[hIdx].iy += (rawIy - smoothedHands[hIdx].iy) * 0.45;
+            smoothedHands[hIdx].tx += (rawTx - smoothedHands[hIdx].tx) * 0.45;
+            smoothedHands[hIdx].ty += (rawTy - smoothedHands[hIdx].ty) * 0.45;
           }
 
-          // จัดการการลากชิ้นส่วนจิ๊กซอว์พร้อมกันหลายคน
-          if (isGameRunning) {
+          const { ix, iy, tx, ty } = smoothedHands[hIdx];
+
+          // วาดพิกุลทองประจำมือ (แยกสีตามมือผู้เล่น)
+          drawThaiPikulFlower(canvasCtx, ix, iy, 15, 0.95, 0, hIdx);
+
+          const pinchDist = Math.hypot(ix - tx, iy - ty);
+          const isPinching = pinchDist < 46;
+
+          // จีบนิ้วสั่งคลิก UI หรือปุ่มเปลี่ยนด่าน
+          if (isPinching && !heldPieces[hIdx]) {
+            triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2, hIdx);
+          }
+
+          // จัดการลากจิ๊กซอว์แบบไม่แย่งภาพกัน
+          if (isGameRunning && !infoModal.classList.contains('active')) {
             if (isPinching) {
-              if (!sh.heldPiece) {
-                // ค้นหาชิ้นส่วนที่ยังไม่ถูกล็อก และยังไม่มีใครจับ
+              if (!heldPieces[hIdx]) {
+                // ค้นหาชิ้นส่วนที่ว่างอยู่เท่านั้น
                 for (const p of puzzlePieces) {
-                  if (!p.isSnapped && p.heldByHand === null && p.heldByPointer === null) {
-                    if (sh.ix >= p.x && sh.ix <= p.x + p.w && sh.iy >= p.y && sh.iy <= p.y + p.h) {
-                      sh.heldPiece = p;
-                      p.heldByHand = idx;
-                      p.el.classList.add('dragging');
-                      createFlowerTouch(sh.ix, sh.iy, idx);
-                      break;
-                    }
+                  if (!p.isSnapped && !p.isHeld && ix >= p.x && ix <= p.x + p.w && iy >= p.y && iy <= p.y + p.h) {
+                    heldPieces[hIdx] = p;
+                    p.isHeld = true; // ล็อกไม่ให้อีกมือมาหยิบซ้อน
+                    p.el.classList.add('dragging');
+                    break;
                   }
                 }
               } else {
-                // อัปเดตตำแหน่งชิ้นส่วนที่มือนั้นถืออยู่
-                sh.heldPiece.x = sh.ix - sh.heldPiece.w / 2;
-                sh.heldPiece.y = sh.iy - sh.heldPiece.h / 2;
-                sh.heldPiece.el.style.left = `${sh.heldPiece.x}px`;
-                sh.heldPiece.el.style.top = `${sh.heldPiece.y}px`;
+                // อัปเดตตำแหน่งชิ้นส่วนตามมือคนนั้น
+                const hp = heldPieces[hIdx];
+                hp.x = ix - hp.w / 2;
+                hp.y = iy - hp.h / 2;
+                hp.el.style.left = `${hp.x}px`;
+                hp.el.style.top = `${hp.y}px`;
               }
             } else {
-              if (sh.heldPiece) {
-                sh.heldPiece.el.classList.remove('dragging');
-                sh.heldPiece.heldByHand = null;
-                checkSnap(sh.heldPiece);
-                sh.heldPiece = null;
+              // เมื่อปล่อยนิ้ว
+              if (heldPieces[hIdx]) {
+                const hp = heldPieces[hIdx];
+                hp.el.classList.remove('dragging');
+                hp.isHeld = false;
+                checkSnap(hp);
+                heldPieces[hIdx] = null;
               }
             }
           }
         });
-
-        // ปล่อยชิ้นส่วนที่มือหลุดจากจอไป
-        for (let i = detectedHands.length; i < smoothedHands.length; i++) {
-          if (smoothedHands[i].heldPiece) {
-            smoothedHands[i].heldPiece.el.classList.remove('dragging');
-            smoothedHands[i].heldPiece.heldByHand = null;
-            checkSnap(smoothedHands[i].heldPiece);
-            smoothedHands[i].heldPiece = null;
-          }
-        }
       }
 
       renderFlowerParticles(canvasCtx);
@@ -1743,7 +1910,7 @@
     }
 
     /* =========================================================
-       11. CAMERA INITIALIZATION (MOBILE COMPATIBLE)
+       11. CAMERA INITIALIZATION & ADAPTIVE RESIZE
        ========================================================= */
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
@@ -1754,11 +1921,7 @@
     async function initCameraStream() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: 'user',
-            width: { ideal: 640 }, // ปรับให้เหมาะกับความเร็วบนมือถือ
-            height: { ideal: 480 }
-          },
+          video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } },
           audio: false
         });
         videoElement.srcObject = stream;
@@ -1769,13 +1932,13 @@
             await pose.send({ image: videoElement });
             await hands.send({ image: videoElement });
           },
-          width: 640,
-          height: 480
+          width: 1280,
+          height: 720
         });
         camera.start();
         requestAnimationFrame(onFrame);
       } catch (err) {
-        console.warn('Camera permission pending or device restricted:', err);
+        console.warn('Camera stream permission pending or unavailable:', err);
       }
     }
 
@@ -1788,6 +1951,7 @@
       if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
         ytPlayer.playVideo();
       }
+
       startScreen.classList.add('camera-ready');
       startMainCard.style.display = 'none';
       arStartPrompt.style.display = 'block';
@@ -1802,15 +1966,17 @@
       initLevel(0);
     });
 
-    // ป้องกันการรีเซ็ตจิ๊กซอว์เมื่อแถบเบราว์เซอร์เลื่อน
-    let lastWidth = window.innerWidth;
-    let lastHeight = window.innerHeight;
+    let lastKnownWinWidth = window.innerWidth;
+    let lastKnownWinHeight = window.innerHeight;
 
     window.addEventListener('resize', () => {
-      if (Math.abs(window.innerWidth - lastWidth) > 80 || Math.abs(window.innerHeight - lastHeight) > 80) {
-        lastWidth = window.innerWidth;
-        lastHeight = window.innerHeight;
-        if (isGameRunning) initLevel(currentLevelIdx);
+      // ตรวจสอบการหมุนจอหรือเปลี่ยนขนาดบน iPad/Notebook จริงๆ
+      if (Math.abs(window.innerWidth - lastKnownWinWidth) > 80 || Math.abs(window.innerHeight - lastKnownWinHeight) > 80) {
+        lastKnownWinWidth = window.innerWidth;
+        lastKnownWinHeight = window.innerHeight;
+        if (isGameRunning) {
+          initLevel(currentLevelIdx);
+        }
       }
     });
   </script>
