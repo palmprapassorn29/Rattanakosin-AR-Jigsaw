@@ -107,7 +107,7 @@
       z-index: 6;
     }
 
-    /* Start Screen (คงเดิม 100%) */
+    /* Start Screen */
     #start-screen {
       position: absolute;
       top: 0;
@@ -748,7 +748,6 @@
       box-shadow: 0 6px 20px rgba(255, 240, 153, 0.8);
     }
 
-    /* Final Victory Modal Custom Card (ปรับขนาดให้กะทัดรัด สมส่วน ไม่ล้นจอ) */
     .victory-card {
       max-width: 480px !important;
       width: 88% !important;
@@ -808,7 +807,6 @@
       pointer-events: none;
     }
 
-    /* Responsive Queries */
     @media (max-width: 768px) {
       header { padding: 8px 14px; }
       .title-group h1 { font-size: 18px; }
@@ -835,27 +833,14 @@
       .victory-card { max-width: 94% !important; padding: 16px 14px !important; }
       .victory-main-img { max-height: 150px !important; }
     }
-
-    @media (orientation: landscape) and (max-height: 500px) {
-      header { padding: 4px 12px; }
-      #minimap-wrapper { top: 50px; right: 10px; padding: 4px; }
-      #minimap-img { width: 110px; height: 70px; }
-      .modal-card { padding: 12px 18px; gap: 12px; }
-      .victory-card { max-height: 96vh; padding: 10px 18px !important; gap: 4px !important; }
-      .victory-main-img { max-height: 110px !important; margin-bottom: 2px !important; }
-      .victory-card h2 { font-size: 18px !important; }
-      .victory-card .reward-banner { padding: 3px 10px !important; margin-bottom: 3px !important; }
-      .victory-card p#victory-stats { margin-bottom: 6px !important; }
-      .victory-card .gold-btn { font-size: 13.5px !important; padding: 6px 18px !important; }
-    }
   </style>
 </head>
 <body>
 
-  <!-- Background Music (YouTube IFrame: รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้) -->
+  <!-- Background Music -->
   <div id="yt-audio-frame"></div>
 
-  <!-- Start Screen with Centered Kanok Card & Sparkles (คงเดิม 100%) -->
+  <!-- Start Screen -->
   <div id="start-screen">
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
@@ -882,12 +867,11 @@
   <div id="ar-container">
     <video id="webcam-video" playsinline muted></video>
     <canvas id="ar-canvas"></canvas>
-    <!-- กรอบหน้าตัวเกมจาก bgratta.png (จะถูกซ่อนเมื่อเลือกกรอบรูปเหตุการณ์) -->
     <div id="game-border-frame"></div>
     <canvas id="frame-overlay"></canvas>
   </div>
 
-  <!-- Jigsaw Game Stage (4 Pieces) -->
+  <!-- Jigsaw Game Stage -->
   <div id="game-stage">
     <div id="puzzle-board" class="puzzle-target-board"></div>
   </div>
@@ -915,7 +899,7 @@
       <img id="minimap-img" src="" alt="Thumbnail">
     </div>
 
-    <!-- 1. LEFT SIDE Dressing Panel (8 ชุด, 8 หมวก, 8 เครื่องประดับ) -->
+    <!-- Dressing Panel -->
     <div id="dressing-panel" class="interactive">
       <div class="panel-header">
         <h3>👗 ห้องเครื่องแต่งกาย</h3>
@@ -926,24 +910,20 @@
         <button class="cat-tab" data-cat="hats">หมวก/ชฎา</button>
         <button class="cat-tab" data-cat="accessories">เครื่องประดับ</button>
       </div>
-      <div class="vertical-item-grid" id="dress-items-container">
-        <!-- Rendered dynamically -->
-      </div>
+      <div class="vertical-item-grid" id="dress-items-container"></div>
     </div>
 
-    <!-- 2. Pop Culture Frame Shop Panel (กรอบเหตุการณ์สำคัญ 1_2.png - 5_2.jpg) -->
+    <!-- Shop Panel -->
     <div id="shop-panel" class="interactive">
       <div class="panel-header">
         <h3>🛍️ ร้านค้ากรอบรูปเหตุการณ์สำคัญรัตนโกสินทร์</h3>
         <button class="panel-close" id="shop-close-btn">✖</button>
       </div>
-      <div class="horizontal-item-grid" id="shop-items-container">
-        <!-- Rendered dynamically -->
-      </div>
+      <div class="horizontal-item-grid" id="shop-items-container"></div>
     </div>
   </div>
 
-  <!-- History Modal with Large Finished Stage Image on the Right -->
+  <!-- History Modal -->
   <div id="info-modal" class="modal-overlay">
     <div class="modal-card">
       <div class="modal-content-left">
@@ -958,7 +938,7 @@
     </div>
   </div>
 
-  <!-- Final Victory Modal with ending.jpg & Play Again Button + Back to Index Button -->
+  <!-- Final Victory Modal -->
   <div id="victory-modal" class="modal-overlay">
     <div class="modal-card victory-card">
       <img src="ending.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์นะคะ" class="victory-main-img">
@@ -1001,7 +981,7 @@
     }
 
     /* =========================================================
-       1. HISTORICAL STAGES (5 Historical Levels - 4 Pieces: 2x2)
+       1. HISTORICAL STAGES (5 Levels - 4 Pieces: 2x2)
        ========================================================= */
     const LEVELS = [
       {
@@ -1047,7 +1027,7 @@
     ];
 
     /* =========================================================
-       2. AR COSTUME & ITEM ASSETS (8 ชุด, 8 หมวก, 8 เครื่องประดับ)
+       2. AR COSTUME & ITEM ASSETS
        ========================================================= */
     const ASSETS = {
       clothes: {
@@ -1157,7 +1137,6 @@
       }
     };
 
-    // Preload Assets
     const loadedImages = { clothes: {}, hats: {}, accessories: {} };
     Object.keys(ASSETS).forEach(cat => {
       loadedImages[cat] = {};
@@ -1172,12 +1151,7 @@
       });
     });
 
-    let currentSelection = {
-      clothes: 'sabai_gold',
-      hats: 'none',
-      accessories: 'none'
-    };
-
+    let currentSelection = { clothes: 'sabai_gold', hats: 'none', accessories: 'none' };
     let activeFrameKey = 'none';
     let userMoney = 100;
 
@@ -1204,7 +1178,7 @@
     });
 
     /* =========================================================
-       4. LEFT DRESSING & SHOP PANELS (Interactive)
+       4. LEFT DRESSING & SHOP PANELS UI
        ========================================================= */
     const dressingPanel = document.getElementById('dressing-panel');
     const dressToggleBtn = document.getElementById('dress-toggle-btn');
@@ -1278,11 +1252,7 @@
             <span>${item.name}</span>
           `;
         }
-
-        div.addEventListener('click', () => {
-          selectCostumeItem(currentCategory, key);
-        });
-
+        div.addEventListener('click', () => selectCostumeItem(currentCategory, key));
         dressItemsContainer.appendChild(div);
       });
     }
@@ -1306,28 +1276,19 @@
         div.setAttribute('data-key', key);
 
         if (key === 'none') {
-          div.innerHTML = `
-            ❌
-            <span>${item.name}</span>
-            <div class="price-tag">ฟรี</div>
-          `;
+          div.innerHTML = `❌<span>${item.name}</span><div class="price-tag">ฟรี</div>`;
         } else {
           let iconContent = `<div style="font-size:32px; margin-bottom:4px;">${item.icon || '🖼️'}</div>`;
           if (loadedShopImages[key] && loadedShopImages[key].src) {
             iconContent = `<img src="${loadedShopImages[key].src}" alt="${item.name}" style="width:42px; height:42px; object-fit:cover; border-radius:4px; margin-bottom:4px;">`;
           }
-
           div.innerHTML = `
             ${iconContent}
             <span>${item.name}</span>
             <div class="price-tag">${item.owned ? (activeFrameKey === key ? 'กำลังใช้' : 'สวมใส่') : `${item.price} สตางค์`}</div>
           `;
         }
-
-        div.addEventListener('click', () => {
-          handleShopSelection(key);
-        });
-
+        div.addEventListener('click', () => handleShopSelection(key));
         shopItemsContainer.appendChild(div);
       });
     }
@@ -1357,7 +1318,7 @@
     renderDressingItems();
 
     /* =========================================================
-       5. WEB AUDIO SYNTHESIZER & AI SPEECH SYNTHESIS
+       5. AUDIO & SPEECH SYNTHESIS
        ========================================================= */
     const AudioEngine = {
       ctx: null,
@@ -1407,7 +1368,7 @@
     };
 
     /* =========================================================
-       6. YOUTUBE BGM PLAYER ("รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้")
+       6. YOUTUBE BGM PLAYER
        ========================================================= */
     let ytPlayer = null;
     let isMuted = false;
@@ -1418,8 +1379,7 @@
 
     window.onYouTubeIframeAPIReady = function() {
       ytPlayer = new YT.Player('yt-audio-frame', {
-        height: '1',
-        width: '1',
+        height: '1', width: '1',
         videoId: '4J1WgPSB4sM',
         playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': '4J1WgPSB4sM', 'controls': 0, 'disablekb': 1 }
       });
@@ -1444,10 +1404,10 @@
        7. GOLDEN THAI PIKUL FLOWER TOUCH EFFECT (ดอกพิกุลทอง 8 กลีบ)
        ========================================================= */
     const PLAYER_COLORS = [
-      '#FFD166', // มือที่ 1 -> ทองอร่าม
-      '#7DD3FC', // มือที่ 2 -> เพทายฟ้า
-      '#C4B5FD', // มือที่ 3 -> กลีบบัวม่วง
-      '#86EFAC'  // มือที่ 4 -> มรกตเขียว
+      '#FFD166', // ทองอร่าม
+      '#7DD3FC', // เพทายฟ้า
+      '#C4B5FD', // กลีบบัวม่วง
+      '#86EFAC'  // มรกตเขียว
     ];
 
     const thaiFlowerParticles = [];
@@ -1522,7 +1482,6 @@
           thaiFlowerParticles.splice(i, 1);
           continue;
         }
-
         drawThaiPikulFlower(ctx, p.x, p.y, p.size, p.alpha, p.rot, p.color);
       }
     }
@@ -1532,7 +1491,7 @@
     });
 
     /* =========================================================
-       8. JIGSAW PUZZLE SYSTEM (ต่อติดง่าย + ดูดเข้าล็อกอัตโนมัติ)
+       8. JIGSAW PUZZLE SYSTEM (ปรับระยะให้ผ่านด่านได้ง่ายขึ้น)
        ========================================================= */
     let totalSnapped = 0;
     let puzzlePieces = [];
@@ -1679,7 +1638,6 @@
             isSnapped: false,
             isHeld: false,
             heldBy: null,
-            nearSnapFrames: 0,
             rewardGiven: false
           };
 
@@ -1689,14 +1647,14 @@
       }
     }
 
-    // ต่อติดง่ายขึ้น: เพิ่มระยะ Snap เป็น 42% และดูดแม่เหล็กทันที
     function checkSnap(pieceObj) {
       if (pieceObj.isSnapped) return;
       const dx = pieceObj.x - pieceObj.targetX;
       const dy = pieceObj.y - pieceObj.targetY;
       const dist = Math.hypot(dx, dy);
 
-      const snapDistance = Math.min(pieceObj.w, pieceObj.h) * 0.42;
+      // ขยายระยะ Snap ให้กว้างขึ้นเป็น 50% เพื่อให้ต่อผ่านด่านง่ายขึ้นมาก
+      const snapDistance = Math.min(pieceObj.w, pieceObj.h) * 0.50;
 
       if (dist < snapDistance) {
         pieceObj.x = pieceObj.targetX;
@@ -1767,6 +1725,14 @@
 
         el.style.left = `${pieceObj.x}px`;
         el.style.top = `${pieceObj.y}px`;
+
+        const distToTarget = Math.hypot(pieceObj.x - pieceObj.targetX, pieceObj.y - pieceObj.targetY);
+        if (distToTarget < Math.min(pieceObj.w, pieceObj.h) * 0.45) {
+          pieceObj.x = pieceObj.targetX;
+          pieceObj.y = pieceObj.targetY;
+          el.style.left = `${pieceObj.x}px`;
+          el.style.top = `${pieceObj.y}px`;
+        }
       };
 
       const onPointerUp = () => {
@@ -1861,7 +1827,7 @@
     });
 
     /* =========================================================
-       10. MEDIAPIPE MULTI-HAND TRACKING & AR INTERACTION
+       10. MEDIAPIPE MULTI-HAND TRACKING & AR FLOWER CURSOR
        ========================================================= */
     const videoElement = document.getElementById('webcam-video');
     const canvasElement = document.getElementById('ar-canvas');
@@ -1875,10 +1841,10 @@
     const handSessions = new Map();
     const HAND_TIMEOUT = 500;
 
-    // ปรับระยะการจีบให้ติดง่าย ไม่หลุดมือ และขยายระยะ Hysteresis ปล่อย
-    const PINCH_START_DISTANCE = 0.065;
-    const PINCH_RELEASE_DISTANCE = 0.090;
-    const PINCH_CONFIRM_FRAMES = 2;
+    // ปรับระยะการจีบให้จับติดง่ายขึ้น
+    const PINCH_START_DISTANCE = 0.080;
+    const PINCH_RELEASE_DISTANCE = 0.110;
+    const PINCH_CONFIRM_FRAMES = 1;
 
     function getStableHandId(handIndex, handedness) {
       return `${handedness}-${handIndex}`;
@@ -1888,14 +1854,10 @@
       const candidates = document.elementsFromPoint(x, y);
       for (const el of candidates) {
         if (!el) continue;
-
         if (el.matches('#next-level-btn')) {
-          if (gameState === GAME_STATE.LEVEL_COMPLETE) {
-            return el;
-          }
+          if (gameState === GAME_STATE.LEVEL_COMPLETE) return el;
           continue;
         }
-
         if (el.matches('#confirm-start-btn, #restart-game-btn, #back-index-btn, .ar-touch-item, .btn-top, .btn-icon, .cat-tab, .panel-close')) {
           return el;
         }
@@ -1935,33 +1897,27 @@
     hands.setOptions({
       maxNumHands: 4,
       modelComplexity: isMobile ? 0 : 1,
-      minDetectionConfidence: 0.58,
-      minTrackingConfidence: 0.58
+      minDetectionConfidence: 0.50,
+      minTrackingConfidence: 0.50
     });
     hands.onResults((results) => { handResults = results; });
 
+    // วาดเคอร์เซอร์ AR ให้เป็นดอกพิกุลทองแทนวงกลมธรรมดา
     function drawHandCursor(ctx, x, y, isPinching, color) {
-      ctx.save();
-      ctx.strokeStyle = color;
-      ctx.fillStyle = color;
-
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(x, y, isPinching ? 18 : 12, 0, Math.PI * 2);
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(x, y, 4, 0, Math.PI * 2);
-      ctx.fill();
+      const flowerSize = isPinching ? 28 : 20;
+      const rotAngle = performance.now() * 0.002;
+      drawThaiPikulFlower(ctx, x, y, flowerSize, 0.9, rotAngle, color);
 
       if (isPinching) {
-        ctx.lineWidth = 1.5;
+        ctx.save();
+        ctx.strokeStyle = '#FFF099';
+        ctx.lineWidth = 2;
         ctx.setLineDash([4, 4]);
         ctx.beginPath();
-        ctx.arc(x, y, 24, 0, Math.PI * 2);
+        ctx.arc(x, y, 32, 0, Math.PI * 2);
         ctx.stroke();
+        ctx.restore();
       }
-      ctx.restore();
     }
 
     let renderLoopStarted = false;
@@ -1986,7 +1942,6 @@
       canvasCtx.clearRect(0, 0, w, h);
       frameCtx.clearRect(0, 0, w, h);
 
-      // Render Shop Frame
       if (activeFrameKey !== 'none' && SHOP_FRAMES[activeFrameKey]) {
         if (loadedShopImages[activeFrameKey] && loadedShopImages[activeFrameKey].complete) {
           frameCtx.save();
@@ -1995,7 +1950,6 @@
         }
       }
 
-      // Render Pose Costume Fitting
       if (poseResults && poseResults.poseLandmarks) {
         const lm = poseResults.poseLandmarks;
         const leftShoulder = lm[11];
@@ -2013,7 +1967,6 @@
           const shoulderDist = Math.hypot(rsX - lsX, rsY - lsY);
           const angle = Math.atan2(rsY - lsY, rsX - lsX);
 
-          // Clothes
           const cKey = currentSelection.clothes;
           const cImg = loadedImages.clothes[cKey];
           if (cKey !== 'none' && cImg && cImg.complete) {
@@ -2027,7 +1980,6 @@
             canvasCtx.restore();
           }
 
-          // Accessories
           const accKey = currentSelection.accessories;
           if (accKey !== 'none') {
             const accImg = loadedImages.accessories[accKey];
@@ -2042,7 +1994,6 @@
             }
           }
 
-          // Hats
           if (nose && nose.visibility > 0.4) {
             const hKey = currentSelection.hats;
             if (hKey !== 'none') {
@@ -2064,24 +2015,19 @@
         }
       }
 
-      // Hand Sessions Tracking
       const now = performance.now();
 
       if (handResults && handResults.multiHandLandmarks && handResults.multiHandLandmarks.length > 0) {
         for (let i = 0; i < handResults.multiHandLandmarks.length; i++) {
           const landmarks = handResults.multiHandLandmarks[i];
           const handedness = (handResults.multiHandedness && handResults.multiHandedness[i]) 
-            ? handResults.multiHandedness[i].label 
-            : `Hand${i}`;
-          
+            ? handResults.multiHandedness[i].label : `Hand${i}`;
           const handScore = (handResults.multiHandedness && handResults.multiHandedness[i])
-            ? handResults.multiHandedness[i].score
-            : 1.0;
+            ? handResults.multiHandedness[i].score : 1.0;
 
-          if (handScore < 0.50) continue;
+          if (handScore < 0.45) continue;
 
           const handId = getStableHandId(i, handedness);
-
           let session = handSessions.get(handId);
           if (!session) {
             const colorIdx = handSessions.size % PLAYER_COLORS.length;
@@ -2108,21 +2054,16 @@
           const targetX = (1 - indexTip.x) * w;
           const targetY = indexTip.y * h;
 
-          const smoothFactor = isMobile ? 0.35 : 0.45;
-          session.x += (targetX - session.x) * smoothFactor;
-          session.y += (targetY - session.y) * smoothFactor;
+          session.x += (targetX - session.x) * 0.5;
+          session.y += (targetY - session.y) * 0.5;
 
           const dx = indexTip.x - thumbTip.x;
           const dy = indexTip.y - thumbTip.y;
           session.pinchDistance = Math.hypot(dx, dy);
 
-          // Hysteresis Pinch
-          let rawPinch = false;
-          if (session.isPinching) {
-            rawPinch = session.pinchDistance < PINCH_RELEASE_DISTANCE;
-          } else {
-            rawPinch = session.pinchDistance < PINCH_START_DISTANCE;
-          }
+          let rawPinch = session.isPinching 
+            ? session.pinchDistance < PINCH_RELEASE_DISTANCE 
+            : session.pinchDistance < PINCH_START_DISTANCE;
 
           if (rawPinch) {
             session.pinchFrames++;
@@ -2133,14 +2074,12 @@
           session.wasPinching = session.isPinching;
           session.isPinching = session.pinchFrames >= PINCH_CONFIRM_FRAMES;
 
-          // แสดง Cursor ประจำมือ
           drawHandCursor(canvasCtx, session.x, session.y, session.isPinching, session.color);
 
-          // ลากจิ๊กซอว์แบบติดมือง่าย (ขยายรัศมีจับ 28px)
           if (gameState === GAME_STATE.PLAYING) {
             if (session.isPinching) {
               if (!session.heldPiece) {
-                const grabTolerance = 28;
+                const grabTolerance = 35; // ขยายรัศมีการจับด้วยมือ AR ให้กว้างขึ้น
                 for (const p of puzzlePieces) {
                   if (!p.isSnapped && p.heldBy === null) {
                     if (session.x >= (p.x - grabTolerance) && session.x <= (p.x + p.w + grabTolerance) &&
@@ -2161,9 +2100,8 @@
                 session.heldPiece.el.style.left = `${session.heldPiece.x}px`;
                 session.heldPiece.el.style.top = `${session.heldPiece.y}px`;
 
-                // ระบบแม่เหล็กดูดชิ้นส่วนเข้าล็อกขณะลาก
                 const distToTarget = Math.hypot(session.heldPiece.x - session.heldPiece.targetX, session.heldPiece.y - session.heldPiece.targetY);
-                if (distToTarget < Math.min(session.heldPiece.w, session.heldPiece.h) * 0.35) {
+                if (distToTarget < Math.min(session.heldPiece.w, session.heldPiece.h) * 0.50) {
                   session.heldPiece.x = session.heldPiece.targetX;
                   session.heldPiece.y = session.heldPiece.targetY;
                   session.heldPiece.el.style.left = `${session.heldPiece.x}px`;
@@ -2181,14 +2119,12 @@
             }
           }
 
-          // AR Point + Pinch กดปุ่ม UI
           if (!session.heldPiece && session.isPinching && !session.wasPinching) {
             triggerUniversalARClick(session.x, session.y, session);
           }
         }
       }
 
-      // ทำความสะอาด Session ที่พ้นระยะเวลา
       for (const [id, session] of handSessions.entries()) {
         if (now - session.lastSeen > HAND_TIMEOUT) {
           if (session.heldPiece) {
@@ -2248,7 +2184,6 @@
           height: 720
         });
         camera.start();
-
         startRenderLoop();
       } catch (err) {
         console.warn('Camera stream permission pending or unavailable:', err);
@@ -2264,7 +2199,6 @@
       if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
         ytPlayer.playVideo();
       }
-
       startScreen.classList.add('camera-ready');
       startMainCard.style.display = 'none';
       arStartPrompt.style.display = 'block';
