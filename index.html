@@ -116,7 +116,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 16px;
+      padding: clamp(12px, 3vw, 24px);
       background-image: 
         linear-gradient(180deg, rgba(10, 25, 47, 0.2) 0%, rgba(10, 25, 47, 0.4) 50%, rgba(10, 15, 25, 0.92) 100%),
         radial-gradient(circle at 50% 30%, #ffd97d 0%, #b85d19 40%, #4a150c 75%, #0d060c 100%);
@@ -135,8 +135,8 @@
       position: relative;
       background: linear-gradient(145deg, rgba(20, 12, 8, 0.95) 0%, rgba(10, 25, 47, 0.96) 100%);
       border: 2px solid var(--gold);
-      border-radius: 28px;
-      padding: clamp(24px, 5vw, 38px) clamp(20px, 5vw, 42px);
+      border-radius: clamp(20px, 4vw, 32px);
+      padding: clamp(20px, 4vw, 38px) clamp(16px, 4vw, 42px);
       max-width: 660px;
       width: 92%;
       max-height: 90vh;
@@ -163,7 +163,7 @@
 
     #start-screen h1 {
       font-family: var(--font-title);
-      font-size: clamp(26px, 5vw, 36px);
+      font-size: clamp(24px, 5vw, 36px);
       color: var(--gold-light);
       margin-bottom: 10px;
       background: linear-gradient(180deg, #FFF099 20%, #D4AF37 80%);
@@ -173,7 +173,7 @@
     }
 
     #start-screen p {
-      font-size: clamp(14px, 2vw, 15.5px);
+      font-size: clamp(13.5px, 2vw, 15.5px);
       line-height: 1.6;
       color: var(--ivory);
       margin-bottom: 22px;
@@ -184,7 +184,7 @@
       background: linear-gradient(180deg, #FFE79A 0%, #D4AF37 50%, #996515 100%);
       color: #381A00;
       font-family: var(--font-title);
-      font-size: clamp(18px, 3vw, 22px);
+      font-size: clamp(17px, 3vw, 22px);
       font-weight: 700;
       border: 1.5px solid #FFF8DC;
       border-radius: 40px;
@@ -212,14 +212,14 @@
       text-align: center;
       pointer-events: auto;
       width: 90%;
-      max-width: 480px;
+      max-width: 460px;
     }
 
     .prompt-box {
       background: var(--navy-glass);
       border: 2px solid var(--gold);
       border-radius: 24px;
-      padding: 24px;
+      padding: clamp(20px, 4vw, 26px);
       box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 30px rgba(212, 175, 55, 0.5);
       backdrop-filter: blur(12px);
       display: flex;
@@ -230,12 +230,12 @@
 
     .prompt-box h2 {
       font-family: var(--font-title);
-      font-size: clamp(22px, 4vw, 28px);
+      font-size: clamp(20px, 4vw, 26px);
       color: var(--gold-light);
     }
 
     .prompt-box p {
-      font-size: 14px;
+      font-size: clamp(13px, 2vw, 14.5px);
       line-height: 1.5;
     }
 
@@ -260,7 +260,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 16px;
+      padding: clamp(8px, 2vh, 14px) clamp(12px, 3vw, 24px);
       background: linear-gradient(180deg, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.4) 70%, transparent 100%);
       flex-wrap: wrap;
       gap: 8px;
@@ -268,7 +268,7 @@
 
     .title-group h1 {
       font-family: var(--font-title);
-      font-size: clamp(18px, 3.5vw, 24px);
+      font-size: clamp(17px, 3.5vw, 24px);
       color: var(--gold-light);
     }
 
@@ -295,28 +295,28 @@
       gap: 6px;
       font-weight: 700;
       color: var(--gold-light);
-      font-size: 14px;
+      font-size: clamp(13px, 2vw, 15px);
       box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     }
 
     .money-pill span {
       font-family: var(--font-title);
-      font-size: 16px;
+      font-size: clamp(15px, 2.5vw, 18px);
     }
 
     .btn-top {
       background: var(--navy-glass);
       border: 1.5px solid var(--gold);
       color: var(--gold-light);
-      padding: 6px 12px;
+      padding: clamp(5px, 1.5vh, 8px) clamp(10px, 2vw, 14px);
       border-radius: 20px;
       font-family: var(--font-body);
-      font-size: 12.5px;
+      font-size: clamp(12px, 1.8vw, 13.5px);
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.4);
       transition: all 0.2s ease;
       white-space: nowrap;
@@ -331,21 +331,20 @@
       background: var(--navy-glass);
       border: 1.5px solid var(--gold);
       color: var(--gold-light);
-      width: 36px;
-      height: 36px;
+      width: clamp(34px, 4vw, 40px);
+      height: clamp(34px, 4vw, 40px);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: clamp(15px, 2.2vw, 18px);
       cursor: pointer;
     }
 
-    /* Thumbnail Mini-map */
     #minimap-wrapper {
       position: absolute;
-      top: 68px;
-      right: 16px;
+      top: clamp(64px, 10vh, 78px);
+      right: clamp(12px, 2.5vw, 20px);
       background: var(--navy-glass);
       border: 2px solid var(--gold);
       border-radius: 14px;
@@ -357,15 +356,15 @@
     }
 
     #minimap-wrapper h4 {
-      font-size: 12px;
+      font-size: clamp(11px, 1.8vw, 13px);
       color: var(--gold-light);
       margin-bottom: 4px;
       font-family: var(--font-title);
     }
 
     #minimap-img {
-      width: clamp(140px, 20vw, 200px);
-      height: clamp(95px, 13vw, 135px);
+      width: clamp(130px, 18vw, 200px);
+      height: clamp(85px, 12vw, 130px);
       object-fit: cover;
       border-radius: 8px;
       border: 2px solid rgba(212, 175, 55, 0.7);
@@ -373,13 +372,12 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
 
-    /* Dressing Sidebar & Shop Panel */
     #dressing-panel {
       position: absolute;
-      top: 68px;
-      left: 16px;
-      width: clamp(240px, 32vw, 280px);
-      max-height: calc(100vh - 85px);
+      top: clamp(64px, 10vh, 78px);
+      left: clamp(12px, 2.5vw, 18px);
+      width: clamp(240px, 30vw, 270px);
+      max-height: calc(100vh - 90px);
       background: var(--navy-glass);
       border: 2px solid var(--gold);
       border-radius: 20px;
@@ -449,18 +447,20 @@
       margin-bottom: 8px;
       overflow-x: auto;
       scrollbar-width: none;
+      touch-action: pan-x;
     }
 
     .cat-tab {
       background: transparent;
       border: 1px solid rgba(212, 175, 55, 0.4);
       color: var(--ivory);
-      font-size: 11.5px;
+      font-size: clamp(11px, 1.8vw, 12.5px);
       font-family: var(--font-title);
       padding: 4px 8px;
       cursor: pointer;
       border-radius: 10px;
       white-space: nowrap;
+      transition: all 0.2s;
     }
 
     .cat-tab.active {
@@ -478,6 +478,8 @@
       max-height: calc(100vh - 190px);
       padding-right: 4px;
       scrollbar-width: thin;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
     }
 
     .horizontal-item-grid {
@@ -486,6 +488,8 @@
       overflow-x: auto;
       padding: 4px 2px 8px 2px;
       scrollbar-width: thin;
+      touch-action: pan-x;
+      -webkit-overflow-scrolling: touch;
     }
 
     .ar-touch-item {
@@ -503,13 +507,13 @@
     }
 
     .vertical-item-grid .ar-touch-item {
-      height: 90px;
+      height: clamp(85px, 14vh, 100px);
     }
 
     .horizontal-item-grid .ar-touch-item {
       flex: 0 0 auto;
-      width: 100px;
-      height: 105px;
+      width: clamp(90px, 14vw, 110px);
+      height: clamp(95px, 15vh, 115px);
     }
 
     .ar-touch-item.active {
@@ -520,7 +524,7 @@
     }
 
     .ar-touch-item.none-item {
-      font-size: 26px;
+      font-size: clamp(22px, 4vw, 28px);
       color: #FF4D4D;
       display: flex;
       flex-direction: column;
@@ -530,32 +534,32 @@
 
     .ar-touch-item.none-item span {
       margin-top: 4px;
-      font-size: 11px;
+      font-size: clamp(10px, 1.6vw, 11.5px);
       color: #FFF;
       font-family: var(--font-body);
     }
 
     .ar-touch-item img {
-      width: 38px;
-      height: 38px;
+      width: clamp(34px, 5vw, 42px);
+      height: clamp(34px, 5vw, 42px);
       object-fit: contain;
       margin-bottom: 4px;
       pointer-events: none;
     }
 
     .ar-touch-item span {
-      font-size: 10px;
+      font-size: clamp(9.5px, 1.5vw, 11px);
       color: var(--ivory);
       text-align: center;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 85px;
+      max-width: 90px;
       pointer-events: none;
     }
 
     .ar-touch-item .price-tag {
-      font-size: 10.5px;
+      font-size: clamp(10px, 1.6vw, 11.5px);
       color: var(--gold-light);
       font-weight: bold;
       margin-top: 2px;
@@ -613,7 +617,6 @@
       box-shadow: none;
     }
 
-    /* Modals */
     .modal-overlay {
       position: absolute;
       top: 0;
@@ -677,8 +680,8 @@
 
     .modal-jigsaw-right img {
       width: 100%;
-      max-width: 280px;
-      max-height: 220px;
+      max-width: 260px;
+      max-height: 200px;
       object-fit: cover;
       border-radius: 12px;
       border: 2px solid var(--gold);
@@ -687,13 +690,13 @@
 
     .modal-card h2 {
       font-family: var(--font-title);
-      font-size: clamp(22px, 4vw, 28px);
+      font-size: clamp(20px, 4vw, 28px);
       color: var(--gold-light);
       margin-bottom: 10px;
     }
 
     .modal-card p {
-      font-size: clamp(14px, 2vw, 15.5px);
+      font-size: clamp(13.5px, 2vw, 15.5px);
       line-height: 1.6;
       color: var(--ivory);
       margin-bottom: 18px;
@@ -706,7 +709,7 @@
       border-radius: 12px;
       padding: 6px 14px;
       color: var(--gold-light);
-      font-size: clamp(14px, 2vw, 16px);
+      font-size: clamp(13px, 2vw, 16px);
       font-weight: bold;
       margin-bottom: 14px;
       display: inline-block;
@@ -716,7 +719,7 @@
       background: linear-gradient(180deg, #E6CA65 0%, #B8860B 100%);
       color: #3B2404;
       font-family: var(--font-title);
-      font-size: clamp(18px, 3vw, 20px);
+      font-size: clamp(17px, 3vw, 20px);
       font-weight: 700;
       border: none;
       border-radius: 30px;
@@ -724,6 +727,7 @@
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
       transition: all 0.25s ease;
+      margin: 4px;
     }
 
     .gold-btn:hover {
@@ -740,7 +744,7 @@
 
     .victory-main-img {
       width: 100%;
-      max-height: 300px;
+      max-height: 280px;
       object-fit: contain;
       border-radius: 16px;
       border: 2px solid var(--gold);
@@ -762,7 +766,7 @@
 
   <div id="yt-audio-frame"></div>
 
-  <!-- Start Screen with Centered Kanok Card & Sparkles -->
+  <!-- Original Start Screen exactly as requested -->
   <div id="start-screen">
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
@@ -832,9 +836,7 @@
         <button class="cat-tab" data-cat="hats">หมวก/ชฎา</button>
         <button class="cat-tab" data-cat="accessories">เครื่องประดับ</button>
       </div>
-      <div class="vertical-item-grid" id="dress-items-container">
-        <!-- Rendered dynamically -->
-      </div>
+      <div class="vertical-item-grid" id="dress-items-container"></div>
     </div>
 
     <!-- 2. Pop Culture Frame Shop Panel -->
@@ -843,9 +845,7 @@
         <h3>🛍️ ร้านค้ากรอบรูปเหตุการณ์สำคัญรัตนโกสินทร์</h3>
         <button class="panel-close" id="shop-close-btn">✖</button>
       </div>
-      <div class="horizontal-item-grid" id="shop-items-container">
-        <!-- Rendered dynamically -->
-      </div>
+      <div class="horizontal-item-grid" id="shop-items-container"></div>
     </div>
   </div>
 
@@ -864,14 +864,17 @@
     </div>
   </div>
 
-  <!-- Final Victory Modal -->
+  <!-- Final Victory Modal with Index Home Button -->
   <div id="victory-modal" class="modal-overlay">
     <div class="modal-card victory-card">
       <img src="ending.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์นะคะ" class="victory-main-img" onerror="this.src='https://placehold.co/400x250/16243b/FFF8DC?text=Rattanakosin+Victory'">
       <h2 style="font-size:clamp(22px, 4vw, 32px); margin-bottom:8px;">ท่านสำเร็จบริบูรณ์แล้วเจ้าค่ะ!</h2>
       <div class="reward-banner" style="margin-bottom:10px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ สตางค์</div>
       <p id="victory-stats" style="text-align:center; margin-bottom:16px; font-weight:bold;"></p>
-      <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้งไหมเจ้าคะ (Play Again)</button>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+        <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้ง</button>
+        <button class="gold-btn interactive" id="home-index-btn" style="background: linear-gradient(180deg, #A82323 0%, #5A0F0F 100%); color: #FFF8DC;">🏠 กลับหน้าแรก (Index)</button>
+      </div>
     </div>
   </div>
 
@@ -911,7 +914,7 @@
       },
       {
         id: 5,
-        title: "ด่านที่ ⁵ : พระบารมีปกเกล้าและเกษตรทฤษฎีใหม่",
+        title: "ด่านที่ ๕ : พระบารมีปกเกล้าและเกษตรทฤษฎีใหม่",
         subtitle: "สืบสานศาสตร์พระราชา (รัชกาลที่ ๙)",
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_s6u0xls6u0xls6u0.jpg",
@@ -1027,7 +1030,6 @@
       }
     };
 
-    // Preload Assets
     const loadedImages = { clothes: {}, hats: {}, accessories: {} };
     Object.keys(ASSETS).forEach(cat => {
       loadedImages[cat] = {};
@@ -1293,7 +1295,14 @@
 
     const thaiFlowerParticles = [];
 
-    function drawThaiPikulFlower(ctx, cx, cy, size, alpha, rot, petalColor = '#D4AF37', centerColor = '#FFE066') {
+    const USER_PALETTES = [
+      { primary: '#D4AF37', secondary: '#8B1E1E', center: '#FFE066' }, // Player 1: Gold & Crimson
+      { primary: '#FF758F', secondary: '#5A0F0F', center: '#FFF099' }, // Player 2: Ruby Pink
+      { primary: '#00B4D8', secondary: '#03045E', center: '#90E0EF' }, // Player 3: Ocean Blue
+      { primary: '#70E000', secondary: '#386641', center: '#D8F3DC' }  // Player 4: Emerald Green
+    ];
+
+    function drawThaiPikulFlower(ctx, cx, cy, size, alpha, rot, palette = USER_PALETTES[0]) {
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(rot);
@@ -1314,8 +1323,8 @@
 
         const grad = ctx.createLinearGradient(0, 0, 0, -size);
         grad.addColorStop(0, '#FFFFFF');
-        grad.addColorStop(0.5, petalColor);
-        grad.addColorStop(1, '#8B1E1E');
+        grad.addColorStop(0.5, palette.primary);
+        grad.addColorStop(1, palette.secondary);
         ctx.fillStyle = grad;
         ctx.fill();
         ctx.strokeStyle = '#FFF099';
@@ -1326,21 +1335,21 @@
 
       ctx.beginPath();
       ctx.arc(0, 0, size * 0.3, 0, Math.PI * 2);
-      ctx.fillStyle = centerColor;
+      ctx.fillStyle = palette.center;
       ctx.fill();
-      ctx.strokeStyle = '#D4AF37';
+      ctx.strokeStyle = palette.primary;
       ctx.lineWidth = 1.5;
       ctx.stroke();
 
       ctx.beginPath();
       ctx.arc(0, 0, size * 0.14, 0, Math.PI * 2);
-      ctx.fillStyle = '#8B1E1E';
+      ctx.fillStyle = palette.secondary;
       ctx.fill();
 
       ctx.restore();
     }
 
-    function createFlowerTouch(x, y, color = '#D4AF37') {
+    function createFlowerTouch(x, y, paletteIdx = 0) {
       thaiFlowerParticles.push({
         x, y,
         size: 14,
@@ -1348,7 +1357,7 @@
         rot: Math.random() * Math.PI,
         rotSpeed: 0.05,
         alpha: 1.0,
-        color
+        palette: USER_PALETTES[paletteIdx % USER_PALETTES.length]
       });
     }
 
@@ -1364,18 +1373,19 @@
           continue;
         }
 
-        drawThaiPikulFlower(ctx, p.x, p.y, p.size, p.alpha, p.rot, p.color);
+        drawThaiPikulFlower(ctx, p.x, p.y, p.size, p.alpha, p.rot, p.palette);
       }
     }
 
     window.addEventListener('pointerdown', (e) => {
-      createFlowerTouch(e.clientX, e.clientY, '#D4AF37');
+      createFlowerTouch(e.clientX, e.clientY, 0);
     });
 
     let currentLevelIdx = 0;
     let totalSnapped = 0;
     let puzzlePieces = [];
     let gameStartTime = 0;
+    let levelCompletedTriggered = false;
 
     const gameStage = document.getElementById('game-stage');
     const puzzleBoard = document.getElementById('puzzle-board');
@@ -1394,6 +1404,7 @@
       puzzlePieces.forEach(p => p.el.remove());
       puzzlePieces = [];
       totalSnapped = 0;
+      levelCompletedTriggered = false;
 
       const stageW = window.innerWidth;
       const stageH = window.innerHeight;
@@ -1478,10 +1489,11 @@
         updateMoneyUI();
 
         AudioEngine.playSnap();
-        createFlowerTouch(pieceObj.x + pieceObj.w / 2, pieceObj.y + pieceObj.h / 2, '#D4AF37');
+        createFlowerTouch(pieceObj.x + pieceObj.w / 2, pieceObj.y + pieceObj.h / 2, 0);
 
-        if (totalSnapped === puzzlePieces.length) {
-          setTimeout(levelCompleted, 500);
+        if (totalSnapped === puzzlePieces.length && !levelCompletedTriggered) {
+          levelCompletedTriggered = true;
+          setTimeout(levelCompleted, 400);
         }
       }
     }
@@ -1502,7 +1514,7 @@
         startPieceX = pieceObj.x;
         startPieceY = pieceObj.y;
 
-        createFlowerTouch(clientX, clientY, '#D4AF37');
+        createFlowerTouch(clientX, clientY, 0);
 
         window.addEventListener('pointermove', onPointerMove);
         window.addEventListener('pointerup', onPointerUp);
@@ -1539,6 +1551,7 @@
     const victoryModal = document.getElementById('victory-modal');
     const victoryStats = document.getElementById('victory-stats');
     const restartGameBtn = document.getElementById('restart-game-btn');
+    const homeIndexBtn = document.getElementById('home-index-btn');
 
     function levelCompleted() {
       AudioEngine.playVictory();
@@ -1554,7 +1567,9 @@
     }
 
     nextLevelBtn.addEventListener('click', () => {
-      // แก้ไขบัค: ตรวจสอบให้มั่นใจว่าเมื่อต่อเสร็จครบแล้ว ปุ่มข้ามด่านจะทำงานได้ทันที
+      if (totalSnapped < puzzlePieces.length) {
+        return; 
+      }
       infoModal.classList.remove('active');
       if (currentLevelIdx < LEVELS.length - 1) {
         currentLevelIdx++;
@@ -1575,6 +1590,10 @@
       initLevel(0);
     });
 
+    homeIndexBtn.addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
     const videoElement = document.getElementById('webcam-video');
     const canvasElement = document.getElementById('ar-canvas');
     const frameCanvas = document.getElementById('frame-overlay');
@@ -1583,7 +1602,7 @@
 
     let poseResults = null;
     let handResults = null;
-    const arHeldPieces = {}; // รองรับการจับจิ๊กซอว์หลายมือพร้อมกัน (Multi-hand puzzle dragging)
+    const arHeldPieces = {}; 
     let lastArClickTime = 0;
     let isGameRunning = false;
 
@@ -1593,8 +1612,8 @@
     pose.setOptions({
       modelComplexity: 1,
       smoothLandmarks: true,
-      minDetectionConfidence: 0.55,
-      minTrackingConfidence: 0.55
+      minDetectionConfidence: 0.6,
+      minTrackingConfidence: 0.6
     });
     pose.onResults((results) => { poseResults = results; });
 
@@ -1602,18 +1621,18 @@
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
     });
     hands.setOptions({
-      maxNumHands: 4, // รองรับหลายมือพร้อมกันสูงสุด 4 มือ
+      maxNumHands: 4, 
       modelComplexity: 1,
-      minDetectionConfidence: 0.6,
-      minTrackingConfidence: 0.6
+      minDetectionConfidence: 0.65,
+      minTrackingConfidence: 0.65
     });
     hands.onResults((results) => { handResults = results; });
 
     function triggerUniversalARClick(x, y) {
       const now = Date.now();
-      if (now - lastArClickTime < 400) return;
+      if (now - lastArClickTime < 450) return;
 
-      createFlowerTouch(x, y, '#FF758F');
+      createFlowerTouch(x, y, 1);
 
       const promptBtn = document.getElementById('confirm-start-btn');
       if (promptBtn && promptBtn.offsetParent !== null) {
@@ -1629,20 +1648,15 @@
       if (el) {
         const clickTarget = el.closest('button, .ar-touch-item, .btn-top, .btn-icon, .panel-close, .cat-tab, .gold-btn');
         if (clickTarget) {
+          if (clickTarget.id === 'next-level-btn' && totalSnapped < puzzlePieces.length) {
+            return; 
+          }
           clickTarget.click();
           lastArClickTime = now;
           return;
         }
       }
     }
-
-    // กำหนดสีดอกไม้ประจำผู้เล่นแต่ละมือไม่ให้ซ้ำกันและดูสวยงาม
-    const HAND_COLORS = [
-      { petal: '#D4AF37', center: '#FFF099' }, // สีทองหลวง
-      { petal: '#FF758F', center: '#FFE3E8' }, // สีชมพทดับทิม
-      { petal: '#00B4D8', center: '#90E0EF' }, // สีฟ้าคราม
-      { petal: '#70E000', center: '#D8F3DC' }  // สีเขียวมรกต
-    ];
 
     function onFrame() {
       if (canvasElement.width !== window.innerWidth || canvasElement.height !== window.innerHeight) {
@@ -1668,7 +1682,6 @@
         }
       }
 
-      // AR Fitting Costume Overlay
       if (poseResults && poseResults.poseLandmarks) {
         const lm = poseResults.poseLandmarks;
         const leftShoulder = lm[11];
@@ -1734,7 +1747,6 @@
         }
       }
 
-      // Multi-User Hand Tracking & Interaction
       if (handResults && handResults.multiHandLandmarks) {
         handResults.multiHandLandmarks.forEach((landmarks, handIndex) => {
           const indexTip = landmarks[8];
@@ -1745,11 +1757,11 @@
           const tx = (1 - thumbTip.x) * w;
           const ty = thumbTip.y * h;
 
-          const colorTheme = HAND_COLORS[handIndex % HAND_COLORS.length];
-          drawThaiPikulFlower(canvasCtx, ix, iy, 16, 0.95, 0, colorTheme.petal, colorTheme.center);
+          const palette = USER_PALETTES[handIndex % USER_PALETTES.length];
+          drawThaiPikulFlower(canvasCtx, ix, iy, 16, 0.95, 0, palette);
 
           const pinchDist = Math.hypot(ix - tx, iy - ty);
-          const isPinching = pinchDist < 48;
+          const isPinching = pinchDist < 45;
 
           if (isPinching) {
             triggerUniversalARClick((ix + tx) / 2, (iy + ty) / 2);
@@ -1759,7 +1771,6 @@
             if (isPinching) {
               if (!arHeldPieces[handIndex]) {
                 for (const p of puzzlePieces) {
-                  // ป้องกันไม่ให้หลายมือแย่งชิ้นส่วนเดียวกัน
                   const isAlreadyHeld = Object.values(arHeldPieces).includes(p);
                   if (!p.isSnapped && !isAlreadyHeld && ix >= p.x && ix <= p.x + p.w && iy >= p.y && iy <= p.y + p.h) {
                     arHeldPieces[handIndex] = p;
