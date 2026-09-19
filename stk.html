@@ -835,27 +835,14 @@
       .victory-card { max-width: 94% !important; padding: 16px 14px !important; }
       .victory-main-img { max-height: 150px !important; }
     }
-
-    @media (orientation: landscape) and (max-height: 500px) {
-      header { padding: 4px 12px; }
-      #minimap-wrapper { top: 50px; right: 10px; padding: 4px; }
-      #minimap-img { width: 110px; height: 70px; }
-      .modal-card { padding: 12px 18px; gap: 12px; }
-      .victory-card { max-height: 96vh; padding: 10px 18px !important; gap: 4px !important; }
-      .victory-main-img { max-height: 110px !important; margin-bottom: 2px !important; }
-      .victory-card h2 { font-size: 18px !important; }
-      .victory-card .reward-banner { padding: 3px 10px !important; margin-bottom: 3px !important; }
-      .victory-card p#victory-stats { margin-bottom: 6px !important; }
-      .victory-card .gold-btn { font-size: 13.5px !important; padding: 6px 18px !important; }
-    }
   </style>
 </head>
 <body>
 
-  <!-- Background Music (YouTube IFrame: รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้) -->
+  <!-- Background Music (YouTube IFrame) -->
   <div id="yt-audio-frame"></div>
 
-  <!-- Start Screen with Centered Kanok Card & Sparkles -->
+  <!-- Start Screen -->
   <div id="start-screen">
     <div class="start-card" id="start-main-card">
       <span class="badge-sub">เกมการศึกษาประวัติศาสตร์แนว AR</span>
@@ -886,7 +873,7 @@
     <canvas id="frame-overlay"></canvas>
   </div>
 
-  <!-- Jigsaw Game Stage (4 Pieces) -->
+  <!-- Jigsaw Game Stage -->
   <div id="game-stage">
     <div id="puzzle-board" class="puzzle-target-board"></div>
   </div>
@@ -914,7 +901,7 @@
       <img id="minimap-img" src="" alt="Thumbnail">
     </div>
 
-    <!-- 1. LEFT SIDE Dressing Panel -->
+    <!-- LEFT SIDE Dressing Panel -->
     <div id="dressing-panel" class="interactive">
       <div class="panel-header">
         <h3>👗 ห้องเครื่องแต่งกาย</h3>
@@ -928,7 +915,7 @@
       <div class="vertical-item-grid" id="dress-items-container"></div>
     </div>
 
-    <!-- 2. Pop Culture Frame Shop Panel -->
+    <!-- Shop Panel -->
     <div id="shop-panel" class="interactive">
       <div class="panel-header">
         <h3>🛍️ ร้านค้ากรอบรูปเหตุการณ์สำคัญรัตนโกสินทร์</h3>
@@ -938,7 +925,7 @@
     </div>
   </div>
 
-  <!-- History Modal with Large Finished Stage Image on the Right -->
+  <!-- History Modal -->
   <div id="info-modal" class="modal-overlay">
     <div class="modal-card">
       <div class="modal-content-left">
@@ -962,15 +949,15 @@
       <p id="victory-stats" style="text-align:center; margin-bottom:12px; font-weight:bold;"></p>
       <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้งไหมเจ้าคะ (Play Again)</button>
       <button class="gold-btn interactive" id="back-index-btn" style="margin-top: 8px; background: linear-gradient(180deg, #2A3B53 0%, #101F33 100%); color: var(--gold-light); border: 1.5px solid var(--gold);">
-        🏠 กลับหน้าหลัก (stk.html)
+        🏠 กลับหน้าหลัก (index.html)
       </button>
     </div>
   </div>
 
   <script>
     /* =========================================================
-       0. GAME STATE & TRANSITION CONTROL SYSTEM
-       ========================================================= */
+        0. GAME STATE & TRANSITION CONTROL SYSTEM
+        ========================================================= */
     const GAME_STATE = {
       START: 'START',
       PLAYING: 'PLAYING',
@@ -996,8 +983,8 @@
     }
 
     /* =========================================================
-       1. HISTORICAL STAGES (5 Historical Levels - 4 Pieces: 2x2)
-       ========================================================= */
+        1. HISTORICAL STAGES (5 Levels - 4 Pieces: 2x2)
+        ========================================================= */
     const LEVELS = [
       {
         id: 1,
@@ -1042,8 +1029,8 @@
     ];
 
     /* =========================================================
-       2. AR COSTUME & ITEM ASSETS
-       ========================================================= */
+        2. AR COSTUME & ITEM ASSETS
+        ========================================================= */
     const ASSETS = {
       clothes: {
         none: { name: 'ไม่มี' },
@@ -1177,8 +1164,8 @@
     let userMoney = 100;
 
     /* =========================================================
-       3. POP CULTURE FRAMES SHOP
-       ========================================================= */
+        3. POP CULTURE FRAMES SHOP
+        ========================================================= */
     const SHOP_FRAMES = {
       none: { name: 'ไม่มี', price: 0, owned: true },
       frame1: { name: 'กรอบวัดพระแก้ว', price: 60, owned: false, icon: '🛕', imgSrc: '1.png' },
@@ -1199,8 +1186,8 @@
     });
 
     /* =========================================================
-       4. LEFT DRESSING & SHOP PANELS (Interactive)
-       ========================================================= */
+        4. DRESSING & SHOP PANELS
+        ========================================================= */
     const dressingPanel = document.getElementById('dressing-panel');
     const dressToggleBtn = document.getElementById('dress-toggle-btn');
     const dressCloseBtn = document.getElementById('dress-close-btn');
@@ -1352,8 +1339,8 @@
     renderDressingItems();
 
     /* =========================================================
-       5. WEB AUDIO SYNTHESIZER & AI SPEECH SYNTHESIS
-       ========================================================= */
+        5. AUDIO SYNTHESIZER & SPEECH
+        ========================================================= */
     const AudioEngine = {
       ctx: null,
       init() {
@@ -1402,8 +1389,8 @@
     };
 
     /* =========================================================
-       6. YOUTUBE BGM PLAYER ("รัตนโกสินทร์ - ชมพู ฟรุ๊ตตี้")
-       ========================================================= */
+        6. YOUTUBE BGM PLAYER
+        ========================================================= */
     let ytPlayer = null;
     let isMuted = false;
 
@@ -1436,8 +1423,8 @@
     });
 
     /* =========================================================
-       7. GOLDEN THAI PIKUL FLOWER TOUCH EFFECT (ดอกพิกุลทอง 8 กลีบ)
-       ========================================================= */
+        7. GOLDEN THAI PIKUL FLOWER TOUCH EFFECT (ดอกพิกุลทอง 8 กลีบ)
+        ========================================================= */
     const PLAYER_COLORS = [
       '#FFD166', // ทองอร่าม
       '#7DD3FC', // เพทายฟ้า
@@ -1527,8 +1514,8 @@
     });
 
     /* =========================================================
-       8. JIGSAW PUZZLE SYSTEM (ต่อติดง่าย + แม่เหล็กดูดล็อกอัตโนมัติ)
-       ========================================================= */
+        8. JIGSAW PUZZLE SYSTEM
+        ========================================================= */
     let totalSnapped = 0;
     let puzzlePieces = [];
     let gameStartTime = 0;
@@ -1674,7 +1661,6 @@
             isSnapped: false,
             isHeld: false,
             heldBy: null,
-            nearSnapFrames: 0,
             rewardGiven: false
           };
 
@@ -1684,14 +1670,13 @@
       }
     }
 
-    // เพิ่มระยะ Snap เป็น 48% เพื่อให้ต่อติดผ่านด่านได้ง่ายยิ่งขึ้น
     function checkSnap(pieceObj) {
       if (pieceObj.isSnapped) return;
       const dx = pieceObj.x - pieceObj.targetX;
       const dy = pieceObj.y - pieceObj.targetY;
       const dist = Math.hypot(dx, dy);
 
-      const snapDistance = Math.min(pieceObj.w, pieceObj.h) * 0.48;
+      const snapDistance = Math.min(pieceObj.w, pieceObj.h) * 0.45;
 
       if (dist < snapDistance) {
         pieceObj.x = pieceObj.targetX;
@@ -1779,8 +1764,8 @@
     }
 
     /* =========================================================
-       9. MODAL & LEVEL TRANSITIONS
-       ========================================================= */
+        9. MODAL & LEVEL TRANSITIONS
+        ========================================================= */
     const infoModal = document.getElementById('info-modal');
     const modalTitle = document.getElementById('modal-title');
     const modalDesc = document.getElementById('modal-desc');
@@ -1852,12 +1837,12 @@
     });
 
     backIndexBtn.addEventListener('click', () => {
-      window.location.href = 'stk.html';
+      window.location.href = 'index.html';
     });
 
     /* =========================================================
-       10. MEDIAPIPE MULTI-HAND TRACKING & AR INTERACTION
-       ========================================================= */
+        10. MEDIAPIPE MULTI-HAND TRACKING & AR
+        ========================================================= */
     const videoElement = document.getElementById('webcam-video');
     const canvasElement = document.getElementById('ar-canvas');
     const frameCanvas = document.getElementById('frame-overlay');
@@ -1870,9 +1855,9 @@
     const handSessions = new Map();
     const HAND_TIMEOUT = 500;
 
-    const PINCH_START_DISTANCE = 0.075;
-    const PINCH_RELEASE_DISTANCE = 0.100;
-    const PINCH_CONFIRM_FRAMES = 1;
+    const PINCH_START_DISTANCE = 0.070;
+    const PINCH_RELEASE_DISTANCE = 0.095;
+    const PINCH_CONFIRM_FRAMES = 2;
 
     function getStableHandId(handIndex, handedness) {
       return `${handedness}-${handIndex}`;
@@ -1929,17 +1914,32 @@
     hands.setOptions({
       maxNumHands: 4,
       modelComplexity: isMobile ? 0 : 1,
-      minDetectionConfidence: 0.55,
-      minTrackingConfidence: 0.55
+      minDetectionConfidence: 0.58,
+      minTrackingConfidence: 0.58
     });
     hands.onResults((results) => { handResults = results; });
 
-    // วาดเคอร์เซอร์จับนิ้ว AR เป็น "ดอกพิกุลทอง" ๘ กลีบสวยงามสมูท
     function drawHandCursor(ctx, x, y, isPinching, color) {
       ctx.save();
-      const flowerSize = isPinching ? 24 : 16;
-      const rot = performance.now() * 0.002;
-      drawThaiPikulFlower(ctx, x, y, flowerSize, 0.95, rot, color);
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(x, y, isPinching ? 18 : 12, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (isPinching) {
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.arc(x, y, 24, 0, Math.PI * 2);
+        ctx.stroke();
+      }
       ctx.restore();
     }
 
@@ -2051,7 +2051,7 @@
             ? handResults.multiHandedness[i].score
             : 1.0;
 
-          if (handScore < 0.45) continue;
+          if (handScore < 0.50) continue;
 
           const handId = getStableHandId(i, handedness);
 
@@ -2081,7 +2081,7 @@
           const targetX = (1 - indexTip.x) * w;
           const targetY = indexTip.y * h;
 
-          const smoothFactor = isMobile ? 0.4 : 0.5;
+          const smoothFactor = isMobile ? 0.35 : 0.45;
           session.x += (targetX - session.x) * smoothFactor;
           session.y += (targetY - session.y) * smoothFactor;
 
@@ -2110,7 +2110,7 @@
           if (gameState === GAME_STATE.PLAYING) {
             if (session.isPinching) {
               if (!session.heldPiece) {
-                const grabTolerance = 36;
+                const grabTolerance = 35;
                 for (const p of puzzlePieces) {
                   if (!p.isSnapped && p.heldBy === null) {
                     if (session.x >= (p.x - grabTolerance) && session.x <= (p.x + p.w + grabTolerance) &&
@@ -2131,9 +2131,8 @@
                 session.heldPiece.el.style.left = `${session.heldPiece.x}px`;
                 session.heldPiece.el.style.top = `${session.heldPiece.y}px`;
 
-                // ระบบแม่เหล็กพลังดูดอัตโนมัติเมื่อใกล้เคียง
                 const distToTarget = Math.hypot(session.heldPiece.x - session.heldPiece.targetX, session.heldPiece.y - session.heldPiece.targetY);
-                if (distToTarget < Math.min(session.heldPiece.w, session.heldPiece.h) * 0.45) {
+                if (distToTarget < Math.min(session.heldPiece.w, session.heldPiece.h) * 0.40) {
                   session.heldPiece.x = session.heldPiece.targetX;
                   session.heldPiece.y = session.heldPiece.targetY;
                   session.heldPiece.el.style.left = `${session.heldPiece.x}px`;
@@ -2173,8 +2172,8 @@
     }
 
     /* =========================================================
-       11. CAMERA INITIALIZATION & START FLOW
-       ========================================================= */
+        11. CAMERA INITIALIZATION & START FLOW
+        ========================================================= */
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
     const startMainCard = document.getElementById('start-main-card');
