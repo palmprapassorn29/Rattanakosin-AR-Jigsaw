@@ -748,25 +748,56 @@
       box-shadow: 0 6px 20px rgba(255, 240, 153, 0.8);
     }
 
-    /* Final Victory Modal Custom Card */
+    /* Final Victory Modal Custom Card (ปรับขนาดให้กะทัดรัด สมส่วน ไม่ล้นจอ) */
     .victory-card {
-      max-width: 860px;
-      width: 94%;
+      max-width: 480px !important;
+      width: 88% !important;
+      max-height: 90vh;
+      overflow-y: auto;
       flex-direction: column !important;
       text-align: center !important;
-      padding: 24px 28px 28px 28px !important;
+      padding: 20px 22px 22px 22px !important;
       align-items: center !important;
+      gap: 8px !important;
+      border-radius: 20px !important;
     }
 
     .victory-main-img {
       width: 100%;
-      max-height: 340px;
+      max-width: 320px;
+      max-height: 190px !important;
       object-fit: contain;
-      border-radius: 16px;
-      border: 2px solid var(--gold);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 20px rgba(212, 175, 55, 0.5);
-      margin-bottom: 16px;
+      border-radius: 12px !important;
+      border: 1.5px solid var(--gold);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6), 0 0 15px rgba(212, 175, 55, 0.4);
+      margin-bottom: 6px !important;
       display: block;
+    }
+
+    .victory-card h2 {
+      font-size: 23px !important;
+      margin-bottom: 2px !important;
+    }
+
+    .victory-card .reward-banner {
+      font-size: 13.5px !important;
+      padding: 5px 14px !important;
+      margin-bottom: 6px !important;
+    }
+
+    .victory-card p#victory-stats {
+      font-size: 13px !important;
+      line-height: 1.45 !important;
+      margin-bottom: 12px !important;
+      font-weight: 400 !important;
+    }
+
+    .victory-card .gold-btn {
+      font-size: 16px !important;
+      padding: 9px 24px !important;
+      border-radius: 22px !important;
+      width: auto;
+      max-width: 90%;
     }
 
     #yt-audio-frame {
@@ -791,7 +822,6 @@
       .modal-card { flex-direction: column; padding: 20px 16px; max-height: 90vh; overflow-y: auto; }
       .modal-jigsaw-right { flex: 0 0 auto; width: 100%; }
       .modal-jigsaw-right img { max-height: 150px; }
-      .victory-main-img { max-height: 200px; }
       .start-card { padding: 28px 20px; }
       #start-screen h1 { font-size: 26px; }
       .gold-btn-start { font-size: 17px; padding: 12px 28px; }
@@ -802,6 +832,8 @@
       .btn-top span { display: none; }
       #minimap-wrapper { top: auto; bottom: 12px; right: 10px; }
       #minimap-img { width: 100px; height: 65px; }
+      .victory-card { max-width: 94% !important; padding: 16px 14px !important; }
+      .victory-main-img { max-height: 150px !important; }
     }
 
     @media (orientation: landscape) and (max-height: 500px) {
@@ -809,7 +841,12 @@
       #minimap-wrapper { top: 50px; right: 10px; padding: 4px; }
       #minimap-img { width: 110px; height: 70px; }
       .modal-card { padding: 12px 18px; gap: 12px; }
-      .victory-main-img { max-height: 140px; }
+      .victory-card { max-height: 96vh; padding: 10px 18px !important; gap: 4px !important; }
+      .victory-main-img { max-height: 110px !important; margin-bottom: 2px !important; }
+      .victory-card h2 { font-size: 18px !important; }
+      .victory-card .reward-banner { padding: 3px 10px !important; margin-bottom: 3px !important; }
+      .victory-card p#victory-stats { margin-bottom: 6px !important; }
+      .victory-card .gold-btn { font-size: 13.5px !important; padding: 6px 18px !important; }
     }
   </style>
 </head>
@@ -925,11 +962,11 @@
   <div id="victory-modal" class="modal-overlay">
     <div class="modal-card victory-card">
       <img src="ending.jpg" alt="ขอให้สนุกกับวิชาประวัติศาสตร์นะคะ" class="victory-main-img">
-      <h2 style="font-size:32px; margin-bottom:8px;">ท่านสำเร็จบริบูรณ์แล้วเจ้าค่ะ!</h2>
-      <div class="reward-banner" style="margin-bottom:10px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ สตางค์</div>
-      <p id="victory-stats" style="text-align:center; margin-bottom:16px; font-weight:bold;"></p>
+      <h2 style="font-size:24px; margin-bottom:4px;">ท่านสำเร็จบริบูรณ์แล้วเจ้าค่ะ!</h2>
+      <div class="reward-banner" style="margin-bottom:8px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ สตางค์</div>
+      <p id="victory-stats" style="text-align:center; margin-bottom:12px; font-weight:bold;"></p>
       <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้งไหมเจ้าคะ (Play Again)</button>
-      <button class="gold-btn interactive" id="back-index-btn" style="margin-top: 12px; background: linear-gradient(180deg, #2A3B53 0%, #101F33 100%); color: var(--gold-light); border: 1.5px solid var(--gold);">
+      <button class="gold-btn interactive" id="back-index-btn" style="margin-top: 8px; background: linear-gradient(180deg, #2A3B53 0%, #101F33 100%); color: var(--gold-light); border: 1.5px solid var(--gold);">
         🏠 กลับหน้าหลัก (index.html)
       </button>
     </div>
@@ -1839,9 +1876,9 @@
     const HAND_TIMEOUT = 500;
 
     // ปรับระยะการจีบให้ติดง่าย ไม่หลุดมือ และขยายระยะ Hysteresis ปล่อย
-    const PINCH_START_DISTANCE = 0.065;   // จีบติดง่ายขึ้น
-    const PINCH_RELEASE_DISTANCE = 0.090; // ถือมั่นคง ไม่หลุดมือ
-    const PINCH_CONFIRM_FRAMES = 2;       // ยืนยันไวขึ้น ตอบสนองเร็ว
+    const PINCH_START_DISTANCE = 0.065;
+    const PINCH_RELEASE_DISTANCE = 0.090;
+    const PINCH_CONFIRM_FRAMES = 2;
 
     function getStableHandId(handIndex, handedness) {
       return `${handedness}-${handIndex}`;
