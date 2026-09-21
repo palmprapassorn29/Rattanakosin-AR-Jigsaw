@@ -783,14 +783,15 @@
       background: linear-gradient(180deg, #E6CA65 0%, #B8860B 100%);
       color: #3B2404;
       font-family: var(--font-title);
-      font-size: 20px;
+      font-size: 22px; /* ขยายฟอนต์ให้ใหญ่ขึ้น กดง่าย */
       font-weight: 700;
       border: none;
-      border-radius: 30px;
-      padding: 12px 36px;
+      border-radius: 35px;
+      padding: 16px 44px; /* เพิ่มพื้นที่ปุ่มให้กดง่ายขึ้นมาก */
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
       transition: all 0.25s ease;
+      min-height: 60px; /* เพิ่มความสูงขั้นต่ำให้สัมผัสง่าย */
     }
 
     .gold-btn:hover {
@@ -842,11 +843,11 @@
     }
 
     .victory-card .gold-btn {
-      font-size: 16px !important;
-      padding: 9px 24px !important;
+      font-size: 18px !important;
+      padding: 12px 28px !important;
       border-radius: 22px !important;
       width: auto;
-      max-width: 90%;
+      max-width: 95%;
     }
 
     #yt-audio-frame {
@@ -1800,7 +1801,8 @@
       const dy = pieceObj.y - pieceObj.targetY;
       const dist = Math.hypot(dx, dy);
 
-      const snapDistance = Math.min(pieceObj.w, pieceObj.h) * 0.52; 
+      // ขยายรัศมีการดูดเป็น 1.2 เท่า (ดูดเข้าช่องง่ายมาก ไม่ต้องลากเป๊ะ)
+      const snapDistance = Math.min(pieceObj.w, pieceObj.h) * 1.2; 
 
       if (dist < snapDistance) {
         pieceObj.x = pieceObj.targetX;
@@ -1955,6 +1957,9 @@
 
     function showQuizModal() {
       gameState = GAME_STATE.QUIZ;
+      // ล้างข้อมูล AR Cursors ตอนตอบคำถามเพื่อให้ผู้เล่นเอามือจิ้มจอเท่านั้น (ลดความหน่วง & ป้องกันกดผิด)
+      handSessions.clear(); 
+      
       const qObj = QUIZ_QUESTIONS[currentLevelIdx];
       document.getElementById('quiz-question-text').textContent = qObj.q;
       const opts = document.getElementById('quiz-options-container');
@@ -2066,7 +2071,8 @@
           continue;
         }
 
-        if (el.matches('#confirm-start-btn, #confirm-continue-btn, #restart-game-btn, #back-index-btn, .quiz-option, .ar-touch-item, .btn-top, .btn-icon, .cat-tab, .panel-close')) {
+        // ยกเลิก .quiz-option ออกจากเงื่อนไขนี้ เพื่อบังคับให้ใช้มือจิ้มจอเวลาตอบคำถามเท่านั้น ป้องกัน AR ไปเลื่อนโดน
+        if (el.matches('#confirm-start-btn, #confirm-continue-btn, #restart-game-btn, #back-index-btn, .ar-touch-item, .btn-top, .btn-icon, .cat-tab, .panel-close')) {
           return el;
         }
       }
@@ -2362,8 +2368,9 @@
                 session.heldPiece.el.style.left = `${session.heldPiece.x}px`;
                 session.heldPiece.el.style.top = `${session.heldPiece.y}px`;
 
+                // รัศมีดูด 1.2 ดูดง่ายขึ้น
                 const distToTarget = Math.hypot(session.heldPiece.x - session.heldPiece.targetX, session.heldPiece.y - session.heldPiece.targetY);
-                if (distToTarget < Math.min(session.heldPiece.w, session.heldPiece.h) * 0.52) {
+                if (distToTarget < Math.min(session.heldPiece.w, session.heldPiece.h) * 1.2) {
                   session.heldPiece.x = session.heldPiece.targetX;
                   session.heldPiece.y = session.heldPiece.targetY;
                   session.heldPiece.el.style.left = `${session.heldPiece.x}px`;
@@ -2446,10 +2453,14 @@
             if (isInferencing) return; 
             isInferencing = true;
             try {
+              // ปิดการวิเคราะห์ AR ตอนตอบคำถามชั่วคราว เพื่อความลื่นไหลระดับ 100%
+              if (gameState === GAME_STATE.QUIZ) return;
+
               await hands.send({ image: videoElement });
               
               poseFrameCounter++;
-              if (poseFrameCounter % 3 === 0) {
+              // ลดความถี่การวิเคราะห์ท่าทางลง (เป็น 1 ใน 4 เฟรม) ทำให้เฟรมเรตเกมสูงขึ้นมาก
+              if (poseFrameCounter % 4 === 0) {
                 await pose.send({ image: videoElement });
               }
             } finally {
