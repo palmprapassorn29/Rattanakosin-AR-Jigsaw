@@ -261,6 +261,31 @@
       color: var(--gold-light);
     }
 
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .btn-secondary {
+      background: linear-gradient(180deg, #2A3B53 0%, #101F33 100%);
+      color: var(--gold-light);
+      border: 1.5px solid var(--gold);
+      font-family: var(--font-title);
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 30px;
+      padding: 10px 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      transition: all 0.25s ease;
+    }
+    
+    .btn-secondary:hover {
+      transform: scale(1.04);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+    }
+
     /* UI Overlay */
     #ui-container {
       position: absolute;
@@ -635,7 +660,7 @@
       z-index: 8 !important;
     }
 
-    /* Modals (แก้ไขแล้ว - ป้องกันการเผลอกดโดนปุ่มล่องหน) */
+    /* Modals */
     .modal-overlay {
       position: absolute;
       top: 0;
@@ -649,14 +674,14 @@
       align-items: center;
       z-index: 100;
       opacity: 0;
-      visibility: hidden; /* <--- เพิ่มตัวนี้เพื่อซ่อนปุ่มอย่างสมบูรณ์ */
+      visibility: hidden;
       pointer-events: none;
       transition: opacity 0.35s ease, visibility 0.35s ease;
     }
 
     .modal-overlay.active {
       opacity: 1;
-      visibility: visible; /* <--- ให้แสดงผลและกดได้ตอน Active เท่านั้น */
+      visibility: visible;
       pointer-events: auto;
     }
 
@@ -712,6 +737,34 @@
       color: var(--ivory);
       margin-bottom: 22px;
       font-weight: 300;
+    }
+    
+    /* Quiz Styles */
+    .quiz-card {
+      flex-direction: column !important;
+      text-align: center !important;
+      max-width: 600px !important;
+      padding: 35px 30px !important;
+    }
+    .quiz-option {
+      display: block;
+      width: 100%;
+      padding: 14px 20px;
+      margin-bottom: 12px;
+      background: rgba(10, 25, 47, 0.8);
+      border: 1.5px solid var(--gold);
+      border-radius: 12px;
+      color: var(--gold-light);
+      font-size: 16px;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+    .quiz-option:hover {
+      background: rgba(139, 30, 30, 0.85);
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+      transform: scale(1.02);
     }
 
     .reward-banner {
@@ -821,6 +874,7 @@
       .start-card { padding: 28px 20px; }
       #start-screen h1 { font-size: 26px; }
       .gold-btn-start { font-size: 17px; padding: 12px 28px; }
+      .quiz-card { max-width: 95% !important; }
     }
 
     @media (max-width: 480px) {
@@ -830,6 +884,7 @@
       #minimap-img { width: 100px; height: 65px; }
       .victory-card { max-width: 94% !important; padding: 16px 14px !important; }
       .victory-main-img { max-height: 150px !important; }
+      .button-group { flex-direction: column; width: 100%; }
     }
 
     @media (orientation: landscape) and (max-height: 500px) {
@@ -868,9 +923,15 @@
     <div class="prompt-box">
       <h2>✨ กล้องพร้อมแล้วหนาท่านผู้น่ารัก✨</h2>
       <p>ยื่นนิ้วชี้หรือจีบนิ้วกลางอากาศเพื่อกดปุ่มด้านล่าง หรือใช้นิ้วสัมผัสหน้าจอได้ทุกจุด</p>
-      <button class="gold-btn interactive" id="confirm-start-btn">
-        🌸 เริ่มท่องมิติเวลา (Start Playing)
-      </button>
+      
+      <div class="button-group">
+        <button class="gold-btn interactive" id="confirm-continue-btn" style="display: none;">
+          🌸 เล่นต่อจากเดิม (Continue)
+        </button>
+        <button class="gold-btn interactive" id="confirm-start-btn">
+          🌸 เริ่มเกมใหม่แต่ต้น (Start Over)
+        </button>
+      </div>
     </div>
   </div>
 
@@ -949,6 +1010,17 @@
     </div>
   </div>
 
+  <!-- Quiz Modal (Added for questions between levels) -->
+  <div id="quiz-modal" class="modal-overlay">
+    <div class="modal-card quiz-card">
+      <h2 style="margin-bottom: 20px;">ตอบคำถามเพื่อไปต่อ</h2>
+      <p id="quiz-question-text" style="font-size: 18px; font-weight: bold; margin-bottom: 25px;"></p>
+      <div id="quiz-options-container" style="width: 100%;">
+        <!-- Quiz options will be injected here -->
+      </div>
+    </div>
+  </div>
+
   <!-- Final Victory Modal with Play Again Button -->
   <div id="victory-modal" class="modal-overlay">
     <div class="modal-card victory-card">
@@ -957,7 +1029,6 @@
       <div class="reward-banner" style="margin-bottom:8px;">ได้รับรางวัลใหญ่: 💵 +๓๐๐ สตางค์</div>
       <p id="victory-stats" style="text-align:center; margin-bottom:12px; font-weight:bold;"></p>
       <button class="gold-btn interactive" id="restart-game-btn">🔄 เล่นอีกครั้งไหมเจ้าคะ (Play Again)</button>
-      <!-- แก้ไขลิงก์เป็น stk.html ตามไฟล์หน้าเว็บปัจจุบัน -->
       <button class="gold-btn interactive" id="back-index-btn" style="margin-top: 8px; background: linear-gradient(180deg, #2A3B53 0%, #101F33 100%); color: var(--gold-light); border: 1.5px solid var(--gold);">
         🏠 กลับหน้าหลัก (stk.html)
       </button>
@@ -972,6 +1043,7 @@
       START: 'START',
       PLAYING: 'PLAYING',
       LEVEL_COMPLETE: 'LEVEL_COMPLETE',
+      QUIZ: 'QUIZ',
       VICTORY: 'VICTORY'
     };
 
@@ -985,6 +1057,10 @@
     if (isNaN(currentLevelIdx) || currentLevelIdx < 0 || currentLevelIdx >= 5) { // LEVELS.length = 5
       currentLevelIdx = 0;
     }
+
+    // โหลดคะแนนควิซล่าสุดจาก LocalStorage
+    let savedQuizScore = localStorage.getItem('arJigsawQuizScore');
+    let userQuizScore = savedQuizScore !== null ? parseInt(savedQuizScore, 10) : 0;
 
     let lastLevelActionTime = 0;
     const LEVEL_ACTION_COOLDOWN = 1000;
@@ -1041,6 +1117,37 @@
         rows: 2, cols: 2,
         image: "Gemini_Generated_Image_s6u0xls6u0xls6u0.jpg",
         history: "✦ สตอรี่ประวัติศาสตร์: พระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร ทรงอุทิศพระวรกายเพื่อปวงชน พระราชทานโครงการพระราชดำริกว่า ๔,๐๐๐ โครงการ อาทิ ฝนหลวง กังหันน้ำชัยพัฒนา และหลักปรัชญาเศรษฐกิจพอเพียง เพื่อความอยู่ดีกินดีอย่างยั่งยืน"
+      }
+    ];
+
+    /* =========================================================
+       1.5 QUIZ QUESTIONS (5 Questions)
+       ========================================================= */
+    const QUIZ_QUESTIONS = [
+      {
+        q: "พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (รัชกาลที่ 1) ทรงสร้างสิ่งใดขึ้นมาเพื่อเป็นศูนย์รวมจิตใจของราษฎร",
+        choices: ["ก. วัดพระแก้ว", "ข. รถไฟฟ้า", "ค. ค่ายทหาร", "ง. สวนสนุก"],
+        ans: 0
+      },
+      {
+        q: "พระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว (รัชกาลที่ 3) ทรงสร้างความเจริญรุ่งเรืองด้านการค้ากับต่างประเทศโดยเฉพาะกับประเทศใด จนได้รับเงินสำรองใส่ถุงแดงไว้",
+        choices: ["ก. ประเทศญี่ปุ่น", "ข. ประเทศจีน", "ค. ประเทศอินเดีย", "ง. ประเทศโปรตุเกส"],
+        ans: 1
+      },
+      {
+        q: "การเกิดสุริยุปราคาล่วงหน้าได้อย่างแม่นยำ พระองค์จึงได้รับการยกย่องให้เป็นอะไร",
+        choices: ["ก.พระบิดาแห่งการศึกษาไทย", "ข.พระบิดาแห่งเทคโนโลยีไทย", "ค.พระบิดาแห่งดาราศาสตร์ไทย", "ง.พระบิดาแห่งวิทยาศาสตร์ไทย"],
+        ans: 2
+      },
+      {
+        q: "พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (รัชกาลที่ 5) ทรงทำพระราชกรณียกิจสำคัญยิ่งใหญ่ใด ที่ช่วยให้ราษฎรมีอิสรภาพและไม่ตกเป็นทาส",
+        choices: ["ก. การจัดทำธงชาติไทย", "ข. การเลิกทาสและเลิกไพร่", "ค. การตัดถนนเจริญกรุง", "ง. การตั้งโรงพิมพ์แห่งแรก"],
+        ans: 1
+      },
+      {
+        q: "หลักปรัชญาใดที่พระองค์พระราชทานเพื่อให้ประชาชนมีความอยู่ดีกินดีอย่างยั่งยืน?",
+        choices: ["ก. ปรัชญาเศรษฐกิจเสรีนิยม", "ข. ปรัชญาเศรษฐกิจพอเพียง", "ค. ปรัชญานิติรัฐนิยม", "ง. ปรัชญาระบบทุนนิยมก้าวหน้า"],
+        ans: 1
       }
     ];
 
@@ -1418,8 +1525,8 @@
       ytPlayer = new YT.Player('yt-audio-frame', {
         height: '1',
         width: '1',
-        videoId: '4J1WgPSB4sM',
-        playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': '4J1WgPSB4sM', 'controls': 0, 'disablekb': 1 }
+        videoId: '4SBMlkaGcs0',
+        playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': '4SBMlkaGcs0', 'controls': 0, 'disablekb': 1 }
       });
     };
 
@@ -1546,7 +1653,6 @@
       const stageW = window.innerWidth;
       const stageH = window.innerHeight;
       const minDimension = Math.min(stageW, stageH);
-      // ลดขนาดกระดานลงเล็กน้อยเพื่อให้เล่นบนจอแคบง่ายขึ้น
       const boardW = Math.min(stageW * 0.48, minDimension * 0.58, 460); 
       const boardH = boardW * (2 / 3);
 
@@ -1599,10 +1705,8 @@
     function initLevel(lvlIdx) {
       currentLevelIdx = (typeof lvlIdx === 'number' && lvlIdx >= 0 && lvlIdx < LEVELS.length) ? lvlIdx : currentLevelIdx;
       
-      // บันทึกลง LocalStorage ทุกครั้งที่เริ่มหรือเปลี่ยนด่าน
       localStorage.setItem('arJigsawLevel', currentLevelIdx);
       
-      // ล้างคิวการจับนิ้วทั้งหมดป้องกันของค้าง
       handSessions.clear();
 
       levelCompletionTriggered = false;
@@ -1690,7 +1794,6 @@
       }
     }
 
-    // ระยะแม่เหล็กเพิ่มเป็น 52% ดูดง่ายขึ้น
     function checkSnap(pieceObj) {
       if (pieceObj.isSnapped) return;
       const dx = pieceObj.x - pieceObj.targetX;
@@ -1729,7 +1832,6 @@
       }
     }
 
-    // ใช้งาน Pointer Capture กันหลุด + แก้กระตุก
     function bindMouseTouchEvents(pieceObj) {
       const el = pieceObj.el;
       let startPointerX = 0, startPointerY = 0;
@@ -1739,7 +1841,7 @@
         if (gameState !== GAME_STATE.PLAYING) return;
         if (pieceObj.isSnapped || pieceObj.heldBy !== null) return;
 
-        el.setPointerCapture(e.pointerId); // ล็อคนิ้วกับชิ้นส่วน ลากไวยังไงก็ไม่หลุด
+        el.setPointerCapture(e.pointerId);
         pieceObj.isHeld = true;
         pieceObj.heldBy = 'touch-mouse';
         el.classList.add('dragging');
@@ -1771,7 +1873,7 @@
 
       const onPointerUp = (e) => {
         if (!pieceObj.isHeld || pieceObj.heldBy !== 'touch-mouse') return;
-        el.releasePointerCapture(e.pointerId); // ปล่อยการล็อค
+        el.releasePointerCapture(e.pointerId);
         pieceObj.isHeld = false;
         pieceObj.heldBy = null;
         el.classList.remove('dragging');
@@ -1786,13 +1888,15 @@
     }
 
     /* =========================================================
-       9. MODAL & LEVEL TRANSITIONS
+       9. MODAL & LEVEL TRANSITIONS (WITH QUIZ AND DATABASE FETCH)
        ========================================================= */
     const infoModal = document.getElementById('info-modal');
     const modalTitle = document.getElementById('modal-title');
     const modalDesc = document.getElementById('modal-desc');
     const modalHistoryImg = document.getElementById('modal-history-img');
     const nextLevelBtn = document.getElementById('next-level-btn');
+
+    const quizModal = document.getElementById('quiz-modal');
 
     const victoryModal = document.getElementById('victory-modal');
     const victoryStats = document.getElementById('victory-stats');
@@ -1825,46 +1929,105 @@
       infoModal.classList.add('active');
     }
 
-    function goToNextLevel() {
+    // ฟังก์ชั่นบันทึกคะแนนไปยังฐานข้อมูล
+    function saveScoreToDB(score) {
+      // สร้างหรืออ้างอิง playerId
+      let playerId = localStorage.getItem('arJigsawPlayerId');
+      if(!playerId) {
+        playerId = 'Player_' + Math.floor(Math.random() * 1000000);
+        localStorage.setItem('arJigsawPlayerId', playerId);
+      }
+      
+      let isPassed = score >= 3 ? 1 : 0;
+      let formData = new FormData();
+      formData.append('player_id', playerId);
+      formData.append('score', score);
+      formData.append('is_passed', isPassed);
+
+      // ส่งข้อมูลไปยังเซิร์ฟเวอร์
+      fetch('save_score.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => console.log('Score saved'))
+      .catch(err => console.error('Error saving score:', err));
+    }
+
+    function showQuizModal() {
+      gameState = GAME_STATE.QUIZ;
+      const qObj = QUIZ_QUESTIONS[currentLevelIdx];
+      document.getElementById('quiz-question-text').textContent = qObj.q;
+      const opts = document.getElementById('quiz-options-container');
+      opts.innerHTML = '';
+      
+      qObj.choices.forEach((choice, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option interactive';
+        btn.textContent = choice;
+        btn.onclick = () => {
+          if(idx === qObj.ans) {
+            userQuizScore++;
+          }
+          localStorage.setItem('arJigsawQuizScore', userQuizScore);
+          quizModal.classList.remove('active');
+          levelTransitionLocked = false;
+          executeGoToNextLevel();
+        };
+        opts.appendChild(btn);
+      });
+      
+      quizModal.classList.add('active');
+    }
+
+    nextLevelBtn.addEventListener('click', () => {
       if (gameState !== GAME_STATE.LEVEL_COMPLETE) return;
       if (!levelTransitionLocked) return;
       if (totalSnapped !== puzzlePieces.length) return;
       if (!canLevelAction()) return;
 
+      infoModal.classList.remove('active');
+      showQuizModal();
+    });
+
+    function executeGoToNextLevel() {
       levelTransitionLocked = true;
 
       if (currentLevelIdx < LEVELS.length - 1) {
         currentLevelIdx++;
-        infoModal.classList.remove('active');
         initLevel(currentLevelIdx);
       } else {
-        infoModal.classList.remove('active');
         gameState = GAME_STATE.VICTORY;
         userMoney += 300;
         updateMoneyUI();
         const totalSecs = Math.floor((Date.now() - gameStartTime) / 1000);
-        victoryStats.textContent = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที (ยอดเงินสะสม ${userMoney} สตางค์)`;
+        
+        // เมื่อจบเกมทั้งหมด จะทำการบันทึกคะแนน
+        saveScoreToDB(userQuizScore);
+        
+        victoryStats.innerHTML = `ออเจ้าผ่านภารกิจทั้ง ๕ ยุคสมัย ในเวลา ${Math.floor(totalSecs / 60)} นาที ${totalSecs % 60} วินาที<br>
+                                 (ยอดเงินสะสม ${userMoney} สตางค์)<br><br>
+                                 <span style="font-size: 16px; color: var(--gold-light);">คะแนนการทดสอบ: ${userQuizScore} / 5 คะแนน</span>`;
         victoryModal.classList.add('active');
       }
     }
-
-    nextLevelBtn.addEventListener('click', goToNextLevel);
 
     restartGameBtn.addEventListener('click', () => {
       if (!canLevelAction()) return;
       victoryModal.classList.remove('active');
       gameStartTime = Date.now();
       currentLevelIdx = 0;
-      localStorage.removeItem('arJigsawLevel'); // ล้างข้อมูลด่านล่าสุด กลับไปเริ่มใหม่
+      userQuizScore = 0;
+      localStorage.removeItem('arJigsawLevel');
+      localStorage.removeItem('arJigsawQuizScore');
       initLevel(0);
     });
 
     backIndexBtn.addEventListener('click', () => {
-      window.location.href = 'stk.html'; // <--- เปลี่ยนให้เด้งกลับหน้าเดิมที่ถูกต้อง
+      window.location.href = 'https://thaihistorygame.byethost7.com/?i=2';
     });
 
     /* =========================================================
-       10. MEDIAPIPE MULTI-HAND TRACKING & AR INTERACTION (ดอกพิกุล)
+       10. MEDIAPIPE MULTI-HAND TRACKING & AR INTERACTION 
        ========================================================= */
     const videoElement = document.getElementById('webcam-video');
     const canvasElement = document.getElementById('ar-canvas');
@@ -1878,7 +2041,6 @@
     const handSessions = new Map();
     const HAND_TIMEOUT = 500;
 
-    // ปรับระยะการจีบให้เสถียรขึ้น
     const PINCH_START_DISTANCE = 0.055;
     const PINCH_RELEASE_DISTANCE = 0.085;
     const PINCH_CONFIRM_FRAMES = 2;
@@ -1892,7 +2054,6 @@
       for (const el of candidates) {
         if (!el) continue;
 
-        // <--- ส่วนสำคัญ: ป้องกัน AR Raycast กดปุ่มใน Modal ที่ซ่อนอยู่ --->
         const modal = el.closest('.modal-overlay');
         if (modal && !modal.classList.contains('active')) {
           continue; 
@@ -1905,7 +2066,7 @@
           continue;
         }
 
-        if (el.matches('#confirm-start-btn, #restart-game-btn, #back-index-btn, .ar-touch-item, .btn-top, .btn-icon, .cat-tab, .panel-close')) {
+        if (el.matches('#confirm-start-btn, #confirm-continue-btn, #restart-game-btn, #back-index-btn, .quiz-option, .ar-touch-item, .btn-top, .btn-icon, .cat-tab, .panel-close')) {
           return el;
         }
       }
@@ -1916,11 +2077,7 @@
       const target = getARInteractiveTarget(x, y);
       if (target) {
         createFlowerTouch(x, y, session.color);
-        if (target.id === 'next-level-btn') {
-          goToNextLevel();
-        } else {
-          target.click();
-        }
+        target.click();
         AudioEngine.playSnap();
       }
     }
@@ -1931,7 +2088,7 @@
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
     });
     pose.setOptions({
-      modelComplexity: 0, // ลดเหลือ 0 ให้เบาเครื่องสุด
+      modelComplexity: 0,
       smoothLandmarks: true,
       minDetectionConfidence: 0.5,
       minTrackingConfidence: 0.5
@@ -1942,8 +2099,8 @@
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
     });
     hands.setOptions({
-      maxNumHands: 2, // ลดจาก 4 เป็น 2
-      modelComplexity: 0, // ให้เบาที่สุด
+      maxNumHands: 2,
+      modelComplexity: 0,
       minDetectionConfidence: 0.55,
       minTrackingConfidence: 0.55
     });
@@ -1952,7 +2109,6 @@
     function drawHandCursor(ctx, x, y, isPinching, color) {
       ctx.save();
 
-      // 1. วงแหวนสถานะจีบนิ้ว
       if (isPinching) {
         ctx.strokeStyle = '#D4AF37'; 
         ctx.lineWidth = 3;
@@ -1969,7 +2125,6 @@
         ctx.stroke();
       }
 
-      // 2. ดอกพิกุล 8 กลีบ
       ctx.translate(x, y);
       const petals = 8;
       const size = isPinching ? 18 : 14; 
@@ -1999,7 +2154,6 @@
         ctx.restore();
       }
 
-      // 3. จุดตรงกลางเพื่อให้รู้ตำแหน่งเป๊ะๆ
       ctx.beginPath();
       ctx.arc(0, 0, 4, 0, Math.PI * 2);
       ctx.fillStyle = '#FFFFFF';
@@ -2033,7 +2187,6 @@
       canvasCtx.clearRect(0, 0, w, h);
       frameCtx.clearRect(0, 0, w, h);
 
-      // Render Shop Frame
       if (activeFrameKey !== 'none' && SHOP_FRAMES[activeFrameKey]) {
         if (loadedShopImages[activeFrameKey] && loadedShopImages[activeFrameKey].complete) {
           frameCtx.save();
@@ -2042,7 +2195,6 @@
         }
       }
 
-      // Render Pose Costume Fitting
       if (poseResults && poseResults.poseLandmarks) {
         const lm = poseResults.poseLandmarks;
         const leftShoulder = lm[11];
@@ -2060,7 +2212,6 @@
           const shoulderDist = Math.hypot(rsX - lsX, rsY - lsY);
           const angle = Math.atan2(rsY - lsY, rsX - lsX);
 
-          // Clothes
           const cKey = currentSelection.clothes;
           const cImg = loadedImages.clothes[cKey];
           if (cKey !== 'none' && cImg && cImg.complete) {
@@ -2074,7 +2225,6 @@
             canvasCtx.restore();
           }
 
-          // Accessories
           const accKey = currentSelection.accessories;
           if (accKey !== 'none') {
             const accImg = loadedImages.accessories[accKey];
@@ -2089,7 +2239,6 @@
             }
           }
 
-          // Hats
           if (nose && nose.visibility > 0.4) {
             const hKey = currentSelection.hats;
             if (hKey !== 'none') {
@@ -2111,7 +2260,6 @@
         }
       }
 
-      // Hand Sessions Tracking
       const now = performance.now();
 
       if (handResults && handResults.multiHandLandmarks && handResults.multiHandLandmarks.length > 0) {
@@ -2155,7 +2303,6 @@
           const targetX = (1 - indexTip.x) * w;
           const targetY = indexTip.y * h;
           
-          // Speed-based smoothing: ขยับเร็วให้ตามเร็ว อยู่นิ่งให้นิ่ง
           const moveDist = Math.hypot(targetX - session.x, targetY - session.y);
           let smoothFactor = isMobile ? 0.35 : 0.45;
           if (moveDist > 50) {
@@ -2173,7 +2320,6 @@
           const dy = indexTip.y - thumbTip.y;
           session.pinchDistance = Math.hypot(dx, dy);
 
-          // Hysteresis Pinch
           let rawPinch = false;
           if (session.isPinching) {
             rawPinch = session.pinchDistance < PINCH_RELEASE_DISTANCE;
@@ -2190,10 +2336,8 @@
           session.wasPinching = session.isPinching;
           session.isPinching = session.pinchFrames >= PINCH_CONFIRM_FRAMES;
 
-          // แสดง Cursor ประจำมือเป็นดอกพิกุล
           drawHandCursor(canvasCtx, session.x, session.y, session.isPinching, session.color);
 
-          // ลากจิ๊กซอว์แบบติดมือง่าย (ขยายรัศมีจับ 28px)
           if (gameState === GAME_STATE.PLAYING) {
             if (session.isPinching) {
               if (!session.heldPiece) {
@@ -2218,7 +2362,6 @@
                 session.heldPiece.el.style.left = `${session.heldPiece.x}px`;
                 session.heldPiece.el.style.top = `${session.heldPiece.y}px`;
 
-                // ระบบแม่เหล็กดูดชิ้นส่วนเข้าล็อกขณะลาก (52%)
                 const distToTarget = Math.hypot(session.heldPiece.x - session.heldPiece.targetX, session.heldPiece.y - session.heldPiece.targetY);
                 if (distToTarget < Math.min(session.heldPiece.w, session.heldPiece.h) * 0.52) {
                   session.heldPiece.x = session.heldPiece.targetX;
@@ -2238,14 +2381,12 @@
             }
           }
 
-          // AR Point + Pinch กดปุ่ม UI
           if (!session.heldPiece && session.isPinching && !session.wasPinching) {
             triggerUniversalARClick(session.x, session.y, session);
           }
         }
       }
 
-      // ทำความสะอาด Session ที่พ้นระยะเวลา
       for (const [id, session] of handSessions.entries()) {
         if (now - session.lastSeen > HAND_TIMEOUT) {
           if (session.heldPiece) {
@@ -2262,13 +2403,14 @@
     }
 
     /* =========================================================
-       11. CAMERA INITIALIZATION & START FLOW (Optimized Workload)
+       11. CAMERA INITIALIZATION & START FLOW
        ========================================================= */
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
     const startMainCard = document.getElementById('start-main-card');
     const arStartPrompt = document.getElementById('ar-start-prompt');
     const confirmStartBtn = document.getElementById('confirm-start-btn');
+    const confirmContinueBtn = document.getElementById('confirm-continue-btn'); 
 
     let isInferencing = false;
     let poseFrameCounter = 0;
@@ -2301,13 +2443,11 @@
 
         const camera = new Camera(videoElement, {
           onFrame: async () => {
-            if (isInferencing) return; // ป้องกันเฟรมทับซ้อน ลดอาการค้าง
+            if (isInferencing) return; 
             isInferencing = true;
             try {
-              // ให้ Hands เป็นตัวหลักทำงานทุกเฟรม
               await hands.send({ image: videoElement });
               
-              // Pose ให้ทำงาน 1 ใน 3 เฟรมเพื่อลดภาระเครื่อง
               poseFrameCounter++;
               if (poseFrameCounter % 3 === 0) {
                 await pose.send({ image: videoElement });
@@ -2340,6 +2480,11 @@
       startScreen.classList.add('camera-ready');
       startMainCard.style.display = 'none';
       arStartPrompt.style.display = 'block';
+
+      if (localStorage.getItem('arJigsawLevel') !== null && currentLevelIdx > 0) {
+        confirmContinueBtn.style.display = 'inline-block';
+        confirmStartBtn.className = 'btn-secondary interactive';
+      }
     });
 
     confirmStartBtn.addEventListener('click', () => {
@@ -2347,7 +2492,18 @@
       arStartPrompt.style.display = 'none';
       gameStartTime = Date.now();
       
-      // ดึงจาก currentLevelIdx ที่ถูกเซ็ตไว้ตอนโหลด LocalStorage
+      localStorage.removeItem('arJigsawLevel');
+      localStorage.removeItem('arJigsawQuizScore');
+      currentLevelIdx = 0;
+      userQuizScore = 0;
+      initLevel(0);
+    });
+
+    confirmContinueBtn.addEventListener('click', () => {
+      startScreen.style.display = 'none';
+      arStartPrompt.style.display = 'none';
+      gameStartTime = Date.now();
+      
       initLevel(currentLevelIdx);
     });
 
